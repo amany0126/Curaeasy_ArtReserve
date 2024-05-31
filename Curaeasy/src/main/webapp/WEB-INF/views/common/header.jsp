@@ -134,13 +134,13 @@
             <div id="user-actions">
                 <ul>
                     <li>
-                        <a href="#" class="login-link"><i class="fas fa-sign-in-alt"></i> 로그인</a> <br>
-                        <a href="#" class="signup-link"><i class="fas fa-user-plus"></i> 회원가입</a> <br>
+                        <a data-toggle="modal" data-target="#loginModal"><i class="fas fa-sign-in-alt"></i> 로그인</a> <br>
+                        <a href="enrollForm.me" class="signup-link"><i class="fas fa-user-plus"></i> 회원가입</a> <br>
                         <a href="#" class="schedule-link"><i class="far fa-calendar-alt icon"></i>스케줄</a>
                     </li>
                 </ul>
             </div>
-
+	
             
 
             <!--
@@ -163,5 +163,53 @@
             -->
         </div>
     </div>
+    	<div class="modal fade" id="loginModal">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">Login</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<form action="login.me" method="post">
+					<!-- Modal body -->
+					<div class="modal-body">
+						<label for="userId" class="mr-sm-2">ID : </label>
+						<!--  
+                        	EL 구문을 통해 쿠키값을 손쉽게 얻어올 수 있다
+                        	[ 표현법 ]
+                        	cookie.키값.value
+                        -->
+						<input type="text" class="form-control mb-2 mr-sm-2"
+							placeholder="Enter ID" id="userId" name="userId"
+							value="${cookie.saveId.value}" required="required"> <br>
+						<label for="userPwd" class="mr-sm-2">Password : </label> <input
+							type="password" class="form-control mb-2 mr-sm-2"
+							placeholder="Enter Password" id="userPwd" name="userPwd"
+							required="required"> <br>
+						<c:choose>
+							<c:when test="${not empty cookie.saveId}">
+								<!-- 만약 saveId 라는 쿠키가 있다면 : 체크박스가 체크 되겠끔  -->
+								<input type="checkbox" id="saveId" name="saveId" value="y"
+									checked>
+								<label for="saveId">아이디 저장</label>
+							</c:when>
+							<c:otherwise>
+								<input type="checkbox" id="saveId" name="saveId" value="y">
+								<label for="saveId">아이디 저장</label>
+							</c:otherwise>
+						</c:choose>
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">로그인</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+    
 </body>
 </html>
