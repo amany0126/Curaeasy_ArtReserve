@@ -262,6 +262,13 @@ public class MemberController {
 		
 		return mv;
 	}
+	@GetMapping("loginPage.me")
+	public String loginPage() {
+		// 단순히 회원가입 페이지만 포워딩
+		// /WEB-INF/views/member/memberEnrollForm.jsp
+		return "member/loginAndMemberEnrollForm";
+		
+	}
 }
 	
 

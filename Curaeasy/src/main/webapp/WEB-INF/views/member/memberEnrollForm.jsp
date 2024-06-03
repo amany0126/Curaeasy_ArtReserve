@@ -10,11 +10,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
     <style>
-        .content {
+      /*   .content {
             background-color:rgb(247, 245, 245);
             width:80%;
             margin:auto;
-        }
+        } */
         .innerOuter {
             border:1px solid lightgray;
             width:80%;
@@ -26,9 +26,8 @@
 </head>
 </head>
 <body>
-    
-    <!-- 메뉴바 -->
-
+<jsp:include page="../common/header.jsp" />
+    <!-- 회원가입 -->
     <div class="content">
         <br><br>
         <div class="innerOuter">
@@ -76,7 +75,7 @@
 					</div>
 					<div id="emailOk"  style="display: none;">인증완료되었습니다! <br></div>
 					
-					<label for="phone"> &nbsp; 생년월일 : </label>
+					<label for="phone"> &nbsp; 전화번호 : </label>
                     <input type="text" class="form-control" id="phone" placeholder="휴대폰 번호 입력(- 없이)" name="memberPhone"> <br>		
 
                     <label for="birthday"> &nbsp; 생년월일 : </label>
@@ -380,6 +379,6 @@
     </div>
 
     <!-- 푸터바 -->
-
+<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

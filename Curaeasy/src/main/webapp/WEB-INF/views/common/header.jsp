@@ -147,7 +147,8 @@
 		                <c:when test="${empty sessionScope.loginUser}">
 		                <!-- 로그인 전 -->
 		               
-		                        <a data-toggle="modal" data-target="#loginModal" class="signup-link"><i class="fas fa-sign-in-alt"></i> 로그인</a> <br>
+		                       <!--  <a data-toggle="modal" data-target="#loginModal" class="signup-link"><i class="fas fa-sign-in-alt"></i> 로그인</a> <br> -->
+		                        <a href="loginPage.me" class="signup-link"><i  class="fas fa-sign-in-alt"></i> 로그인</a> <br>
 		                        <a href="enrollForm.me" class="signup-link"><i class="fas fa-user-plus"></i> 회원가입</a> <br>
 		                        <a href="#" class="schedule-link"><i class="far fa-calendar-alt icon"></i>스케줄</a>
 		                </c:when>
@@ -156,7 +157,7 @@
 		                   <%--  <label class="signup-link">${sessionScope.loginUser.memberName}님 환영합니다</label><!--  &nbsp;&nbsp; --><br> --%>
 		                    <a href="#" class="signup-link"><i class="fas fa-user-plus" ></i>마이페이지</a><br>
 		                    <a href="#" class="schedule-link"><i class="far fa-calendar-alt icon"></i>스케줄</a><br>
-		                    <a href="logout.me" class="signup-link"><i class="fas fa-sign-in-alt"></i>로그아웃</a>
+		                    <a href="logout.me" class="signup-link"><i class="fas fa-sign-in-alt"></i>로그아웃</a><br>
 						</c:otherwise>
 		                </c:choose>
                     </li>
