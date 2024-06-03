@@ -56,7 +56,7 @@ public class MemberController {
 			// > 로그인 요청 시 사용자가 입력한 아이디, 비번
 			// m 의 userId 필드 : 아이디 "평문 " 형식
 			// m 의 userPwd 필드 : 비밀번호"평문 " 형식
-			System.out.println(m);
+			// System.out.println(m);
 			Member loginUser = memberService.loginMember(m);
 			// 기존 loginUser : 아이디와 비번이 모두 일치해야 단일행 조회
 			// 새로운 loginUser : 오로지 아이디만을 가지고 일치해야 단일행 조회 
@@ -230,7 +230,7 @@ public class MemberController {
 		String result ="";
 		
 		int delectResult = memberService.validate(c);
-		System.out.println(delectResult);
+		// System.out.println(delectResult);
 
 		if(delectResult>0) {
 			result = "인증 성공";
@@ -241,6 +241,26 @@ public class MemberController {
 		// 아까 발급받았던 인증번호는 무조건 삭제해야함!! (일회성이므로)
 		// System.out.println(certNoList);
 		return result;
+	}
+	@GetMapping("logout.me")
+	public ModelAndView logoutMember(ModelAndView mv,HttpSession session) {
+		// System.out.println("잘 호출되나??");
+		
+		// session 객체를 만료시키거나
+		// session 으로 부터  loginUser 만 지우기
+		// > session.invalidate();
+		//   무효화 하는 방식은 사용 불가
+		
+		session.removeAttribute("loginUser");
+		
+		// 일회성 알람문구를 담아서 메인페이지로 url 재요청
+		session.setAttribute("alertTitle", "로그아웃 성공!");
+		session.setAttribute("alertMsg", "이용해 주셔서 감사합니다.");
+		
+		// redirect:/
+		mv.setViewName("redirect:/");
+		
+		return mv;
 	}
 }
 	

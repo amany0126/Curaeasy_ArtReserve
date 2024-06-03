@@ -262,7 +262,7 @@
 			
 		}
 		function reCertMail() {
-			console.log("reCertMail");
+			/* console.log("reCertMail"); */
 			// ajax 요청 보내기 
 			$.ajax({
 				url : "reCert.do",
@@ -327,7 +327,7 @@
 		<script>
 		
 		function validateMail() {
-			console.log("validateMail");
+			/* console.log("validateMail"); */
 			// ajax 요청 보내기 
 			$.ajax({
 				url : "validate.do",
@@ -367,9 +367,9 @@
 			let okPwd2val =okPwd2.val();
 			let okemail =$("#enrollForm input[id=okemail]");
 			let okemailval =okemail.val();
-			console.log(okid.val());
+			/* console.log(okid.val());
 			console.log(okPwd2.val());
-			console.log(okemailval);
+			console.log(okemailval); */
 			if(okidval == "Y" && okPwd2val == "Y" && okemailval =="Y" ){
 				$("#enrollForm button[type=submit]").attr("disabled",false)
 			}else{
