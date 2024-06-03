@@ -21,7 +21,7 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Poor+Story&display=swap" rel="stylesheet">
     <style>
 
-        div { box-sizing: border-box; border:2px solid red;}
+        div { box-sizing: border-box;}
         #logo img{ width:100%; height: 100%; margin-left:0px; margin-right: 20px; }
         #header { background-color: #333; }
         #header-1 {
@@ -96,7 +96,7 @@
         <div id="header-1">
             <ul id="navi">
                 <li id="logo">
-                    <a href="#"><img src="../resources/logo2.png"></a>
+                    <a href="#"><img src="resources/images/logo2.png"></a>
                 </li>
                 <li>
                     <a href="#">플랫폼</a>

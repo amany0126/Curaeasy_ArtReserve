@@ -23,7 +23,6 @@
     
 </head>
 <style>
-    div{border : 1px solid red;}
     * { 
         font-family: "IBM Plex Sans KR", sans-serif;
         font-weight: 400;
@@ -138,13 +137,13 @@
             <div class="footer-column">
                 <div class="slider">
                     <div class="slides">
-                        <img src="../resources/이미지4.jpg" alt="image1">
-                        <img src="../resources/참고이미지1.png" alt="image2">
-                        <img src="../resources/이미지3.jpg" alt="image3">
-                        <img src="../resources/이미지6.jpg" alt="image4">
-                        <img src="../resources/이미지12.jpg" alt="image5">
-                        <img src="../resources/이미지14.jpg" alt="image6">
-                        <img src="../resources/이미지2.jpg" alt="image7">
+                        <img src="resources/images/img4.jpg" alt="image1">
+                        <img src="resources/images/cimg1.png" alt="image2">
+                        <img src="resources/images/img3.jpg" alt="image3">
+                        <img src="resources/images/img6.jpg" alt="image4">
+                        <img src="resources/images/img12.jpg" alt="image5">
+                        <img src="resources/images/img14.jpg" alt="image6">
+                        <img src="resources/images/img2.jpg" alt="image7">
                     </div>
                     <button class="prev">&#10094;</button>
                     <button class="next">&#10095;</button>
