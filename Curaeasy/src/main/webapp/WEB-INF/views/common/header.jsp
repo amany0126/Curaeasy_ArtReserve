@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>     
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,11 +17,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!--폰트-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" >
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Poor+Story&display=swap" rel="stylesheet">
     <style>
 
-        div { box-sizing: border-box; border:2px solid red;}
+        div { box-sizing: border-box;}
         #logo img{ width:100%; height: 100%; margin-left:0px; margin-right: 20px; }
         #header { background-color: #333; }
         #header-1 {
@@ -84,12 +85,18 @@
     </style>
 </head>
 <body>
-
+		<c:if test="${not empty sessionScope.alertMsg}">
+			<script>
+				// alert("${sessionScope.alertMsg}");
+				alertify.alert("${sessionScope.alertTitle}", '${sessionScope.alertMsg}', function(){ alertify.success('Ok'); })
+			</script>
+			<c:remove var="alertMsg" scope="session"/>
+		</c:if>
     <div id="header">
         <div id="header-1">
             <ul id="navi">
                 <li id="logo">
-                    <a href="#"><img src="../resources/logo2.png"></a>
+                    <a href="#"><img src="resources/images/logo2.png"></a>
                 </li>
                 <li>
                     <a href="#">플랫폼</a>
@@ -181,11 +188,11 @@
                         	cookie.키값.value
                         -->
 						<input type="text" class="form-control mb-2 mr-sm-2"
-							placeholder="Enter ID" id="userId" name="userId"
+							placeholder="Enter ID" id="userId" name=memberId
 							value="${cookie.saveId.value}" required="required"> <br>
 						<label for="userPwd" class="mr-sm-2">Password : </label> <input
 							type="password" class="form-control mb-2 mr-sm-2"
-							placeholder="Enter Password" id="userPwd" name="userPwd"
+							placeholder="Enter Password" id="userPwd" name="memberPwd"
 							required="required"> <br>
 						<c:choose>
 							<c:when test="${not empty cookie.saveId}">
