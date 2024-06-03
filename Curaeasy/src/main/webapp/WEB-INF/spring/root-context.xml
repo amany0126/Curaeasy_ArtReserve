@@ -2,8 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:tx="http://www.springframework.org/schema/tx"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
 		<bean class="org.apache.commons.dbcp.BasicDataSource" 
@@ -41,7 +41,27 @@
 		<!-- 연결을 위한 객체를 참조해오기 -->
 		<property name="dataSource" ref="dataSource" />
 	</bean>
+	    <bean class="org.mybatis.spring.SqlSessionTemplate" 
+		  id="sqlSession">
+		  <!-- 2단계에서 등록한 빈을 참조하겠다 -->
+		  <constructor-arg ref="sqlSessionFactory" />
+	</bean> 
+		<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		  id="transactionManager">
+		  <property name="dataSource" ref="dataSource"/>
+		  </bean>
+		  <tx:annotation-driven transaction-manager="transactionManager" />
 	
-	
-		
+			<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+			  id="multipartResolver">
+		<!-- defaultEncoding : 업로드 되는 파일에 대한 인코딩 처리를 어떻게 할건지 지정 -->
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- 
+			maxUploadSize : 한번에 전체 업로드 되는 파일의 총 용량 
+			- 총 파일의 최대용량은 10MByte 로 지정
+			10MByte == 10 * 1024*1024 // 기존
+			단, xml 에서 계산식이 적용되지 않으므로 직접 계산한 결과값을 넣어야 함!
+		-->
+		<property name="maxUploadSize" value="10000000"/>
+	</bean>
 </beans>

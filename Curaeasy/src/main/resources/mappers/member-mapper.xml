@@ -2,7 +2,65 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 
 <mapper namespace="memberMapper">
-
+	<resultMap id="memberResultSet" type="member">
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="MEMBER_ID" property="memberId" />
+		<result column="MEMBER_PWD" property="memberPwd" />
+		<result column="MEMBER_NAME" property="memberName" />
+		<result column="MEMBER_PHONE" property="memberPhone" />
+		<result column="MEMBER_EMAIL" property="memberEmail" />
+		<result column="MEMBER_ADDRESS" property="memberAddress" />
+		<result column="MEMBER_BIRTHDAY" property="memberBirthday" />
+		<result column="MEMBER_ENROLL_DATE" property="memberEnrollDate" />
+		<result column="ARTIST_ONGOING" property="artistOngoing" />
+		<result column="MEMBER_STATUS" property="memberStatus" />
+	</resultMap>
+	
+	<resultMap id="certResultSet" type="cert">
+		<result column="EMAIL" property="email" />
+		<result column="CERT_NO" property="certNo" />
+		<result column="CERT_TIME" property="certTime" />
+	</resultMap>
+	
+	<!-- 회원가입용 쿼리문 -->
+	<insert id="insertMember" parameterType="member">
+	 INSERT INTO MEMBER (MEMBER_NO,MEMBER_ID,MEMBER_PWD,MEMBER_NAME,
+                     	 MEMBER_PHONE,MEMBER_EMAIL,MEMBER_ADDRESS,MEMBER_BIRTHDAY)
+	             VALUES ( SEQ_MEMBER_NO.NEXTVAL,#{memberId},#{memberPwd},#{memberName}
+	             		,#{memberPhone},#{memberEmail},#{memberAddress},#{memberBirthday} )
+	</insert>
+	<!-- 아이디 체크 -->
+	<select id="idCheck" resultType="_int" parameterType="string">
+		SELECT COUNT(*)
+		 	  FROM MEMBER
+		 WHERE MEMBER_ID = #{memberId} 
+	</select>
+	
+	<!-- 이메일 인증번호 발송용 쿼리문 -->
+	<insert id="getCertNo" parameterType="cert">
+	 INSERT INTO CERT (EMAIL, CERT_NO,CERT_TIME)
+	             VALUES (#{email},#{certNo},SYSDATE)
+	</insert>
+	<!-- 이메일 인증번호 재발송용 -->
+	<update id="reCert" parameterType="cert">
+		UPDATE CERT
+		   SET CERT_NO = #{certNo}, CERT_TIME= SYSDATE   
+		 WHERE EMAIL = #{email}
+	</update>
+	<!-- 이메일 인증 확인용 쿼리문 -->
+	<delete  id="validate" parameterType="cert">
+		DELETE 
+		  FROM CERT
+		 WHERE EMAIL= #{email} AND CERT_NO = #{certNo} AND  CERT_TIME + 1/(24*60)  &gt; SYSDATE
+	</delete> 
+	
+		<select id="loginMember" parameterType="member" 
+	    	resultMap="memberResultSet">
+ 		SELECT * 
+ 	  FROM MEMBER
+	 WHERE MEMBER_ID = #{memberId} 
+	   AND MEMBER_STATUS = 'N' 
+	</select>
 </mapper>
 
 
