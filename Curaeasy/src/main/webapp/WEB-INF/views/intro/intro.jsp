@@ -8,7 +8,7 @@
 </head>
 <body>
 	<jsp:include page="../common/header.jsp" />
-	<h1>작가정보</h1>
-	<jsp:include page="../common/footer.jsp" />" />
+	<h1>사이트소개</h1>
+	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

@@ -96,10 +96,10 @@
         <div id="header-1">
             <ul id="navi">
                 <li id="logo">
-                    <a href="#"><img src="resources/images/logo2.png"></a>
+                    <a href="${pageContext.request.contextPath}/"><img src="resources/images/logo2.png"></a>
                 </li>
                 <li>
-                    <a href="#">플랫폼</a>
+                    <a href="intro.do">큐레이지<a>
                     <ul>
                         <li><a href="#">소개</a></li> <!--아트플랫폼 소개 페이지-->
                         <li><a href="#">공간</a></li> <!--전시장 평면도 기타 등-->
@@ -108,7 +108,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">전시참가</a>
+                    <a href="display.do">전시참가</a>
                     <ul>
                         <li><a href="#">진행중 전시</a></li>
                         <li><a href="#">마감된 전시</a></li>
@@ -116,21 +116,21 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#">전시대관</a>
+                    <a href="rental.do">전시대관</a>
                     <ul>
                         <li><a href="#">대관안내</a></li>
                         <li><a href="#">대관신청</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">소식|정보</a>
+                    <a href="notice.do">소식 | 정보</a>
                     <ul>
                         <li><a href="#">공지사항</a></li>
                         <li><a href="#">게시판</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">게시판</a>
+                    <a href="review.do">사용자후기</a>
                     <ul>
                         <li><a href="#">공지사항</a></li>
                         <li><a href="#">관림후기</a></li>
