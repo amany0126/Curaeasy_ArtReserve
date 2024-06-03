@@ -1,13 +1,13 @@
-package com.kh.curaeasy.review.controller;
+package com.kh.curaeasy.intro.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class ReviewController {
+public class IntroController {
 
-	@RequestMapping("review.do")
+	@RequestMapping("intro.do")
 	public String reviewList() {
-		return "review/reviewListView";
+		return "intro/intro";
 	}
 }

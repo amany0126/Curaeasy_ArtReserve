@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:forward page="common/header.jsp" />
+	<jsp:include page="../common/header.jsp" />
 	<h1>리뷰리스트</h1>
-	<jsp:forward page="common/footer.jsp" />
+	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

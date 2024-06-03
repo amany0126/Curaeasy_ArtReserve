@@ -226,6 +226,6 @@
         });
     </script>
 
-    <jsp:include page="common/footer.jsp" />
+    <jsp:include page="common/main_footer.jsp" />
 </body>
 </html>

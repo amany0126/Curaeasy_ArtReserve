@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<jsp:forward page="common/header.jsp" />
+	<jsp:include page="../common/header.jsp" />
 	<h1>대관신청 유의사항</h1>
-	<jsp:forward page="common/footer.jsp" />
+	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>
