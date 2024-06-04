@@ -34,4 +34,24 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.loginMember", m);
 	}
 
+	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.updateMember", m);
+	}
+
+	public int deleteMember(SqlSessionTemplate sqlSession, String memberId) {
+		return sqlSession.update("memberMapper.deleteMember", memberId);
+	}
+
+	public int changePwd(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.changePwd", m);
+	}
+
+	public String findId(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.findId", m);
+	}
+
+	public int findPwd(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.findPwd", m);
+	}
+
 }

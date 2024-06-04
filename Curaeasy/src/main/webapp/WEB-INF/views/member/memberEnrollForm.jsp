@@ -39,11 +39,10 @@
                     <label for="userId">* 아이디 : </label>
                     <input type="text" class="form-control" id="userId" placeholder="사용하실 아이디를 입력하세요" name="memberId" required> <br>
 					<input type="hidden" id="okid">
-					<div id="checkResult1" style="font-size: 0.8em ;display: none;" >
-					</div>
+					<div id="checkResult1" style="font-size: 0.8em ;display: none;" ></div>
 					<br>
                     <label for="userPwd">* 비밀번호 : </label>
-                    <input type="password" class="form-control" id="userPwd" placeholder="*영문, 숫자, 특수문자(@,#,$,%,^,&,*) 포함 8~15글자" name="memberPwd" required> <br>
+                    <input type="password" class="form-control" id="userPwd" placeholder="*영문, 숫자, 특수문자(!,@,#,$,%,^,&,*) 포함 8~15글자" name="memberPwd" required> <br>
 					<input type="hidden" id="okPwd1">
 					<div id="checkResult2" style="font-size: 0.8em ;display: none;" >
 					</div>
@@ -58,7 +57,7 @@
                     <input type="text" class="form-control" id="userName" placeholder="이름을 입력해주세요" name="memberName" required> <br>
 					<input type="hidden" id="okemail">
 
-                    <label for="email"> &nbsp; 이메일 : </label> <br>
+                    <label for="email"> &nbsp;* 이메일 : </label> <br>
                     <div>
                     <input type="text" class="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="memberEmail" style="display:inline; width: 37vw;">
 					<button type="button" onclick="certEmail();" id="cert" class="btn btn-light" style="display: inline; width: 120px; border-color: black;">이메일 인증</button>
@@ -71,19 +70,19 @@
 					<button type="button" id="reCert" onclick="reCertMail();" disabled class="btn btn-light" style="display: inline; width: 150px; border-color: black;">인증번호 재인증</button>
 					<button type="button" id="validate" onclick="validateMail();" disabled class="btn btn-light" style="display: inline; width: 130px; border-color: black;">인증번호 인증</button>
 					<p id="checkTime"></p>
-					<br><br>
+					
 					</div>
 					<div id="emailOk"  style="display: none;">인증완료되었습니다! <br></div>
-					
-					<label for="phone"> &nbsp; 전화번호 : </label>
-                    <input type="text" class="form-control" id="phone" placeholder="휴대폰 번호 입력(- 없이)" name="memberPhone"> <br>		
+					<br>
+					<label for="phone"> &nbsp;* 전화번호 : </label>
+                    <input type="text" class="form-control" id="phone" placeholder="휴대폰 번호 입력(- 없이)" name="memberPhone" required> <br>		
 
-                    <label for="birthday"> &nbsp; 생년월일 : </label>
-                    <input type="date" class="form-control" id="birthday" placeholder="생년월일을 입력해주세요" name="memberBirthday"> <br>
+                    <label for="birthday"> &nbsp;* 생년월일 : </label>
+                    <input type="date" class="form-control" id="birthday" placeholder="생년월일을 입력해주세요" name="memberBirthday" required> <br>
 
                     
-                    <label for="address"> &nbsp; 주소 : </label>
-                    <input type="text" class="form-control" id="address" placeholder="실거주지를 입력해주세요" name="memberAddress"> <br>
+                    <label for="address"> &nbsp;* 주소 : </label>
+                    <input type="text" class="form-control" id="address" placeholder="실거주지를 입력해주세요" name="memberAddress" required> <br>
                     
        
                 </div> 
@@ -145,8 +144,8 @@
 			$(function() {
 				let $userPwdInput = $("#enrollForm input[id=userPwd]");
 				let $checkPwdInput = $("#enrollForm input[id=checkPwd]");
-				$userPwdInput.keyup(ckeckPwd);
-				$checkPwdInput.keyup(valPwd);
+				$userPwdInput.keyup(ckeckPwd); // 1차
+				$checkPwdInput.keyup(valPwd); // 중복
 			});
 		</script>
 		
@@ -160,7 +159,7 @@
 			let checkPwd = $checkPwdInput.val();
 			let $okPwd1Input = $("#enrollForm input[id=okPwd1]");
 			
-			let regExp4 = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&*])(?=.\S)[A-Za-z\d@#$%^&*]{8,15}$/;
+			let regExp4 = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.\S)[A-Za-z\d!@#$%^&*]{8,15}$/;
 			
 			
 			userPwd = $userPwdInput.val();
@@ -198,29 +197,30 @@
 			let checkPwd = $checkPwdInput.val();
 			let $okPwd1Input = $("#enrollForm input[id=okPwd1]");
 			
-			let regExp4 = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@#$%^&*])(?=.\S)[A-Za-z\d@#$%^&*]{8,15}$/;
+			let regExp4 = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.\S)[A-Za-z\d!@#$%^&*]{8,15}$/;
 			
 			$okPwd1Input = $("#okPwd1").val();
 			checkPwd = $checkPwdInput.val();
 			if(checkPwd!= null && checkPwd !="" ){
-			if($okPwd1Input == "Y"){
-				 if(!regExp4.test(checkPwd)) {
+			if($okPwd1Input == "Y" ){
+				 if(!regExp4.test(checkPwd) && userPwd != checkPwd) {
 		               $("#checkResult3").text("비밀번호가 일치하지 않습니다.").show().css("color","red");
 		               $("#enrollForm input[id=okPwd2]").val("N");
 		               checkdSudmit();
-		         }else if(regExp4.test(checkPwd)){
+		               ckeckPwd()
+		         }else if(regExp4.test(checkPwd)&& userPwd == checkPwd){
 		               $("#checkResult3").text("비밀번호가 일치합니다").show().css("color","green");
 		               $("#enrollForm input[id=okPwd2]").val("Y");
 		               checkdSudmit();
-		               
-		         }else{
+		               ckeckPwd()
+		         }else if(checkPwd == ""){
 		               $("#checkResult3").hide(); 
 		               $("#enrollForm input[id=okPwd2]").val("N");
 		               checkdSudmit();
-		               
+		               ckeckPwd()
 		         }
 			}else{
-               $("#checkResult3").text("먼저 입력하신 비밀번호가 유효한 비밀번호가 아닙니다.").show().css("color","red");
+               $("#checkResult3").text("먼저 입력하신 비밀번호와 일치하지 않습니다.").show().css("color","red");
                $("#enrollForm input[id=okPwd2]").val("N");
                checkdSudmit();
 			}
@@ -341,16 +341,18 @@
 						if(result == "인증실패"){
 							alert("인증번호 재입력 또는 인증번호 재발급 부탁드립니다.");
 							 checkdSudmit();
-						}else{
+						}else {
 							alert(result);
 							// 인증번호 대조 성공 후 인증 관련 요소 비활성화
 							$("#checkNo").attr("readonly",true);
 							$("#validate").attr("disabled",true);
 							$("#reCert").attr("disabled",true);
+							$("#cert").attr("disabled",false);
 							alert("인증에 성공하셨습니다.");
 							$("#enrollForm input[id=okemail]").val("Y");
 							$("#emailOk").show()
 							clearInterval(runCount); 
+							$("#checkTime").text("");
 							checkdSudmit();
 						}
 					},

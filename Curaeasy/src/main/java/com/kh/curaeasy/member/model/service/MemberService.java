@@ -40,8 +40,6 @@ public class MemberService {
 	@Transactional 
 	public int reCert(Cert c) {
 		int result = memberDao.reCert(sqlSession, c);
-		// 트랜잭션을 관리해주는 빈 등록
-		// > 자동으로 트랜잭션 관리
 		return result;
 	}
 	@Transactional 
@@ -56,5 +54,31 @@ public class MemberService {
 	public Member loginMember(Member m) {
 		Member loginUser = memberDao.loginMember(sqlSession, m);
 		return loginUser;
+	}
+
+	@Transactional 
+	public int updateMember(Member m) {
+	
+		return memberDao.updateMember(sqlSession, m);
+	}
+
+	@Transactional 
+	public int deleteMember(String memberId) {
+		return memberDao.deleteMember(sqlSession, memberId);
+	}
+
+	@Transactional 
+	public int changePwd(Member m) {
+		return memberDao.changePwd(sqlSession, m);
+	}
+
+
+	public String findId(Member m) {
+		return memberDao.findId(sqlSession, m);
+	}
+
+
+	public int findPwd(Member m) {
+		return memberDao.findPwd(sqlSession, m);
 	}
 }

@@ -1,6 +1,7 @@
 package com.kh.curaeasy.member.controller;
 
 import java.sql.Date;
+import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import com.kh.curaeasy.member.model.vo.Cert;
 import com.kh.curaeasy.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Controller
 public class MemberController {
@@ -233,9 +235,9 @@ public class MemberController {
 		// System.out.println(delectResult);
 
 		if(delectResult>0) {
-			result = "인증 성공";
+			result = "인증성공";
 		}else {
-			result = "인증 실패";
+			result = "인증실패";
 		}
 		// 인증이 성공되든 실패되든 간에
 		// 아까 발급받았던 인증번호는 무조건 삭제해야함!! (일회성이므로)
@@ -264,10 +266,146 @@ public class MemberController {
 	}
 	@GetMapping("loginPage.me")
 	public String loginPage() {
-		// 단순히 회원가입 페이지만 포워딩
-		// /WEB-INF/views/member/memberEnrollForm.jsp
-		return "member/loginAndMemberEnrollForm";
+		return "member/login";
 		
+	}
+	@GetMapping("myPage.me")
+	public String myPage() {
+		return "member/myPage";
+	}
+	
+	@PostMapping(value = "update.me",produces = "text/html; charset=UTF-8")
+	public String updateMember(Member m, Model model, HttpSession session, String ckPassword) {
+		
+		int result = memberService.updateMember(m);
+		
+		if (result > 0) { // 성공
+			Member updateMem = memberService.loginMember(m);
+			
+			session.setAttribute("loginUser", updateMem);
+			
+			/*session.setAttribute("alertTitle", "개인정보 변경성공");
+			session.setAttribute("alertMsg", "개인정보 변경이 성공적으로 진행되셨습니다.");
+			*/
+			return "redirect:/myPage.me";
+		} else { // 실패
+			
+			// 에러문구 담아서 에러페이지로 포워딩
+			model.addAttribute("errorMsg", "개인정보 변경에 실패하셨습니다");
+			// /WEB-INF/views/common/errorPage.jsp
+			return "/common/errorPage";
+
+		}
+	}
+	@PostMapping(value = "delete.me", produces = "text/html; charset=UTF-8")
+	public String deldteMember(Member m, Model model, HttpSession session) {
+		String encPwd= ((Member)session.getAttribute("loginUser")).getMemberPwd();
+				
+		if( bcryptPasswordEncoder.matches(m.getMemberPwd(),encPwd)){ // 비밀번호가 맞을경우
+			int result = memberService.deleteMember(m.getMemberId());
+				
+			if (result > 0) { // 탈퇴 처리 성공
+				/*
+				 * session.setAttribute("alertTitle", "회원탈퇴 성공");
+				 * session.setAttribute("alertMsg", "성공적으로 탈퇴되었습니다. 그동안 이용해주셔서 감사합니다.");
+				 */
+				session.removeAttribute("loginUser");
+				return "redirect:/";
+			} else { // 탈퇴 처리 실패
+				model.addAttribute("errorMsg", "회원탈퇴에 실패하셨습니다.");
+				return "/common/errorPage";
+			}
+		}else { // 비밀번호가 틀릴경우
+			/*
+			 * session.setAttribute("alertTitle", "회원탈퇴 실패");
+			 * session.setAttribute("alertMsg", "입력하신 비밀번호가 일치하지 않습니다. 재입력 부탁드립니다");
+			 */
+			return "redirect:/myPage.me";
+		}
+	}
+	@PostMapping(value = "changePwd.me", produces = "text/html; charset=UTF-8")
+	public String changePwd(Member m, Model model, HttpSession session,String NewPwd) {
+		String encPwd= ((Member)session.getAttribute("loginUser")).getMemberPwd();
+				
+		if( bcryptPasswordEncoder.matches(m.getMemberPwd(),encPwd)){ // 비밀번호가 맞을경우
+			encPwd = bcryptPasswordEncoder.encode(NewPwd);
+			m.setMemberPwd(encPwd);
+			int result = memberService.changePwd(m);
+				
+			if (result > 0) { // 탈퇴 처리 성공
+				Member updateMem = memberService.loginMember(m);
+				session.setAttribute("loginUser", updateMem);
+				
+				return "redirect:/myPage.me";
+			} else { // 탈퇴 처리 실패
+				model.addAttribute("errorMsg", "회원정보 변경에 실패하셨습니다.");
+				return "/common/errorPage";
+			}
+		}else { // 비밀번호가 틀릴경우
+			/*
+			 * session.setAttribute("alertTitle", "회원탈퇴 실패");
+			 * session.setAttribute("alertMsg", "입력하신 비밀번호가 일치하지 않습니다. 재입력 부탁드립니다");
+			 */
+			return "redirect:/myPage.me";
+		}
+	}
+	@GetMapping("findIdPwd.me")
+	public String findIdPwd() {
+		return "member/findIdPwd";
+	}
+	@PostMapping(value = "findId.me", produces = "text/html; charset=UTF-8")
+	public String findId(Member m, Model model, HttpSession session) {
+		
+		String userId = memberService.findId(m);
+		
+		if (userId != null) {
+			
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setSubject("[크레이지] 조회하신 아이디 입니다"); // 제목 설정
+			message.setText("아이디 : " +userId); // 내용 설정
+			message.setTo(m.getMemberEmail());
+			mailSender.send(message);
+			
+			model.addAttribute("eventMsg", "요청하신 정보를 이메일로 발송하였습니다.");
+			return "/common/eventPage";
+		}else {
+			
+			model.addAttribute("errorMsg", "아이디 조회에 실패하셨습니다.");
+			return "/common/errorPage";
+		}
+		
+	}
+	@PostMapping(value = "findPwd.me", produces = "text/html; charset=UTF-8")
+	public String findPwd(Member m, Model model, HttpSession session) {
+		
+		Random random =new Random();
+		String newPwd="";
+		for(int i=0 ;i<8;i++) {
+			newPwd += ((char)((int)(random.nextInt(26))+65));
+		}
+		
+		System.out.println(newPwd);
+		
+		String encPwd = bcryptPasswordEncoder.encode(newPwd);
+		m.setMemberPwd(encPwd);
+
+		int rePwd = memberService.findPwd(m);
+		
+		if (rePwd > 0) {
+			
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setSubject("[크레이지] 임시비밀번호 발급 입니다"); // 제목 설정
+			message.setText("임시 비밀번호 : " +newPwd + "n로그인 후 비밀번호 변경 부탁드립니다."); // 내용 설정
+			message.setTo(m.getMemberEmail());
+			mailSender.send(message);
+			
+			model.addAttribute("eventMsg", "요청하신 정보를 이메일로 발송하였습니다.");
+			return "/common/eventPage";
+		}else {
+			
+			model.addAttribute("errorMsg", "임시비밀번호 발급에 실패하셨습니다.");
+			return "/common/errorPage";
+		}
 	}
 }
 	

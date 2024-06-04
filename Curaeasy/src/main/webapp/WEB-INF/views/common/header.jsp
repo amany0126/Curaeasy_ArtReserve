@@ -155,7 +155,7 @@
 						<c:otherwise>
 		              		<!-- 로그인 후 -->
 		                   <%--  <label class="signup-link">${sessionScope.loginUser.memberName}님 환영합니다</label><!--  &nbsp;&nbsp; --><br> --%>
-		                    <a href="#" class="signup-link"><i class="fas fa-user-plus" ></i>마이페이지</a><br>
+		                    <a href="myPage.me" class="signup-link"><i class="fas fa-user-plus" ></i>마이페이지</a><br>
 		                    <a href="#" class="schedule-link"><i class="far fa-calendar-alt icon"></i>스케줄</a><br>
 		                    <a href="logout.me" class="signup-link"><i class="fas fa-sign-in-alt"></i>로그아웃</a><br>
 						</c:otherwise>
@@ -185,7 +185,7 @@
             </div>
             -->
         </div>
-    </div>
+    </div><%-- 
     	<div class="modal fade" id="loginModal">
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
@@ -232,7 +232,7 @@
 				</form>
 			</div>
 		</div>
-	</div>
+	</div> --%>
     
 </body>
 </html>
