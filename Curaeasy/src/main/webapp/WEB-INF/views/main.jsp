@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- 부트스트랩 스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <!--로그인스타일-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!--폰트-->
@@ -20,7 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Poor+Story&display=swap" rel="stylesheet">
     
     <style>
-        /* 폰트스타일 */
+        /* 기존 스타일 */
         * { 
             font-family: "IBM Plex Sans KR", sans-serif;
             font-weight: 400;
@@ -49,8 +47,8 @@
             flex-wrap: wrap;
             justify-content: space-between;
             max-width: 1300px;
-            height : 500px;
             margin: auto;
+            padding: 20px;
         }
         #content-area3 {height:100%; width: 20%; }
 
@@ -94,7 +92,7 @@
         }
         #navi li:hover > ul { display: block; }
 
-        /* ======================== footer style */        
+        /* footer style */
         .footer { background-color: #333; color: #fff; padding: 40px 20px; }
         .footer-container {
             display: flex;
@@ -153,7 +151,6 @@
             padding: 5px;
             cursor: pointer;
         }
-        /* footer 슬라이더 양쪽 화살표 */
         .prev { left: 10px; } .next { right: 10px; }
 
         .Writer{
@@ -173,49 +170,84 @@
             padding: 10px;
             display: none;
         }
+
+        /* 새로운 스타일 */
+        .section {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            margin: 10px;
+            border-radius: 10px;
+        }
+        .section h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .card h3 {
+            margin-top: 10px;
+            color: #444;
+        }
+        .card p {
+            color: #666;
+        }
     </style>
 </head>
 <body>
-	<jsp:include page="common/header.jsp" />
+    <jsp:include page="common/header.jsp" />
 
-    <!-- Content 영역-->
+    <!-- Content 영역 -->
     <div id="content-area">
-
-        <div id="content-area3">
-            <div class="Writer">
-                <!--  <img src=".." style="width:200px; height:200px;"> -->
+        <div class="section">
+            <h2>전시</h2>
+            <div class="card">
+                <img src="resources/images/main1.jpg" alt="전시 이미지">
+                <h3>김진안 展 MAGNETIC LIFE</h3>
+                <p>2024-06-04(Tue) - 2024-06-14(Fri)</p>
+                <p>인천아트플랫폼 전시관2(1)</p>
             </div>
-            <p class="Introduce">
-                자기소개 어쩌구저쩌구
-            </p>
-        
-            <div class="Writer">ㅇㅇㅇ작가</div>
-            <p class="Introduce">
-                자기소개 어쩌구저쩌구
-            </p>
-        
-            <div class="Writer">ㅇㅇㅇ작가</div>
-            <p class="Introduce">
-                자기소개 어쩌구저쩌구
-            </p>
-        
-            <div class="Writer">ㅇㅇㅇ작가</div>
-            <p class="Introduce">
-                자기소개 어쩌구저쩌구
-            </p>
+        </div>
 
-            <div class="Writer">ㅇㅇㅇ작가</div>
-            <p class="Introduce">
-                자기소개 어쩌구저쩌구
-            </p>
+        <div class="section">
+            <h2>공연</h2>
+            <div class="card">
+                <img src="resources/images/main2.jpg" alt="공연 이미지">
+                <h3>인천아트플랫폼 유스테이지</h3>
+                <p>2024-04-16(Tue) - 2024-11-28(Thu)</p>
+                <p>12:00 - 13:30</p>
+                <p>인천아트플랫폼 야외공연장</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>공지사항</h2>
+            <div class="card">
+                <img src="resources/images/main3.jpg" alt="공지사항 이미지">
+                <h3>2024 인천아트플랫폼 &lt;학교연계 프로그램&gt;</h3>
+                <p>2024-04-01(Mon) - 2024-12-31(Tue)</p>
+                <p>인천 관내 초등학교 대상</p>
+            </div>
         </div>
     </div>
+
+    <jsp:include page="common/main_footer.jsp" />
 
     <script>
         $(function(){
             $("#content-area3>div").click(function(){
                 let $p = $(this).next(); 
-                console.log($p.css("display"));
                 if($p.css("display") == "none"){
                     $(this).siblings("#content-area>p").slideUp(500);
                     $p.slideDown(500);
@@ -225,7 +257,5 @@
             });
         });
     </script>
-
-    <jsp:include page="common/main_footer.jsp" />
 </body>
 </html>

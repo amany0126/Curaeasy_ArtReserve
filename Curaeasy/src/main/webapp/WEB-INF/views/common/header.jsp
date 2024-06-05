@@ -150,7 +150,7 @@
 		                       <!--  <a data-toggle="modal" data-target="#loginModal" class="signup-link"><i class="fas fa-sign-in-alt"></i> 로그인</a> <br> -->
 		                        <a href="loginPage.me" class="signup-link"><i  class="fas fa-sign-in-alt"></i> 로그인</a> <br>
 		                        <a href="enrollForm.me" class="signup-link"><i class="fas fa-user-plus"></i> 회원가입</a> <br>
-		                        <a href="#" class="schedule-link"><i class="far fa-calendar-alt icon"></i>스케줄</a>
+		                        <a href="#" class="schedule-link"><i class="far fa-calendar-alt icon"></i> 스케줄</a>
 		                </c:when>
 						<c:otherwise>
 		              		<!-- 로그인 후 -->
