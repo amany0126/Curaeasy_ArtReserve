@@ -85,13 +85,7 @@
     </style>
 </head>
 <body>
-		<c:if test="${not empty sessionScope.alertMsg}">
-			<script>
-				// alert("${sessionScope.alertMsg}");
-				alertify.alert("${sessionScope.alertTitle}", '${sessionScope.alertMsg}', function(){ alertify.success('Ok'); })
-			</script>
-			<c:remove var="alertMsg" scope="session"/>
-		</c:if>
+
     <div id="header">
         <div id="header-1">
             <ul id="navi">

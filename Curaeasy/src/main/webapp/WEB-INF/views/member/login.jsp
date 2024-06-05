@@ -15,7 +15,7 @@
 
     <style> 
            .innerOuter {
-            border:1px solid lightgray;
+            /* border:1px solid lightgray; */
             width:80%;
             margin:auto;
             padding:5% 10%;
@@ -75,7 +75,8 @@
 					<br>
 					<div align="center">
 						<!-- <a href="비밀번호찾기.html" class="signup-link" style="color: black;">비밀번호 찾기&nbsp;</a>  | -->
-                        <a href="findIdPwd.me"  class="signup-link" style="color: black;">&nbsp;아이디 찾기&nbsp; | &nbsp;비밀번호 찾기&nbsp;</a> 
+                        <a href="IdFind.me"  class="signup-link" style="color: black;">&nbsp;아이디 찾기&nbsp; </a> |
+                        <a href="PwdFind.me"  class="signup-link" style="color: black;"> &nbsp;비밀번호 찾기&nbsp;</a> 
 					</div>
 
         </form>

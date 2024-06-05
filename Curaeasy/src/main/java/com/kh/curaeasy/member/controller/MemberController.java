@@ -349,9 +349,13 @@ public class MemberController {
 			return "redirect:/myPage.me";
 		}
 	}
-	@GetMapping("findIdPwd.me")
-	public String findIdPwd() {
-		return "member/findIdPwd";
+	@GetMapping("IdFind.me")
+	public String idFind() {
+		return "member/idFind";
+	}
+	@GetMapping("PwdFind.me")
+	public String pwdFind() {
+		return "member/pwdFind";
 	}
 	@PostMapping(value = "findId.me", produces = "text/html; charset=UTF-8")
 	public String findId(Member m, Model model, HttpSession session) {

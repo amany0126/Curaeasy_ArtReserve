@@ -40,7 +40,6 @@
                     <input type="text" class="form-control" id="userId" placeholder="영문소문자, 숫자 포함  5~15 글자 " name="memberId" required> <br>
 					<input type="hidden" id="okid">
 					<div id="checkResult1" style="font-size: 0.8em ;display: none;" ></div>
-					<br>
                     <label for="userPwd">* 비밀번호 : </label>
                     <input type="password" class="form-control" id="userPwd" placeholder="*영문, 숫자, 특수문자(!,@,#,$,%,^,&,*) 포함 8~15글자" name="memberPwd" required> <br>
 					<input type="hidden" id="okPwd1">
@@ -57,13 +56,11 @@
                     <input type="text" class="form-control" id="userName" placeholder="이름을 입력해주세요" name="memberName" required> <br>
 					<input type="hidden" id="okemail">
 
-                    <label for="email"> &nbsp;* 이메일 : </label> <br>
+                    <label for="email"> &nbsp;* 이메일 : </label> 
                     <div>
                     <input type="text" class="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="memberEmail" style="display:inline; width: 37vw;">
 					<button type="button" onclick="certEmail();" id="cert" class="btn btn-light" style="display: inline; width: 120px; border-color: black;">이메일 인증</button>
 					</div>
-					<br><br>
-					
 					<div id="emailcheck" style="display: none;">
 					인증번호 :  <br>
 					<input type="text" id="certNo"  class="form-control" style="display:inline; width: 15vw;" >
@@ -246,7 +243,7 @@
 					email : $("#email").val() 
 						},
 						success : function(result) {
-							alert(result);
+							// alert(result);
 							// 인증번호 발급 후 인증 관련 요소 활성화
 							$("#checkNo").attr("disabled",true);
 							$("#validate").attr("disabled",false);
@@ -275,7 +272,7 @@
 					email : $("#email").val() 
 						},
 						success : function(result) {
-							alert(result);
+							// alert(result);
 							// 인증번호 발급 후 인증 관련 요소 활성화
 							$("#checkNo").attr("disabled",false);
 							$("#validate").attr("disabled",false);
@@ -356,12 +353,12 @@
 							alert("인증번호 재입력 또는 인증번호 재발급 부탁드립니다.");
 							 checkdSudmit();
 						}else {
-							alert(result);
+							// alert(result);
 							// 인증번호 대조 성공 후 인증 관련 요소 비활성화
 							$("#checkNo").attr("readonly",true);
 							$("#validate").attr("disabled",true);
 							$("#reCert").attr("disabled",true);
-							$("#cert").attr("disabled",false);
+							$("#cert").attr("disabled",true);
 							alert("인증에 성공하셨습니다.");
 							$("#enrollForm input[id=okemail]").val("Y");
 							$("#emailOk").show()
