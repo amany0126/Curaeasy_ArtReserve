@@ -291,13 +291,13 @@
 		}
 		
 		
-		
-		
-		var time = 60;
+		var time = 0;
 		var min = 0;
 		 var sec = 0;
 		 var runCount;
+		
 		function fncCountDown() {
+			time = 60;
 			  if ( time > 0 ) {
 				   runCount = setInterval(startCountDown,1000);
 			  }
@@ -322,6 +322,15 @@
 			$("#checkTime").text("인증시간 : 인증시간이 만료되었습니다. 재인증 부탁드립니다");
 			checkdSudmit();
 		}
+		  function CountDown0() {  
+				
+				clearInterval(runCount); 
+				$("#checkNo").attr("readonly",true);
+				$("#validate").attr("disabled",true);
+				$("#reCert").attr("disabled",true);
+				$("#checkTime").text("");
+				checkdSudmit();
+			}
 		</script>
 		<script>
 		
@@ -351,8 +360,8 @@
 							alert("인증에 성공하셨습니다.");
 							$("#enrollForm input[id=okemail]").val("Y");
 							$("#emailOk").show()
-							clearInterval(runCount); 
-							$("#checkTime").text("");
+							$("#checkTime").hide(); 
+							CountDown0()
 							checkdSudmit();
 						}
 					},
