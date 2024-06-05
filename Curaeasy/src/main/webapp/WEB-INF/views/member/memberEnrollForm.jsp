@@ -37,7 +37,7 @@
             <form action="insert.me" method="post" id="enrollForm">
                 <div class="form-group">
                     <label for="userId">* 아이디 : </label>
-                    <input type="text" class="form-control" id="userId" placeholder="사용하실 아이디를 입력하세요" name="memberId" required> <br>
+                    <input type="text" class="form-control" id="userId" placeholder="영문소문자, 숫자 포함  5~15 글자 " name="memberId" required> <br>
 					<input type="hidden" id="okid">
 					<div id="checkResult1" style="font-size: 0.8em ;display: none;" ></div>
 					<br>
@@ -96,19 +96,26 @@
         <br><br>
 		<script>
 			$(function() {
-				// 아이디를 입력하는 input 요소 객체 변수에 담아두기
+				let $userIdInput = $("#enrollForm input[id=userId]");
+				let $userPwdInput = $("#enrollForm input[id=userPwd]");
+				let $checkPwdInput = $("#enrollForm input[id=checkPwd]");
+				$userIdInput.keyup(checkId); 
+				$userPwdInput.keyup(ckeckPwd); // 1차
+				$checkPwdInput.keyup(valPwd); // 중복
+			});
+			function checkId() {
 				const $idInput = $("#enrollForm input[id=userId]")
-				// 아이디를 입력할때마다 실시간으로 아이디 중복 체크
-				// "keyup" 이벤트 활용
-				$idInput.keyup(function() {
 					// console.log($idInput.val());
 					// > 사용자가 실시간으로 입력한 아이디값을 중복체크 시 요청값으로 넘김
 					// 우선 , 아이디값이 최소 5글자 이상으로 입력되었을 때에만
 					// ajax 를 요청해서 중복체크 하기!!
 					// (유료 DB 제품은 실행하는 쿼리문의 갯수가 몇개냐에 따라 요금제가 지정됨)
-					if($idInput.val().length >=5 ){
+						let checkId =  $idInput.val();
+						console.log(checkId);
+					if(checkId.length >=5 ){
 						// 5글자 이상일때
 						// ajxa 로 아이디 중복확인 요청보내기
+						let regExp =/^[a-z0-9]{5,15}$/;
 						$.ajax({
 							url : "idCheck.me",
 							type : "get",
@@ -116,15 +123,20 @@
 								checkId : $idInput.val()
 							},
 							success : function(result) {
-								if(result == "NNNNN"){
+								if(result == "NNNNN" && regExp.test(checkId)){
 								$("#enrollForm input[id=okid]").val("N");
 								$("#checkResult1").text("이미 사용중이거나 탈퇴한 회원의 아이디 입니다. 다시 입력해주세요").show().css("color","red");
 								checkdSudmit();
-								}else{
+								}else if(result == "NNNNY" && regExp.test(checkId)){
 								$("#enrollForm input[id=okid]").val("Y");
 								$("#checkResult1").text("사용 가능한 아이디입니다").show().css("color","green");
 								checkdSudmit();
+								}else if(result == "NNNNY" &&!regExp.test(checkId)){
+								$("#enrollForm input[id=okid]").val("N");
+								$("#checkResult1").text("유효한 아이디가 아닙니다. 다시 입력해주세요.").show().css("color","red");
+								checkdSudmit();
 								}
+								
 							},
 							error : function() {
 								console.log("ajax 통신 실패");
@@ -134,19 +146,12 @@
 						
 					}else {
 						// 5글자 미만일 때
-						$("#checkResult").hide(); 
+						$("#checkResult1").hide(); 
 						$("#enrollForm input[id=okid]").val("N");
 						$("#enrollForm button[type=submit]").attr("disabled",true)
 					}
-				});
-			});
+				}
 			
-			$(function() {
-				let $userPwdInput = $("#enrollForm input[id=userPwd]");
-				let $checkPwdInput = $("#enrollForm input[id=checkPwd]");
-				$userPwdInput.keyup(ckeckPwd); // 1차
-				$checkPwdInput.keyup(valPwd); // 중복
-			});
 		</script>
 		
 		<script>
