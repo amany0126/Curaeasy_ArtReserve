@@ -38,8 +38,8 @@
 	<beans:bean class="org.springframework.mail.javamail.JavaMailSenderImpl" id="mailSender">
 		<beans:property name="host" value="smtp.gmail.com"/>
 		<beans:property name="port" value="25"/>
-		<beans:property name="username" value="kh012697@gmail.com"/>
-		<beans:property name="password" value="polfzhkmepbwtxyr"/>
+		<beans:property name="username" value="curaeasy2024@gmail.com"/>
+		<beans:property name="password" value="yblxcoedthqozqid"/>
 		<!-- 
 			email 전송 시 필요한 SMTP 관련 설정값 
 			Properties prop = new Properties();
