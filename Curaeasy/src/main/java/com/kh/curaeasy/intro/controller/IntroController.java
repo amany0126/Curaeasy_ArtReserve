@@ -10,4 +10,8 @@ public class IntroController {
 	public String reviewList() {
 		return "intro/intro";
 	}
+	@RequestMapping("location.do")
+	public String location() {
+		return "intro/location";
+	}
 }
