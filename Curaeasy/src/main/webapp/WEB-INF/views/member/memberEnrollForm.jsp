@@ -322,6 +322,7 @@
 			$("#validate").attr("disabled",true);
 			$("#reCert").attr("disabled",true);
 			$("#checkTime").text("인증시간 : 인증시간이 만료되었습니다. 재인증 부탁드립니다");
+			$("#cert").attr("disabled",false);
 			checkdSudmit();
 		}
 		  function CountDown0() {  
