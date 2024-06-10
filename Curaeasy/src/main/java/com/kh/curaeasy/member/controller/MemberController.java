@@ -366,7 +366,7 @@ public class MemberController {
 			
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setSubject("[크레이지] 조회하신 아이디 입니다"); // 제목 설정
-			message.setText("아이디 : " +userId); // 내용 설정
+			message.setText("<html><body><h1>아이디 : " +userId+"</h1></body></html>"); // 내용 설정
 			message.setTo(m.getMemberEmail());
 			mailSender.send(message);
 			
@@ -399,7 +399,7 @@ public class MemberController {
 			
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setSubject("[크레이지] 임시비밀번호 발급 입니다"); // 제목 설정
-			message.setText("임시 비밀번호 : " +newPwd + "/n로그인 후 비밀번호 변경 부탁드립니다."); // 내용 설정
+			message.setText("임시 비밀번호 : " +newPwd + "\n로그인 후 비밀번호 변경 부탁드립니다."); // 내용 설정
 			message.setTo(m.getMemberEmail());
 			mailSender.send(message);
 			
