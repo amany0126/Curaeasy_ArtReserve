@@ -3,6 +3,8 @@ package com.kh.curaeasy.member.controller;
 import java.sql.Date;
 import java.util.Random;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -97,7 +100,7 @@ public class MemberController {
 				// > ModelAndView 방식 또한
 				// View Resolver 가 주소를 자동 완성 해줌!!
 			}
-			System.out.println(loginUser);
+			// System.out.println(loginUser);
 			return mv;
 	  }
 	  
@@ -172,16 +175,25 @@ public class MemberController {
 
 		
 		Cert c = new Cert(email, certNo,date);
+		int delectEmailcheck = memberService.delectEmailcheck(c);
 		
-		System.out.println(date);
+		// System.out.println(date);
 		
 		int result = memberService.getCertNo(c);
 		if(result>0) {
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setSubject("[크레이지] 이메일 인증 번호 입니다"); // 제목 설정
-		message.setText("인증번호 : " + randem); // 내용 설정
-		message.setTo(email);
-		mailSender.send(message);
+			MimeMessage  mimeMessage  = mailSender.createMimeMessage();
+			try {
+				MimeMessageHelper messageHelper =new MimeMessageHelper(mimeMessage , true ,"UTF-8");
+				messageHelper.setSubject("[크레이지] 이메일 인증번호 입니다"); 
+				String str = new EmailController().EmailAuthentication(randem);
+				messageHelper.setText(str,true);
+				messageHelper.setTo(email);
+				mailSender.send(mimeMessage );
+				
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} // 내용 설정
 		
 		
 			return "인증번호 발급 완료";
@@ -208,11 +220,19 @@ public class MemberController {
 		
 		int result = memberService.reCert(c);
 		if(result>0) {
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setSubject("[크레이지] 이메일 재인증 번호 입니다"); // 제목 설정
-		message.setText("인증번호 : " + randem); // 내용 설정
-		message.setTo(email);
-		mailSender.send(message);
+			MimeMessage  mimeMessage  = mailSender.createMimeMessage();
+			try {
+				MimeMessageHelper messageHelper =new MimeMessageHelper(mimeMessage , true ,"UTF-8");
+				messageHelper.setSubject("[크레이지] 이메일 재 인증번호 입니다"); 
+				String str = new EmailController().EmailAuthentication(randem);
+				messageHelper.setText(str,true);
+				messageHelper.setTo(email);
+				mailSender.send(mimeMessage );
+				
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} // 내용 설정
 		
 		
 			return "인증번호 재발급 완료";
@@ -363,12 +383,20 @@ public class MemberController {
 		String userId = memberService.findId(m);
 		
 		if (userId != null) {
-			
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setSubject("[크레이지] 조회하신 아이디 입니다"); // 제목 설정
-			message.setText("<html><body><h1>아이디 : " +userId+"</h1></body></html>"); // 내용 설정
-			message.setTo(m.getMemberEmail());
-			mailSender.send(message);
+			MimeMessage  mimeMessage  = mailSender.createMimeMessage();
+			//message.setText("<html><body><h1>아이디 : " +userId+"</h1></body></html>"); // 내용 설정
+			try {
+				MimeMessageHelper messageHelper =new MimeMessageHelper(mimeMessage , true ,"UTF-8");
+				messageHelper.setSubject("[크레이지] 조회하신 아이디 입니다"); // 제목 설정
+				String str = new EmailController().IdSearch(userId);
+				messageHelper.setText(str,true);
+				messageHelper.setTo(m.getMemberEmail());
+				mailSender.send(mimeMessage );
+				
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} // 내용 설정
 			
 			model.addAttribute("eventMsg", "요청하신 정보를 이메일로 발송하였습니다.");
 			return "/common/eventPage";
@@ -397,12 +425,22 @@ public class MemberController {
 		
 		if (rePwd > 0) {
 			
-			SimpleMailMessage message = new SimpleMailMessage();
-			message.setSubject("[크레이지] 임시비밀번호 발급 입니다"); // 제목 설정
-			message.setText("임시 비밀번호 : " +newPwd + "\n로그인 후 비밀번호 변경 부탁드립니다."); // 내용 설정
-			message.setTo(m.getMemberEmail());
-			mailSender.send(message);
+			MimeMessage  mimeMessage  = mailSender.createMimeMessage();
+			// message.setSubject("[크레이지] 조회하신 아이디 입니다"); // 제목 설정
+			//message.setText("<html><body><h1>아이디 : " +userId+"</h1></body></html>"); // 내용 설정
+			try {
+				MimeMessageHelper messageHelper =new MimeMessageHelper(mimeMessage , true ,"UTF-8");
+				messageHelper.setSubject("[크레이지] 요청하신 임시비밀번호 입니다");
+				String str = new EmailController().reissuancePwd(newPwd);
+				messageHelper.setText(str,true);
 			
+				messageHelper.setTo(m.getMemberEmail());
+				mailSender.send(mimeMessage );
+				
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			model.addAttribute("eventMsg", "요청하신 정보를 이메일로 발송하였습니다.");
 			return "/common/eventPage";
 		}else {

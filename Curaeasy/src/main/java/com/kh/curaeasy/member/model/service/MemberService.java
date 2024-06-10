@@ -81,4 +81,10 @@ public class MemberService {
 	public int findPwd(Member m) {
 		return memberDao.findPwd(sqlSession, m);
 	}
+
+
+	public int delectEmailcheck(Cert c) {
+		return memberDao.delectEmailcheck(sqlSession, c);
+	}
+
 }

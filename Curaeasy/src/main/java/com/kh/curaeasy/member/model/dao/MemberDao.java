@@ -54,4 +54,8 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.findPwd", m);
 	}
 
+	public int delectEmailcheck(SqlSessionTemplate sqlSession, Cert c) {
+		return sqlSession.delete("memberMapper.delectEmailcheck", c);
+	}
+
 }

@@ -98,6 +98,11 @@
 		     MEMBER_PHONE = #{memberPhone} AND MEMBER_EMAIL = #{memberEmail}
 	     AND MEMBER_STATUS = 'N' 
 	</update>
+	<delete  id="delectEmailcheck" parameterType="cert">
+		DELETE 
+		  FROM CERT
+		 WHERE EMAIL= #{email} 
+	</delete> 
 </mapper>
 
 
