@@ -27,9 +27,9 @@ public class ArtistController {
 	
 	 @Autowired private ArtistService artistService;
 	
-	@RequestMapping("artist.do")
+	@RequestMapping("introduce.do")
 	public String artistInfo() {
-		return "artist/artistInfo";
+		return "artist/artistIntroduceView";
 	}
 	@RequestMapping("enrollForm.at")
 	public String EnrollFormArtist() {
