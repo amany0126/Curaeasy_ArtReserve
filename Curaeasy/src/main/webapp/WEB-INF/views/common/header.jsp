@@ -106,6 +106,13 @@
 				        <li><a href="onDisplay.do">진행중 전시</a></li>
 				        <li><a href="offDisplay.do">마감된 전시</a></li>
 				        <li><a href="introduce.do">작가소개</a></li>
+                        <c:choose>
+                            <c:when test="${empty sessionScope.loginUser}">
+                            </c:when>
+                            <c:otherwise>
+                                  <li><a href="enrollForm.at">작가신청</a></li>
+                            </c:otherwise>
+                            </c:choose>
 				    </ul>
 				</li>
                 <li>

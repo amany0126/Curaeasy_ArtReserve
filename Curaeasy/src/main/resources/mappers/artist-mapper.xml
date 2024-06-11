@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="artistMapper">
+	<resultMap id="ArtistResultSet" type="artist">
+		<result column="ARTIST_NO" property="artistNo" />
+		<result column="ARTIST_NICKNAME" property="artistNickName" />
+		<result column="ARTIST_ORDINAL" property="artistOrdinal" />
+		<result column="ARTIST_APPLY_DATE" property="artistApplyDate" />
+		<result column="ARTIST_APPLY_TITLE" property="artistApplyTitle" />
+		<result column="ARTIST_INTRODUCE" property="artistIntroduce" />
+		<result column="ARTIST_IMAGE" property="artistImage" />
+		<result column="ARTIST_RESULT" property="artistResult" />
+		<result column="ARTIST_STATUS" property="artistStatus" />
+		<result column="MEMBER_NO" property="memberNo" />
+	</resultMap>
+		<select id="NickNameCheck" resultType="_int" parameterType="string">
+		SELECT COUNT(*)
+		 	  FROM ARTIST
+		 WHERE ARTIST_NICKNAME = #{checkNickName} 
+	</select>
+	<insert id="insertArtist" parameterType="artist">
+	 INSERT INTO ARTIST (ARTIST_NO,ARTIST_NICKNAME,ARTIST_ORDINAL,ARTIST_APPLY_TITLE,
+                     	 ARTIST_INTRODUCE,ARTIST_IMAGE,MEMBER_NO)
+	             VALUES ( SEQ_ARTIST_NO.NEXTVAL,#{artistNickName},#{artistOrdinal},#{artistApplyTitle}
+	             		,#{artistIntroduce},#{artistImage},#{memberNo})
+	</insert>
+</mapper>
