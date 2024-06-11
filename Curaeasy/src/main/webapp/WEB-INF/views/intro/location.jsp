@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>지도</title>
+    <title>curaeasy</title>
     <!-- 발급받은앱키 : 8526765428f2427fc73fd2a908aeca1e -->
 
     <style>

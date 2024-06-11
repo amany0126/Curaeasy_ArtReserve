@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>curaeasy</title>
 </head>
 <body>
-
-    <jsp:include page="header.jsp" />
 
     <br>
     <div align="center">
@@ -19,8 +17,6 @@
         </h1>
     </div>
     <br>
-
-    <jsp:include page="footer.jsp" />
     
 </body>
 </html>

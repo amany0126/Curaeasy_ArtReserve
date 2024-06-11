@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>
+    <title>마감된 전시</title>
     <style>
         body {
             margin: 0;
@@ -15,6 +15,11 @@
             max-width: 1200px;
             margin: auto;
             padding: 20px;
+        }
+        .header, .footer {
+            background-color: #f8f8f8;
+            padding: 20px;
+            text-align: center;
         }
         .content {
             padding: 20px;
@@ -44,17 +49,29 @@
             color: #fff;
             cursor: pointer;
         }
-        .notice-list {
+        .exhibition-list {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .exhibition-item {
+            width: 30%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .exhibition-item img {
             width: 100%;
-            border-collapse: collapse;
+            height: 200px;
+            object-fit: cover;
         }
-        .notice-list th, .notice-list td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
+        .exhibition-item h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
         }
-        .notice-list th {
-            background-color: #f2f2f2;
+        .exhibition-item p {
+            font-size: 1em;
+            line-height: 1.5;
+            margin-bottom: 10px;
         }
         .pagination {
             text-align: center;
@@ -80,42 +97,29 @@
 <div class="container">
     <div class="content">
         <div class="content-header">
-            <h1>공지사항</h1>
+            <h1>마감된 전시</h1>
         </div>
         <div class="search-box">
             <input type="text" placeholder="검색어를 입력하세요" />
             <button>검색</button>
         </div>
-        <table class="notice-list">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>제목</th>
-                    <th>등록일</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><b class="noti_b">공지</b></td>
-                    <td>
-                        <a href="viewa47b.html?no=545" class="subject">
-                            [공고 제2024-102호] 2024 인천아트플랫폼 정기대관(6월~12월) 결과 공고
-                        </a>
-                    </td>
-                    <td>2024-05-28</td>
-                </tr>
-                <tr>
-                    <td><b class="noti_b">공지</b></td>
-                    <td>
-                        <a href="view1c4c.html?no=544" class="subject">
-                            [공고 제2024-86호] 2024 인천아트플랫폼 보안인력 운영 용역 소액 수의 견적 제출 안내 공고
-                        </a>
-                    </td>
-                    <td>2024-05-21</td>
-                </tr>
-                <!-- 추가적인 공지사항 항목들 -->
-            </tbody>
-        </table>
+        <div class="exhibition-list">
+            <div class="exhibition-item">
+                <img src="resources/images/display1.jpg" alt="전시 이미지 1">
+                <h2>[마감 전시] 김민수 展 PAST MEMORIES</h2>
+                <p>2023-12-01(Fri) ~ 2023-12-15(Fri)</p>
+            </div>
+            <div class="exhibition-item">
+                <img src="resources/images/display2.jpg" alt="전시 이미지 2">
+                <h2>[마감 전시] 이현수 展 FORGOTTEN TIME</h2>
+                <p>2024-01-05(Thu) ~ 2024-01-20(Fri)</p>
+            </div>
+            <div class="exhibition-item">
+                <img src="resources/images/display3.jpg" alt="전시 이미지 3">
+                <h2>[마감 전시] 박지영 展 SILENT ECHOES</h2>
+                <p>2024-03-10(Sun) ~ 2024-03-25(Mon)</p>
+            </div>
+        </div>
         <div class="pagination">
             <a href="#" class="prev">«</a>
             <a href="#" class="active">1</a>

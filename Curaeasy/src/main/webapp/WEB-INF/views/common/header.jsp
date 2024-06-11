@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>header</title>
+    <title>curaeasy</title>
     <!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- 부트스트랩 스타일 -->
@@ -93,41 +93,40 @@
                     <a href="${pageContext.request.contextPath}/"><img src="resources/images/logo2.png"></a>
                 </li>
                 <li>
-                    <a href="intro.do">큐레이지<a>
+                    <a href="about.do">큐레이지<a>
                     <ul>
-                        <li><a href="#">소개</a></li> <!--아트플랫폼 소개 페이지-->
-                        <li><a href="#">공간</a></li> <!--전시장 평면도 기타 등-->
-                        <li><a href="#">조직도</a></li> <!--우리팀원 소개페이지-->
+                        <li><a href="about.do">소개</a></li> <!--아트플랫폼 소개 페이지-->
+                        <!--  <li><a href="gallery.do">갤러리</a></li> <!--전시장 평면도 기타 등-->
+                        <li><a href="organization.do">조직도</a></li> <!--우리팀원 소개페이지-->
                         <li><a href="location.do">오시는길</a></li> <!--지도API 근처 버스|지하철|주차 안내-->
                     </ul>
                 </li>
-                <li>
-                    <a href="display.do">전시참가</a>
-                    <ul>
-                        <li><a href="#">진행중 전시</a></li>
-                        <li><a href="#">마감된 전시</a></li>
-                        <li><a href="#">작가소개</a></li>
-                    </ul>
-                </li>
+				<li>
+				    <a href="onDisplay.do">전시참가</a>
+				    <ul>
+				        <li><a href="onDisplay.do">진행중 전시</a></li>
+				        <li><a href="offDisplay.do">마감된 전시</a></li>
+				        <li><a href="introduce.do">작가소개</a></li>
+				    </ul>
+				</li>
                 <li>
                     <a href="rental.do">전시대관</a>
                     <ul>
-                        <li><a href="#">대관안내</a></li>
-                        <li><a href="#">대관신청</a></li>
+                        <li><a href="rentalInfo.do">대관안내</a></li>
+                        <li><a href="rental">대관신청</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="notice.do">소식 | 정보</a>
                     <ul>
-                        <li><a href="#">공지사항</a></li>
+                        <li><a href="notice.do">공지사항</a></li>
                         <li><a href="#">게시판</a></li>
                     </ul>
                 </li>
                 <li>
                     <a href="review.do">사용자후기</a>
                     <ul>
-                        <li><a href="#">공지사항</a></li>
-                        <li><a href="#">관림후기</a></li>
+                        <li><a href="review.do">관람후기</a></li>
                     </ul>
                 </li>
             </ul>
