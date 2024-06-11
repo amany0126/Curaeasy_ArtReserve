@@ -116,7 +116,7 @@
         <div class="tab-menu">
             <a href="onDisplay.do" class="active">현재전시</a>
             <a href="upcomingDisplay.do">예정전시</a>
-            <a href="offDisplay.do">과거전시</a>
+            <a href="offDisplay.do">지난전시</a>
         </div>
         <div class="content-header">
             <h1>진행중인 전시</h1>
