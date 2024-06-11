@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>지도</title>
-    <!-- 발급받은앱키 : 853de28739e34ecec13c85230e86b4c4 -->
+    <title>curaeasy</title>
+    <!-- 발급받은앱키 : 8526765428f2427fc73fd2a908aeca1e -->
 
     <style>
         .screen_out {display:block;overflow:hidden;position:absolute;left:-9999px;width:1px;height:1px;font-size:0;line-height:0;text-indent:-9999px}
@@ -128,7 +128,7 @@
     </div>
 
     <!-- 카카오맵 내가 발급받은 키값 -->
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=853de28739e34ecec13c85230e86b4c4"></script>
+    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=8526765428f2427fc73fd2a908aeca1e"></script>
     <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
         mapCenter = new kakao.maps.LatLng(37.47289754094072, 126.61978944141647), // 지도의 중심 좌표

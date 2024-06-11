@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class NoticeController {
 	
 	@RequestMapping("notice.do")
-	public String displayList() {
+	public String noticeList() {
 		return "notice/noticeListView";
 	}
 }

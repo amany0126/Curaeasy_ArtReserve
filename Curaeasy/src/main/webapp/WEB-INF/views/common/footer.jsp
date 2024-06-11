@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>footer</title>
+    <title>curaeasy</title>
 
     <!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -27,7 +27,12 @@
             font-weight: 400;
             font-style: normal;
         }
-        .footer { background-color: #333; color: #fff; padding: 40px 20px; }
+        .footer { 
+            background-color: #333; 
+            color: #fff; 
+            padding: 40px 20px; 
+            clear: both; /* 충돌 방지용 */
+        }
         .footer-container {
             display: flex;
             flex-wrap: wrap;
@@ -40,18 +45,26 @@
             min-width: 350px;
             margin: 10px 20px;
         }
-        .footer-column li { list-style: none; text-align: left;}
-        .footer-column ul li { margin-bottom: 10px; }
-
-        /* sns 로고 */
-        .sns-icons { display: flex; gap: 30x; }
+        .footer-column li { 
+            list-style: none; 
+            text-align: left;
+        }
+        .footer-column ul li { 
+            margin-bottom: 10px; 
+        }
+        .sns-icons { 
+            display: flex; 
+            gap: 30px; 
+        }
         .sns-icons a {
             margin:10px;
             color: white;
             font-size: 1.7em;
             transition: color 1s ease;
         }
-        .social-icons a:hover { color: white; }
+        .sns-icons a:hover { 
+            color: white; 
+        }
         .footer-bottom {
             margin-top: 20px;
             border-top: 1px solid #444;

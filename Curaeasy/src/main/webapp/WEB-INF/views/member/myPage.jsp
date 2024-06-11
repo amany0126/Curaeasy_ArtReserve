@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>마이페이지</title>
+<title>curaeasy</title>
     <style> 
            .innerOuter {
             border:1px solid lightgray;
