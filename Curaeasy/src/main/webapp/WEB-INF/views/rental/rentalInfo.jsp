@@ -164,7 +164,7 @@
             </table>
         </div>
         <div class="btn-container">
-            <button onclick="location.href='rentalApplication.do'">대관신청</button>
+            <button onclick="location.href='rental.do'">대관신청</button>
         </div>
     </div>
 </div>

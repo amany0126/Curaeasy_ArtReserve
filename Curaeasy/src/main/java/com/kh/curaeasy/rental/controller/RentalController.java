@@ -10,4 +10,8 @@ public class RentalController {
 	public String rentalInfo() {
 		return "rental/rentalInfo";
 	}
+	@RequestMapping("rental.do")
+	public String rental() {
+		return "rental/rentalEnrollForm";
+	}
 }
