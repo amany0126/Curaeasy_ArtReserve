@@ -15,9 +15,14 @@ public class DisplayController {
     public String closedDisplay() {
         return "display/closedDisplayView";
     }
-
-    @RequestMapping("introduce.do")
-    public String artistIntroduction() {
-        return "display/artistIntroduceView";
+    
+    @RequestMapping("displayDetail.do")
+    public String displayDetail() {
+        return "display/displayDetailView";
+    }
+    
+    @RequestMapping("upcomingDisplay.do")
+    public String upcomingDisplay() {
+        return "display/upcomingDisplayView";
     }
 }

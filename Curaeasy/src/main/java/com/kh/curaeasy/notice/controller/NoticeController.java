@@ -10,4 +10,8 @@ public class NoticeController {
 	public String noticeList() {
 		return "notice/noticeListView";
 	}
+	@RequestMapping("noticeDetail.do")
+	public String noticeDetail() {
+		return "notice/noticeDetailView";
+	}
 }

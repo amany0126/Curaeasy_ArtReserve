@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전체 전시</title>
+    <title>예정 전시</title>
     <style>
         body {
             margin: 0;
@@ -90,20 +90,11 @@
             line-height: 1.5;
             margin-bottom: 10px;
         }
-        .pagination {
+        .no-exhibition {
             text-align: center;
-            margin-top: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .pagination a {
-            margin: 0 5px;
-            text-decoration: none;
-            color: #333;
-        }
-        .pagination a.active {
-            font-weight: bold;
+            font-size: 1.5em;
+            color: #777;
+            padding: 50px 0;
         }
     </style>
 </head>
@@ -114,12 +105,12 @@
 <div class="container">
     <div class="content">
         <div class="tab-menu">
-            <a href="onDisplay.do" class="active">현재전시</a>
-            <a href="upcomingDisplay.do">예정전시</a>
+            <a href="onDisplay.do">현재전시</a>
+            <a href="upcomingDisplay.do" class="active">예정전시</a>
             <a href="offDisplay.do">과거전시</a>
         </div>
         <div class="content-header">
-            <h1>진행중인 전시</h1>
+            <h1>예정 전시</h1>
         </div>
         <div class="search-box">
             <input type="text" placeholder="검색어를 입력하세요" />
@@ -128,56 +119,19 @@
         <div class="exhibition-list">
             <div class="exhibition-item">
                 <img src="resources/images/display1.jpg" alt="전시 이미지 1">
-                <h2>[대관 전시] 김진안 展 MAGNETIC LIFE</h2>
-                <p>2024-06-04(Tue) ~ 2024-06-14(Fri)</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 2">
-                <h2>[대관 전시] 이재훈 展 ARTIST LIFE</h2>
+                <h2>[예정 전시] 김준수 展 FUTURE LANDSCAPES</h2>
                 <p>2024-07-01(Mon) ~ 2024-07-10(Wed)</p>
             </div>
             <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 3">
-                <h2>[대관 전시] 박성민 展 CREATIVE WORLD</h2>
+                <img src="resources/images/display1.jpg" alt="전시 이미지 2">
+                <h2>[예정 전시] 박민희 展 DREAMSCAPES</h2>
                 <p>2024-08-15(Fri) ~ 2024-08-25(Sun)</p>
             </div>
             <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 4">
-                <h2>[대관 전시] 홍길동 展 FANTASY REALM</h2>
+                <img src="resources/images/display1.jpg" alt="전시 이미지 3">
+                <h2>[예정 전시] 이성호 展 THE UNKNOWN</h2>
                 <p>2024-09-01(Sun) ~ 2024-09-10(Tue)</p>
             </div>
-            <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 5">
-                <h2>[대관 전시] 김영희 展 NATURE'S GIFT</h2>
-                <p>2024-10-05(Sat) ~ 2024-10-15(Tue)</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 6">
-                <h2>[대관 전시] 이철수 展 URBAN DREAMS</h2>
-                <p>2024-11-10(Sun) ~ 2024-11-20(Wed)</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 7">
-                <h2>[대관 전시] 박명수 展 ABSTRACT VISIONS</h2>
-                <p>2024-12-05(Thu) ~ 2024-12-15(Sun)</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 8">
-                <h2>[대관 전시] 이수진 展 COSMIC DANCE</h2>
-                <p>2025-01-01(Wed) ~ 2025-01-10(Fri)</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 9">
-                <h2>[대관 전시] 김철수 展 TIMELESS TALES</h2>
-                <p>2025-02-05(Wed) ~ 2025-02-15(Sat)</p>
-            </div>
-        </div>
-        <div class="pagination">
-            <a href="#" class="prev">«</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#" class="next">»</a>
         </div>
     </div>
 </div>

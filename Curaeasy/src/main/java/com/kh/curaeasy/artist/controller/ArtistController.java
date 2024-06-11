@@ -6,8 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ArtistController {
 
-	@RequestMapping("artist.do")
-	public String artistInfo() {
-		return "artist/artistInfo";
-	}
+    @RequestMapping("introduce.do")
+    public String artistIntroduction() {
+        return "artist/artistIntroduceView";
+    }
 }
+
+
+
+

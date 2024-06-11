@@ -93,10 +93,9 @@
                     <a href="${pageContext.request.contextPath}/"><img src="resources/images/logo2.png"></a>
                 </li>
                 <li>
-                    <a href="about.do">큐레이지<a>
+                    <a href="about.do">큐레이지</a>
                     <ul>
                         <li><a href="about.do">소개</a></li> <!--아트플랫폼 소개 페이지-->
-                        <!--  <li><a href="gallery.do">갤러리</a></li> <!--전시장 평면도 기타 등-->
                         <li><a href="organization.do">조직도</a></li> <!--우리팀원 소개페이지-->
                         <li><a href="location.do">오시는길</a></li> <!--지도API 근처 버스|지하철|주차 안내-->
                     </ul>

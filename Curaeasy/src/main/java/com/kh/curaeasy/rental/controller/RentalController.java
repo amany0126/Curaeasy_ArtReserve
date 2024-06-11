@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class RentalController {
 
-	@RequestMapping("rental.do")
+	@RequestMapping("rentalInfo.do")
 	public String rentalInfo() {
 		return "rental/rentalInfo";
 	}

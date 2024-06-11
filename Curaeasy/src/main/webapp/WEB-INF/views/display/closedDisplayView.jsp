@@ -24,6 +24,23 @@
         .content {
             padding: 20px;
         }
+        .tab-menu {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+        }
+        .tab-menu a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            border-bottom: 2px solid transparent;
+        }
+        .tab-menu a.active {
+            border-bottom: 2px solid #333;
+            font-weight: bold;
+        }
         .content-header {
             margin-bottom: 20px;
         }
@@ -96,6 +113,11 @@
 
 <div class="container">
     <div class="content">
+        <div class="tab-menu">
+            <a href="onDisplay.do">현재전시</a>
+            <a href="upcomingDisplay.do">예정전시</a>
+            <a href="offDisplay.do" class="active">과거전시</a>
+        </div>
         <div class="content-header">
             <h1>마감된 전시</h1>
         </div>
