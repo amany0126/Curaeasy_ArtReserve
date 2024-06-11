@@ -18,13 +18,11 @@
 </head>
 <body>
 	<jsp:include page="../common/header.jsp" />
-	<<!-- h1>마이페이지</h1> -->
+	<!-- h1>마이페이지</h1> -->
 	<div class="content">
         <br><br>
         <div class="innerOuter">
             <h2>마이페이지</h2>
-            <br>
-
             <form action="update.me" method="post">
                 <div class="form-group">
                     <label for="userId">* 아이디 : </label>
@@ -57,6 +55,7 @@
                 </div> 
                 <br>
                 <div class="btns" align="center">
+                    <a href="enrollForm.at"> <button type="button" class="btn btn-light">작가신청</button></a>
                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#PwdChange">비밀번호 변경하기</button>
                     <button type="submit" class="btn btn-primary">수정하기</button>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
