@@ -1,5 +1,28 @@
 package com.kh.curaeasy.artist.model.service;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.kh.curaeasy.artist.model.dao.ArtistDao;
+import com.kh.curaeasy.artist.model.vo.Artist;
+@Service
 public class ArtistService {
+	
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
+	@Autowired
+	private ArtistDao artistDao;
+	
+	public int NickNameCheck(String checkNickName) {
+		return artistDao.NickNameCheck(sqlSession, checkNickName);
+	}
+	
+	@Transactional
+	public int insertArtist(Artist at) {
+		return artistDao.insertArtist(sqlSession, at);
+	}
 
 }
