@@ -25,4 +25,10 @@ public class DisplayController {
     public String upcomingDisplay() {
         return "display/upcomingDisplayView";
     }
+    
+    @RequestMapping("displayAdd.do")
+    public String displayAdd() {
+        return "display/displayEnrollForm";
+    }
+    
 }

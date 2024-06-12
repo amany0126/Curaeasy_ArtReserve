@@ -179,6 +179,8 @@
             <a href="#">3</a>
             <a href="#" class="next">»</a>
         </div>
+        
+        <a href="displayAdd.do"> <button type="button" class="btn btn-light">전시추가</button></a>
     </div>
 </div>
 
