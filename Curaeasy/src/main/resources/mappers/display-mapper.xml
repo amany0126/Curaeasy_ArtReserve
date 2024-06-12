@@ -24,4 +24,30 @@
 			 WHERE SYSDATE BETWEEN DISPLAY_START_DATE AND DISPLAY_END_DATE
 			 ORDER BY DISPLAY_NO
 		</select>
+		<insert id="insertDisplay" parameterType="display">
+			INSERT INTO DISPLAY
+						VALUES(SEQ_DISPLAY_NO.NEXTVAL,
+							   #{displayName},
+							   #{displayContent},
+							   #{displayStartDate},
+							   #{displayEndDate},
+							   #{displayPrice},
+							   DEFAULT,
+							   1,
+							   1)
+		</insert>
+		<insert id="insertDisplayAttachment" parameterType="displayAttachment">
+			
+			INSERT INTO DISPLAY_ATTACHMENT(
+									ATTACHMENT_NO,
+									ORIGIN_NAME,
+									CHANGE_NAME,
+									IMAGE_LEVEL,
+									DISPLAY_NO)
+					VALUES(SEQ_DISPLAY_ATTACHMENT_NO.NEXTVAL, 
+							#{originName},
+							#{changeName},
+							#{imageLevel},
+							SEQ_DISPLAY_NO.CURRVAL)
+		</insert>
 </mapper>

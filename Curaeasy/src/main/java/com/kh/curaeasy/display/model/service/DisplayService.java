@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.curaeasy.display.model.dao.DisplayDao;
 import com.kh.curaeasy.display.model.vo.Display;
+import com.kh.curaeasy.display.model.vo.DisplayAttachment;
 
 @Service
 public class DisplayService {
@@ -21,6 +23,11 @@ public class DisplayService {
 	// 현재 진행중인 전시 리스트 가져오기
 	public ArrayList<Display> mainPageSelectDisplayList() {
 		return displayDao.mainPageSelectDisplayList(sqlSession);
+	}
+	
+	@Transactional
+	public int insertDisplay(Display d, ArrayList<DisplayAttachment> fileList) {
+		return displayDao.insertDisplay(sqlSession, d, fileList);
 	}
 
 }

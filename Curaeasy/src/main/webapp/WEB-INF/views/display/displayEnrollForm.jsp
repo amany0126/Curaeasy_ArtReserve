@@ -68,55 +68,55 @@
 
 <div class="container">
     <div class="form-container">
-        <h3 class="form-header">전시신청</h3>
+        <h3 class="form-header">전시추가</h3>
         <hr>
-        <form action="submitExhibition.jsp" method="post" enctype="multipart/form-data">
+        <form action="insertDisplay.do" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="exhibitionName">전시명:</label>
-                <input type="text" id="exhibitionName" name="exhibitionName" required maxlength="300">
+                <label for="displayName">전시명:</label>
+                <input type="text" id="displayName" name="displayName" required maxlength="300">
             </div>
             <div class="form-group">
-                <label for="exhibitionDescription">전시설명:</label>
-                <textarea id="exhibitionDescription" name="exhibitionDescription" required maxlength="900" rows="5"></textarea>
+                <label for="displayContent">전시설명:</label>
+                <textarea id="displayContent" name="displayContent" required maxlength="900" rows="5"></textarea>
             </div>
             <div class="form-section-title">전시 기간</div>
             <div class="form-inline">
                 <div class="form-group">
                     <label for="startDate">전시 시작일:</label>
-                    <input type="text" id="startDate" name="startDate" class="datepicker" required>
+                    <input type="text" id="startDate" name="displayStartDate" class="datepicker" required>
                 </div>
                 <div class="form-group">
                     <label for="endDate">전시 종료일:</label>
-                    <input type="text" id="endDate" name="endDate" class="datepicker" required>
+                    <input type="text" id="endDate" name="displayEndDate" class="datepicker" required>
                 </div>
             </div>
             <div class="form-group">
-                <label for="exhibitionPrice">전시가격:</label>
-                <input type="text" id="exhibitionPrice" name="exhibitionPrice" required placeholder="원단위로 입력해주세요 ex) 30000">
+                <label for="displayPrice">전시가격:</label>
+                <input type="number" min="0" id="displayPrice" name="displayPrice" required placeholder="원단위로 입력해주세요 ex) 30000">
             </div>
             <div class="form-section-title">첨부 파일</div>
             <div class="form-group">
                 <label for="thumbnail">썸네일 첨부파일:</label>
-                <input type="file" id="thumbnail" name="thumbnail" accept="image/*" required>
+                <input type="file" id="thumbnail" name="upfile" accept="image/*" required>
             </div>
             <div class="form-group">
                 <label for="detailFile1">상세 첨부파일 1:</label>
-                <input type="file" id="detailFile1" name="detailFile1" accept="image/*">
+                <input type="file" id="detailFile1" name="upfile" accept="image/*">
             </div>
             <div class="form-group">
                 <label for="detailFile2">상세 첨부파일 2:</label>
-                <input type="file" id="detailFile2" name="detailFile2" accept="image/*">
+                <input type="file" id="detailFile2" name="upfile" accept="image/*">
             </div>
             <div class="form-group">
                 <label for="detailFile3">상세 첨부파일 3:</label>
-                <input type="file" id="detailFile3" name="detailFile3" accept="image/*">
+                <input type="file" id="detailFile3" name="upfile" accept="image/*">
             </div>
             <div class="form-group">
                 <label for="detailFile4">상세 첨부파일 4:</label>
-                <input type="file" id="detailFile4" name="detailFile4" accept="image/*">
+                <input type="file" id="detailFile4" name="upfile" accept="image/*">
             </div>
             <div class="form-footer">
-                <button type="submit" class="btn btn-primary">제출</button>
+                <button type="submit" class="btn btn-primary" onclick="return checkAvailability();">제출</button>
             </div>
         </form>
     </div>
@@ -132,9 +132,28 @@
         dateFormat: "Y-m-d"
     });
 
+    
     function checkAvailability() {
         // Add your availability checking logic here
-        alert('대관 가능 여부 확인 기능은 구현되지 않았습니다.');
+        if($("#displayName").val().trim().length == 0){
+            alert("제목은 1글자 이상 입력해야 합니다.");
+            return false;
+        }
+        
+        if($("#displayContent").val().trim().length == 0){
+            alert("내용은 1글자 이상 입력해야 합니다.");
+            return false;
+        }
+
+        if($("#startDate")[0]._flatpickr.selectedDates[0] > $("#endDate")[0]._flatpickr.selectedDates[0]){
+            alert("시작일은 종료일과 같거나 이전이어야 합니다.");
+            return false;
+        }
+
+        if($("#displayPrice").val() < 0){
+            alert("전시금액은 0 이상이어야 합니다.")
+            return false;
+        }
     }
 </script>
 </body>
