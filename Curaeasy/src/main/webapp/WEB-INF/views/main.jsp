@@ -210,36 +210,7 @@
 
     <!-- Content 영역 -->
     <div id="content-area">
-        <div class="section">
-            <h2>전시</h2>
-            <div class="card">
-                <img src="resources/images/main1.jpg" alt="전시 이미지">
-                <h3>김진안 展 MAGNETIC LIFE</h3>
-                <p>2024-06-04(Tue) - 2024-06-14(Fri)</p>
-                <p>인천아트플랫폼 전시관2(1)</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>공연</h2>
-            <div class="card">
-                <img src="resources/images/main2.jpg" alt="공연 이미지">
-                <h3>인천아트플랫폼 유스테이지</h3>
-                <p>2024-04-16(Tue) - 2024-11-28(Thu)</p>
-                <p>12:00 - 13:30</p>
-                <p>인천아트플랫폼 야외공연장</p>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>공지사항</h2>
-            <div class="card">
-                <img src="resources/images/main3.jpg" alt="공지사항 이미지">
-                <h3>2024 인천아트플랫폼 &lt;학교연계 프로그램&gt;</h3>
-                <p>2024-04-01(Mon) - 2024-12-31(Tue)</p>
-                <p>인천 관내 초등학교 대상</p>
-            </div>
-        </div>
+        
     </div>
 
     <jsp:include page="common/main_footer.jsp" />
@@ -255,6 +226,39 @@
                     $p.slideUp(500);
                 }
             });
+
+            $.ajax({
+                url: "mainPageSelectDisplayList.do",
+                method: "GET",
+                success: function(result) {
+                        console.log(result);
+                    for (let i = 0; i < 3; i++) {
+                        const displayImg = document.createElement("img");
+                        displayImg.src="http://naver.com";
+                        displayImg.alt="사진 추가예정";
+
+                        const displayName = document.createElement("h3");
+                        displayName.innerText = result[i].displayName;
+
+                        const displayDuration = document.createElement("p");
+                        displayDuration.innerText = result[i].displayStartDate + " - " + result[i].displayEndDate;
+
+                        const displayContent = document.createElement("p");
+                        displayContent.innerText = result[i].displayContent;
+
+                        const displayGallery = document.createElement("p");
+                        displayGallery.innerText = result[i].galleryNo;
+
+                        var $ee = $("<div class=card>").append(displayImg).append(displayName).append(displayDuration).append(displayContent).append(displayGallery);
+                        var $e = $("<div class=section>").append("<h2>전시</h2>").append($ee);
+                        
+                        $("#content-area").append($e);
+                    }
+                },
+                error: function() {
+                    console.log("ajax failed");
+                }
+            })
         });
     </script>
 </body>
