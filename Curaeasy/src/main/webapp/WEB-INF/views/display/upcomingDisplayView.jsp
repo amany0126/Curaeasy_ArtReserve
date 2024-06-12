@@ -74,12 +74,15 @@
         .exhibition-item {
             width: 30%;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 100px;
         }
         .exhibition-item img {
             width: 100%;
             height: 400px;
             object-fit: cover;
+            border-radius: 20px;
+            border-style : ridge;
+            box-shadow: 0 0 10px gray;
         }
         .exhibition-item h2 {
             font-size: 1.5em;
@@ -95,6 +98,23 @@
             font-size: 1.5em;
             color: #777;
             padding: 50px 0;
+        }
+        .search-box>input { border-radius: 20px;}
+        .search-box>button { border-radius: 20px;}
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .pagination a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #333;
+        }
+        .pagination a.active {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -118,22 +138,30 @@
         </div>
         <div class="exhibition-list">
             <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 1">
-                <h2>[예정 전시] 김준수 展 FUTURE LANDSCAPES</h2>
+                <img src="resources/images/전시10.jpg" alt="전시 이미지 1">
+                <h2>[예정 전시] 김준수 <br>展 FUTURE LANDSCAPES</h2>
                 <p>2024-07-01(Mon) ~ 2024-07-10(Wed)</p>
             </div>
             <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 2">
-                <h2>[예정 전시] 박민희 展 DREAMSCAPES</h2>
+                <img src="resources/images/전시11.jpg" alt="전시 이미지 2">
+                <h2>[예정 전시] 박민희 <br>展 DREAMSCAPES</h2>
                 <p>2024-08-15(Fri) ~ 2024-08-25(Sun)</p>
             </div>
             <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 3">
-                <h2>[예정 전시] 이성호 展 THE UNKNOWN</h2>
+                <img src="resources/images/전시12.jpg" alt="전시 이미지 3">
+                <h2>[예정 전시] 이성호 <br>展 THE UNKNOWN</h2>
                 <p>2024-09-01(Sun) ~ 2024-09-10(Tue)</p>
             </div>
         </div>
+        <div class="pagination">
+            <a href="#" class="prev">«</a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#" class="next">»</a>
+        </div>
     </div>
+    
 </div>
 
 <jsp:include page="../common/footer.jsp" />

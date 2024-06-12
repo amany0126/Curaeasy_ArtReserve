@@ -16,6 +16,7 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 40px; /* 좌우 공백을 위해 패딩을 추가 */
+            margin-bottom: 100px;
         }
         .title {
             font-size: 36px;
@@ -47,6 +48,10 @@
             background-color: #f2f2f2;
             font-weight: bold;
         }
+
+        .title{margin-top: 50px; margin-bottom: 50px;}
+
+
     </style>
 </head>
 <body>
@@ -56,7 +61,7 @@
         <div class="title">조직도</div>
         <hr>
         <div class="subtitle">조직도</div>
-        <table>
+        <table id="table">
             <tr>
                 <th>직위</th>
                 <th>성명</th>
