@@ -112,7 +112,7 @@
                     <a href="rental.do">전시대관</a>
                     <ul>
                         <li><a href="rentalInfo.do">대관안내</a></li>
-                        <li><a href="rental">대관신청</a></li>
+                        <li><a href="rental.do">대관신청</a></li>
                     </ul>
                 </li>
                 <li>

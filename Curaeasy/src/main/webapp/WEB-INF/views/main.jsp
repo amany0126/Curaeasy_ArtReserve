@@ -243,6 +243,7 @@
                 <p>인천 관내 초등학교 대상</p>
             </div>
         </div>
+        
     </div>
 
     <jsp:include page="common/main_footer.jsp" />
@@ -258,6 +259,39 @@
                     $p.slideUp(500);
                 }
             });
+
+            $.ajax({
+                url: "mainPageSelectDisplayList.do",
+                method: "GET",
+                success: function(result) {
+                        console.log(result);
+                    for (let i = 0; i < 3; i++) {
+                        const displayImg = document.createElement("img");
+                        displayImg.src="http://naver.com";
+                        displayImg.alt="사진 추가예정";
+
+                        const displayName = document.createElement("h3");
+                        displayName.innerText = result[i].displayName;
+
+                        const displayDuration = document.createElement("p");
+                        displayDuration.innerText = result[i].displayStartDate + " - " + result[i].displayEndDate;
+
+                        const displayContent = document.createElement("p");
+                        displayContent.innerText = result[i].displayContent;
+
+                        const displayGallery = document.createElement("p");
+                        displayGallery.innerText = result[i].galleryNo;
+
+                        var $ee = $("<div class=card>").append(displayImg).append(displayName).append(displayDuration).append(displayContent).append(displayGallery);
+                        var $e = $("<div class=section>").append("<h2>전시</h2>").append($ee);
+                        
+                        $("#content-area").append($e);
+                    }
+                },
+                error: function() {
+                    console.log("ajax failed");
+                }
+            })
         });
     </script>
 </body>

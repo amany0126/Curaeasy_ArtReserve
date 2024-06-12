@@ -13,12 +13,14 @@
 		<typeAlias type="com.kh.curaeasy.member.model.vo.Cert" alias="cert" />
 		<typeAlias type="com.kh.curaeasy.notice.model.vo.Notice" alias="notice" />
 		<typeAlias type="com.kh.curaeasy.artist.model.vo.Artist" alias="artist" />
+		<typeAlias type="com.kh.curaeasy.display.model.vo.Display" alias="display" />
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml" />
 		<mapper resource="/mappers/notice-mapper.xml" />
 		<mapper resource="/mappers/artist-mapper.xml" />
+		<mapper resource="/mappers/display-mapper.xml" />
 	</mappers>
 </configuration>  
 
