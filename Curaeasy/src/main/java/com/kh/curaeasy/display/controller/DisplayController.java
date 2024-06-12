@@ -47,4 +47,9 @@ public class DisplayController {
     	ArrayList<Display> list = displayService.mainPageSelectDisplayList();
     	return new Gson().toJson(list);
     }
+    @RequestMapping("displayAdd.do")
+    public String displayAdd() {
+        return "display/displayEnrollForm";
+    }
+    
 }

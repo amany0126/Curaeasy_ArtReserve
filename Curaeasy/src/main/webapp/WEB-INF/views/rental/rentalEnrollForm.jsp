@@ -1,119 +1,94 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>대관신청</title>
     <style>
-        body {
+        .coronation {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .img {
+            flex: 0 0 33%;
+        }
+        .img img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .information {
+            flex: 0 0 65%;
+            padding-left: 2rem;
+        }
+        .information p {
             margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
         }
-        .container {
-            max-width: 1200px;
+        .btn-group {
+            margin-top: 1rem;
+        }
+        .btn-group button {
+            margin-right: 1rem;
+        }
+        .innerOuter {
+            border: 1px solid lightgray;
+            width: 80%;
             margin: auto;
-            padding: 20px;
-        }
-        .header, .footer {
-            background-color: #f8f8f8;
-            padding: 20px;
-            text-align: center;
-        }
-        .content {
-            padding: 20px;
-        }
-        .content-header {
-            margin-bottom: 20px;
-        }
-        .content-header h1 {
-            font-size: 2em;
-            margin: 0 0 10px 0;
-        }
-        .facility-item {
-            display: flex;
-            margin-bottom: 20px;
-        }
-        .facility-item img {
-            width: 300px;
-            height: 200px;
-            object-fit: cover;
-            margin-right: 20px;
-        }
-        .facility-details {
-            flex: 1;
-        }
-        .facility-details h2 {
-            margin-top: 0;
-        }
-        .facility-buttons {
-            display: flex;
-            margin-top: 10px;
-        }
-        .facility-buttons button {
-            padding: 10px 20px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            background-color: #333;
-            color: #fff;
-            cursor: pointer;
-        }
-        hr {
-            border: none;
-            border-top: 2px solid #ddd;
-            margin: 20px 0;
+            padding: 2rem;
+            background-color: white;
         }
     </style>
 </head>
 <body>
-
 <jsp:include page="../common/header.jsp" />
 
 <div class="container">
-    <div class="content">
-        <div class="content-header">
-            <h1>대관신청</h1>
-        </div>
-        <div class="facility-item">
-            <img src="resources/images/gallery1.png">
-            <div class="facility-details">
-                <h2>전시장 1</h2>
-                <p>전시실 B1은 약 1,000평 규모의 전시공간으로 최첨단 조명 시스템을 갖추고 있습니다. 인천아트플랫폼의 가장 큰 전시공간으로, 현대미술부터 전통공예까지 다양한 장르의 작품을 전시할 수 있습니다. 자연광이 들어오는 전면 유리창을 통해 아름다운 전경을 감상할 수 있습니다.</p>
-                <div class="facility-buttons">
-                    <button>공간안내</button>
-                    <button>상세보기</button>
+    <div class="innerOuter">
+        <h3>대관신청</h3>
+        <hr style="border: 1px solid black;">
+        
+        <div class="coronation">
+            <div class="img">
+                <img src="중국산 꼬북이.jpg" alt="프로필이미지">
+            </div>
+            <div class="information">
+                <p><b>제 1 전시장</b></p>
+                <p>A동 1층 전시장 1은 지상 1, 2층에 걸친 약 200평의 규모를 갖추고 있습니다. 인천아트플랫폼에서 가장 규모가 큰 전시장으로 문화체육광관부 1종 미술관으로 등록되어 있습니다. 주로 인천아트플랫폼 자체 기획전시를 개최하고 있으며, 별도 로비 공간이 있습니다. 규모가 큰 개인전과 그룹 전시에 적합한 전시 공간입니다.</p>
+                <div class="btn-group">
+                    <button class="btn btn-outline-dark">공간안내</button>
+                    <button class="btn btn-dark">수시대관신청</button>
                 </div>
             </div>
         </div>
         <hr>
-        <div class="facility-item">
-            <img src="resources/images/gallery2.png">
-            <div class="facility-details">
-                <h2>전시장 2</h2>
-                <p>공연장 C는 약 300석 규모의 공연장으로 연극, 무용, 콘서트 등 다양한 공연을 개최할 수 있는 공간입니다. 최신 음향 시스템과 조명 장비를 갖추고 있으며, 관객석과 무대가 가깝게 배치되어 보다 가까운 감동을 선사할 수 있습니다.</p>
-                <div class="facility-buttons">
-                    <button>공간안내</button>
-                    <button>상세보기</button>
+
+        <!-- Repeat the structure for additional exhibition halls -->
+        <div class="coronation">
+            <div class="img">
+                <img src="image2.jpg" alt="프로필이미지">
+            </div>
+            <div class="information">
+                <p><b>제 2 전시장</b></p>
+                <p>전시장 2는 인천아트플랫폼 중앙광장에 위치한 36평 규모의 전시 공간입니다. 천장이 높은 구조로 회화, 사진, 설치 등 작은 규모의 기획전이나 개인전 개최에 용이합니다.</p>
+                <div class="btn-group">
+                    <button class="btn btn-outline-dark">공간안내</button>
+                    <button class="btn btn-dark">수시대관신청</button>
                 </div>
             </div>
         </div>
         <hr>
-        <div class="facility-item">
-            <img src="resources/images/gallery3.png">
-            <div class="facility-details">
-                <h2>E1 전시장 2</h2>
-                <p>전시실 E1은 인천아트플랫폼의 중간규모 전시공간으로 회화, 사진, 조각 등 다양한 장르의 전시가 가능합니다. 높은 천장과 넓은 벽면을 활용하여 대형 작품도 전시할 수 있으며, 특히 야간 전시를 위한 조명 시스템이 잘 갖추어져 있습니다.</p>
-                <div class="facility-buttons">
-                    <button>공간안내</button>
-                    <button>상세보기</button>
-                </div>
-            </div>
-        </div>
+
+        <!-- More coronation blocks can be added similarly -->
+        
     </div>
 </div>
 
 <jsp:include page="../common/footer.jsp" />
-
 </body>
 </html>
