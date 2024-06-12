@@ -24,6 +24,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            padding-top: 20px;
+            padding-bottom: 50px;
         }
         .content-header h1 {
             font-size: 2em;
@@ -66,8 +68,11 @@
         }
         .artist-item img {
             width: 100%;
-            height: 200px;
+            height: 250px;
             object-fit: cover;
+            border-radius: 20px;
+            border-style : ridge;
+            box-shadow: 0 0 10px gray;
         }
         .artist-item h2 {
             font-size: 1.2em;
@@ -79,9 +84,10 @@
             margin-bottom: 10px;
         }
         .pagination {
-            text-align: center;
+            text-align: left;
             margin-top: 20px;
             width: 100%;
+            padding-bottom: 50px;
             display: flex;
             justify-content: center;
             clear: both;
@@ -94,6 +100,26 @@
         .pagination a.active {
             font-weight: bold;
         }
+
+        .sidebar li { 
+            list-style-type: none;
+            padding-bottom: 20px;
+            font-size: 19px;
+            font-weight : 700;
+            text-align :left;
+            color : black;
+        }
+
+
+        .sidebar>ul{ padding: 0; }
+        .sidebar a { color : black; }
+        .sidebar a:hover { color : plum; }
+
+        .search-box>input { border-radius: 20px;}
+        .search-box>button { border-radius: 20px;}
+
+        .artist-item>img:hover { opacity: 0.4; cursor: pointer; }
+
     </style>
 </head>
 <body>
@@ -110,8 +136,8 @@
             </div>
         </div>
         <div class="sidebar">
-            <ul>
-               <li><a href="#">2023기</a></li>
+            <ul class="ul">
+                <li><a href="#">2023기</a></li>
                 <li><a href="#">2022기</a></li>
                 <li><a href="#">2021기</a></li>
                 <li><a href="#">2020기</a></li>

@@ -17,16 +17,10 @@
     <!--로그인스타일-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!--폰트-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" >
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Poor+Story&display=swap" rel="stylesheet">
+
     
     <style>
-        * { 
-            font-family: "IBM Plex Sans KR", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-        }
+
         .footer { 
             background-color: #333; 
             color: #fff; 

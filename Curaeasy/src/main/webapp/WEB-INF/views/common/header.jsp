@@ -16,28 +16,27 @@
     <!--로그인스타일-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!--폰트-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" >
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Poor+Story&display=swap" rel="stylesheet">
+
     <style>
 
         div { box-sizing: border-box;}
-        #logo img{ width:100%; height: 100%; margin-left:0px; margin-right: 20px; }
+        #logo img{ width:100%; height: 100%; margin-left:0px; margin-right: 0px; }
         #header { background-color: #333; }
         #header-1 {
             height:160px;
-            width : 1300px;
+            width : 1500px;
             display: flex;
             flex-wrap: wrap;
             margin: auto;
             background-color: #333; color: #fff; 
+            
         }
         #navi { 
             padding: 0; 
             margin : 0; 
             list-style-type: none; 
             height: 100%; 
-            width: 1000px; 
+            width: 1300px; 
         }
 
         #user-actions li { list-style-type : none; }  
@@ -70,14 +69,15 @@
             margin: 0;
             list-style-type: none;
         }
+        #navi{margin:auto;}
         #navi ul li a:hover { background-color: #eee; color: black; font-size: 17px; font-weight: 600; }
         #navi ul li { width: 100%; border-bottom: none; }
         #navi ul li a {
             line-height: 30px;
-            font-size: 16px;
+            font-size: 18px;
             font-weight: normal;
             padding: 10px;
-            color: #333;
+            color: white;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
         #navi li:hover > ul { display: block; }
@@ -90,7 +90,7 @@
         <div id="header-1">
             <ul id="navi">
                 <li id="logo">
-                    <a href="${pageContext.request.contextPath}/"><img src="resources/images/logo2.png"></a>
+                    <a href="${pageContext.request.contextPath}/"><img src="resources/images/logo.png"></a>
                 </li>
                 <li>
                     <a href="about.do">큐레이지</a>
@@ -127,6 +127,7 @@
                     <ul>
                         <li><a href="review.do">관람후기</a></li>
                     </ul>
+                    
                 </li>
             </ul>
 		
