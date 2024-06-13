@@ -19,7 +19,7 @@ public class AdminNoticeController {
 	
 //	@Autowired private BCryptPasswordEncoder bcryptPasswordEncoder;
 //	@Autowired private AdminNoticeService noticeService;
-//	
+	
 	/*
 	
 	@GetMapping("list.no")

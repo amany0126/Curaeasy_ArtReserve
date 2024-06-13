@@ -14,6 +14,7 @@
             flex-direction: row;
             align-items: center;
             margin-bottom: 2rem;
+            margin-top: 50px;
         }
         .img {
             flex: 0 0 33%;
@@ -38,10 +39,12 @@
         }
         .innerOuter {
             border: 1px solid lightgray;
-            width: 80%;
+            width: 100%;
             margin: auto;
             padding: 2rem;
             background-color: white;
+            margin-top: 70px; margin-bottom: 100px;
+            border-radius: 50px; box-shadow: 0 0 5px gray;
         }
     </style>
 </head>

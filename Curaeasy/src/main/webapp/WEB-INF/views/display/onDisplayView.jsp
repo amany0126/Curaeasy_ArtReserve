@@ -9,16 +9,16 @@
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
-
-
+    <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Grandiflora+One&display=swap" rel="stylesheet">
 
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+        /*폰트
+        .content{
+            font-family: "Grandiflora One", cursive;
+            font-weight: 400;
+            font-style: normal;
+        }*/
+        
         .container {
             max-width: 100%;
             margin: auto;
