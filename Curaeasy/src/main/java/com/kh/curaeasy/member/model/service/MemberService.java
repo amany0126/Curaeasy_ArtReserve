@@ -87,4 +87,9 @@ public class MemberService {
 		return memberDao.delectEmailcheck(sqlSession, c);
 	}
 
+
+	public int checkEmail(String email) {
+		return memberDao.checkEmail(sqlSession, email);
+	}
+
 }

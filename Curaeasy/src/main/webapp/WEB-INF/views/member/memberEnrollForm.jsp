@@ -58,8 +58,9 @@
 
                     <label for="email"> &nbsp;* 이메일 : </label> 
                     <div>
-                    <input type="text" class="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="memberEmail" style="display:inline; width: 37vw;">
-					<button type="button" onclick="certEmail();" id="cert" class="btn btn-light" style="display: inline; width: 120px; border-color: black;">이메일 인증</button>
+                    <input type="email" class="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="memberEmail" style="display:inline; width: 37vw;">
+					<button type="button" onclick="certEmail();" id="cert" class="btn btn-light" style="display: inline; width: 120px; border-color: black;" disabled>이메일 인증</button>
+					<div id="emailDuplicates" style="display: none;"></div>
 					</div>
 					<div id="emailcheck" style="display: none;">
 					인증번호 :  <br>
@@ -96,9 +97,11 @@
 				let $userIdInput = $("#enrollForm input[id=userId]");
 				let $userPwdInput = $("#enrollForm input[id=userPwd]");
 				let $checkPwdInput = $("#enrollForm input[id=checkPwd]");
+				let $checkEmailInput = $("#enrollForm input[id=email]");
 				$userIdInput.keyup(checkId); 
 				$userPwdInput.keyup(ckeckPwd); // 1차
 				$checkPwdInput.keyup(valPwd); // 중복
+				$checkEmailInput.keyup(checkEmail); // 중복
 			});
 			function checkId() {
 				const $idInput = $("#enrollForm input[id=userId]")
@@ -232,6 +235,40 @@
 	               checkdSudmit();
 				}
 			}
+		
+		function checkEmail() {
+			let $checkEmailInput = $("#enrollForm input[id=email]");
+			let userEmail = $checkEmailInput.val();
+			/* console.log(userEmail) */
+			const pattern = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+			if(checkPwd!= null && checkPwd !="" && pattern.test(userEmail)){
+					$.ajax({
+						url : "emailDl.me",
+						type : "post",
+						data : {email : $("#email").val() },
+						success : function(result) {
+							if(result == "NNNNN"){
+								
+								$("#emailDuplicates").text("이미 사용중이거나 탈퇴한 회원의 이메일입니다. 다시 입력해주세요").show().css("color","red");
+								$("#cert").attr("disabled",true);
+								}else if(result == "NNNNY"){
+								
+								$("#emailDuplicates").text("사용 가능한 이메일입니다").show().css("color","green");
+								$("#cert").attr("disabled",false);
+								}
+						},
+						error : function() {
+							console.log("인증번호 발급용 ajax 통신 실패!");
+						}
+						
+					});					
+				}else{
+				$("#cert").attr("disabled",true);
+				$("#emailDuplicates").hide(); 
+				
+			}	
+			
+		}
 		
 		function certEmail() {
 			// ajax 요청 보내기 
