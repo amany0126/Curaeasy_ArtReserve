@@ -11,15 +11,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Display {
+public class DisplayAttachment {
+	private int AttachmentNo;
+	private String originName;
+	private String changeName;
+	private int imageLevel;
+	private String status;
 	private String displayNo;
-	private String displayName;
-	private String displayContent;
-	private String displayStartDate;
-	private String displayEndDate;
-	private int displayPrice;
-	private String displayStatus;
-	private String artistNo;
-	private String galleryNo;
 	
 }

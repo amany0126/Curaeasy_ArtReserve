@@ -1,83 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <title>대관신청</title>
     <style>
-        body {
+        .coronation {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .img {
+            flex: 0 0 33%;
+        }
+        .img img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .information {
+            flex: 0 0 65%;
+            padding-left: 2rem;
+        }
+        .information p {
             margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
         }
-        .container {
-            max-width: 1200px;
+        .btn-group {
+            margin-top: 1rem;
+        }
+        .btn-group button {
+            margin-right: 1rem;
+        }
+        .innerOuter {
+            border: 1px solid lightgray;
+            width: 80%;
             margin: auto;
-            padding: 20px;
-        }
-        .header, .footer {
-            background-color: #f8f8f8;
-            padding: 20px;
-            text-align: center;
-        }
-        .content {
-            padding: 20px;
-        }
-        .content-header {
-            margin-bottom: 20px;
-        }
-        .content-header h1 {
-            font-size: 2em;
-            margin: 0 0 10px 0;
-        }
-        .facility-item {
-            display: flex;
-            margin-bottom: 20px;
-        }
-        .facility-item img {
-            width: 300px;
-            height: 200px;
-            object-fit: cover;
-            margin-right: 20px;
-        }
-        .facility-details {
-            flex: 1;
-        }
-        .facility-details h2 {
-            margin-top: 0;
-        }
-        .facility-buttons {
-            display: flex;
-            margin-top: 10px;
-        }
-        .facility-buttons button {
-            padding: 10px 20px;
-            margin-right: 10px;
-            border: 1px solid #ccc;
-            background-color: #333;
-            color: #fff;
-            cursor: pointer;
-        }
-        hr {
-            border: none;
-            border-top: 2px solid #ddd;
-            margin: 20px 0;
+            padding: 2rem;
+            background-color: white;
         }
     </style>
 </head>
 <body>
-
 <jsp:include page="../common/header.jsp" />
 
 <div class="container">
-    <div class="content">
-        <div class="content-header">
-            <h1>대관신청</h1>
-        </div>
-         <div class="coronation">
+    <div class="innerOuter">
+        <h3>대관신청</h3>
+        <hr style="border: 1px solid black;">
+        
+        <div class="coronation">
             <div class="img">
-                <img src="image1.jpg" alt="제 1 전시장 이미지">
+                <img src="중국산 꼬북이.jpg" alt="프로필이미지">
             </div>
             <div class="information">
                 <p><b>제 1 전시장</b></p>
@@ -90,9 +68,10 @@
         </div>
         <hr>
 
+        <!-- Repeat the structure for additional exhibition halls -->
         <div class="coronation">
             <div class="img">
-                <img src="image2.jpg" alt="제 2 전시장 이미지">
+                <img src="image2.jpg" alt="프로필이미지">
             </div>
             <div class="information">
                 <p><b>제 2 전시장</b></p>

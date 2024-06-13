@@ -43,7 +43,6 @@
             background-color: gray; color:white;
             text-align: center;
             width : 500px; height: 50px;
-            font-family :Verdana, Geneva, Tahoma, sans-serif;
             display: list-item;
             text-align: -webkit-match-parent;
             unicode-bidi: isolate;
@@ -64,9 +63,8 @@
 <body>
     <%@ include file="../common/header.jsp" %>
 
-    <div>
-        <h1 id="title"> CURAEASY ART PLATFORM </h1>
-    </div>
+
+    <h1 id="title" style="margin-top: 50px; margin-bottom: 30px;"> CURAEASY ART PLATFORM </h1>
 
     <h2 style="text-align:center;">오시는길</h2>
     <hr style="height: 5px; background-color:#333;"> <br>

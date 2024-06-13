@@ -78,8 +78,12 @@
         }
         .exhibition-item img {
             width: 100%;
-            height: 200px;
+            height: 400px;
             object-fit: cover;
+            border-radius: 20px;
+            border-style : ridge;
+            box-shadow: 0 0 10px gray;
+            opacity: 0.4;
         }
         .exhibition-item h2 {
             font-size: 1.5em;
@@ -105,6 +109,9 @@
         .pagination a.active {
             font-weight: bold;
         }
+        .search-box>input { border-radius: 20px;}
+        .search-box>button { border-radius: 20px;}
+
     </style>
 </head>
 <body>
@@ -128,17 +135,17 @@
         <div class="exhibition-list">
             <div class="exhibition-item">
                 <img src="resources/images/display1.jpg" alt="전시 이미지 1">
-                <h2>[마감 전시] 김민수 展 PAST MEMORIES</h2>
+                <h2>[마감 전시] 김민수 <br>展 PAST MEMORIES</h2>
                 <p>2023-12-01(Fri) ~ 2023-12-15(Fri)</p>
             </div>
             <div class="exhibition-item">
                 <img src="resources/images/display2.jpg" alt="전시 이미지 2">
-                <h2>[마감 전시] 이현수 展 FORGOTTEN TIME</h2>
+                <h2>[마감 전시] 이현수 <br>展 FORGOTTEN TIME</h2>
                 <p>2024-01-05(Thu) ~ 2024-01-20(Fri)</p>
             </div>
             <div class="exhibition-item">
-                <img src="resources/images/display3.jpg" alt="전시 이미지 3">
-                <h2>[마감 전시] 박지영 展 SILENT ECHOES</h2>
+                <img src="resources/images/img4.jpg" alt="전시 이미지 3">
+                <h2>[마감 전시] 박지영 <br>展 SILENT ECHOES</h2>
                 <p>2024-03-10(Sun) ~ 2024-03-25(Mon)</p>
             </div>
         </div>

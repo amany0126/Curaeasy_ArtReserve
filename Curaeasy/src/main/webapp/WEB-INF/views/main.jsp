@@ -50,7 +50,7 @@
             margin: auto;
             padding: 20px;
         }
-        #content-area3 {height:100%; width: 20%; }
+        #content-area3 {height:100%; width: 20%;}
 
         /* 로그인 */
         #user-actions li { list-style-type : none; }  
@@ -174,11 +174,14 @@
         /* 새로운 스타일 */
         .section {
             flex: 1;
-            padding: 20px;
+            padding: 50px;
             box-sizing: border-box;
             background-color: #f9f9f9;
             margin: 10px;
             border-radius: 10px;
+            margin-top: 50px;
+            margin-bottom: 100px;
+            
         }
         .section h2 {
             margin-top: 0;
@@ -211,7 +214,7 @@
     <!-- Content 영역 -->
     <div id="content-area">
         <div class="section">
-            <h2>전시</h2>
+            <h2>전시</h2><br>
             <div class="card">
                 <img src="resources/images/main1.jpg" alt="전시 이미지">
                 <h3>김진안 展 MAGNETIC LIFE</h3>
@@ -221,7 +224,7 @@
         </div>
 
         <div class="section">
-            <h2>공연</h2>
+            <h2>공연</h2><br>
             <div class="card">
                 <img src="resources/images/main2.jpg" alt="공연 이미지">
                 <h3>인천아트플랫폼 유스테이지</h3>
@@ -232,7 +235,7 @@
         </div>
 
         <div class="section">
-            <h2>공지사항</h2>
+            <h2>공지사항</h2><br>
             <div class="card">
                 <img src="resources/images/main3.jpg" alt="공지사항 이미지">
                 <h3>2024 인천아트플랫폼 &lt;학교연계 프로그램&gt;</h3>
@@ -240,6 +243,7 @@
                 <p>인천 관내 초등학교 대상</p>
             </div>
         </div>
+        
     </div>
 
     <jsp:include page="common/main_footer.jsp" />
@@ -255,6 +259,39 @@
                     $p.slideUp(500);
                 }
             });
+
+            $.ajax({
+                url: "mainPageSelectDisplayList.do",
+                method: "GET",
+                success: function(result) {
+                        console.log(result);
+                    for (let i = 0; i < 3; i++) {
+                        const displayImg = document.createElement("img");
+                        displayImg.src="http://naver.com";
+                        displayImg.alt="사진 추가예정";
+
+                        const displayName = document.createElement("h3");
+                        displayName.innerText = result[i].displayName;
+
+                        const displayDuration = document.createElement("p");
+                        displayDuration.innerText = result[i].displayStartDate + " - " + result[i].displayEndDate;
+
+                        const displayContent = document.createElement("p");
+                        displayContent.innerText = result[i].displayContent;
+
+                        const displayGallery = document.createElement("p");
+                        displayGallery.innerText = result[i].galleryNo;
+
+                        var $ee = $("<div class=card>").append(displayImg).append(displayName).append(displayDuration).append(displayContent).append(displayGallery);
+                        var $e = $("<div class=section>").append("<h2>전시</h2>").append($ee);
+                        
+                        $("#content-area").append($e);
+                    }
+                },
+                error: function() {
+                    console.log("ajax failed");
+                }
+            })
         });
     </script>
 </body>
