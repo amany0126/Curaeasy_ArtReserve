@@ -60,7 +60,7 @@ public class DisplayController {
     }
     
     @RequestMapping("insertDisplay.do")
-    public void insertDisplay(Display d, ArrayList<MultipartFile> upfile, HttpSession session) {
+    public String insertDisplay(Display d, ArrayList<MultipartFile> upfile, HttpSession session) {
     	System.out.println(d);
     	System.out.println(upfile);
     	
@@ -84,6 +84,8 @@ public class DisplayController {
     	
     	int result = displayService.insertDisplay(d, fileList);
     	System.out.println(result);
+    	
+    	return "/main";
     	
     }
     
