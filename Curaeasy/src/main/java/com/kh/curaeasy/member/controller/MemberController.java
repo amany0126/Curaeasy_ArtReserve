@@ -137,18 +137,7 @@ public class MemberController {
 	@ResponseBody
 	@GetMapping(value="idCheck.me", produces = "text/html; charset=UTF-8")
 	public String idCheck(String checkId) {
-		// System.out.println(checkId);
-		// > 중복확인할 아이디 값이 전달됨
 		int count = memberService.idCheck(checkId);
-		// count 가 1 일경우 : 존재하는 아이디 (사용 불가)
-		// count 가 0 일경우 : 존재하지 않는  아이디 (사용가능)
-		/*
-		if(count>0) { // 사용불가능 "NNNNN"
-			return  "NNNNN";
-		}else { // 사용가능 "NNNNY"
-			return  "NNNNY";
-		}
-		*/
 		return (count>0)? "NNNNN" : "NNNNY";
 	}
 	
@@ -448,6 +437,12 @@ public class MemberController {
 			model.addAttribute("errorMsg", "임시비밀번호 발급에 실패하셨습니다.");
 			return "/common/errorPage";
 		}
+	}
+	@ResponseBody
+	@PostMapping(value="emailDl.me", produces = "text/html; charset=UTF-8")
+	public String checkEmail(String email) {
+		int count = memberService.checkEmail(email);
+		return (count>0)? "NNNNN" : "NNNNY";
 	}
 }
 	

@@ -75,45 +75,103 @@
         <div class="content-header">
             <h1>대관신청</h1>
         </div>
-        <div class="facility-item">
-            <img src="resources/images/gallery1.png">
-            <div class="facility-details">
-                <h2>전시장 1</h2>
-                <p>전시실 B1은 약 1,000평 규모의 전시공간으로 최첨단 조명 시스템을 갖추고 있습니다. 인천아트플랫폼의 가장 큰 전시공간으로, 현대미술부터 전통공예까지 다양한 장르의 작품을 전시할 수 있습니다. 자연광이 들어오는 전면 유리창을 통해 아름다운 전경을 감상할 수 있습니다.</p>
-                <div class="facility-buttons">
-                    <button>공간안내</button>
-                    <button>상세보기</button>
+         <div class="coronation">
+            <div class="img">
+                <img src="image1.jpg" alt="제 1 전시장 이미지">
+            </div>
+            <div class="information">
+                <p><b>제 1 전시장</b></p>
+                <p>A동 1층 전시장 1은 지상 1, 2층에 걸친 약 200평의 규모를 갖추고 있습니다. 인천아트플랫폼에서 가장 규모가 큰 전시장으로 문화체육광관부 1종 미술관으로 등록되어 있습니다. 주로 인천아트플랫폼 자체 기획전시를 개최하고 있으며, 별도 로비 공간이 있습니다. 규모가 큰 개인전과 그룹 전시에 적합한 전시 공간입니다.</p>
+                <div class="btn-group">
+                    <button class="btn btn-outline-dark">공간안내</button>
+                    <button class="btn btn-dark" onclick="PTR(1)">수시대관신청</button>
                 </div>
             </div>
         </div>
         <hr>
-        <div class="facility-item">
-            <img src="resources/images/gallery2.png">
-            <div class="facility-details">
-                <h2>전시장 2</h2>
-                <p>공연장 C는 약 300석 규모의 공연장으로 연극, 무용, 콘서트 등 다양한 공연을 개최할 수 있는 공간입니다. 최신 음향 시스템과 조명 장비를 갖추고 있으며, 관객석과 무대가 가깝게 배치되어 보다 가까운 감동을 선사할 수 있습니다.</p>
-                <div class="facility-buttons">
-                    <button>공간안내</button>
-                    <button>상세보기</button>
+
+        <div class="coronation">
+            <div class="img">
+                <img src="image2.jpg" alt="제 2 전시장 이미지">
+            </div>
+            <div class="information">
+                <p><b>제 2 전시장</b></p>
+                <p>전시장 2는 인천아트플랫폼 중앙광장에 위치한 36평 규모의 전시 공간입니다. 천장이 높은 구조로 회화, 사진, 설치 등 작은 규모의 기획전이나 개인전 개최에 용이합니다.</p>
+                <div class="btn-group">
+                    <button class="btn btn-outline-dark">공간안내</button>
+                    <button class="btn btn-dark" onclick="PTR(2)">수시대관신청</button>
                 </div>
             </div>
         </div>
         <hr>
-        <div class="facility-item">
-            <img src="resources/images/gallery3.png">
-            <div class="facility-details">
-                <h2>E1 전시장 2</h2>
-                <p>전시실 E1은 인천아트플랫폼의 중간규모 전시공간으로 회화, 사진, 조각 등 다양한 장르의 전시가 가능합니다. 높은 천장과 넓은 벽면을 활용하여 대형 작품도 전시할 수 있으며, 특히 야간 전시를 위한 조명 시스템이 잘 갖추어져 있습니다.</p>
-                <div class="facility-buttons">
-                    <button>공간안내</button>
-                    <button>상세보기</button>
+
+        <div class="coronation">
+            <div class="img">
+                <img src="image3.jpg" alt="제 3 전시장 이미지">
+            </div>
+            <div class="information">
+                <p><b>제 3 전시장</b></p>
+                <p>전시장 3은 인천아트플랫폼 서쪽에 위치한 100평 규모의 전시 공간입니다. 현대미술, 미디어아트, 퍼포먼스 등 다양한 형태의 전시가 가능한 공간으로, 최신 기술을 활용한 전시도 용이합니다.</p>
+                <div class="btn-group">
+                    <button class="btn btn-outline-dark">공간안내</button>
+                    <button class="btn btn-dark" onclick="PTR(3)">수시대관신청</button>
                 </div>
             </div>
         </div>
+        <hr> <div class="coronation">
+            <div class="img">
+                <img src="image1.jpg" alt="제 1 전시장 이미지">
+            </div>
+            <div class="information">
+                <p><b>제 4 전시장</b></p>
+                <p>A동 4층 전시장 1은 지상 1, 2층에 걸친 약 200평의 규모를 갖추고 있습니다. 인천아트플랫폼에서 가장 규모가 큰 전시장으로 문화체육광관부 1종 미술관으로 등록되어 있습니다. 주로 인천아트플랫폼 자체 기획전시를 개최하고 있으며, 별도 로비 공간이 있습니다. 규모가 큰 개인전과 그룹 전시에 적합한 전시 공간입니다.</p>
+                <div class="btn-group">
+                    <button class="btn btn-outline-dark">공간안내</button>
+                    <button class="btn btn-dark" onclick="PTR(4)">수시대관신청</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="coronation">
+            <div class="img">
+                <img src="image2.jpg" alt="제 2 전시장 이미지">
+            </div>
+            <div class="information">
+                <p><b>제 5 전시장</b></p>
+                <p>전시장 5는 인천아트플랫폼 중앙광장에 위치한 36평 규모의 전시 공간입니다. 천장이 높은 구조로 회화, 사진, 설치 등 작은 규모의 기획전이나 개인전 개최에 용이합니다.</p>
+                <div class="btn-group">
+                    <button class="btn btn-outline-dark">공간안내</button>
+                    <button class="btn btn-dark" onclick="PTR(5)">수시대관신청</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+
+        <div class="coronation">
+            <div class="img">
+                <img src="image3.jpg" alt="제 3 전시장 이미지">
+            </div>
+            <div class="information">
+                <p><b>제 6 전시장</b></p>
+                <p>전시장 6은 인천아트플랫폼 서쪽에 위치한 100평 규모의 전시 공간입니다. 현대미술, 미디어아트, 퍼포먼스 등 다양한 형태의 전시가 가능한 공간으로, 최신 기술을 활용한 전시도 용이합니다.</p>
+                <div class="btn-group">
+                    <button class="btn btn-outline-dark">공간안내</button>
+                    <button class="btn btn-dark" onclick="PTR(6)">수시대관신청</button>
+                </div>
+            </div>
+        </div>
+        <hr>
     </div>
 </div>
 
 <jsp:include page="../common/footer.jsp" />
-
+<script>
+	function PTR(num) {
+		console.log(num)
+		var link = 'calendar.re?gno='+num;
+		location.replace(link);
+	}
+</script>
 </body>
 </html>

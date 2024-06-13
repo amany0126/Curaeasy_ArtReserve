@@ -58,4 +58,8 @@ public class MemberDao {
 		return sqlSession.delete("memberMapper.delectEmailcheck", c);
 	}
 
+	public int checkEmail(SqlSessionTemplate sqlSession, String email) {
+		return sqlSession.selectOne("memberMapper.checkEmail", email);
+	}
+
 }

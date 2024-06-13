@@ -103,6 +103,11 @@
 		  FROM CERT
 		 WHERE EMAIL= #{email} 
 	</delete> 
+	<select id="checkEmail" resultType="_int" parameterType="string">
+		SELECT COUNT(*)
+		 	  FROM MEMBER
+		 WHERE MEMBER_EMAIL = #{email} 
+	</select>
 </mapper>
 
 
