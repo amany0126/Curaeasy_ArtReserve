@@ -36,6 +36,7 @@ public class ArtistInterceptor extends HandlerInterceptorAdapter {
 		} else {
 			session.setAttribute("alertMsg", "로그인 후 이용 가능한 서비스입니다.");
 			response.sendRedirect(request.getContextPath());
+			// 로그인이 필요한 서비스입니다 메세지 띄워주고 로그인페이지로 포워딩
 			
 			return false;
 		}
