@@ -16,11 +16,12 @@
             margin:auto;
         } */
         .innerOuter {
-            border:1px solid lightgray;
+            border:0px solid lightgray;
             width:80%;
             margin:auto;
             padding:5% 10%;
             background-color:white;
+			margin-top: 5px;
         }
     </style>
 </head>
