@@ -58,7 +58,7 @@
         
         <div class="coronation">
             <div class="img">
-                <img src="중국산 꼬북이.jpg" alt="프로필이미지">
+                <img src="resources/images/gallery1.jpg" alt="프로필이미지">
             </div>
             <div class="information">
                 <p><b>제 1 전시장</b></p>
@@ -74,7 +74,7 @@
         <!-- Repeat the structure for additional exhibition halls -->
         <div class="coronation">
             <div class="img">
-                <img src="image2.jpg" alt="프로필이미지">
+                <img src="resources/images/gallery2.jpg" alt="프로필이미지">
             </div>
             <div class="information">
                 <p><b>제 2 전시장</b></p>
@@ -89,7 +89,7 @@
 
         <div class="coronation">
             <div class="img">
-                <img src="image3.jpg" alt="제 3 전시장 이미지">
+                <img src="resources/images/gallery3.jpg" alt="제 3 전시장 이미지">
             </div>
             <div class="information">
                 <p><b>제 3 전시장</b></p>
@@ -102,7 +102,7 @@
         </div>
         <hr> <div class="coronation">
             <div class="img">
-                <img src="image1.jpg" alt="제 1 전시장 이미지">
+                <img src="resources/images/gallery4.jpg" alt="제 4 전시장 이미지">
             </div>
             <div class="information">
                 <p><b>제 4 전시장</b></p>
@@ -117,7 +117,7 @@
 
         <div class="coronation">
             <div class="img">
-                <img src="image2.jpg" alt="제 2 전시장 이미지">
+                <img src="resources/images/gallery5.jpg" alt="제 5 전시장 이미지">
             </div>
             <div class="information">
                 <p><b>제 5 전시장</b></p>
@@ -132,7 +132,7 @@
 
         <div class="coronation">
             <div class="img">
-                <img src="image3.jpg" alt="제 3 전시장 이미지">
+                <img src="resources/images/gallery6.jpg" alt="제 6 전시장 이미지">
             </div>
             <div class="information">
                 <p><b>제 6 전시장</b></p>
