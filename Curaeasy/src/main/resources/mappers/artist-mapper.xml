@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="artistMapper">
-	<resultMap id="ArtistResultSet" type="artist">
+	<resultMap id="artistResultSet" type="artist">
 		<result column="ARTIST_NO" property="artistNo" />
 		<result column="ARTIST_NICKNAME" property="artistNickName" />
 		<result column="ARTIST_ORDINAL" property="artistOrdinal" />
@@ -24,4 +24,29 @@
 	             VALUES ( SEQ_ARTIST_NO.NEXTVAL,#{artistNickName},#{artistOrdinal},#{artistApplyTitle}
 	             		,#{artistIntroduce},#{artistImage},#{memberNo})
 	</insert>
+	<select id="artistNo" resultType="_int" parameterType="_int">
+		SELECT ARTIST_NO
+		 	  FROM ARTIST
+		 WHERE MEMBER_NO = #{userNo} 
+	</select>
+	<!-- 메인페이지에 표시할 최신 등록 작가를 한명 선택하는 쿼리 -->
+	<select id="selectLatestArtist" resultMap="artistResultSet">
+		SELECT *
+		  FROM ARTIST
+		 WHERE ARTIST_RESULT = 'Y'
+		   AND ARTIST_NO = (SELECT MAX(ARTIST_NO)
+		   					   FROM ARTIST)
+	</select>
+	
+	<!-- 작가소개 페이지에 표시할 작가 리스트를 가져오는 쿼리 -->
+	<select id="selectArtistList" resultMap="artistResultSet">
+		SELECT ARTIST_NICKNAME,
+			   ARTIST_INTRODUCE,
+			   ARTIST_ORDINAL,
+			   ARTIST_IMAGE
+		  FROM ARTIST
+		 WHERE ARTIST_RESULT = 'Y'
+		   AND ARTIST_STATUS = 'Y'
+		 ORDER BY ARTIST_ORDINAL DESC, ARTIST_NO DESC
+	</select>
 </mapper>

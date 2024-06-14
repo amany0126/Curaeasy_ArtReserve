@@ -112,8 +112,10 @@ public class MemberController {
 	}
 	
 	@PostMapping(value = "insert.me",  produces = "text/html; charset=UTF-8")
-	public String insertMember(Member m, Model model, HttpSession session) {
-
+	public String insertMember(Member m,String address1, String address2 ,Model model, HttpSession session) {
+		
+		String address = address1+'/'+address2;
+		m.setMemberAddress(address);
 		String encPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 		m.setMemberPwd(encPwd);
 		int result = memberService.insertMember(m);

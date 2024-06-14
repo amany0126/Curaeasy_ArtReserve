@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -109,27 +110,22 @@
         <hr>
         <div class="exhibition-details">
             <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지">
-                <h2>김진안 展 MAGNETIC LIFE</h2>
-                <p>2024-06-04(Tue) ~ 2024-06-14(Fri)</p>
+                <h2>${requestScope.d.displayName}</h2>
+                <img src="resources/display/${requestScope.list[0].changeName}" alt="전시 이미지">
             </div>
             <div class="exhibition-info">
                 <table>
                     <tr>
                         <th>전시명</th>
-                        <td>김진안 展 MAGNETIC LIFE</td>
+                        <td>${requestScope.d.displayName}</td>
                     </tr>
                     <tr>
                         <th>기간</th>
-                        <td>2024-06-04(Tue) ~ 2024-06-14(Fri)</td>
+                        <td>${ requestScope.d.displayStartDate } ~ ${ requestScope.d.displayEndDate }</td>
                     </tr>
                     <tr>
                         <th>장소</th>
-                        <td>인천아트플랫폼 전시실</td>
-                    </tr>
-                    <tr>
-                        <th>소개</th>
-                        <td>김진안 작가의 최신 작품 전시...</td>
+                        <td>${ requestScope.d.galleryNo }</td>
                     </tr>
                 </table>
             </div>
@@ -137,8 +133,10 @@
         <hr>
         <div class="exhibition-intro">
             <h2>전시 소개</h2>
-            <img src="resources/images/display1.jpg" alt="전시 포스터">
-            <p>김진안 展 MAGNETIC LIFE는...</p>
+            <c:forEach items="${ requestScope.list }" var="item">
+            	<img src="resources/display/${ item.changeName }" alt="전시 포스터">
+            </c:forEach>
+            <p>${ requestScope.d.displayContent }</p>
         </div>
         <hr>
         <div class="back-to-list">

@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="noticeMapper">
+	<resultMap id="noticeResultSet" type="notice">
+		<result column="NOTICE_NO" property="noticeNo" />
+		<result column="NOTICE_DATE" property="noticeDate" />
+		<result column="NOTICE_TITLE" property="noticeTitle" />
+		<result column="NOTICE_CONTENT" property="noticeContent" />
+		<result column="NOTICE_ATTACHMENT" property="noticeAttachment" />
+		<result column="NOTICE_STATUS" property="noticeStatus" />
+	</resultMap>
 	
+	<!-- 메인페이지에 표시할 최신 등록 공지를 한개 선택하는 쿼리 -->
+	<select id="selectLatestNotice" resultMap="noticeResultSet" resultType="notice">
+		SELECT *
+		  FROM NOTICE
+		 WHERE NOTICE_STATUS = 'Y'
+		   AND NOTICE_NO = (SELECT MAX(NOTICE_NO)
+		   					   FROM NOTICE)
+	</select>
 </mapper>
 
 

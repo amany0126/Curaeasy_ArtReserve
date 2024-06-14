@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,14 +12,6 @@
     <title>마감된 전시</title>
     
     <style>
-        /*폰트
-        .content{
-            font-family: "Grandiflora One", cursive;
-            font-weight: 400;
-            font-style: normal;
-        }
-        */
-
         .container {
             max-width: 1200px;
             margin: auto;
@@ -89,9 +82,9 @@
             height: 400px;
             object-fit: cover;
             border-radius: 20px;
-            border-style : ridge;
+            border-style: ridge;
             box-shadow: 0 0 10px gray;
-            opacity: 0.4;
+            filter: blur(5px);
         }
         .exhibition-item h2 {
             font-size: 1.5em;
@@ -137,25 +130,22 @@
             <h1>마감된 전시</h1>
         </div>
         <div class="search-box">
-            <input type="text" placeholder="검색어를 입력하세요" />
-            <button>검색</button>
+            <form action="searchOffDisplay.do" method="get">
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
+                <button type="submit">검색</button>
+            </form>
         </div>
         <div class="exhibition-list">
-            <div class="exhibition-item">
-                <img src="resources/images/display1.jpg" alt="전시 이미지 1">
-                <h2>[마감 전시] 김민수 <br>展 PAST MEMORIES</h2>
-                <p>2023-12-01(Fri) ~ 2023-12-15(Fri)</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/display2.jpg" alt="전시 이미지 2">
-                <h2>[마감 전시] 이현수 <br>展 FORGOTTEN TIME</h2>
-                <p>2024-01-05(Thu) ~ 2024-01-20(Fri)</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/img4.jpg" alt="전시 이미지 3">
-                <h2>[마감 전시] 박지영 <br>展 SILENT ECHOES</h2>
-                <p>2024-03-10(Sun) ~ 2024-03-25(Mon)</p>
-            </div>
+            <c:forEach var="exhibition" items="${ offDisplayList }">
+                <div class="exhibition-item">
+                    <img src="<c:url value='/resources/display/${exhibition.imagePath}' />" alt="전시 이미지">
+                    <h2>${ exhibition.displayName }</h2>
+                    <p>${ exhibition.displayStartDate } ~ ${ exhibition.displayEndDate }</p>
+                </div>
+            </c:forEach>
+            <c:if test="${ empty offDisplayList }">
+                <div class="no-exhibition">마감된 전시가 없습니다.</div>
+            </c:if>
         </div>
         <div class="pagination">
             <a href="#" class="prev">«</a>

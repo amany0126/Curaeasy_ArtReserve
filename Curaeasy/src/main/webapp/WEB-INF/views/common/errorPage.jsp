@@ -5,11 +5,21 @@
 <head>
 <meta charset="UTF-8">
 <title>curaeasy</title>
-</head>
-<body>
+<style>
+	     .innerOuter {
 
+            width:65%;
+            margin:auto;
+            padding:5% 10%;
+            background-color:white;
+        }
+</style>
+</head>
+
+<body>
+<jsp:include page="header.jsp" />
     <br>
-    <div align="center">
+    <div align="center" class="innerOuter">
         <img src="https://cdn2.iconfinder.com/data/icons/oops-404-error/64/208_balloon-bubble-chat-conversation-sorry-speech-256.png">
         <br><br>
         <h1 style="font-weight:bold;">
@@ -17,6 +27,6 @@
         </h1>
     </div>
     <br>
-    
+<jsp:include page="footer.jsp" />    
 </body>
 </html>
