@@ -1,29 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>전체 전시</title>
-
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Grandiflora+One&display=swap" rel="stylesheet">
 
+    <title>현재 전시</title>
     <style>
-        /*폰트
-        .content{
-            font-family: "Grandiflora One", cursive;
-            font-weight: 400;
-            font-style: normal;
-        }*/
-        
         .container {
             max-width: 100%;
             margin: auto;
             padding: 20px;
-            margin-bottom : 50px;
+            margin-bottom: 50px;
         }
         .header, .footer {
             background-color: #f8f8f8;
@@ -43,7 +36,6 @@
         .tab-menu {
             display: flex;
             justify-content: center;
-            margin-top: 20px;
             margin-bottom: 20px;
             border-bottom: 2px solid #ddd;
         }
@@ -90,6 +82,9 @@
             width: 100%;
             height: 400px;
             object-fit: cover;
+            border-radius: 20px;
+            border-style: ridge;
+            box-shadow: 0 0 10px gray;
         }
         .exhibition-item h2 {
             font-size: 1.5em;
@@ -100,30 +95,8 @@
             line-height: 1.5;
             margin-bottom: 10px;
         }
-        .pagination {
-            text-align: center;
-            margin-top: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .pagination a {
-            margin: 0 5px;
-            text-decoration: none;
-            color: #333;
-        }
-        .pagination a.active {
-            font-weight: bold;
-        }
-
-        .exhibition-item>img {
-            border-style : ridge;
-            border-radius: 20px;
-            box-shadow: 0 0 10px gray;
-        }
         .search-box>input { border-radius: 20px;}
         .search-box>button { border-radius: 20px;}
-
     </style>
 </head>
 <body>
@@ -141,65 +114,24 @@
             <h1>진행중인 전시</h1>
         </div>
         <div class="search-box">
-            <input type="text" placeholder="검색어를 입력하세요" />
-            <button>검색</button>
+            <form action="searchDisplay.do" method="get">
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
+                <button type="submit">검색</button>
+            </form>
         </div>
         <div class="exhibition-list">
-            <div class="exhibition-item">
-                <img src="resources/images/전시1.jpg" alt="전시 이미지 1">
-                <h2>[대관 전시] 김진안 <br>展 MAGNETIC LIFE</h2>
-                <p>[ 2024-06-04(Tue) ~ 2024-06-14(Fri) ]</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/전시2.jpg" alt="전시 이미지 2">
-                <h2>[대관 전시] 이재훈 <br>展 ARTIST LIFE</h2>
-                <p>[ 2024-07-01(Mon) ~ 2024-07-10(Wed) ]</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/전시3.jpg" alt="전시 이미지 3">
-                <h2>[대관 전시] 박성민 <br>展 CREATIVE WORLD</h2>
-                <p>[ 2024-08-15(Fri) ~ 2024-08-25(Sun) ]</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/전시4.jpg" alt="전시 이미지 4">
-                <h2>[대관 전시] 홍길동 <br>展 FANTASY REALM</h2>
-                <p>[ 2024-09-01(Sun) ~ 2024-09-10(Tue) ]</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/전시5.jpg" alt="전시 이미지 5">
-                <h2>[대관 전시] 김영희 <br>展 NATURE'S GIFT</h2>
-                <p>[ 2024-10-05(Sat) ~ 2024-10-15(Tue) ]</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/전시6.jpg" alt="전시 이미지 6">
-                <h2>[대관 전시] 이철수 <br>展 URBAN DREAMS</h2>
-                <p>[ 2024-11-10(Sun) ~ 2024-11-20(Wed) ]</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/전시7.jpg" alt="전시 이미지 7">
-                <h2>[대관 전시] 박명수 <br>展 ABSTRACT VISIONS</h2>
-                <p>[ 2024-12-05(Thu) ~ 2024-12-15(Sun) ]</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/전시8.jpg" alt="전시 이미지 8">
-                <h2>[대관 전시] 이수진 <br>展 COSMIC DANCE</h2>
-                <p>[ 2025-01-01(Wed) ~ 2025-01-10(Fri) ]</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/전시9.jpg" alt="전시 이미지 9">
-                <h2>[대관 전시] 김철수 <br>展 TIMELESS TALES</h2>
-                <p>[ 2025-02-05(Wed) ~ 2025-02-15(Sat) ]</p>
-            </div>
+            <c:forEach var="exhibition" items="${ onDisplayList }">
+                <div class="exhibition-item">
+                    <img src="<c:url value='/resources/display/${exhibition.imagePath}' />" alt="전시 이미지">
+                    <h2>${ exhibition.displayName }</h2>
+                    <p>${ exhibition.displayContent }</p>
+                    <p>${ exhibition.displayStartDate } ~ ${ exhibition.displayEndDate }</p>
+                </div>
+            </c:forEach>
+            <c:if test="${ empty onDisplayList }">
+                <div class="no-exhibition">진행중인 전시가 없습니다.</div>
+            </c:if>
         </div>
-        <div class="pagination">
-            <a href="#" class="prev">«</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#" class="next">»</a>
-        </div>
-        
-        <a href="displayAdd.do"> <button type="button" class="btn btn-light">전시추가</button></a>
     </div>
 </div>
 

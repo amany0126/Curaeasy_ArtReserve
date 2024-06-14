@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -11,13 +12,6 @@
 
     <title>예정 전시</title>
     <style>
-        /*폰트
-        .content{
-            font-family: "Grandiflora One", cursive;
-            font-weight: 400;
-            font-style: normal;
-        }*/
-        
         .container {
             max-width: 1200px;
             margin: auto;
@@ -88,7 +82,7 @@
             height: 400px;
             object-fit: cover;
             border-radius: 20px;
-            border-style : ridge;
+            border-style: ridge;
             box-shadow: 0 0 10px gray;
         }
         .exhibition-item h2 {
@@ -140,25 +134,22 @@
             <h1>예정 전시</h1>
         </div>
         <div class="search-box">
-            <input type="text" placeholder="검색어를 입력하세요" />
-            <button>검색</button>
+            <form action="searchUpcomingDisplay.do" method="get">
+                <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
+                <button type="submit">검색</button>
+            </form>
         </div>
         <div class="exhibition-list">
-            <div class="exhibition-item">
-                <img src="resources/images/전시10.jpg" alt="전시 이미지 1">
-                <h2>[예정 전시] 김준수 <br>展 FUTURE LANDSCAPES</h2>
-                <p>2024-07-01(Mon) ~ 2024-07-10(Wed)</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/전시11.jpg" alt="전시 이미지 2">
-                <h2>[예정 전시] 박민희 <br>展 DREAMSCAPES</h2>
-                <p>2024-08-15(Fri) ~ 2024-08-25(Sun)</p>
-            </div>
-            <div class="exhibition-item">
-                <img src="resources/images/전시12.jpg" alt="전시 이미지 3">
-                <h2>[예정 전시] 이성호 <br>展 THE UNKNOWN</h2>
-                <p>2024-09-01(Sun) ~ 2024-09-10(Tue)</p>
-            </div>
+            <c:forEach var="exhibition" items="${ upcomingDisplayList }">
+                <div class="exhibition-item">
+                    <img src="<c:url value='/resources/display/${exhibition.imagePath}' />" alt="전시 이미지">
+                    <h2>${ exhibition.displayName }</h2>
+                    <p>${ exhibition.displayStartDate } ~ ${ exhibition.displayEndDate }</p>
+                </div>
+            </c:forEach>
+            <c:if test="${ empty upcomingDisplayList }">
+                <div class="no-exhibition">예정된 전시가 없습니다.</div>
+            </c:if>
         </div>
         <div class="pagination">
             <a href="#" class="prev">«</a>
@@ -168,7 +159,6 @@
             <a href="#" class="next">»</a>
         </div>
     </div>
-    
 </div>
 
 <jsp:include page="../common/footer.jsp" />

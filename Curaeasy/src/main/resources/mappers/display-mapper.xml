@@ -11,6 +11,7 @@
 		<result column="DISPLAY_STATUS" property="displayStatus" />
 		<result column="ARTIST_NO" property="artistNo" />
 		<result column="GALLERY_NO" property="galleryNo" />
+		<result column="IMAGE_PATH" property="imagePath" />
 	</resultMap>
 		<select id="mainPageSelectDisplayList" resultMap="displayResultSet">
 			SELECT DISPLAY_NO,
@@ -23,6 +24,54 @@
               JOIN GALLERY ON(DISPLAY.GALLERY_NO = GALLERY.GALLERY_NO)
 			 WHERE SYSDATE BETWEEN DISPLAY_START_DATE AND DISPLAY_END_DATE
 			 ORDER BY DISPLAY_NO
+		</select>
+		<select id="selectOnDisplayList" resultMap="displayResultSet">
+		    SELECT D.DISPLAY_NO,
+		           D.DISPLAY_NAME,
+		           D.DISPLAY_CONTENT,
+		           TO_CHAR(D.DISPLAY_START_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_START_DATE,
+		           TO_CHAR(D.DISPLAY_END_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_END_DATE,
+		           G.GALLERY_NAME AS GALLERY_NO,
+		           D.DISPLAY_STATUS,
+		           A.CHANGE_NAME AS IMAGE_PATH
+		      FROM DISPLAY D
+		      JOIN GALLERY G ON(D.GALLERY_NO = G.GALLERY_NO)
+		      LEFT JOIN DISPLAY_ATTACHMENT A ON(D.DISPLAY_NO = A.DISPLAY_NO AND A.IMAGE_LEVEL = 1)
+		     WHERE D.DISPLAY_STATUS != '종료'
+		       AND SYSDATE BETWEEN D.DISPLAY_START_DATE AND D.DISPLAY_END_DATE
+		     ORDER BY D.DISPLAY_NO
+		</select>
+		<select id="selectUpcomingDisplayList" resultMap="displayResultSet">
+		    SELECT D.DISPLAY_NO,
+		           D.DISPLAY_NAME,
+		           D.DISPLAY_CONTENT,
+		           TO_CHAR(D.DISPLAY_START_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_START_DATE,
+		           TO_CHAR(D.DISPLAY_END_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_END_DATE,
+		           G.GALLERY_NAME AS GALLERY_NO,
+		           D.DISPLAY_STATUS,
+		           A.CHANGE_NAME AS IMAGE_PATH
+		      FROM DISPLAY D
+		      JOIN GALLERY G ON(D.GALLERY_NO = G.GALLERY_NO)
+		      LEFT JOIN DISPLAY_ATTACHMENT A ON(D.DISPLAY_NO = A.DISPLAY_NO AND A.IMAGE_LEVEL = 1)
+		     WHERE D.DISPLAY_STATUS != '종료'
+		       AND D.DISPLAY_START_DATE > SYSDATE
+		     ORDER BY D.DISPLAY_START_DATE
+		</select>
+		<select id="selectClosedDisplayList" resultMap="displayResultSet">
+		    SELECT D.DISPLAY_NO,
+		           D.DISPLAY_NAME,
+		           D.DISPLAY_CONTENT,
+		           TO_CHAR(D.DISPLAY_START_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_START_DATE,
+		           TO_CHAR(D.DISPLAY_END_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_END_DATE,
+		           G.GALLERY_NAME AS GALLERY_NO,
+		           D.DISPLAY_STATUS,
+		           A.CHANGE_NAME AS IMAGE_PATH
+		      FROM DISPLAY D
+		      JOIN GALLERY G ON(D.GALLERY_NO = G.GALLERY_NO)
+		      LEFT JOIN DISPLAY_ATTACHMENT A ON(D.DISPLAY_NO = A.DISPLAY_NO AND A.IMAGE_LEVEL = 1)
+		     WHERE D.DISPLAY_STATUS != '종료'
+		       AND D.DISPLAY_START_DATE > SYSDATE
+		     ORDER BY D.DISPLAY_START_DATE
 		</select>
 		<insert id="insertDisplay" parameterType="display">
 			INSERT INTO DISPLAY

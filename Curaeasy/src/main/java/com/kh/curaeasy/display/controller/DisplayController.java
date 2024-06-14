@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,13 +26,32 @@ public class DisplayController {
 	@Autowired
 	private DisplayService displayService;
 
-    @RequestMapping("onDisplay.do")
-    public String ongoingDisplay() {
-        return "display/onDisplayView";
+    
+	@RequestMapping("onDisplay.do")
+	public String onDisplayList(Model model) {
+	    // 현재 진행 중인 전시 목록 조회
+	    ArrayList<Display> list = displayService.selectOnDisplayList();
+	    
+	    model.addAttribute("onDisplayList", list);
+	    
+	    return "display/onDisplayView";
+	}
+    @RequestMapping("upcomingDisplay.do")
+    public String upcomingDisplay(Model model) {
+    	// 진행 예정 전시 목록 조회
+	    ArrayList<Display> list = displayService.selectUpcomingDisplayList();
+	    
+	    model.addAttribute("upcomingDisplayList", list);
+    	
+        return "display/upcomingDisplayView";
     }
-
     @RequestMapping("offDisplay.do")
-    public String closedDisplay() {
+    public String closedDisplay(Model model) {
+    	// 마감 전시 목록 조회
+	    ArrayList<Display> list = displayService.selectClosedDisplayList();
+	    
+	    model.addAttribute("closedDisplayList", list);
+	    
         return "display/closedDisplayView";
     }
     
@@ -40,10 +60,6 @@ public class DisplayController {
         return "display/displayDetailView";
     }
     
-    @RequestMapping("upcomingDisplay.do")
-    public String upcomingDisplay() {
-        return "display/upcomingDisplayView";
-    }
     
     @RequestMapping(value="mainPageSelectDisplayList.do", produces="application/json; charset=utf-8")
     @ResponseBody
