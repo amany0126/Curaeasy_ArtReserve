@@ -28,7 +28,7 @@
 		SELECT ARTIST_NO
 		 	  FROM ARTIST
 		 WHERE MEMBER_NO = #{userNo} 
-	
+	</select>
 	<!-- 메인페이지에 표시할 최신 등록 작가를 한명 선택하는 쿼리 -->
 	<select id="selectLatestArtist" resultMap="artistResultSet">
 		SELECT *
