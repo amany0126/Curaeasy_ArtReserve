@@ -8,12 +8,14 @@
 <title>curaeasy</title>
     <style> 
            .innerOuter {
-            border:1px solid lightgray;
+            border:0px solid lightgray;
             width:80%;
             margin:auto;
             padding:5% 10%;
             background-color:white;
         }
+		button { border-radius: 50px !important;}
+
     </style>
 </head>
 <body>

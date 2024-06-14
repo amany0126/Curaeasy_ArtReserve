@@ -15,6 +15,7 @@
             max-width: 1200px;
             margin: auto;
             padding: 20px;
+            margin-top: 60px;
         }
         .header, .footer {
             background-color: #f8f8f8;
@@ -72,6 +73,7 @@
         table, th, td {
             border: 1px solid #ddd;
         }
+        th { background-color: lightgray; }
         th, td {
             padding: 10px;
             text-align: left;
@@ -87,6 +89,8 @@
             color: #fff;
             cursor: pointer;
         }
+
+        button { border-radius: 20px !important; width:300px; }
     </style>
 </head>
 <body>
@@ -114,10 +118,12 @@
                 <li>결과발표: 2024년 5월 20일</li>
             </ul>
         </div>
+        <hr style="background-color: lightcoral;">
         <div class="section">
             <h2>수시대관</h2>
             <p>수시대관은 연중 상시로 신청 가능합니다. 자세한 내용은 인천아트플랫폼 대관 담당자에게 문의 바랍니다.</p>
         </div>
+        <hr style="background-color: lightcoral;">
         <div class="section">
             <h2>대관방침</h2>
             <h3>자격조건</h3>
@@ -127,6 +133,7 @@
                 <li>기타 대관 목적에 적합한 단체 및 개인</li>
             </ul>
         </div>
+        <hr style="background-color: lightcoral;">
         <div class="section">
             <h2>제한사항</h2>
             <p>다음의 경우 대관이 제한될 수 있습니다.</p>
@@ -136,6 +143,7 @@
                 <li>기타 공공질서 및 미풍양속에 반하는 행사</li>
             </ul>
         </div>
+        <hr style="background-color: lightcoral;">
         <div class="table-container">
             <h2>대관료</h2>
             <table>

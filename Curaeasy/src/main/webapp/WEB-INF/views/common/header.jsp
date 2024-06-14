@@ -35,7 +35,10 @@
 
         div { box-sizing: border-box;}
         #logo img{ width:100%; height: 100%; margin-left:0px; margin-right: 0px; }
-        #header { background-color: #333; }
+        #logo a:hover { background-color: transparent !important; }
+        #header { 
+            background-color: #333; box-shadow: 20px 10px 15px 10px lightgray; 
+        }
         #header-1 {
             height:160px;
             width : 1500px;
@@ -43,14 +46,15 @@
             flex-wrap: wrap;
             margin: auto;
             background-color: #333; color: #fff; 
-            
         }
         #navi { 
             padding: 0; 
-            margin : 0; 
+            margin : 0 auto; 
             list-style-type: none; 
             height: 100%; 
             width: 1300px; 
+            justify-content: center;
+            flex-grow: 1;
         }
 
         #user-actions li { list-style-type : none; }  
@@ -63,6 +67,7 @@
         /* navi */
         #navi > li { float: left; width: 15%; height: 80px; line-height: 100px; text-align: center; position: relative; padding:0px; }
         #navi > li a { 
+            background-color: transparent !important;
             text-decoration: none; color: #fff; 
             font-size: 20px; font-weight: 900; 
             display: block; 
