@@ -56,6 +56,7 @@
     $(function(){
       // calendar element 취득
       var calendarEl = $('#calendar')[0];
+
       // full-calendar 생성하기
       var calendar = new FullCalendar.Calendar(calendarEl, {
     	 contentHeight: 700, // calendar 높이 설정
@@ -98,20 +99,52 @@
         // change the border color just for fun
         info.el.style.borderColor = 'red';
         },
+        
         dateClick: function(info) { // 일정 하나 선택
-            console.log(info);
+           console.log(info); 
+           console.log(info.dateStr); 
+           console.log('${requestScope.today1}'); 
             
-            console.log(info.jsEvent.target.className.includes("fc-bg-event fc-event fc-event-start fc-event-end fc-event-future"));
-            if(info.jsEvent.target.className.includes("fc-bg-event fc-event fc-event-start fc-event-end fc-event-future")){
-                alert('이미 등록된 일정입니다');
+           	
+           if(info.jsEvent.toElement.className.includes("number")){
+        	   
+           }else{
+            if(info.jsEvent.srcElement.innerText === "예약종료" || info.jsEvent.srcElement.innerText === "예약완료"){
+                alert('신청이 불가능한 일정입니다');
                 }else{
                 alert('신청 가능한 일자입니다')
-               
-                window.location.href = "http://localhost:8006/curaeasy/inrollFrom.re?disNo=${requestScope.gno}&staDay="+info.dateStr; 
-               /*  window.open("https://www.google.com/"); */
-            }
+              	
+            
+                	    let f = document.createElement('form');
+                		let gno = ${requestScope.gno};    
+                	
+                	    let obj1;
+                	    obj1 = document.createElement('input');
+                	    obj1.setAttribute('type', 'hidden');
+                	    obj1.setAttribute('name', 'disNo');
+                	    obj1.setAttribute('value', gno);
 
-            // window.open("https://www.google.com/"); // 오픈할 사이트 등록
+                	    let obj2;
+                	    obj2 = document.createElement('input');
+                	    obj2.setAttribute('type', 'hidden');
+                	    obj2.setAttribute('name', 'staDay');
+                	    obj2.setAttribute('value', info.dateStr);
+                	    
+                	    f.appendChild(obj1);
+                	    f.appendChild(obj2);
+                	    f.setAttribute('method', 'post');
+                	    f.setAttribute('action', 'inrollFrom.re');
+                	    document.body.appendChild(f);
+                	    f.submit();
+                
+                
+                
+               /*  window.location.href = "http://localhost:8006/curaeasy/inrollFrom.re?disNo=${requestScope.gno}&staDay="+info.dateStr; */ 
+
+            }
+           }
+           
+
            
         },
         select: function(arg) { // 캘린더에서 드래그로 이벤트를 생성할 수 있다.
@@ -140,14 +173,25 @@
 		            title: '예약완료',
 		            start: '${c.rentalStartDate}',
 		            end: '${c.rentalEndDate}',
-		            display : 'background'
+		            display : 'background',
+		            eventBackgroundColor : 'blue',
+		            	eventBorderColor  : 'blue'
 		          },
-				
+		          {
+			            title: '예약완료',
+			            start: '${c.rentalEndDate}',
+			            display : 'background'
+			       },
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
+	{
+            title: '예약종료',
+            start: '1000-01-01',
+            end: '${requestScope.today}', 
+            display : 'background'
         	
-        
+       },
         ]
       });
       // 캘린더 랜더링

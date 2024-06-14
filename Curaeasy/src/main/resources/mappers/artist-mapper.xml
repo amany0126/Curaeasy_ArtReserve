@@ -24,4 +24,9 @@
 	             VALUES ( SEQ_ARTIST_NO.NEXTVAL,#{artistNickName},#{artistOrdinal},#{artistApplyTitle}
 	             		,#{artistIntroduce},#{artistImage},#{memberNo})
 	</insert>
+	<select id="artistNo" resultType="_int" parameterType="_int">
+		SELECT ARTIST_NO
+		 	  FROM ARTIST
+		 WHERE MEMBER_NO = #{userNo} 
+	</select>
 </mapper>
