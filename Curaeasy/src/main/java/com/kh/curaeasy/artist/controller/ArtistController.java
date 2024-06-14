@@ -3,6 +3,7 @@ package com.kh.curaeasy.artist.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.kh.curaeasy.artist.model.service.ArtistService;
 import com.kh.curaeasy.artist.model.vo.Artist;
 import com.kh.curaeasy.member.model.vo.Member;
@@ -28,9 +30,16 @@ public class ArtistController {
 	 @Autowired private ArtistService artistService;
 	
 	@RequestMapping("introduce.do")
-	public String artistInfo() {
+	public String artistInfo(Model model) {
+		
+		// 입주작가 페이지에 표시할 작가 리스트를 가져오기
+		ArrayList<Artist> list = artistService.selectArtistList();
+		model.addAttribute("list", list);
+		model.addAttribute("jsonList", new Gson().toJson(list));
+		
 		return "artist/artistIntroduceView";
 	}
+	
 	@RequestMapping("enrollForm.at")
 	public String EnrollFormArtist() {
 		return "artist/enrollFormArtist";

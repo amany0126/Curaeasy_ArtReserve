@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -130,65 +131,55 @@
     <div class="content">
         <div class="content-header">
             <h1>입주작가</h1>
-            <div class="search-box">
-                <input type="text" placeholder="검색어를 입력하세요" />
-                <button>검색</button>
-            </div>
         </div>
         <div class="sidebar">
             <ul class="ul">
-                <li><a href="#">2023기</a></li>
-                <li><a href="#">2022기</a></li>
-                <li><a href="#">2021기</a></li>
-                <li><a href="#">2020기</a></li>
-                <li><a href="#">2019기</a></li>
+           		<c:set var='ordinal' value='9999' />
+            	<c:forEach items='${requestScope.list}' var="item">
+           			<c:if test="${ ordinal ne item.artistOrdinal }">
+           				<li><a href="javascript:void(0)">${ item.artistOrdinal }기</a></li>
+           				<c:set var='ordinal' value='${item.artistOrdinal}' />
+           			</c:if>
+                </c:forEach>
             </ul>
         </div>
         <div class="main-content">
             <div class="artist-list">
-                <div class="artist-item">
-                    <img src="resources/images/artist1.jpg" alt="작가 이미지 1">
-                    <h2>작가명 1</h2>
-                    <p>작가소개 1</p>
-                </div>
-                <div class="artist-item">
-                    <img src="resources/images/artist2.jpg" alt="작가 이미지 2">
-                    <h2>작가명 2</h2>
-                    <p>작가소개 2</p>
-                </div>
-                <div class="artist-item">
-                    <img src="resources/images/artist3.jpg" alt="작가 이미지 3">
-                    <h2>작가명 3</h2>
-                    <p>작가소개 3</p>
-                </div>
-                <div class="artist-item">
-                    <img src="resources/images/artist4.jpg" alt="작가 이미지 4">
-                    <h2>작가명 4</h2>
-                    <p>작가소개 4</p>
-                </div>
-                <div class="artist-item">
-                    <img src="resources/images/artist5.jpg" alt="작가 이미지 5">
-                    <h2>작가명 5</h2>
-                    <p>작가소개 5</p>
-                </div>
-                <div class="artist-item">
-                    <img src="resources/images/artist6.jpg" alt="작가 이미지 6">
-                    <h2>작가명 6</h2>
-                    <p>작가소개 6</p>
-                </div>
-            </div>
-            <div class="pagination">
-                <a href="#" class="prev">«</a>
-                <a href="#" class="active">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#" class="next">»</a>
+            	<c:set var='ordinal' value='${requestScope.list[0].artistOrdinal}' />
+	            	<c:forEach items='${requestScope.list}' var="item">
+	           			<c:if test="${ ordinal eq item.artistOrdinal }">
+	           				<div class="artist-item">
+			                    <img src="resources/images/${ item.artistImage }" alt="작가 이미지 1">
+			                    <h2>${ item.artistNickName }</h2>
+			                    <p>${ item.artistIntroduce }</p>
+			                </div>
+	           			</c:if>
+	                </c:forEach>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(".sidebar a").click(function(event) {
+        const list = JSON.parse('${jsonList}');
+        const ordinal = event.target.innerText.replace("기", "");
+
+        $(".artist-list").empty();
+
+        list.forEach(e => {
+            if(e.artistOrdinal == ordinal){
+                $e = $("<div class=artist-item></div>");
+                $e.append($('<img src="resources/images/' + e.artistImage + '" alt="작가 이미지 1">'))
+                $e.append($('<h2>' + e.artistNickName + '</h2>'))
+                $e.append($('<p>' + e.artistIntroduce + '</p>'))
+                $(".artist-list").append($e);
+            }
+        });
+
+        
+    })
+</script>
 
 <jsp:include page="../common/footer.jsp" />
-
 </body>
 </html>

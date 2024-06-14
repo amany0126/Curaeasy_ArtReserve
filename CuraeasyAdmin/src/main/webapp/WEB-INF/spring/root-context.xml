@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+		<bean class="org.apache.commons.dbcp.BasicDataSource" 
+		  id="dataSource" destroy-method="close">
+		<!-- 
+			어느 DB 에 접속할건지를 필드값으로 지정하면됨 
+			기존에는 이 설정을 mybatis-config.xml 에서 설정했지만
+			스프링에서는 스프링이 알아야 하는 기본 정보이기 때문에
+			root-context.xml 에 기술해야함!!
+		-->
+		<property name="driverClassName" 
+				  value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" 
+				  value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="CURAEASY" />
+		<property name="password" value="CURAEASY" />
+	</bean>
+	
+	<!-- 2단계. MyBatis Spring 에서 제공하는 SQL 명령어 실행을 위한 bean 등록 -->
+	<!-- 
+		SqlSession 객체의 역할을 해주는 빈을 등록 
+		순수 마이바티스 이용 시 : SqlSession 객체 이용
+		(SqlSessionFactoryBuilder > SqlSessionFactory > SqlSession)
+		Spring 에 마이바티스 연동 시 : SqlSessionTemplate 객체 이용
+		(SqlSessionFactoryBean > SqlSessionTemplate)
+	-->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" 
+		  id="sqlSessionFactory">
+		<!-- 
+			MyBatis 설정파일의 위치를 지정 (mybatis-config.xml) 
+			classpath: 가 resources 폴더를 의미함
+		-->
+		<property name="configLocation" 
+				  value="classpath:mybatis-config.xml" />
+		<!-- 연결을 위한 객체를 참조해오기 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	    <bean class="org.mybatis.spring.SqlSessionTemplate" 
+		  id="sqlSession">
+		  <!-- 2단계에서 등록한 빈을 참조하겠다 -->
+		  <constructor-arg ref="sqlSessionFactory" />
+	</bean> 
+		<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		  id="transactionManager">
+		  <property name="dataSource" ref="dataSource"/>
+		  </bean>
+		  <tx:annotation-driven transaction-manager="transactionManager" />
+	
+			<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+			  id="multipartResolver">
+		<!-- defaultEncoding : 업로드 되는 파일에 대한 인코딩 처리를 어떻게 할건지 지정 -->
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- 
+			maxUploadSize : 한번에 전체 업로드 되는 파일의 총 용량 
+			- 총 파일의 최대용량은 10MByte 로 지정
+			10MByte == 10 * 1024*1024 // 기존
+			단, xml 에서 계산식이 적용되지 않으므로 직접 계산한 결과값을 넣어야 함!
+		-->
+		<property name="maxUploadSize" value="10000000"/>
+	</bean>
+</beans>

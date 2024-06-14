@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DisplayAttachment {
-	private int AttachmentNo;
+	private int attachmentNo;
 	private String originName;
 	private String changeName;
 	private int imageLevel;

@@ -1,5 +1,7 @@
 package com.kh.curaeasy.artist.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,10 @@ public class ArtistDao {
 
 	public int insertArtist(SqlSessionTemplate sqlSession, Artist at) {
 		return sqlSession.insert("artistMapper.insertArtist", at);
+	}
+
+	public ArrayList<Artist> selectArtistList(SqlSessionTemplate sqlSession) {
+		return (ArrayList) sqlSession.selectList("artistMapper.selectArtistList", null);
 	}
 
 }
