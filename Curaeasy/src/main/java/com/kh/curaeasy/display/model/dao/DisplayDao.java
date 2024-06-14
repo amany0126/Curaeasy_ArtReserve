@@ -44,4 +44,20 @@ public class DisplayDao {
 		return result;
 	}
 
+	public Display selectDisplay(SqlSessionTemplate sqlSession, int dno) {
+		return sqlSession.selectOne("displayMapper.selectDisplay", dno);
+	}
+
+	public ArrayList<DisplayAttachment> selectDisplayAttachment(SqlSessionTemplate sqlSession, int dno) {
+		return (ArrayList) sqlSession.selectList("displayMapper.selectDisplayAttachment", dno);
+	}
+
+	public ArrayList<Display> selectOnDisplay(SqlSessionTemplate sqlSession) {
+		return (ArrayList) sqlSession.selectList("displayMapper.selectOnDisplay", null);
+	}
+
+	public ArrayList<DisplayAttachment> selectOnDisplayThumbnail(SqlSessionTemplate sqlSession) {
+		return (ArrayList) sqlSession.selectList("displayMapper.selectOnDisplayThumbnail", null);
+	}
+
 }

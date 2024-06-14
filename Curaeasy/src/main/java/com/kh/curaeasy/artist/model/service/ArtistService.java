@@ -1,5 +1,7 @@
 package com.kh.curaeasy.artist.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,10 @@ public class ArtistService {
 	@Transactional
 	public int insertArtist(Artist at) {
 		return artistDao.insertArtist(sqlSession, at);
+	}
+
+	public ArrayList<Artist> selectArtistList() {
+		return artistDao.selectArtistList(sqlSession);
 	}
 
 }

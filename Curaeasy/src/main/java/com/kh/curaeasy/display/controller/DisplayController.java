@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.Gson;
 import com.kh.curaeasy.display.model.service.DisplayService;
 import com.kh.curaeasy.display.model.vo.Display;
 import com.kh.curaeasy.display.model.vo.DisplayAttachment;
@@ -56,19 +54,18 @@ public class DisplayController {
     }
     
     @RequestMapping("displayDetail.do")
-    public String displayDetail() {
+    public String displayDetail(int dno, Model model) {
+    	
+    	// 선택한 작품번호의 작품과 첨부파일 가져오기
+    	Display d = displayService.selectDisplay(dno);
+    	ArrayList<DisplayAttachment> list = displayService.selectDisplayAttachment(dno);
+    	
+    	model.addAttribute("d", d);
+    	model.addAttribute("list", list);
+    	
         return "display/displayDetailView";
     }
     
-    
-    @RequestMapping(value="mainPageSelectDisplayList.do", produces="application/json; charset=utf-8")
-    @ResponseBody
-    public String mainPageSelectDisplayList() {
-    	
-    	// 현재 진행중인 전시 리스트 가져오기
-    	ArrayList<Display> list = displayService.mainPageSelectDisplayList();
-    	return new Gson().toJson(list);
-    }
     
     @RequestMapping("displayAdd.do")
     public String displayAdd() {
@@ -99,7 +96,7 @@ public class DisplayController {
     	System.out.println(fileList);
     	
     	int result = displayService.insertDisplay(d, fileList);
-    	System.out.println(result);
+    	
     	
     	return "/main";
     	

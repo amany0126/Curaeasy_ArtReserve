@@ -39,14 +39,25 @@ public class DisplayService {
     public ArrayList<Display> selectClosedDisplayList() {
         return displayDao.selectClosedDisplayList(sqlSession);
     }
-    
-    
-    
-    
 	
 	@Transactional
 	public int insertDisplay(Display d, ArrayList<DisplayAttachment> fileList) {
 		return displayDao.insertDisplay(sqlSession, d, fileList);
 	}
 
+	public Display selectDisplay(int dno) {
+		return displayDao.selectDisplay(sqlSession, dno);
+	}
+
+	public ArrayList<DisplayAttachment> selectDisplayAttachment(int dno) {
+		return displayDao.selectDisplayAttachment(sqlSession, dno);
+	}
+
+	public ArrayList<Display> selectOnDisplay() {
+		return displayDao.selectOnDisplay(sqlSession);
+	}
+
+	public ArrayList<DisplayAttachment> selectOnDisplayThumbnail() {
+		return displayDao.selectOnDisplayThumbnail(sqlSession);
+	}
 }

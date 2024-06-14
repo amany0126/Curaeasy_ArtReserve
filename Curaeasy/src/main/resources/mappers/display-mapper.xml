@@ -13,6 +13,14 @@
 		<result column="GALLERY_NO" property="galleryNo" />
 		<result column="IMAGE_PATH" property="imagePath" />
 	</resultMap>
+	<resultMap type="displayAttachment" id="displayAttachmentResultSet">
+		<result column="ATTACHMENT_NO" property="attachmentNo" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="CHANGE_NAME" property="changeName" />
+		<result column="IMAGE_LEVEL" property="imageLevel" />
+		<result column="STATUS" property="status" />
+		<result column="DISPLAY_NO" property="displayNo" />
+	</resultMap>
 		<select id="mainPageSelectDisplayList" resultMap="displayResultSet">
 			SELECT DISPLAY_NO,
 				   DISPLAY_NAME,
@@ -99,4 +107,68 @@
 							#{imageLevel},
 							SEQ_DISPLAY_NO.CURRVAL)
 		</insert>
+	
+	<!-- 메인페이지에 표시할 (진행중인) 최신 전시를 한개 선택하는 쿼리 -->
+	<select id="selectLatestDisplay" resultType="display" resultMap="displayResultSet" >
+		SELECT DISPLAY_NAME,
+			   TO_CHAR(DISPLAY_START_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_START_DATE,
+			   TO_CHAR(DISPLAY_END_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_END_DATE,
+			   DISPLAY_CONTENT,
+			   GALLERY_NAME AS GALLERY_NO
+		  FROM DISPLAY
+		  JOIN GALLERY ON(DISPLAY.GALLERY_NO = GALLERY.GALLERY_NO)
+		 WHERE DISPLAY_NO = (SELECT MAX(DISPLAY_NO)
+		                       FROM DISPLAY
+		                      WHERE DISPLAY_STATUS = '진행')
+
+	</select>
+	
+	<!-- 전시 상세페이지에 표시할 전시 데이터 1개를 선택하는 쿼리 -->
+	<select id="selectDisplay" parameterType="_int" resultMap="displayResultSet">
+		SELECT DISPLAY_NO,
+			   DISPLAY_NAME,
+			   DISPLAY_CONTENT,
+			   TO_CHAR(DISPLAY_START_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_START_DATE,
+			   TO_CHAR(DISPLAY_END_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_END_DATE,
+			   DISPLAY_PRICE,
+			   DISPLAY_STATUS,
+			   ARTIST_NICKNAME AS ARTIST_NO,
+			   GALLERY_NAME AS GALLERY_NO
+		  FROM DISPLAY D
+		  JOIN ARTIST A USING(ARTIST_NO)
+		  JOIN GALLERY G USING(GALLERY_NO)
+		 WHERE DISPLAY_STATUS != '종료'
+		   AND DISPLAY_NO = #{dno}
+	</select>
+	
+	<!-- 전시 상세페이지에 표시할 사진 데이터를 선택하는 쿼리  -->
+	<select id="selectDisplayAttachment" parameterType="_int" resultMap="displayAttachmentResultSet">
+		SELECT *
+		  FROM DISPLAY_ATTACHMENT A
+		  JOIN DISPLAY D USING(DISPLAY_NO)
+		 WHERE DISPLAY_STATUS != '종료'
+		   AND DISPLAY_NO = #{dno}
+	</select>
+	
+	<!-- 현재전시 목록페이지에 들어갈 전시 데이터를 가져오는 쿼리 -->
+	<select id="selectOnDisplay" resultMap="displayResultSet">
+		SELECT DISPLAY_NO,
+			   DISPLAY_NAME,
+		       TO_CHAR(DISPLAY_START_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_START_DATE,
+			   TO_CHAR(DISPLAY_END_DATE, 'YYYY-MM-DD(DAY)') AS DISPLAY_END_DATE
+		  FROM DISPLAY
+		 WHERE DISPLAY_STATUS = '진행'
+		 ORDER BY DISPLAY_NO
+	</select>
+	
+	<!-- 현재전시 목록페이지에 들어갈 섬네일 데이터를 가져오는 쿼리 -->
+	<select id="selectOnDisplayThumbnail" resultMap="displayAttachmentResultSet">
+		SELECT A.*
+		  FROM DISPLAY_ATTACHMENT A
+		  JOIN DISPLAY D ON(A.DISPLAY_NO = D.DISPLAY_NO)
+		 WHERE DISPLAY_STATUS = '진행'
+		   AND IMAGE_LEVEL = '1'
+		 ORDER BY A.DISPLAY_NO
+	</select>
+	
 </mapper>
