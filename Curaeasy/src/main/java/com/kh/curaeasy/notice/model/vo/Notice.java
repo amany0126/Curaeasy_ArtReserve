@@ -19,4 +19,5 @@ public class Notice {
 	private String noticeContent;
 	private String noticeAttachment;
 	private String noticeStatus;
+	private int noticeCount;
 }
