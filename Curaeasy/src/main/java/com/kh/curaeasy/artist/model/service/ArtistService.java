@@ -31,4 +31,8 @@ public class ArtistService {
 		return artistDao.selectArtistList(sqlSession);
 	}
 
+	public int selectArtistNo(int memberNo) {
+		return artistDao.selectArtistNo(sqlSession,memberNo);
+	}
+
 }

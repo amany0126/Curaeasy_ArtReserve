@@ -40,9 +40,21 @@ public class ArtistController {
 		return "artist/artistIntroduceView";
 	}
 	
-	@RequestMapping("enrollForm.at")
-	public String EnrollFormArtist() {
-		return "artist/enrollFormArtist";
+	@RequestMapping(value = "enrollForm.at", produces = "text/html; charset=UTF-8")
+	public String EnrollFormArtist( HttpSession session) {
+		
+		int memberNo = (((Member)session.getAttribute("loginUser")).getMemberNo());
+		int selectArtistNo = artistService.selectArtistNo(memberNo);
+		
+		if(selectArtistNo>0) {
+			session.setAttribute("alertMsg", "이미 작가시거나 작가 신청 대기중 입니다.");
+			return "member/myPage";
+		}else {
+			return "artist/enrollFormArtist";
+		}
+		
+		
+		
 	}
 	@ResponseBody
 	@GetMapping(value="NickNameCheck.at", produces = "text/html; charset=UTF-8")

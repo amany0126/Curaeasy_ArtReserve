@@ -172,16 +172,12 @@
 				{
 		            title: '예약완료',
 		            start: '${c.rentalStartDate}',
-		            end: '${c.rentalEndDate}',
+		            end:  new Date(new Date('${c.rentalEndDate}').setDate(new Date('${c.rentalEndDate}').getDate() + 1))
+		            	  .toISOString().slice(0,10),
 		            display : 'background',
 		            eventBackgroundColor : 'blue',
 		            	eventBorderColor  : 'blue'
 		          },
-		          {
-			            title: '예약완료',
-			            start: '${c.rentalEndDate}',
-			            display : 'background'
-			       },
 				</c:forEach>
 			</c:otherwise>
 		</c:choose>
