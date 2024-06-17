@@ -31,6 +31,7 @@
 			<mapping path="/update.me" />
 			<mapping path="/delete.me" />
 			<mapping path="/enrollForm.at" />
+			<mapping path="/reserveDisplay.do" />
 			<beans:bean class="com.kh.curaeasy.common.interceptor.LoginInterceptor" 
 						id="loginInterceptor" />	 
 		</interceptor>
