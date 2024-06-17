@@ -38,6 +38,8 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            border-top: 3px solid lightcoral;
+            
         }
         th, td {
             border: 1px solid #ddd;
@@ -49,8 +51,7 @@
             font-weight: bold;
         }
 
-        .title{margin-top: 50px; margin-bottom: 50px;}
-
+        .title{margin-top: 100px; margin-bottom: 50px;}
 
     </style>
 </head>
