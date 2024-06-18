@@ -22,4 +22,8 @@ public class ArtistDao {
 		return (ArrayList) sqlSession.selectList("artistMapper.selectArtistList", null);
 	}
 
+	public int selectArtistNo(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("artistMapper.selectArtistNo", memberNo);
+	}
+
 }

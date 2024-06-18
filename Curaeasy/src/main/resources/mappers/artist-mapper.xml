@@ -13,7 +13,7 @@
 		<result column="ARTIST_STATUS" property="artistStatus" />
 		<result column="MEMBER_NO" property="memberNo" />
 	</resultMap>
-		<select id="NickNameCheck" resultType="_int" parameterType="string">
+	<select id="NickNameCheck" resultType="_int" parameterType="string">
 		SELECT COUNT(*)
 		 	  FROM ARTIST
 		 WHERE ARTIST_NICKNAME = #{checkNickName} 
@@ -48,5 +48,10 @@
 		 WHERE ARTIST_RESULT = 'Y'
 		   AND ARTIST_STATUS = 'Y'
 		 ORDER BY ARTIST_ORDINAL DESC, ARTIST_NO DESC
+	</select>
+		<select id="selectArtistNo" resultType="_int" parameterType="_int">
+		SELECT COUNT(*)
+		 	  FROM ARTIST
+		 WHERE MEMBER_NO = #{memberNo} 
 	</select>
 </mapper>

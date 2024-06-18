@@ -87,7 +87,6 @@ public class MemberController {
 				
 				// 로그인 성공 시 "일회성 알람 문구" 도 같이 담기
 				// (sessionScope 에 담았었음)
-				session.setAttribute("alertTitle", "로그인 성공!");
 				session.setAttribute("alertMsg", loginUser.getMemberName()+"님 환영합니다.");
 				// redirect:/
 				mv.setViewName("redirect:/");
