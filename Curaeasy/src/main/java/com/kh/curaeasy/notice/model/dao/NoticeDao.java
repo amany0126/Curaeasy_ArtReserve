@@ -17,15 +17,15 @@ public int selectListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("noticeMapper.selectListCount");
 	}
 	
-	public ArrayList<Notice> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		
-		int limit = pi.getBoardLimit();
-		int offset = (pi.getCurrentPage() - 1) * limit;
-		
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return (ArrayList)sqlSession.selectList("noticeMapper.selectList", null, rowBounds);
-	}
+
+	 public ArrayList<Notice> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	  
+	 int limit = pi.getBoardLimit(); int offset = (pi.getCurrentPage() - 1) *limit;
+	  
+	 RowBounds rowBounds = new RowBounds(offset, limit);
+	 
+	 return (ArrayList)sqlSession.selectList("noticeMapper.selectList", null,
+	 rowBounds); }
 	
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice n) {
 		

@@ -123,12 +123,8 @@
                     <label for="post-btn">주소:</label>
                  
                     	<input type="hidden" id="sample6_postcode" name="deliveryZipcode" placeholder="&nbsp;&nbsp;우편번호" readonly required >
-	                    <input type="text" id="memberAddress1" name="memberAddress1" placeholder="&nbsp;&nbsp;주소" readonly required style=" width:63vw; display: inline;" class="form-control">
-						<input type="button" id="post-btn" class="btn  btn-light" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="width:10vw; margin-left:5px; border: 1px solid black;" ><br>
-
-                </div>
-                 <div class="form-group">
-                  
+	                    <input type="text" id="memberAddress1" name="memberAddress1" placeholder="&nbsp;&nbsp;주소" readonly required style=" width:66vw; display: inline;" class="form-control">
+						<input type="button" id="post-btn" class="btn btn-light" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="width:10vw; margin-left:1px; border: 1px solid black;" >
                 </div>
                 <div class="form-group">
                     <label for="addressDetail">상세주소 입력</label>
