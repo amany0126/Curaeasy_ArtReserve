@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="adminMapper">
+	<resultMap id="displayResultSet" type="display">
+		<result column="DISPLAY_NO" property="displayNo" />
+		<result column="DISPLAY_NAME" property="displayName" />
+		<result column="DISPLAY_CONTENT" property="displayContent" />
+		<result column="DISPLAY_START_DATE" property="displayStartDate" />
+		<result column="DISPLAY_END_DATE" property="displayEndDate" />
+		<result column="DISPLAY_PRICE" property="displayPrice" />
+		<result column="DISPLAY_STATUS" property="displayStatus" />
+		<result column="ARTIST_NO" property="artistNo" />
+		<result column="GALLERY_NO" property="galleryNo" />
+		<result column="IMAGE_PATH" property="imagePath" />
+	</resultMap>
+	<resultMap type="displayAttachment" id="displayAttachmentResultSet">
+		<result column="ATTACHMENT_NO" property="attachmentNo" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="CHANGE_NAME" property="changeName" />
+		<result column="IMAGE_LEVEL" property="imageLevel" />
+		<result column="STATUS" property="status" />
+		<result column="DISPLAY_NO" property="displayNo" />
+	</resultMap>
+<select id="mainPageSelectDisplayList" resultMap="displayResultSet">
+    SELECT 
+        D.DISPLAY_NO,
+        D.DISPLAY_NAME,
+        D.DISPLAY_CONTENT,
+        TO_CHAR(D.DISPLAY_START_DATE, 'YYYY-MM-DD') AS DISPLAY_START_DATE,
+        TO_CHAR(D.DISPLAY_END_DATE, 'YYYY-MM-DD') AS DISPLAY_END_DATE,
+        G.GALLERY_NAME AS GALLERY_NAME,
+        D.DISPLAY_STATUS,
+        A.ARTIST_NAME AS ARTIST_NAME
+    FROM 
+        DISPLAY D
+    JOIN 
+        GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
+    JOIN 
+        ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
+    WHERE 
+        SYSDATE BETWEEN D.DISPLAY_START_DATE AND D.DISPLAY_END_DATE
+    ORDER BY 
+        D.DISPLAY_NO
+</select>
+
+</mapper>
