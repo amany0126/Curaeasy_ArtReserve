@@ -8,6 +8,24 @@
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 	
+	<typeAliases>
+		<typeAlias type="com.kh.curaeasyadmin.model.vo.Display" alias="display" />
+		<typeAlias type="com.kh.curaeasyadmin.model.vo.Notice" alias="notice" />	
+		<typeAlias type="com.kh.curaeasyadmin.model.vo.Reply" alias="reply" />	
+		<typeAlias type="com.kh.curaeasyadmin.model.vo.Rental" alias="rental" />
+		<typeAlias type="com.kh.curaeasyadmin.model.vo.Reserve" alias="reserve" />
+		<typeAlias type="com.kh.curaeasyadmin.model.vo.Member" alias="member" />
+		
+		<typeAlias type="com.kh.curaeasyadmin.model.vo.Review" alias="review" />
+		<typeAlias type="com.kh.curaeasyadmin.model.vo.Artist" alias="artist" />
+		<typeAlias type="com.kh.curaeasyadmin.model.vo.Gallery" alias="gallery" />
+		
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="/mappers/admin-mapper.xml" />
+	</mappers>
+	
 </configuration>  
 
 

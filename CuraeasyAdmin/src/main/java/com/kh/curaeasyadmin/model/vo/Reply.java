@@ -1,5 +1,6 @@
 package com.kh.curaeasyadmin.model.vo;
 
+import java.sql.Date;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,13 +12,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Notice {
-	
-	private int noticeNo;
-	private String noticeDate;
-	private String noticeTitle;
-	private String noticeContent;
-	private String noticeAttachment;
-	private String noticeStatus;
-	private int noticeCount;
+public class Reply {
+    private int replyNo;
+    private String replyContent;
+    private Date replyEnrollDate;
+    private String replyStatus;
+    private int reviewNo;
+    private int memberNo;
 }

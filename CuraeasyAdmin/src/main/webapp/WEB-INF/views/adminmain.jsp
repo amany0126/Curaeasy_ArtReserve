@@ -51,10 +51,10 @@
                         </a>
                         <div class="collapse" id="collapseExhibitions" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionExhibitions">
-                                <a class="nav-link" href="displaylist.ad">전시회 관리</a>
-                                <a class="nav-link" href="gallerylist.ad">전시관 관리</a>
-                                <a class="nav-link" href="rentallist.ad">대관 관리</a>
-                                <a class="nav-link" href="reservelist.ad">예매 관리</a>
+                                <a class="nav-link" href="displayList.ad">전시회 관리</a>
+                                <a class="nav-link" href="galleryList.ad">전시관 관리</a>
+                                <a class="nav-link" href="rentalList.ad">대관 관리</a>
+                                <a class="nav-link" href="reserveList.ad">예매 관리</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMembers" aria-expanded="false" aria-controls="collapseMembers">
@@ -64,8 +64,8 @@
                         </a>
                         <div class="collapse" id="collapseMembers" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionMembers">
-                                <a class="nav-link" href="memberlist.ad">일반회원 관리</a>
-                                <a class="nav-link" href="artistlist.ad">작가 관리</a>
+                                <a class="nav-link" href="memberList.ad">일반회원 관리</a>
+                                <a class="nav-link" href="artistList.ad">작가 관리</a>
                             </nav>
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseNotices" aria-expanded="false" aria-controls="collapseNotices">
@@ -80,12 +80,13 @@
                         </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReviews" aria-expanded="false" aria-controls="collapseReviews">
                             <div class="sb-nav-link-icon"><i class="fas fa-comment-dots"></i></div>
-                            후기 관리
+                             후기 관리
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseReviews" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionReviews">
-                                <a class="nav-link" href="replylist.ad">댓글 관리</a>
+                                <a class="nav-link" href="reviewList.ad">후기 관리</a>
+                                <a class="nav-link" href="replyList.ad">댓글 관리</a>
                             </nav>
                         </div>
                     </div>
@@ -95,7 +96,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">List of total</h1>
+                    <h1 class="mt-4">Dashboard</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
@@ -121,7 +122,7 @@
                                         <tr>
                                             <td>${display.displayNo}</td>
                                             <td>${display.galleryName}</td>
-                                            <td>${display.artistName}</td>
+                                            <td>${display.artistNickName}</td>
                                             <td>${display.displayStartDate} ~ ${display.displayEndDate}</td>
                                             <td>${display.displayStatus}</td>
                                         </tr>
@@ -135,6 +136,192 @@
                             </table>
                         </div>
                     </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            모든 공지사항 목록
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>NO</th>
+                                        <th>제목</th>
+                                        <th>작성일</th>
+                                        <th>상태</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="notice" items="${noticeList}">
+                                        <tr>
+                                            <td>${notice.noticeNo}</td>
+                                            <td>${notice.noticeTitle}</td>
+                                            <td>${notice.noticeDate}</td>
+                                            <td>${notice.noticeStatus}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    <c:if test="${empty noticeList}">
+                                        <tr>
+                                            <td colspan="4">등록된 공지사항이 없습니다.</td>
+                                        </tr>
+                                    </c:if>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            모든 후기 목록
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>NO</th>
+                                        <th>제목</th>
+                                        <th>내용</th>
+                                        <th>작성일</th>
+                                        <th>작성자</th>
+                                        <th>상태</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="review" items="${reviewList}">
+                                        <tr>
+                                            <td>${review.reviewNo}</td>
+                                            <td>${review.reviewTitle}</td>
+                                            <td>${review.reviewContent}</td>
+                                            <td>${review.reviewEnrollDate}</td>
+                                            <td>${review.memberName}</td>
+                                            <td>${review.reviewStatus}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    <c:if test="${empty reviewList}">
+                                        <tr>
+                                            <td colspan="6">등록된 후기가 없습니다.</td>
+                                        </tr>
+                                    </c:if>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            모든 댓글 목록
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>NO</th>
+                                        <th>내용</th>
+                                        <th>작성일</th>
+                                        <th>상태</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="reply" items="${replyList}">
+                                        <tr>
+                                            <td>${reply.replyNo}</td>
+                                            <td>${reply.replyContent}</td>
+                                            <td>${reply.replyEnrollDate}</td>
+                                            <td>${reply.replyStatus}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    <c:if test="${empty replyList}">
+                                        <tr>
+                                            <td colspan="4">등록된 댓글이 없습니다.</td>
+                                        </tr>
+                                    </c:if>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            모든 대관신청 목록
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>NO</th>
+                                        <th>대관 시작일</th>
+                                        <th>대관 종료일</th>
+                                        <th>작가</th>
+                                        <th>전시관</th>
+                                        <th>심사 결과</th>
+                                        <th>상태</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="rental" items="${rentalList}">
+                                        <tr>
+                                            <td>${rental.rentalNo}</td>
+                                            <td>${rental.rentalStartDate}</td>
+                                            <td>${rental.rentalEndDate}</td>
+                                            <td>${rental.galleryName}</td>
+                                            <td>${rental.rentalResult}</td>
+                                            <td>${rental.rentalStatus}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    <c:if test="${empty rentalList}">
+                                        <tr>
+                                            <td colspan="7">등록된 대관신청이 없습니다.</td>
+                                        </tr>
+                                    </c:if>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            모든 예매 목록
+                        </div>
+                        <div class="card-body">
+                            <table id="datatablesSimple">
+                                <thead>
+                                    <tr>
+                                        <th>NO</th>
+                                        <th>예매수량</th>
+                                        <th>결제코드</th>
+                                        <th>결제일</th>
+                                        <th>입장일</th>
+                                        <th>결제액</th>
+                                        <th>상태</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach var="reserve" items="${reserveList}">
+                                        <tr>
+                                            <td>${reserve.reserveNo}</td>
+                                            <td>${reserve.reserveCount}</td>
+                                            <td>${reserve.paymentCode}</td>
+                                            <td>${reserve.paymentDate}</td>
+                                            <td>${reserve.entranceDate}</td>
+                                            <td>${reserve.paymentPrice}</td>
+                                            <td>${reserve.reserveStatus}</td>
+                                        </tr>
+                                    </c:forEach>
+                                    <c:if test="${empty reserveList}">
+                                        <tr>
+                                            <td colspan="7">등록된 예매가 없습니다.</td>
+                                        </tr>
+                                    </c:if>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
