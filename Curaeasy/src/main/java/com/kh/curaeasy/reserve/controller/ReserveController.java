@@ -2,15 +2,24 @@ package com.kh.curaeasy.reserve.controller;
 
 import java.util.ArrayList;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.curaeasy.display.model.service.DisplayService;
 import com.kh.curaeasy.display.model.vo.Display;
 import com.kh.curaeasy.display.model.vo.DisplayAttachment;
+import com.kh.curaeasy.member.controller.EmailController;
+import com.kh.curaeasy.member.model.vo.Member;
 import com.kh.curaeasy.reserve.model.service.ReserveService;
 import com.kh.curaeasy.reserve.model.vo.Reserve;
 
@@ -22,6 +31,9 @@ public class ReserveController {
 	
 	@Autowired
 	ReserveService rService;
+	
+	@Autowired
+	JavaMailSender mailSender;
 	
 	@RequestMapping("reserve.do")
 	public String reserveInfo() {
@@ -53,12 +65,34 @@ public class ReserveController {
     }
 	
 	@RequestMapping(value="insertReserve.do")
-	public String insertReserve(Reserve data, Model model) {
-		System.out.println(data);
+	@ResponseBody
+	public String insertReserve(Reserve data, Model model, HttpSession session) throws MessagingException {
+		
 		rService.insertReserve(data);
 		Reserve r = rService.selectLastInsertedReserve();
-		System.out.println(r);
+		
+		String emailStr = new EmailController()
+						.PaymentConfirmation(r.getReserveNo(),
+											 r.getReserveCount(),
+											 r.getEntranceDate().substring(0, 10),
+											 r.getPaymentPrice());
+		
+		MimeMessage mimeMessage  = mailSender.createMimeMessage();
+		MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage , true ,"UTF-8");
+		messageHelper.setSubject("[크레이지] 예약하신 전시 내용입니다."); 
+		messageHelper.setText(emailStr,true);
+		messageHelper.setTo(((Member)session.getAttribute("loginUser")).getMemberEmail());
+		mailSender.send(mimeMessage);
+		
 		model.addAttribute("eventMsg", "결제가 완료되었습니다.");
-		return "common/eventPage";
+		return "결제성공함";
+	}
+	
+	
+	
+	@RequestMapping(value="reserveList.me")
+	public String reserveList() {
+		
+		return "";
 	}
 }

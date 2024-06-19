@@ -391,7 +391,7 @@
                     },
                     success: function(result) {
                         alert("결제가 완료되었습니다.");
-                        location.href = "displayDetail.do?dno=${ requestScope.d.displayNo }"
+                        location.href = "reserveList.me"
                     },
                     error: function() {
                         console.log("실패");
