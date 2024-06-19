@@ -123,10 +123,12 @@
         <div class="exhibition-list">
             <c:forEach var="exhibition" items="${ onDisplayList }">
                 <div class="exhibition-item">
-                    <img src="<c:url value='/resources/display/${exhibition.imagePath}' />" alt="전시 이미지">
-                    <h2>${ exhibition.displayName }</h2>
-                    <p>${ exhibition.displayContent }</p>
-                    <p>${ exhibition.displayStartDate } ~ ${ exhibition.displayEndDate }</p>
+                    <a href="displayDetail.do?dno=${exhibition.displayNo}" style="text-decoration: none; color: black;" >
+                        <img src="<c:url value='/resources/display/${exhibition.imagePath}' />" alt="전시 이미지">
+                        <h2>${ exhibition.displayName }</h2>
+                        <p>${ exhibition.displayContent }</p>
+                        <p>${ exhibition.displayStartDate } ~ ${ exhibition.displayEndDate }</p>
+                    </a>
                 </div>
             </c:forEach>
             <c:if test="${ empty onDisplayList }">

@@ -41,7 +41,7 @@
         <hr style="height: 3px">
         <ul>
             <li><a href="myPage.me">마이페이지</a></li>
-            <li><a href="#">결제내역조회</a></li>
+            <li><a href="reserveList.me">결제내역조회</a></li>
             <li><a href="#">후기</a></li>
             <li><a href="enrollForm.at">작가신청</a></li>
         </ul>
