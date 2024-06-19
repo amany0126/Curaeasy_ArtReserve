@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,7 @@
     <!-- Include Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <title>수시대관신청</title>
+    <title>전시회 예매</title>
     <style>
         .form-container {
             border: 1px solid lightgray;
@@ -112,7 +113,7 @@
                 </div>
                 <div class="form-group">
                         <label>연락처 :</label>
-                        <input type="text" id="memberPhone" name="memberPhone" required class="form-control">
+                        <input type="text" id="memberPhone" name="memberPhone" required class="form-control" placeholder="하이픈 없이 입력" maxlength="11">
                 </div>
                 <div class="form-group">
                     <label for="email">이메일:</label>
@@ -160,6 +161,12 @@
                                 <th>예매 인원수</th>
                                 <td>${ requestScope.amount }  명</td>
                             </tr>
+                            <tr>
+                                <th>금액</th>
+                                <td>
+                                    <fmt:formatNumber type="number" value="${ requestScope.price }" />원
+                                </td>
+                            </tr>
                         </table>
                     </div>
                     
@@ -200,7 +207,7 @@
             <br>
             <div class="form-footer1" align="center">
                 <button type="button" class="btn btn-secondary">취소</button>
-                <button type="submit" id="result" class="btn btn-primary" disabled>결제</button>
+                <button type="button" id="result" class="btn btn-primary" onclick='return payment()' disabled>결제</button>
             </div>
         </form>
     </div>
@@ -213,94 +220,21 @@
 
     // Initialize Flatpickr on date input fields
     $(function (){
-    	if ('${requestScope.rn.galleryNo}' == 1) { 
-    		 $(".form-group input[id=galleryNo]").val(1)
-    		 $(".form-group input[id=galleryNo1]").val("제 1 전시관");
-    	}
-        else if ('${requestScope.rn.galleryNo}' == 2) {  
-        	 $(".form-group input[id=galleryNo]").val(2)
-    		 $(".form-group input[id=galleryNo1]").val("제 2 전시관");
-        }
-        else if ('${requestScope.rn.galleryNo}' == 3) {  
-        	 $(".form-group input[id=galleryNo]").val(3)
-    		 $(".form-group input[id=galleryNo1]").val("제 3 전시관");
-        }
-        else if ('${requestScope.rn.galleryNo}' == 4) {  
-        	 $(".form-group input[id=galleryNo]").val(4)
-    		 $(".form-group input[id=galleryNo1]").val("제 4 전시관");
-        }
-        else if ('${requestScope.rn.galleryNo}' == 5) {  
-        	 
-        	 $(".form-gro input[id=galleryNo]").val(5)
-    		 $(".form-group input[id=galleryNo1]").val("제 5 전시관");
-        }
-        else if ( '${requestScope.rn.galleryNo}' == 6) { 
-        	 $(".form-gro input[id=galleryNo]").val(6)
-    		 $(".form-group input[id=galleryNo1]").val("제 6 전시관");
-        }
       
 	});
-    flatpickr(".datepicker", {
-        dateFormat: "Y-m-d"
-    });
-    function checkAvailability() {
-        
-    	if($(".form-group input[id=EndDate]").val()== ""){
-    		$(".form-group input[id=rental-day]").val("대관 종료일을 선택해 주세요").css("color","red");
-    	}
-    	else{
-    		insertDayTrueCheck()
-    	}
-    };
-    function insertDayTrueCheck() {
-    	
-    	if($(".form-group input[id=EndDate]").val() < $(".form-group input[id=StartDate]").val() ){
-    		$(".form-group input[id=rental-day]").val("대관 종료일이 시작일 보다 빠르거나 같을수 없습니다 .").css("color","red");
-    	}else{
-
-    		$.ajax({
-				url : "dayCheck.re",
-				type : "get",
-				data : {
-					disNo : '${requestScope.rn.galleryNo}',
-					endDay : $(".form-group input[id=EndDate]").val(),
-					staDay : $(".form-group input[id=StartDate]").val()
-				},
-				success : function(result) {
-					if(result == "NNNNN"){
-						$(".form-group input[id=rental-day]").val("해당 일정을 선택 할 수없습니다 .").css("color","red");
-					}else if(result == "NNNNY" ){
-						$(".form-group input[id=rental-day]").val("이용가능한 일정입니다 .").css("color","green");
-						$(".form-group input[id=rentalEndDate]").val($(".form-group input[id=EndDate]").val());
-						$(".form-group input[id=EndDate]").attr("disabled",true)
-						$("#usedOk").attr("disabled",true);
-						
-					}
-					submet()
-				},error : function() {console.log("ajax 통신 실패");}
-			
-				});
-
-    	}
-	}
-    
-    
-    
-    
 	function submet()  {
 		
-		console.log("123132")
-		console.log( $('input[name=consent]:checked').val())
-		console.log($(".form-group input[id=rental-day]").val())
-		
-		if( $('input[name=consent]:checked').val()==="yes"){
+		if($('input[name=consent]:checked').val()==="yes"){
+			
 			$("#result").attr("disabled",false);
-		}else {
+			
+		} else {
+			
 			$("#result").attr("disabled",true)
+			
 		}
 		
-		
-		}
+	}
     
     
     function getCheckboxValue(event)  {
@@ -313,16 +247,18 @@
     		  $(".form-group input[id=memberEmail]").val('${sessionScope.loginUser.memberEmail}').attr("disabled",true)
     		  $(".form-group input[id=memberBirthday]").val('${sessionScope.loginUser.memberBirthday}').attr("disabled",true)
     		  $(".form-group input[id=memberAddress1]").val(memberAddress1.split('/', 1)).attr("disabled",true)
+    		  $("#post-btn").attr("disabled", true);
     		  $(".form-group input[id=memberAddress2]").val(memberAddress2[1].split(',', 1)).attr("disabled",true)
-    		  $("#post-btn").attr("disabled",true);
+    		  
     	  }else {
+    		  
     		  $(".form-group input[id=memberName]").val("").attr("disabled",false)
     		  $(".form-group input[id=memberPhone]").val("").attr("disabled",false)
     		  $(".form-group input[id=memberEmail]").val("").attr("disabled",false)
     		  $(".form-group input[id=memberBirthday]").val("").attr("disabled",false)
     		  $(".form-group input[id=memberAddress1]").val("").attr("disabled",false)
     		  $(".form-group input[id=memberAddress2]").val("").attr("disabled",false)
-    		  $("#post-btn").attr("disabled",false);
+    		  $("#post-btn").attr("disabled", false);
     	  }
     	};
 	
@@ -379,5 +315,90 @@
         }).open();
 	}
 	</script>
+    
+    <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+    <script>
+
+        async function payment() {
+
+            if($(".form-group input[id=memberName]").val().trim().length === 0){
+                alert("이름을 입력해주세요.");
+                $(".form-group input[id=memberName]").trigger( "focus" )
+                return false;
+            } else if($(".form-group input[id=memberPhone]").val().trim().length === 0) {
+                alert("전화번호를 입력해주세요.");
+                $(".form-group input[id=memberPhone]").trigger( "focus" )
+                return false;
+            } else if($(".form-group input[id=memberPhone]").val().trim().match(/^D*$/)){
+                alert("전화번호 형식을 확인해 주세요.");
+                $(".form-group input[id=memberPhone]").trigger( "focus" )
+                return false;
+            } else if($(".form-group input[id=memberEmail]").val().trim().length === 0){
+                alert("이메일을 입력해주세요.");
+                $(".form-group input[id=memberEmail]").trigger( "focus" )
+                return false;
+            } else if(!($(".form-group input[id=memberEmail]").val().trim().match(/^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/))){
+                alert("이메일 형식을 확인하세요.");
+                $(".form-group input[id=memberEmail]").trigger( "focus" )
+                return false;
+            } else if($(".form-group input[id=memberAddress1]").val().trim().length === 0){
+                $("#post-btn").trigger( "focus" )
+                alert("주소를 입력해주세요.");
+                return false;
+            }
+    		//   $(".form-group input[id=memberPhone]").val("").attr("disabled",false)
+    		//   $(".form-group input[id=memberEmail]").val("").attr("disabled",false)
+    		//   $(".form-group input[id=memberBirthday]").val("").attr("disabled",false)
+    		//   $(".form-group input[id=memberAddress1]").val("").attr("disabled",false)
+    		//   $(".form-group input[id=memberAddress2]").val("").attr("disabled",false)
+
+            const paymentId = crypto.randomUUID()
+            const response = await PortOne.requestPayment({
+            // Store ID 설정
+            storeId: "store-7e7b8b35-0e5d-454d-9262-238566d87dbb",
+            // 채널 키 설정
+
+            channelKey: "channel-key-8a64eb4c-73f0-4030-ad51-49182281cbf1",
+            paymentId: paymentId,
+            orderName: "Curaeasy",
+            // totalAmount: '${requestScope.price}',
+            totalAmount: 1000,
+            currency: "CURRENCY_KRW",
+            payMethod: "CARD",
+            customer: {
+                customerId: '${sessionScope.loginUser.memberNo}',
+                fullName: $(".form-group input[id=memberName]").val(),
+                phoneNumber: $(".form-group input[id=memberPhone]").val(),
+                email:  $(".form-group input[id=memberEmail]").val()
+            }
+
+            });
+        
+            console.log(response);
+            if(response.code === null){
+                alert("결제에 실패했습니다. 다시 시도해 주세요.")
+            } else {
+                $.ajax({
+                    url: "insertReserve.do",
+                    method: "post",
+                    data: {
+                        reserveCount : '${ requestScope.amount }',
+                        paymentCode : paymentId,
+                        paymentPrice : '${ requestScope.price }',
+                        entranceDate : '${ requestScope.staDay }',
+                        memberNo: '${ sessionScope.loginUser.memberNo }',
+                        displayNo: '${ requestScope.d.displayNo }'
+                    },
+                    success: function(result) {
+                        alert("결제가 완료되었습니다.");
+                        location.href = "displayDetail.do?dno=${ requestScope.d.displayNo }"
+                    },
+                    error: function() {
+                        console.log("실패");
+                    }
+                });
+            }
+        }
+      </script>
 </body>
 </html>

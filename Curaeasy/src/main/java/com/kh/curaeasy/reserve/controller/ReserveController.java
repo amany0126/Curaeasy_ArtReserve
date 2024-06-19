@@ -4,18 +4,24 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.curaeasy.display.model.service.DisplayService;
 import com.kh.curaeasy.display.model.vo.Display;
 import com.kh.curaeasy.display.model.vo.DisplayAttachment;
+import com.kh.curaeasy.reserve.model.service.ReserveService;
+import com.kh.curaeasy.reserve.model.vo.Reserve;
 
 @Controller
 public class ReserveController {
 	
 	@Autowired
 	DisplayService dService;
+	
+	@Autowired
+	ReserveService rService;
 	
 	@RequestMapping("reserve.do")
 	public String reserveInfo() {
@@ -34,12 +40,25 @@ public class ReserveController {
 			}
 		}
 		
+		int price = d.getDisplayPrice() * amount;
+		
 		mv.addObject("d", d)
 		  .addObject("at", at)
 		  .addObject("staDay", staDay)
 		  .addObject("amount", amount)
+		  .addObject("price", price)
 		  .setViewName("reserve/reserveInfo");
     	
     	return mv;
     }
+	
+	@RequestMapping(value="insertReserve.do")
+	public String insertReserve(Reserve data, Model model) {
+		System.out.println(data);
+		rService.insertReserve(data);
+		Reserve r = rService.selectLastInsertedReserve();
+		System.out.println(r);
+		model.addAttribute("eventMsg", "결제가 완료되었습니다.");
+		return "common/eventPage";
+	}
 }
