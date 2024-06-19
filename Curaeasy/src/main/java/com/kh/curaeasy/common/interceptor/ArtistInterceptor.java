@@ -20,7 +20,7 @@ public class ArtistInterceptor extends HandlerInterceptorAdapter {
 	
 		
 	if(session.getAttribute("loginUser") != null) {
-
+		
 		if(((Member)session.getAttribute("loginUser")).getArtistOngoing() == 'Y') {
 			
 			return true;
