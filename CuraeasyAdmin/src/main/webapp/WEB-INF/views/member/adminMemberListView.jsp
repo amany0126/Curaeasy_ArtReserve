@@ -1,14 +1,26 @@
-
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
+
 <html>
 <head>
-<meta charset="UTF-8">
-<title>회원목록 전체조회 (list.me) </title>
-
-<style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Member Management</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="${path}/resources/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+    <script src="${path}/resources/js/scripts.js"></script>
+    <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
@@ -16,21 +28,21 @@
             padding: 0;
         }
         .container {
-            width: 100%;
-            margin: 50px auto;
+            width: 95%;
+            margin: 20px;
             background-color: #fff;
             box-shadow: 0 0 10px black;
             padding: 20px;
-            border-radius: 30px;
+            border-radius: 10px;
         }
         h1 {
-            text-align: center;
+            text-align: left;
             color: #333;
         }
         .filter {
             text-align: center;
             margin-bottom: 20px;
-            float : right;
+            float: right;
         }
         table {
             width: 100%;
@@ -52,23 +64,13 @@
         table tr:nth-child(odd) {
             background-color: #fff;
         }
-
     </style>
-    
-</head>
-<body>
-
-	<h1>확인</h1>
-	
-	<%@ include file="../common/adminTop.jsp" %>
-	
-	<!-- navi 원/투 나누고 includ해 -->
-	<script>
+    <script>
         function filterTable() {
             var filter = document.getElementById("authorFilter").value;
             var rows = document.querySelectorAll("tbody tr");
             rows.forEach(row => {
-                var authorStatus = row.querySelector("td:last-child").textContent.trim();
+                var authorStatus = row.querySelector("td:nth-child(9)").textContent.trim();
                 if (filter === "all" || authorStatus === filter) {
                     row.style.display = "";
                 } else {
@@ -77,67 +79,78 @@
             });
         }
     </script>
-    
+</head>
 
-    <div class="container">
-
-            <h1 style="text-align: left;">&#128101;회원 목록 조회</h1>
-            <div class="filter">
-                <label for="authorFilter">작가 | 회원 필터:</label>
-                <select id="authorFilter" onchange="filterTable()">
-                    <option value="all">전체</option>
-                    <option value="Y">작가 (Y)</option>
-                    <option value="N">일반회원 (N)</option>
-                </select>
-            </div>
-
-        <table id="all">
-            <thead>
-                <tr>
-                    <th>회원번호</th>
-                    <th>회원이름</th>
-                    <th>회원아이디</th>
-                    <th>전화번호</th>
-                    <th>이메일</th>
-                    <th>회원주소</th>
-                    <th>생일</th>
-                    <th>회원가입일</th>
-                    <th>작가여부</th>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+    </nav>
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <%@ include file="../common/adminNav.jsp" %>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">🧑‍🤝‍🧑 회원 목록 조회</h1>
+                    <div class="container">
+                        <div class="filter">
+                            <label for="authorFilter">작가 | 회원 필터:</label>
+                            <select id="authorFilter" onchange="filterTable()">
+                                <option value="all">전체</option>
+                                <option value="Y">작가 (Y)</option>
+                                <option value="N">일반회원 (N)</option>
+                            </select>
+                        </div>
+                        <table id="datatablesSimple">
+                            <thead>
+                                <tr>
+                                    <th>회원번호</th>
+                                    <th>아이디</th>
+                                    <th>이름</th>
+                                    <th>연락처</th>
+                                    <th>이메일</th>
+                                    <th>주소</th>
+                                    <th>생년월일</th>
+                                    <th>가입일</th>
+                                    <th>작가여부</th>
+                                    <th>회원상태</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="member" items="${memberList}">
+                  <tr>
+                    <td>${member.memberNo}</td>
+                    <td>${member.memberId}</td>
+                    <td>${member.memberName}</td>
+                    <td>${member.memberPhone}</td>
+                    <td>${member.memberEmail}</td>
+                    <td>${member.memberAddress}</td>
+                    <td>${member.memberBirthday}</td>
+                    <td>${member.memberEnrollDate}</td>
+                    <td>${member.artistOngoing}</td>
+                    <td>${member.memberStatus}</td>
                 </tr>
-            </thead>
-            <tbody>
-                <%-- 여기서부터는 서버에서 회원 목록 데이터를 가져와서 반복적으로 출력합니다. --%>
-                <%
-                    // 예시 데이터, 실제로는 데이터베이스에서 데이터를 가져와야 합니다.
-                    String[][] members = {
-                        {"1", "홍길동", "hong123", "010-1234-5678", "hong@example.com", "서울시 강남구", "1990-01-01", "2020-06-01", "Y"},
-                        {"2", "김철수", "kimcs", "010-2345-6789", "kim@example.com", "부산시 해운대구", "1985-05-15", "2019-07-15", "N"},
-                        {"3", "박영희", "park99", "010-3456-7890", "park@example.com", "대구시 중구", "1992-12-25", "2021-01-10", "Y"},
-                        {"4", "이민호", "minho123", "010-4567-8901", "minho@example.com", "광주시 북구", "1988-03-03", "2018-11-11", "N"}
-                        // 더 많은 회원 데이터를 여기에 추가합니다.
-                    };
-
-                    for (String[] member : members) {
-                %>
-                <tr>
-                    <td><%= member[0] %></td>
-                    <td><%= member[1] %></td>
-                    <td><%= member[2] %></td>
-                    <td><%= member[3] %></td>
-                    <td><%= member[4] %></td>
-                    <td><%= member[5] %></td>
-                    <td><%= member[6] %></td>
-                    <td><%= member[7] %></td>
-                    <td><%= member[8] %></td>
-                </tr>
-                <%
-                    }
-                %>
-            </tbody>
-        </table>
+                                </c:forEach>
+                                <c:if test="${empty memberList}">
+                                    <tr>
+                                        <td colspan="10">등록된 회원이 없습니다.</td>
+                                    </tr>
+                                </c:if>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">CURAEASY &copy; our ArtHall 2024</div>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
-	
-	<%@ include file="../common/adminNav.jsp" %>
-
 </body>
 </html>

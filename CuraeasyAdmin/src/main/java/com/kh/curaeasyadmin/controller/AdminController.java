@@ -16,6 +16,7 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
+    // 메인 페이지
     @RequestMapping("/")
     public String index(Model model) {
         ArrayList<Display> displayList = adminService.mainPageSelectDisplayList();
@@ -35,13 +36,15 @@ public class AdminController {
         return "index";
     }
 
+    // 전시회 관리
     @RequestMapping("displayList.ad")
     public String displayList(Model model) {
         ArrayList<Display> displayList = adminService.selectDisplayList();
         model.addAttribute("displayList", displayList);
         return "display/adminDisplayListView";
     }
-    
+
+    // 전시관 관리
     @RequestMapping("galleryList.ad")
     public String galleryList(Model model) {
         ArrayList<Gallery> galleryList = adminService.selectGalleryList();
@@ -49,6 +52,7 @@ public class AdminController {
         return "gallery/adminGalleryListView";
     }
 
+    // 대관신청 관리
     @RequestMapping("rentalList.ad")
     public String rentalList(Model model) {
         ArrayList<Rental> rentalList = adminService.selectRentalList();
@@ -56,6 +60,7 @@ public class AdminController {
         return "rental/adminRentalListView";
     }
 
+    // 예매 관리
     @RequestMapping("reserveList.ad")
     public String reserveList(Model model) {
         ArrayList<Reserve> reserveList = adminService.selectReserveList();
@@ -63,6 +68,7 @@ public class AdminController {
         return "reserve/adminReserveListView";
     }
 
+    // 회원 관리
     @RequestMapping("memberList.ad")
     public String memberList(Model model) {
         ArrayList<Member> memberList = adminService.selectMemberList();
@@ -70,6 +76,7 @@ public class AdminController {
         return "member/adminMemberListView";
     }
 
+    // 작가 관리
     @RequestMapping("artistList.ad")
     public String artistList(Model model) {
         ArrayList<Artist> artistList = adminService.selectArtistList();
@@ -77,20 +84,23 @@ public class AdminController {
         return "artist/adminArtistListView";
     }
 
-    @RequestMapping("noticelist.ad")
+    // 공지사항 관리
+    @RequestMapping("noticeList.ad")
     public String noticeList(Model model) {
         ArrayList<Notice> noticeList = adminService.selectNoticeList();
         model.addAttribute("noticeList", noticeList);
         return "notice/adminNoticeListView";
     }
 
+    // 후기 관리
     @RequestMapping("reviewList.ad")
     public String reviewList(Model model) {
         ArrayList<Review> reviewList = adminService.selectReviewList();
         model.addAttribute("reviewList", reviewList);
         return "review/adminReviewListView";
     }
-    
+
+    // 댓글 관리
     @RequestMapping("replyList.ad")
     public String replyList(Model model) {
         ArrayList<Reply> replyList = adminService.selectReplyList();

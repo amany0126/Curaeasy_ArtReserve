@@ -79,19 +79,19 @@
         <result column="DISPLAY_NO" property="displayNo" />
     </resultMap>
 
-    <resultMap id="memberResultSet" type="member">
-        <result column="MEMBER_NO" property="memberNo" />
-        <result column="MEMBER_ID" property="memberId" />
-        <result column="MEMBER_PWD" property="memberPwd" />
-        <result column="MEMBER_NAME" property="memberName" />
-        <result column="MEMBER_PHONE" property="memberPhone" />
-        <result column="MEMBER_EMAIL" property="memberEmail" />
-        <result column="MEMBER_ADDRESS" property="memberAddress" />
-        <result column="MEMBER_BIRTHDAY" property="memberBirthday" />
-        <result column="MEMBER_ENROLL_DATE" property="memberEnrollDate" />
-        <result column="ARTIST_ONGOING" property="artistOngoing" />
-        <result column="MEMBER_STATUS" property="memberStatus" />
-    </resultMap>
+	<resultMap id="memberResultSet" type="member">
+	    <result column="MEMBER_NO" property="memberNo" />
+	    <result column="MEMBER_ID" property="memberId" />
+	    <result column="MEMBER_PWD" property="memberPwd" />
+	    <result column="MEMBER_NAME" property="memberName" />
+	    <result column="MEMBER_PHONE" property="memberPhone" />
+	    <result column="MEMBER_EMAIL" property="memberEmail" />
+	    <result column="MEMBER_ADDRESS" property="memberAddress" />
+	    <result column="MEMBER_BIRTHDAY" property="memberBirthday" />
+	    <result column="MEMBER_ENROLL_DATE" property="memberEnrollDate" />
+	    <result column="ARTIST_ONGOING" property="artistOngoing" />
+	    <result column="MEMBER_STATUS" property="memberStatus" />
+	</resultMap>
 
     <resultMap id="artistResultSet" type="artist">
         <result column="ARTIST_NO" property="artistNo" />
@@ -251,24 +251,24 @@
             NOTICE_NO
     </select>
 
-    <select id="selectMemberList" resultMap="memberResultSet">
-        SELECT 
-            MEMBER_NO,
-            MEMBER_ID,
-            MEMBER_PWD,
-            MEMBER_NAME,
-            MEMBER_PHONE,
-            MEMBER_EMAIL,
-            MEMBER_ADDRESS,
-            TO_CHAR(MEMBER_BIRTHDAY, 'YYYY-MM-DD') AS MEMBER_BIRTHDAY,
-            TO_CHAR(MEMBER_ENROLL_DATE, 'YYYY-MM-DD') AS MEMBER_ENROLL_DATE,
-            ARTIST_ONGOING,
-            MEMBER_STATUS
-        FROM 
-            MEMBER
-        ORDER BY 
-            MEMBER_NO
-    </select>
+	<select id="selectMemberList" resultMap="memberResultSet">
+	    SELECT 
+	        MEMBER_NO,
+	        MEMBER_ID,
+	        MEMBER_PWD,
+	        MEMBER_NAME,
+	        MEMBER_PHONE,
+	        MEMBER_EMAIL,
+	        MEMBER_ADDRESS,
+	        TO_CHAR(MEMBER_BIRTHDAY, 'YYYY-MM-DD') AS MEMBER_BIRTHDAY,
+	        TO_CHAR(MEMBER_ENROLL_DATE, 'YYYY-MM-DD') AS MEMBER_ENROLL_DATE,
+	        ARTIST_ONGOING,
+	        MEMBER_STATUS
+	    FROM 
+	        MEMBER
+	    ORDER BY 
+	        MEMBER_NO
+	</select>
 
     <select id="selectRentalList" resultMap="rentalResultSet">
         SELECT 
