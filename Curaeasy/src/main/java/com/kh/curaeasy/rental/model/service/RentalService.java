@@ -47,5 +47,9 @@ public class RentalService {
 		return rentalDao.result(sqlSession,r);
 	}
 
+	public ArrayList<Rental> selectMyLentalList(int artistNo) {
+		return rentalDao.selectMyLentalList(sqlSession,artistNo);
+	}
+
 
 }

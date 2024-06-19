@@ -38,16 +38,16 @@
             <form action="insert.me" method="post" id="enrollForm">
                 <div class="form-group">
                     <label for="userId">* 아이디 : </label>
-                    <input type="text" class="form-control" id="userId" placeholder="영문소문자, 숫자 포함  5~15 글자 " name="memberId" required> <br>
+                    <input type="text" class="form-control" id="userId" placeholder="영문소문자, 숫자 포함  5~15 글자 " name="memberId" maxlength="15" required> <br>
 					<input type="hidden" id="okid">
 					<div id="checkResult1" style="font-size: 0.8em ;display: none;" ></div>
                     <label for="userPwd">* 비밀번호 : </label>
-                    <input type="password" class="form-control" id="userPwd" placeholder="*영문, 숫자, 특수문자(!,@,#,$,%,^,&,*) 포함 8~15글자" name="memberPwd" required> <br>
+                    <input type="password" class="form-control" id="userPwd" placeholder="*영문, 숫자, 특수문자(!,@,#,$,%,^,&,*) 포함 8~15글자" name="memberPwd" maxlength="15" required> <br>
 					<input type="hidden" id="okPwd1">
 					<div id="checkResult2" style="font-size: 0.8em ;display: none;" >
 					</div>
                     <label for="checkPwd">* 비밀번호 확인 : </label>
-                    <input type="password" class="form-control" id="checkPwd" placeholder="입력하신 비밀번호를 한번더 입력해주세요" required> <br>
+                    <input type="password" class="form-control" id="checkPwd" placeholder="입력하신 비밀번호를 한번더 입력해주세요" maxlength="15" required> <br>
 					<input type="hidden" id="okPwd2">
 					<div id="checkResult3" style="font-size: 0.8em ;display: none;" >
 					</div>
@@ -74,8 +74,10 @@
 					<div id="emailOk"  style="display: none;">인증완료되었습니다! <br></div>
 					<br>
 					<label for="phone"> &nbsp;* 전화번호 : </label>
-                    <input type="text" class="form-control" id="phone" placeholder="휴대폰 번호 입력(- 없이)" name="memberPhone" required> <br>		
-
+                    <input type="text" class="form-control" id="phone" placeholder="휴대폰 번호 입력(- 없이)" name="memberPhone" maxlength="11" required> <br>		
+					<input type="hidden" id="okPhone">
+					<div id="checkResultPhone" style="font-size: 0.8em ;display: none;" ></div>
+					
                     <label for="birthday"> &nbsp;* 생년월일 : </label>
                     <input type="date" class="form-control" id="birthday" placeholder="생년월일을 입력해주세요" name="memberBirthday" required> <br>
 
@@ -104,10 +106,12 @@
 				let $userPwdInput = $("#enrollForm input[id=userPwd]");
 				let $checkPwdInput = $("#enrollForm input[id=checkPwd]");
 				let $checkEmailInput = $("#enrollForm input[id=email]");
+				let $checkPhoneInput = $("#enrollForm input[id=phone]");
 				$userIdInput.keyup(checkId); 
 				$userPwdInput.keyup(ckeckPwd); // 1차
 				$checkPwdInput.keyup(valPwd); // 중복
 				$checkEmailInput.keyup(checkEmail); // 중복
+				$checkPhoneInput.keyup(checkPhone); // 중복
 			});
 			function checkId() {
 				const $idInput = $("#enrollForm input[id=userId]")
@@ -247,7 +251,7 @@
 			let userEmail = $checkEmailInput.val();
 			/* console.log(userEmail) */
 			const pattern = /^[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
-			if(checkPwd!= null && checkPwd !="" && pattern.test(userEmail)){
+			if(userEmail!= null && userEmail !="" && pattern.test(userEmail)){
 					$.ajax({
 						url : "emailDl.me",
 						type : "post",
@@ -417,6 +421,25 @@
 					}
 			});		
 		};
+		function checkPhone() {
+			let $checkPhoneInput = $("#enrollForm input[id=phone]");
+			let userPhone = $checkPhoneInput.val();
+			/* console.log(userEmail) */
+			const pattern = /^(01[016789]{1})+[0-9]{8}?$/;
+			if(userPhone!= null && userPhone !="" ){
+				if(pattern.test(userPhone)){
+						$("#checkResultPhone").text("유효한 전화번호 입니다").show().css("color","green");
+						$("#enrollForm input[id=okPhone]").val("Y");
+					}else{
+						$("#checkResultPhone").text("유요하지 않은 전화번호 양식입니다.").show().css("color","red");
+						$("#enrollForm input[id=okPhone]").val("N");
+					}
+				}else{
+				$("#checkResultPhone").hide(); 
+				$("#enrollForm input[id=okPhone]").val("N");
+			}	
+			
+		}
 		function checkdSudmit() {
 			let okid = $("#enrollForm input[id=okid]");
 			let okidval = okid.val();
@@ -424,10 +447,12 @@
 			let okPwd2val =okPwd2.val();
 			let okemail =$("#enrollForm input[id=okemail]");
 			let okemailval =okemail.val();
+			let okPhone =$("#enrollForm input[id=okPhone]");
+			let okPhoneval =okPhone.val();
 			/* console.log(okid.val());
 			console.log(okPwd2.val());
 			console.log(okemailval); */
-			if(okidval == "Y" && okPwd2val == "Y" && okemailval =="Y" ){
+			if(okidval == "Y" && okPwd2val == "Y" && okemailval =="Y"  && okPhoneval =="Y"){
 				$("#enrollForm button[type=submit]").attr("disabled",false)
 			}else{
 				$("#enrollForm button[type=submit]").attr("disabled",true)

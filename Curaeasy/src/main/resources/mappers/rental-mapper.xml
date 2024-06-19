@@ -48,4 +48,9 @@
 			 INSERT INTO RENTAL (RENTAL_NO, RENTAL_START_DATE,RENTAL_END_DATE,RENTAL_CONTENT, ARTIST_NO,  GALLERY_NO )
 			             VALUES (SEQ_RENTAL_NO.NEXTVAL,#{rentalStartDate} ,#{rentalEndDate} ,#{rentalContent} ,#{artistNo},#{galleryNo}   )
 	</insert>
+	<select id="selectMyLentalList" parameterType="_int" resultMap="RentalResultSet" >
+			SELECT *
+		 	  FROM RENTAL
+		 WHERE ARTIST_NO = #{artistNo} 
+	</select>
 </mapper>

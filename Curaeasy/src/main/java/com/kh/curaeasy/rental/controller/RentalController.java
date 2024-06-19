@@ -113,4 +113,15 @@ public class RentalController {
 			return "/common/errorPage";
 		}
 	}
+	@GetMapping(value = "rentalList.re", produces = "text/html; charset=UTF-8")
+	public String RentalApplicationList( Model model, HttpSession session) {
+		
+		int userNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
+		int artistNo = rentalService.artistNo(userNo);
+		
+		ArrayList<Rental> list = rentalService.selectMyLentalList(artistNo);
+		
+		model.addAttribute("list",list);
+		return "rental/myLentalList";
+	}
 }

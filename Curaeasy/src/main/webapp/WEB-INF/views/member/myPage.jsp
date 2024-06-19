@@ -7,12 +7,15 @@
 <meta charset="UTF-8">
 <title>curaeasy</title>
     <style> 
+
            .innerOuter {
             border:0px solid lightgray;
             width:80%;
-            margin:auto;
+            margin: 0%;
             padding:5% 10%;
             background-color:white;
+            display: inline-block;
+            float: right;
         }
 		button { border-radius: 50px !important;}
 
@@ -20,10 +23,11 @@
 </head>
 <body>
 	<jsp:include page="../common/header.jsp" />
+	<jsp:include page="../common/mainPageSidbar.jsp" />
 	<!-- h1>마이페이지</h1> -->
-	<div class="content">
         <br><br>
         <div class="innerOuter">
+			<div class="content">
             <h2>마이페이지</h2>
             <form action="update.me" method="post">
                 <div class="form-group">
@@ -57,7 +61,7 @@
                 </div> 
                 <br>
                 <div class="btns" align="center">
-                    <a href="enrollForm.at"> <button type="button" class="btn btn-light">작가신청</button></a>
+                <!--     <a href="enrollForm.at"> <button type="button" class="btn btn-light">작가신청</button></a> -->
                     <button type="button" class="btn btn-info" data-toggle="modal" data-target="#PwdChange">비밀번호 변경하기</button>
                     <button type="submit" class="btn btn-primary">수정하기</button>
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
@@ -253,7 +257,7 @@
             </div>
         </div>
     </div>
-	
 	<jsp:include page="../common/footer.jsp" />
 </body>
+	
 </html>

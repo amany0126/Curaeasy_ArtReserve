@@ -187,27 +187,20 @@
                 </table>
             </div>
             <div class="exhibition-info">
-                
-                <!-- <div id="datepicker" class="input-group date" data-provide="datepicker"></div> -->
                 <div id='calendar-container' style="text-align: right;">
                     <div id='calendar'></div>
-                <p style="padding: 10px; margin: 0px;"><strong>예매 인원 선택 후 날짜 선택</strong></p>
+                    <p style="padding: 10px; margin: 0px;"><strong>예매 인원 선택 후 날짜 선택</strong></p>
                 </div>
-                <!-- <div style="text-align: center;">
-                    예매 수 : <input type="number" id="amount" name="amount" class="form-control" value="1" min="1" max="5" required
-                               style="display:inline; width: 80%">
-                </div> -->
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">예매 인원수</label>
-                <select class="custom-select" id="inputGroupSelect01">
-                    <option value="1" selected>1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="3">4</option>
-                    <option value="3">5</option>
-                </select>
+                    <select class="custom-select" id="inputGroupSelect01">
+                        <option value="1" selected>1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="3">4</option>
+                        <option value="3">5</option>
+                    </select>
                 </div>
-                
             </div>
         </div>
         <hr>

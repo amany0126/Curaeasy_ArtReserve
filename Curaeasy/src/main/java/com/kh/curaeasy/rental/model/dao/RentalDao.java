@@ -39,4 +39,8 @@ public class RentalDao {
 		return sqlSession.insert("rentalMapper.result", r);
 	}
 
+	public ArrayList<Rental> selectMyLentalList(SqlSessionTemplate sqlSession, int artistNo) {
+		return (ArrayList)sqlSession.selectList("rentalMapper.selectMyLentalList",artistNo);
+	}
+
 }
