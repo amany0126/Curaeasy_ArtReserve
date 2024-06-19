@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -5,6 +6,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
     <title>공지사항 상세보기</title>
     <style>
         body {
@@ -28,6 +35,12 @@
         }
         .content-header {
             margin-bottom: 20px;
+
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :larger;
+            font-style :oblique;    
         }
         .content-header h1 {
             font-size: 2em;
@@ -96,6 +109,8 @@
             margin: 10px 0;
         }
 
+        td {height: 300px;}
+
     </style>
 </head>
 <body>
@@ -106,7 +121,7 @@
     <div class="content">
     
         <div class="content-header">
-            <h1>[공지사항] 제목 : ${ n.noticeTitle }</h1>
+            <h1>${ n.noticeTitle }</h1>
         </div>
         
         <div class="notice-detail">
@@ -115,36 +130,33 @@
 
             <table id="contentArea" align="center" class="table">
                 <div class="notice-meta">
-                    <span>작성자: 관리자(admin)</span>
+                    <span>작성자: 관리자</span>
                     <span>작성일 : ${ n.noticeDate }</span>
                     <span>조회수 : ${ n.noticeCount }</span>
                 </div>
 
 
                 <tr>
-                    <th>첨부파일</th>
+                    <tr>
+                    <th>첨부파일</th></tr>
                     <td colspan="3">
                     	<c:choose>
 	                    	<c:when test="${ empty n.noticeAttachment }">
 	                    		첨부파일이 없습니다.
 	                    	</c:when>
 	                    	<c:otherwise>
-                        		<a href="${ n.noticeAttachment }" 
-                        		   download="${ n.noticeAttachment }">
-									${ n.noticeAttachment }
-								</a>
+                        		<img src="${ n.noticeAttachment }" >
                         	</c:otherwise>
                         </c:choose>
                     </td>
                 </tr>
                 <tr>
-                    <th>내용</th>
-                    <td colspan="3"></td>
+                    <th colspan="3">내용</th>
                 </tr>
                 <tr>
                     <td colspan="3">
                     	<p style="height:150px;">
-							<!-- <img alt="" src="resources/images/cimg1.png">  -->
+							<!-- <img  src="resources/images/cimg1.png" alt="">  -->
 
                     		${ requestScope.n.noticeContent }
                     	</p>
@@ -163,16 +175,22 @@
         <div class="notice-nav">
             <div class="nav-item">
                 <span>이전글</span>
-                    <a href="#">이전게시글 제목</a>
+                    <a href="noticeDetail.do?cpage=${ requestScope.pi.currentPage - 1 }">이전게시글</a>
                 <span class="icon">&#8743;</span>
             </div>
             <div class="separator"></div>
             <div class="nav-item">
                 <span>다음글</span>
-                    <a href="#">다음게시글 제목</a>
+                    <a href="noticeDetail.do?cpage=${ requestScope.pi.currentPage + 1 }">다음게시글</a>
                 <span class="icon">&#8744;</span>
             </div>
         </div>
+
+
+
+
+        
+        
 
     </div>
 </div>
