@@ -16,7 +16,7 @@
         .innerOuter {
             border:0px solid lightgray;
             width:80%;
-            
+            height : 800px;
             padding:5% 10%;
             background-color:white;
             display: inline-block;
@@ -81,8 +81,8 @@
         td{
          text-align: center;}
 
-        td:hover { display: block; font-size: 15px; font-weight: 600; cursor: pointer; }
-        tr:hover { background-color: #fff; }
+      /*   td:hover { display: block; font-size: 15px; font-weight: 600; cursor: pointer; } */
+        tbody > tr:hover { background-color: lightgray;  }
 
     </style>
 </head>
@@ -96,10 +96,10 @@
         <div class="content-header">
             <h1>대관 예약 일자</h1>
         </div>
-        <div class="search-box">
+    <!--     <div class="search-box">
             <input type="text" placeholder="대관장소를 입력하세요" />
             <button>검색</button>
-        </div>
+        </div> -->
         <table id="noticeList" class="notice-list">
             <thead>
                 <tr>
@@ -164,7 +164,7 @@
        	});
        </script>
  -->
-        
+      <%--   
         <div id="pagingArea">
                 <ul class="pagination">
                 
@@ -224,7 +224,7 @@
 	                </c:otherwise>
                     </c:choose>
                 </ul>
-            </div>
+            </div> --%>
             
             
     </div>

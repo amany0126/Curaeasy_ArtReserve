@@ -415,10 +415,10 @@ public class MemberController {
 		
 		if (rePwd > 0) {
 			
-			MimeMessage  mimeMessage  = mailSender.createMimeMessage();
 			// message.setSubject("[크레이지] 조회하신 아이디 입니다"); // 제목 설정
 			//message.setText("<html><body><h1>아이디 : " +userId+"</h1></body></html>"); // 내용 설정
 			try {
+				MimeMessage  mimeMessage  = mailSender.createMimeMessage();
 				MimeMessageHelper messageHelper =new MimeMessageHelper(mimeMessage , true ,"UTF-8");
 				messageHelper.setSubject("[크레이지] 요청하신 임시비밀번호 입니다");
 				String str = new EmailController().reissuancePwd(newPwd);

@@ -42,13 +42,13 @@
         <ul>
             <li><a href="myPage.me">마이페이지</a></li>
             <li><a href="reserveList.me">결제내역조회</a></li>
-            <li><a href="#">후기</a></li>
+            <li><a href="myReviewList.re">작성한 후기 목록</a></li>
             <li><a href="enrollForm.at">작가신청</a></li>
         </ul>
         <hr style="height: 3px">
         <ul>
             <li><a href="rentalList.re">대관 신청 조회</a></li>
-            <li><a href="#">전시회 관련 조회</a></li>
+            <li><a href="exhibition.do ">전시회 관련 조회</a></li>
         </ul>
     </div>
 </body>

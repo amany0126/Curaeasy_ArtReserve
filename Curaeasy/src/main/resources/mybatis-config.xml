@@ -17,6 +17,7 @@
 		<typeAlias type="com.kh.curaeasy.display.model.vo.Display" alias="display" />
 		<typeAlias type="com.kh.curaeasy.display.model.vo.DisplayAttachment" alias="displayAttachment" />
 		<typeAlias type="com.kh.curaeasy.reserve.model.vo.Reserve" alias="reserve" />
+		<typeAlias type="com.kh.curaeasy.review.model.vo.Review" alias="review" />
 	</typeAliases>
 	
 	<mappers>
@@ -26,6 +27,7 @@
 		<mapper resource="/mappers/rental-mapper.xml" />
 		<mapper resource="/mappers/display-mapper.xml" />
 		<mapper resource="/mappers/reserve-mapper.xml" />
+		<mapper resource="/mappers/review-mapper.xml" />
 	</mappers>
 </configuration>  
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="reviewMapper">
+	<resultMap id="reviewResultSet" type="review">
+		<result column="REVIEW_TITLE" property="reviewTitle" />
+		<result column="REVIEW_STATUS" property="reviewStatus" />
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="REVIEW_IMAGE" property="reviewImage" />
+		<result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate" />
+		<result column="REVIEW_COUNT" property="reviewCount" />
+		<result column="REVIEW_CONTENT" property="reviewContent" />
+		<result column="MEMBER_NO" property="memberNo" />
+	</resultMap>
+
+	<select id="myReviewList" parameterType="_int" resultMap="reviewResultSet">
+		SELECT *
+		  FROM REVIEW
+		 WHERE MEMBER_NO = #{userNo}
+	</select>
+</mapper>

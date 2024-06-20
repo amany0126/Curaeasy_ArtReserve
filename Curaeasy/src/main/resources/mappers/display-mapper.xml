@@ -171,4 +171,10 @@
 		 ORDER BY A.DISPLAY_NO
 	</select>
 	
+	
+	<select id="mydisplayList" resultMap="displayResultSet">
+		    SELECT *
+		      FROM DISPLAY 
+		     WHERE ARTIST_NO =#{artistNo}
+		</select>
 </mapper>

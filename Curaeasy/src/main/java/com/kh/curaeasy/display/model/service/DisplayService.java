@@ -60,4 +60,9 @@ public class DisplayService {
 	public ArrayList<DisplayAttachment> selectOnDisplayThumbnail() {
 		return displayDao.selectOnDisplayThumbnail(sqlSession);
 	}
+
+	public ArrayList<DisplayAttachment> mydisplayList(int artistNo) {
+		// TODO Auto-generated method stub
+		return displayDao.mydisplayList(sqlSession,artistNo);
+	}
 }

@@ -11,19 +11,22 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.curaeasy.display.model.service.DisplayService;
 import com.kh.curaeasy.display.model.vo.Display;
 import com.kh.curaeasy.display.model.vo.DisplayAttachment;
+import com.kh.curaeasy.member.model.vo.Member;
+import com.kh.curaeasy.rental.model.service.RentalService;
 
 @Controller
 public class DisplayController {
 	
 	@Autowired
 	private DisplayService displayService;
-
+	@Autowired private RentalService rentalService;
     
 	@RequestMapping("onDisplay.do")
 	public String onDisplayList(Model model) {
@@ -125,6 +128,19 @@ public class DisplayController {
 		return changeName;
 	}
     
-    
+    @GetMapping(value = "exhibition.do",produces = "text/html; charset=UTF-8")
+    public String MydisplayList( HttpSession session, Model model) {
+    	
+    	// 선택한 작품번호의 작품과 첨부파일 가져오기
+    	int userNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
+    	int artistNo = rentalService.artistNo(userNo);
+    	
+    	ArrayList<DisplayAttachment> list = displayService.mydisplayList(artistNo);
+    	
+    	
+    	model.addAttribute("list", list);
+    	
+        return "display/myDisplayList";
+    }
     
 }
