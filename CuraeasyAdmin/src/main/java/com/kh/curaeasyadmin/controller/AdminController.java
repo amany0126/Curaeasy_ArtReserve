@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.curaeasyadmin.common.model.vo.PageInfo;
+import com.kh.curaeasyadmin.common.template.Pagination;
 import com.kh.curaeasyadmin.model.service.AdminService;
 import com.kh.curaeasyadmin.model.vo.*;
 
@@ -37,9 +39,18 @@ public class AdminController {
 
     // 전시회 관리
     @RequestMapping("displayList.ad")
-    public String displayList(Model model) {
-        ArrayList<Display> displayList = adminService.selectDisplayList();
+    public String displayList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+        int listCount = adminService.getDisplayListCount(); // 전시회 리스트 총 개수
+
+        int pageLimit = 10; // 페이지 하단에 보여질 페이지 최대 개수
+        int boardLimit = 10; // 한 페이지에 보여질 게시글 최대 개수
+
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+        ArrayList<Display> displayList = adminService.selectDisplayList(pi);
+
         model.addAttribute("displayList", displayList);
+        model.addAttribute("pi", pi);
+
         return "display/adminDisplayListView";
     }
 

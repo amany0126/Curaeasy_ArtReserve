@@ -110,28 +110,24 @@
 
     <!-- Select Statements -->
 
+	<select id="getDisplayListCount" resultType="int">
+	    SELECT COUNT(*) FROM DISPLAY
+	</select>
+	
 	<select id="selectDisplayList" resultMap="displayResultSet">
 	    SELECT 
 	        D.DISPLAY_NO,
 	        D.DISPLAY_NAME,
 	        D.DISPLAY_CONTENT,
-	        TO_CHAR(D.DISPLAY_START_DATE, 'YYYY-MM-DD') AS DISPLAY_START_DATE,
-	        TO_CHAR(D.DISPLAY_END_DATE, 'YYYY-MM-DD') AS DISPLAY_END_DATE,
+	        D.DISPLAY_START_DATE,
+	        D.DISPLAY_END_DATE,
 	        D.DISPLAY_PRICE,
 	        D.DISPLAY_STATUS,
-	        D.ARTIST_NO,
-	        D.GALLERY_NO,
-	        (SELECT CHANGE_NAME FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = D.DISPLAY_NO AND IMAGE_LEVEL = 1 AND ROWNUM = 1) AS IMAGE_PATH,
-	        G.GALLERY_NAME,
-	        A.ARTIST_NICKNAME
-	    FROM 
-	        DISPLAY D
-	    JOIN 
-	        GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
-	    JOIN 
-	        ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
-	    ORDER BY 
-	        D.DISPLAY_NO
+	        A.ARTIST_NICKNAME,
+	        G.GALLERY_NAME
+	    FROM DISPLAY D
+	    JOIN ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
+	    JOIN GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
 	</select>
     
 	<select id="selectDisplay" parameterType="int" resultMap="displayResultSet">

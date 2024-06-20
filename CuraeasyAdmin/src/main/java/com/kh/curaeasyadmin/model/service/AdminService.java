@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.model.dao.AdminDao;
 import com.kh.curaeasyadmin.model.vo.*;
 
@@ -19,10 +20,13 @@ public class AdminService {
     private SqlSessionTemplate sqlSession;
 
     // 메인 페이지
+    
+    public int getDisplayListCount() {
+        return adminDao.getDisplayListCount(sqlSession);
+    }
 
-    // 전시회 관리
-    public ArrayList<Display> selectDisplayList() {
-        return adminDao.selectDisplayList(sqlSession);
+    public ArrayList<Display> selectDisplayList(PageInfo pi) {
+        return adminDao.selectDisplayList(sqlSession, pi);
     }
     
     public Display selectDisplay(int displayNo) {

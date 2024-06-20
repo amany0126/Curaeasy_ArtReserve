@@ -2,9 +2,11 @@ package com.kh.curaeasyadmin.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.model.vo.*;
 
 @Repository
@@ -12,9 +14,17 @@ public class AdminDao {
 
     // 메인 페이지
 
-    // 전시회 관리
-    public ArrayList<Display> selectDisplayList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.selectDisplayList");
+    public int getDisplayListCount(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectOne("adminMapper.getDisplayListCount");
+    }
+	
+    // 전시회 관
+	
+    public ArrayList<Display> selectDisplayList(SqlSessionTemplate sqlSession, PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+        return (ArrayList)sqlSession.selectList("adminMapper.selectDisplayList", null, rowBounds);
     }
     
     public Display selectDisplay(SqlSessionTemplate sqlSession, int displayNo) {
