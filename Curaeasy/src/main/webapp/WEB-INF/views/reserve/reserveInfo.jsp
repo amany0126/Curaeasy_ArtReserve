@@ -96,7 +96,6 @@
 <div class="">
     <div class="form-container">
         <h2 class="form-header">전시회 예매</h2>
-        <form action="applyRrental.re" method="post" enctype="multipart/form-data">
             <div class="form-section">
                 <div class="form-section-title">
                     <div align="left" style="display: inline;">
@@ -209,7 +208,6 @@
                 <button type="button" class="btn btn-secondary">취소</button>
                 <button type="button" id="result" class="btn btn-primary" onclick='return payment()' disabled>결제</button>
             </div>
-        </form>
     </div>
 </div>
 <br><br>
@@ -375,7 +373,7 @@
             });
         
             console.log(response);
-            if(response.code === null){
+            if(response.code === "FAILURE_TYPE_PG"){
                 alert("결제에 실패했습니다. 다시 시도해 주세요.")
             } else {
                 $.ajax({
@@ -391,7 +389,7 @@
                     },
                     success: function(result) {
                         alert("결제가 완료되었습니다.");
-                        location.href = "reserveList.me"
+                        location.href = "reserveComplete.do"
                     },
                     error: function() {
                         console.log("실패");

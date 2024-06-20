@@ -105,13 +105,13 @@
                                 <th>상태</th>
                                 <td>${display.displayStatus}</td>
                             </tr>
-                            <tr>
-                                <th>작가번호</th>
-                                <td>${display.artistNo}</td>
+                        	<tr>
+                                <th>작가명</th>
+                                <td>${display.artistNickName}</td>
                             </tr>
                             <tr>
-                                <th>전시관번호</th>
-                                <td>${display.galleryNo}</td>
+                                <th>전시관명</th>
+                                <td>${display.galleryName}</td>
                             </tr>
                             <tr>
                                 <th>이미지 경로</th>

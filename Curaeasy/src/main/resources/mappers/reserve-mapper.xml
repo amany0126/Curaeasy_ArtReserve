@@ -25,10 +25,33 @@
 						   #{displayNo}
 					)
 	</insert>
-	<select id="selectLastInsertedReserve" resultMap="reserveResultSet">
-		SELECT *
+	<select id="selectLastInsertedReserve" resultMap="reserveResultSet" parameterType="string">
+		SELECT RESERVE_NO,
+			   RESERVE_COUNT,
+			   PAYMENT_CODE,
+			   PAYMENT_DATE,
+			   TO_CHAR(ENTRANCE_DATE, 'YYYY-MM-DD') AS ENTRANCE_DATE,
+			   PAYMENT_PRICE,
+			   RESERVE_STATUS,
+			   MEMBER_NO,
+			   DISPLAY_NO
 		  FROM RESERVE
 		 WHERE RESERVE_NO = (SELECT MAX(RESERVE_NO)
-		 					   FROM RESERVE)
+		 					   FROM RESERVE
+		 					  WHERE MEMBER_NO = #{memberNo})
+	</select>
+	
+	<select id="selectReserveList" parameterType="_int" resultMap="reserveResultSet">
+		SELECT RESERVE_NO,
+			   RESERVE_COUNT,
+			   TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD') AS PAYMENT_DATE,
+			   TO_CHAR(ENTRANCE_DATE, 'YYYY-MM-DD') AS ENTRANCE_DATE,
+			   PAYMENT_PRICE,
+			   RESERVE_STATUS,
+			   MEMBER_NO,
+			   DISPLAY_NAME AS DISPLAY_NO
+		  FROM RESERVE R
+		  LEFT JOIN DISPLAY D ON (R.DISPLAY_NO = D.DISPLAY_NO)
+		 WHERE MEMBER_NO = #{memberNo}
 	</select>
 </mapper>

@@ -1,6 +1,9 @@
 package com.kh.curaeasyadmin.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.curaeasyadmin.common.model.vo.PageInfo;
+import com.kh.curaeasyadmin.common.template.Pagination;
 import com.kh.curaeasyadmin.model.service.AdminService;
 import com.kh.curaeasyadmin.model.vo.*;
 
@@ -17,44 +22,46 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    // 메인 페이지
-    @RequestMapping("/")
+    @RequestMapping("/admin.ad")
     public String index(Model model) {
-        ArrayList<Display> displayList = adminService.mainPageSelectDisplayList();
-        ArrayList<Notice> noticeList = adminService.mainPageSelectNoticeList();
-        ArrayList<Review> reviewList = adminService.mainPageSelectReviewList();
-        ArrayList<Reply> replyList = adminService.mainPageSelectReplyList();
-        ArrayList<Rental> rentalList = adminService.mainPageSelectRentalList();
-        ArrayList<Reserve> reserveList = adminService.mainPageSelectReserveList();
-        
-        model.addAttribute("displayList", displayList);
-        model.addAttribute("noticeList", noticeList);
-        model.addAttribute("reviewList", reviewList);
-        model.addAttribute("replyList", replyList);
-        model.addAttribute("rentalList", rentalList);
-        model.addAttribute("reserveList", reserveList);
-        
-        return "index";
+//        int countMember = adminService.getCountMember();
+//        int yearSales = adminService.getYearSales();
+//        int countDisplay = adminService.getCountDisplay();
+//        int pendingArtists = adminService.getPendingArtists();
+//
+//        model.addAttribute("countMember", countMember);
+//        model.addAttribute("yearSales", yearSales);
+//        model.addAttribute("countDisplay", countDisplay);
+//        model.addAttribute("pendingArtists", pendingArtists);
+
+        return "adminmain";
     }
 
     // 전시회 관리
     @RequestMapping("displayList.ad")
-    public String displayList(Model model) {
-        ArrayList<Display> displayList = adminService.selectDisplayList();
+    public String displayList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+        int listCount = adminService.getDisplayListCount(); // 전시회 리스트 총 개수
+
+        int pageLimit = 10; // 페이지 하단에 보여질 페이지 최대 개수
+        int boardLimit = 10; // 한 페이지에 보여질 게시글 최대 개수
+
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+        ArrayList<Display> displayList = adminService.selectDisplayList(pi);
+
         model.addAttribute("displayList", displayList);
+        model.addAttribute("pi", pi);
+
         return "display/adminDisplayListView";
     }
-    
+
     @RequestMapping("displayDetail.ad")
     public String displayDetail(@RequestParam("displayNo") int displayNo, Model model) {
         Display display = adminService.selectDisplay(displayNo);
         model.addAttribute("display", display);
-        
-        System.out.println(display);
- 
+
         return "display/adminDisplayDetailView";
     }
-    
+
     @RequestMapping("updateDisplayForm.ad")
     public String updateDisplayForm(@RequestParam("displayNo") int displayNo, Model model) {
         Display display = adminService.selectDisplay(displayNo);
@@ -81,7 +88,6 @@ public class AdminController {
     public String rentalList(Model model) {
         ArrayList<Rental> rentalList = adminService.selectRentalList();
         model.addAttribute("rentalList", rentalList);
-        System.out.println(rentalList);
         return "rental/adminRentalListView";
     }
 

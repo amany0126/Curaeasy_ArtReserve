@@ -3,18 +3,20 @@
 <mapper namespace="adminMapper">
     
     <!-- Result Maps -->
-    <resultMap id="displayResultSet" type="display">
-        <result column="DISPLAY_NO" property="displayNo" />
-        <result column="DISPLAY_NAME" property="displayName" />
-        <result column="DISPLAY_CONTENT" property="displayContent" />
-        <result column="DISPLAY_START_DATE" property="displayStartDate" />
-        <result column="DISPLAY_END_DATE" property="displayEndDate" />
-        <result column="DISPLAY_PRICE" property="displayPrice" />
-        <result column="DISPLAY_STATUS" property="displayStatus" />
-        <result column="ARTIST_NO" property="artistNo" />
-        <result column="GALLERY_NO" property="galleryNo" />
-        <result column="IMAGE_PATH" property="imagePath" />
-    </resultMap>
+	<resultMap id="displayResultSet" type="com.kh.curaeasyadmin.model.vo.Display">
+	    <result column="DISPLAY_NO" property="displayNo" />
+	    <result column="DISPLAY_NAME" property="displayName" />
+	    <result column="DISPLAY_CONTENT" property="displayContent" />
+	    <result column="DISPLAY_START_DATE" property="displayStartDate" />
+	    <result column="DISPLAY_END_DATE" property="displayEndDate" />
+	    <result column="DISPLAY_PRICE" property="displayPrice" />
+	    <result column="DISPLAY_STATUS" property="displayStatus" />
+	    <result column="ARTIST_NO" property="artistNo" />
+	    <result column="GALLERY_NO" property="galleryNo" />
+	    <result column="IMAGE_PATH" property="imagePath" />
+	    <result column="GALLERY_NAME" property="galleryName" />
+	    <result column="ARTIST_NICKNAME" property="artistNickName" />
+	</resultMap>
 
     <resultMap id="galleryResultSet" type="gallery">
         <result column="GALLERY_NO" property="galleryNo" />
@@ -107,138 +109,50 @@
     </resultMap>
 
     <!-- Select Statements -->
-    <select id="mainPageSelectDisplayList" resultMap="displayResultSet">
-        SELECT 
-            D.DISPLAY_NO,
-            D.DISPLAY_NAME,
-            D.DISPLAY_CONTENT,
-            TO_CHAR(D.DISPLAY_START_DATE, 'YYYY-MM-DD') AS DISPLAY_START_DATE,
-            TO_CHAR(D.DISPLAY_END_DATE, 'YYYY-MM-DD') AS DISPLAY_END_DATE,
-            G.GALLERY_NAME AS GALLERY_NO,
-            D.DISPLAY_STATUS,
-            A.ARTIST_NICKNAME AS ARTIST_NO
-        FROM 
-            DISPLAY D
-        JOIN 
-            GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
-        JOIN 
-            ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
-        WHERE 
-            SYSDATE BETWEEN D.DISPLAY_START_DATE AND D.DISPLAY_END_DATE
-        ORDER BY 
-            D.DISPLAY_NO
-    </select>
 
-    <select id="mainPageSelectNoticeList" resultMap="noticeResultSet">
-        SELECT 
-            NOTICE_NO,
-            NOTICE_TITLE,
-            NOTICE_CONTENT,
-            NOTICE_DATE,
-            NOTICE_ATTACHMENT,
-            NOTICE_COUNT,
-            NOTICE_STATUS
-        FROM 
-            NOTICE
-        WHERE 
-            NOTICE_STATUS = 'N'
-        ORDER BY 
-            NOTICE_NO
-    </select>
-
-    <select id="mainPageSelectReviewList" resultMap="reviewResultSet">
-        SELECT 
-            REVIEW_NO,
-            REVIEW_TITLE,
-            REVIEW_CONTENT,
-            TO_CHAR(REVIEW_ENROLL_DATE, 'YYYY-MM-DD') AS REVIEW_ENROLL_DATE,
-            REVIEW_COUNT,
-            REVIEW_IMAGE,
-            REVIEW_STATUS,
-            MEMBER_NO
-        FROM 
-            REVIEW
-        WHERE 
-            REVIEW_STATUS = 'Y'
-        ORDER BY 
-            REVIEW_NO
-    </select>
-
-    <select id="mainPageSelectReplyList" resultMap="replyResultSet">
-        SELECT 
-            REPLY_NO,
-            REPLY_CONTENT,
-            TO_CHAR(REPLY_ENROLL_DATE, 'YYYY-MM-DD') AS REPLY_ENROLL_DATE,
-            REPLY_STATUS,
-            REVIEW_NO,
-            MEMBER_NO
-        FROM 
-            REPLY
-        WHERE 
-            REPLY_STATUS = 'Y'
-        ORDER BY 
-            REPLY_NO
-    </select>
-
-    <select id="mainPageSelectRentalList" resultMap="rentalResultSet">
-        SELECT 
-            RENTAL_NO,
-            TO_CHAR(RENTAL_APPLY_DATE, 'YYYY-MM-DD') AS RENTAL_APPLY_DATE,
-            TO_CHAR(RENTAL_START_DATE, 'YYYY-MM-DD') AS RENTAL_START_DATE,
-            TO_CHAR(RENTAL_END_DATE, 'YYYY-MM-DD') AS RENTAL_END_DATE,
-            RENTAL_CONTENT,
-            RENTAL_RESULT,
-            RENTAL_STATUS,
-            ARTIST_NO,
-            GALLERY_NO
-        FROM 
-            RENTAL
-        WHERE 
-            RENTAL_STATUS = 'Y'
-        ORDER BY 
-            RENTAL_NO
-    </select>
-
-    <select id="mainPageSelectReserveList" resultMap="reserveResultSet">
-        SELECT 
-            RESERVE_NO,
-            RESERVE_COUNT,
-            PAYMENT_CODE,
-            TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD') AS PAYMENT_DATE,
-            TO_CHAR(ENTRANCE_DATE, 'YYYY-MM-DD') AS ENTRANCE_DATE,
-            PAYMENT_PRICE,
-            RESERVE_STATUS,
-            MEMBER_NO,
-            DISPLAY_NO
-        FROM 
-            RESERVE
-        WHERE 
-            RESERVE_STATUS = 'Y'
-        ORDER BY 
-            RESERVE_NO
-    </select>
-
-    <select id="selectDisplayList" resultMap="displayResultSet">
-        SELECT 
-            DISPLAY_NO,
-            DISPLAY_NAME,
-            DISPLAY_CONTENT,
-            TO_CHAR(DISPLAY_START_DATE, 'YYYY-MM-DD') AS DISPLAY_START_DATE,
-            TO_CHAR(DISPLAY_END_DATE, 'YYYY-MM-DD') AS DISPLAY_END_DATE,
-            DISPLAY_PRICE,
-            DISPLAY_STATUS,
-            ARTIST_NO,
-            GALLERY_NO,
-            (SELECT CHANGE_NAME FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = D.DISPLAY_NO AND IMAGE_LEVEL = 1 AND ROWNUM = 1) AS IMAGE_PATH
-        FROM 
-            DISPLAY D
-        ORDER BY 
-            DISPLAY_NO
-    </select>
+	<select id="getDisplayListCount" resultType="int">
+	    SELECT COUNT(*) FROM DISPLAY
+	</select>
+	
+	<select id="selectDisplayList" resultMap="displayResultSet">
+	    SELECT 
+	        D.DISPLAY_NO,
+	        D.DISPLAY_NAME,
+	        D.DISPLAY_CONTENT,
+	        D.DISPLAY_START_DATE,
+	        D.DISPLAY_END_DATE,
+	        D.DISPLAY_PRICE,
+	        D.DISPLAY_STATUS,
+	        A.ARTIST_NICKNAME,
+	        G.GALLERY_NAME
+	    FROM DISPLAY D
+	    JOIN ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
+	    JOIN GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
+	</select>
     
-   <select id="selectDisplay" parameterType="int" resultMap="displayResultSet">
-        SELECT * FROM DISPLAY WHERE DISPLAY_NO = #{displayNo}
-    </select>
+	<select id="selectDisplay" parameterType="int" resultMap="displayResultSet">
+	    SELECT 
+	        D.DISPLAY_NO,
+	        D.DISPLAY_NAME,
+	        D.DISPLAY_CONTENT,
+	        TO_CHAR(D.DISPLAY_START_DATE, 'YYYY-MM-DD') AS DISPLAY_START_DATE,
+	        TO_CHAR(D.DISPLAY_END_DATE, 'YYYY-MM-DD') AS DISPLAY_END_DATE,
+	        D.DISPLAY_PRICE,
+	        D.DISPLAY_STATUS,
+	        D.ARTIST_NO,
+	        D.GALLERY_NO,
+	        (SELECT CHANGE_NAME FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = D.DISPLAY_NO AND IMAGE_LEVEL = 1 AND ROWNUM = 1) AS IMAGE_PATH,
+	        G.GALLERY_NAME,
+	        A.ARTIST_NICKNAME
+	    FROM 
+	        DISPLAY D
+	    JOIN 
+	        GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
+	    JOIN 
+	        ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
+	    WHERE 
+	        D.DISPLAY_NO = #{displayNo}
+	</select>
     
      <delete id="deleteDisplay">
         DELETE FROM DISPLAY WHERE DISPLAY_NO = #{displayNo}

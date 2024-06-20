@@ -21,22 +21,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="${path}/resources/js/scripts.js"></script>
-    <script src="${path}/resources/demo/chart-area-demo.js"></script>
-    <script src="${path}/resources/demo/chart-bar-demo.js"></script>
-    <script src="${path}/resources/js/datatables-simple-demo.js"></script>
 </head>
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="${pageContext.request.contextPath}/">관리자 페이지</a>
+        <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
         <!-- Sidebar Toggle-->
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-        
-        <!-- Navbar Search-->
-        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-        </form>
-        <!-- Navbar-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -50,222 +42,66 @@
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
                     
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            모든 전시 목록 <!-- 지난전시,진행중,예정 등등 메인에 전체적인 목록조회되게끔 -->
+                    <div class="row dash-row">
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-primary text-white mb-4">
+                                <div class="card-body">회원수</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <div class="small text-white">1234</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple">
-                                <thead>
-                                    <tr>
-                                        <th>NO</th>
-                                        <th>전시관</th>
-                                        <th>대상자목록</th>
-                                        <th>전시일정</th>
-                                        <th>상태</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="display" items="${displayList}">
-                                        <tr>
-                                            <td>${display.displayNo}</td>
-                                            <td>${display.galleryName}</td>
-                                            <td>${display.artistNickName}</td>
-                                            <td>${display.displayStartDate} ~ ${display.displayEndDate}</td>
-                                            <td>${display.displayStatus}</td>
-                                        </tr>
-                                    </c:forEach>
-                                    <c:if test="${empty displayList}">
-                                        <tr>
-                                            <td colspan="5">진행중인 전시가 없습니다.</td>
-                                        </tr>
-                                    </c:if>
-                                </tbody>
-                            </table>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-success text-white mb-4">
+                                <div class="card-body">당해 매출액</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <div class="small text-white">₩1,234,567</div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            모든 공지사항 목록
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-warning text-white mb-4">
+                                <div class="card-body">전시 수</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <div class="small text-white">56</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple">
-                                <thead>
-                                    <tr>
-                                        <th>NO</th>
-                                        <th>제목</th>
-                                        <th>작성일</th>
-                                        <th>상태</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="notice" items="${noticeList}">
-                                        <tr>
-                                            <td>${notice.noticeNo}</td>
-                                            <td>${notice.noticeTitle}</td>
-                                            <td>${notice.noticeDate}</td>
-                                            <td>${notice.noticeStatus}</td>
-                                        </tr>
-                                    </c:forEach>
-                                    <c:if test="${empty noticeList}">
-                                        <tr>
-                                            <td colspan="4">등록된 공지사항이 없습니다.</td>
-                                        </tr>
-                                    </c:if>
-                                </tbody>
-                            </table>
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card bg-danger text-white mb-4">
+                                <div class="card-body">작가 승인 대기 중</div>
+                                <div class="card-footer d-flex align-items-center justify-content-between">
+                                    <div class="small text-white">7</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            모든 후기 목록
+                    <!-- Charts Section -->
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    월별 전시 예매수
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="monthlyReservationChart"></canvas>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple">
-                                <thead>
-                                    <tr>
-                                        <th>NO</th>
-                                        <th>제목</th>
-                                        <th>내용</th>
-                                        <th>작성일</th>
-                                        <th>작성자</th>
-                                        <th>상태</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="review" items="${reviewList}">
-                                        <tr>
-                                            <td>${review.reviewNo}</td>
-                                            <td>${review.reviewTitle}</td>
-                                            <td>${review.reviewContent}</td>
-                                            <td>${review.reviewEnrollDate}</td>
-                                            <td>${review.memberName}</td>
-                                            <td>${review.reviewStatus}</td>
-                                        </tr>
-                                    </c:forEach>
-                                    <c:if test="${empty reviewList}">
-                                        <tr>
-                                            <td colspan="6">등록된 후기가 없습니다.</td>
-                                        </tr>
-                                    </c:if>
-                                </tbody>
-                            </table>
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-chart-bar me-1"></i>
+                                    예매량 Top 5 전시
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="top5ExhibitionsChart"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            모든 댓글 목록
-                        </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple">
-                                <thead>
-                                    <tr>
-                                        <th>NO</th>
-                                        <th>내용</th>
-                                        <th>작성일</th>
-                                        <th>상태</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="reply" items="${replyList}">
-                                        <tr>
-                                            <td>${reply.replyNo}</td>
-                                            <td>${reply.replyContent}</td>
-                                            <td>${reply.replyEnrollDate}</td>
-                                            <td>${reply.replyStatus}</td>
-                                        </tr>
-                                    </c:forEach>
-                                    <c:if test="${empty replyList}">
-                                        <tr>
-                                            <td colspan="4">등록된 댓글이 없습니다.</td>
-                                        </tr>
-                                    </c:if>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            모든 대관신청 목록
-                        </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple">
-                                <thead>
-                                    <tr>
-                                        <th>NO</th>
-                                        <th>대관 시작일</th>
-                                        <th>대관 종료일</th>
-                                        <th>작가</th>
-                                        <th>전시관</th>
-                                        <th>심사 결과</th>
-                                        <th>상태</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="rental" items="${rentalList}">
-                                        <tr>
-                                            <td>${rental.rentalNo}</td>
-                                            <td>${rental.rentalStartDate}</td>
-                                            <td>${rental.rentalEndDate}</td>
-                                            <td>${rental.artistNickName}</td>
-                                            <td>${rental.galleryName}</td>
-                                            <td>${rental.rentalResult}</td>
-                                            <td>${rental.rentalStatus}</td>
-                                        </tr>
-                                    </c:forEach>
-                                    <c:if test="${empty rentalList}">
-                                        <tr>
-                                            <td colspan="7">등록된 대관신청이 없습니다.</td>
-                                        </tr>
-                                    </c:if>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            모든 예매 목록
-                        </div>
-                        <div class="card-body">
-                            <table id="datatablesSimple">
-                                <thead>
-                                    <tr>
-                                        <th>NO</th>
-                                        <th>예매수량</th>
-                                        <th>결제코드</th>
-                                        <th>결제일</th>
-                                        <th>입장일</th>
-                                        <th>결제액</th>
-                                        <th>상태</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="reserve" items="${reserveList}">
-                                        <tr>
-                                            <td>${reserve.reserveNo}</td>
-                                            <td>${reserve.reserveCount}</td>
-                                            <td>${reserve.paymentCode}</td>
-                                            <td>${reserve.paymentDate}</td>
-                                            <td>${reserve.entranceDate}</td>
-                                            <td>${reserve.paymentPrice}</td>
-                                            <td>${reserve.reserveStatus}</td>
-                                        </tr>
-                                    </c:forEach>
-                                    <c:if test="${empty reserveList}">
-                                        <tr>
-                                            <td colspan="7">등록된 예매가 없습니다.</td>
-                                        </tr>
-                                    </c:if>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -277,5 +113,53 @@
             </footer>
         </div>
     </div>
+
+    <script>
+        // Monthly Reservation Chart
+        var ctx1 = document.getElementById('monthlyReservationChart').getContext('2d');
+        var monthlyReservationChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+                datasets: [{
+                    label: '예매수',
+                    data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Top 5 Exhibitions Chart
+        var ctx2 = document.getElementById('top5ExhibitionsChart').getContext('2d');
+        var top5ExhibitionsChart = new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ["전시1", "전시2", "전시3", "전시4", "전시5"],
+                datasets: [{
+                    label: '예매량',
+                    data: [150, 120, 100, 80, 60],
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

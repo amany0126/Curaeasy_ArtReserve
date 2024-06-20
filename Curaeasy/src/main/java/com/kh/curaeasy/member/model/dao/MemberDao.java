@@ -1,5 +1,9 @@
 package com.kh.curaeasy.member.model.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -60,6 +64,18 @@ public class MemberDao {
 
 	public int checkEmail(SqlSessionTemplate sqlSession, String email) {
 		return sqlSession.selectOne("memberMapper.checkEmail", email);
+	}
+
+	public List<Integer> checkLikeList(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectList("memberMapper.checkLikeList", memberNo);
+	}
+
+	public int addLike(SqlSessionTemplate sqlSession, HashMap<String, Object> param) {
+		return sqlSession.insert("memberMapper.addLike", param);
+	}
+
+	public Integer removeLike(SqlSessionTemplate sqlSession, HashMap<String, Object> param) {
+		return sqlSession.insert("memberMapper.removeLike", param);
 	}
 
 }

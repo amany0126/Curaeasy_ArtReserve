@@ -22,5 +22,7 @@ public class Display {
 	private String artistNo;
 	private String galleryNo;
 	private String imagePath;
+	private String artistNickName;
+	private String galleryName;
 	
 }

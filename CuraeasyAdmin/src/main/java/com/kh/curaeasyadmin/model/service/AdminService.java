@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.model.dao.AdminDao;
 import com.kh.curaeasyadmin.model.vo.*;
 
@@ -19,33 +20,13 @@ public class AdminService {
     private SqlSessionTemplate sqlSession;
 
     // 메인 페이지
-    public ArrayList<Display> mainPageSelectDisplayList() {
-        return adminDao.mainPageSelectDisplayList(sqlSession);
+    
+    public int getDisplayListCount() {
+        return adminDao.getDisplayListCount(sqlSession);
     }
 
-    public ArrayList<Notice> mainPageSelectNoticeList() {
-        return adminDao.mainPageSelectNoticeList(sqlSession);
-    }
-
-    public ArrayList<Review> mainPageSelectReviewList() {
-        return adminDao.mainPageSelectReviewList(sqlSession);
-    }
-
-    public ArrayList<Reply> mainPageSelectReplyList() {
-        return adminDao.mainPageSelectReplyList(sqlSession);
-    }
-
-    public ArrayList<Rental> mainPageSelectRentalList() {
-        return adminDao.mainPageSelectRentalList(sqlSession);
-    }
-
-    public ArrayList<Reserve> mainPageSelectReserveList() {
-        return adminDao.mainPageSelectReserveList(sqlSession);
-    }
-
-    // 전시회 관리
-    public ArrayList<Display> selectDisplayList() {
-        return adminDao.selectDisplayList(sqlSession);
+    public ArrayList<Display> selectDisplayList(PageInfo pi) {
+        return adminDao.selectDisplayList(sqlSession, pi);
     }
     
     public Display selectDisplay(int displayNo) {

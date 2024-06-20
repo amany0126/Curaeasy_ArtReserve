@@ -1,5 +1,7 @@
 package com.kh.curaeasy.reserve.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,11 @@ public class ReserveService {
 		return rDao.insertReserve(sqlSession, r);
 	}
 
-	public Reserve selectLastInsertedReserve() {
-		return rDao.selectLastInsertedReserve(sqlSession);
+	public Reserve selectLastInsertedReserve(String memberNo) {
+		return rDao.selectLastInsertedReserve(sqlSession, memberNo);
+	}
+
+	public ArrayList<Reserve> selectReserveList(int memberNo) {
+		return rDao.selectReserveList(sqlSession, memberNo);
 	}
 }

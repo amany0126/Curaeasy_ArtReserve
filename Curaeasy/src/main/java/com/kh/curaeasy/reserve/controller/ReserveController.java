@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,15 +67,15 @@ public class ReserveController {
 	
 	@RequestMapping(value="insertReserve.do")
 	@ResponseBody
-	public String insertReserve(Reserve data, Model model, HttpSession session) throws MessagingException {
+	public String insertReserve(Reserve data, Model model, HttpSession session, HttpServletRequest request) throws MessagingException {
 		
 		rService.insertReserve(data);
-		Reserve r = rService.selectLastInsertedReserve();
+		Reserve r = rService.selectLastInsertedReserve(data.getMemberNo());
 		
 		String emailStr = new EmailController()
 						.PaymentConfirmation(r.getReserveNo(),
 											 r.getReserveCount(),
-											 r.getEntranceDate().substring(0, 10),
+											 r.getEntranceDate(),
 											 r.getPaymentPrice());
 		
 		MimeMessage mimeMessage  = mailSender.createMimeMessage();
@@ -88,11 +89,26 @@ public class ReserveController {
 		return "결제성공함";
 	}
 	
-	
+	@RequestMapping(value="reserveComplete.do", produces = "text/html; charset=utf-8")
+	public ModelAndView reserveComplete(ModelAndView mv, HttpSession session) {
+		Reserve r = rService.selectLastInsertedReserve(String.valueOf(((Member)session.getAttribute("loginUser")).getMemberNo()));
+		Display d = dService.selectDisplay(Integer.parseInt(r.getDisplayNo()));
+		mv.addObject("r", r)
+		  .addObject("d", d)
+		  .setViewName("reserve/reserveComplete");
+		
+		return mv;
+	}
 	
 	@RequestMapping(value="reserveList.me")
-	public String reserveList() {
+	public String reserveList(HttpSession session, Model model) {
 		
-		return "";
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		ArrayList<Reserve> list = rService.selectReserveList(memberNo);
+		
+		model.addAttribute("list", list);
+		
+		return "reserve/myReserveList";
 	}
 }

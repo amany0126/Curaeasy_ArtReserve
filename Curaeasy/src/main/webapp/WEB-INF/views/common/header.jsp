@@ -124,7 +124,6 @@ s0.parentNode.insertBefore(s1,s0);
 			</script>
 			<c:remove var="alertMsg" scope="session"/>
 		</c:if>
-    <div id="header">
         <div id="header-1">
             <ul id="navi">
                 <li id="logo">
