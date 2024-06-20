@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.curaeasyadmin.model.service.AdminService;
 import com.kh.curaeasyadmin.model.vo.*;
@@ -43,6 +44,29 @@ public class AdminController {
         model.addAttribute("displayList", displayList);
         return "display/adminDisplayListView";
     }
+    
+    @RequestMapping("displayDetail.ad")
+    public String displayDetail(@RequestParam("displayNo") int displayNo, Model model) {
+        Display display = adminService.selectDisplay(displayNo);
+        model.addAttribute("display", display);
+        
+        System.out.println(display);
+ 
+        return "display/adminDisplayDetailView";
+    }
+    
+    @RequestMapping("updateDisplayForm.ad")
+    public String updateDisplayForm(@RequestParam("displayNo") int displayNo, Model model) {
+        Display display = adminService.selectDisplay(displayNo);
+        model.addAttribute("display", display);
+        return "display/adminDisplayUpdateForm";
+    }
+
+    @RequestMapping("deleteDisplay.ad")
+    public String deleteDisplay(@RequestParam("displayNo") int displayNo) {
+        adminService.deleteDisplay(displayNo);
+        return "redirect:displayList.ad";
+    }
 
     // 전시관 관리
     @RequestMapping("galleryList.ad")
@@ -57,6 +81,7 @@ public class AdminController {
     public String rentalList(Model model) {
         ArrayList<Rental> rentalList = adminService.selectRentalList();
         model.addAttribute("rentalList", rentalList);
+        System.out.println(rentalList);
         return "rental/adminRentalListView";
     }
 

@@ -82,27 +82,25 @@
                                     <th>대관번호</th>
                                     <th>대관 시작일</th>
                                     <th>대관 종료일</th>
-                                    <th>작가</th>
-                                    <th>전시관</th>
-                                    <th>심사 결과</th>
-                                    <th>상태</th>
+                                    <th>대관 상태</th>
+                                    <th>전시관 이름</th>
+                                    <th>작가 이름</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="rental" items="${rentalList}">
-                                        <tr>
+                                    <tr>
                                         <td>${rental.rentalNo}</td>
                                         <td>${rental.rentalStartDate}</td>
                                         <td>${rental.rentalEndDate}</td>
-                      
-                                        <td>${rental.galleryName}</td>
-                                        <td>${rental.rentalResult}</td>
                                         <td>${rental.rentalStatus}</td>
+                                        <td>${rental.galleryName}</td>
+                                        <td>${rental.artistNickName}</td>
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty rentalList}">
                                     <tr>
-                                        <td colspan="7">등록된 대관신청이 없습니다.</td>
+                                        <td colspan="6">등록된 대관신청이 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>

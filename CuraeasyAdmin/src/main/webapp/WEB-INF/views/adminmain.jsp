@@ -40,58 +40,7 @@
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
-            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                <div class="sb-sidenav-menu">
-                    <div class="nav">
-                        <div class="sb-sidenav-menu-heading">관리자 페이지</div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseExhibitions" aria-expanded="false" aria-controls="collapseExhibitions">
-                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            전시 관리
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseExhibitions" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionExhibitions">
-                                <a class="nav-link" href="displayList.ad">전시회 관리</a>
-                                <a class="nav-link" href="galleryList.ad">전시관 관리</a>
-                                <a class="nav-link" href="rentalList.ad">대관 관리</a>
-                                <a class="nav-link" href="reserveList.ad">예매 관리</a>
-                            </nav>
-                        </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseMembers" aria-expanded="false" aria-controls="collapseMembers">
-                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
-                            회원 관리
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseMembers" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionMembers">
-                                <a class="nav-link" href="memberList.ad">일반회원 관리</a>
-                                <a class="nav-link" href="artistList.ad">작가 관리</a>
-                            </nav>
-                        </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseNotices" aria-expanded="false" aria-controls="collapseNotices">
-                            <div class="sb-nav-link-icon"><i class="fas fa-bullhorn"></i></div>
-                            공지사항 관리
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseNotices" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionNotices">
-                                <a class="nav-link" href="noticelist.ad">공지사항 관리</a>
-                            </nav>
-                        </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReviews" aria-expanded="false" aria-controls="collapseReviews">
-                            <div class="sb-nav-link-icon"><i class="fas fa-comment-dots"></i></div>
-                             후기 관리
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseReviews" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionReviews">
-                                <a class="nav-link" href="reviewList.ad">후기 관리</a>
-                                <a class="nav-link" href="replyList.ad">댓글 관리</a>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+            <%@ include file="common/adminNav.jsp" %>
         </div>
         <div id="layoutSidenav_content">
             <main>
@@ -103,7 +52,6 @@
                     
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
                             모든 전시 목록 <!-- 지난전시,진행중,예정 등등 메인에 전체적인 목록조회되게끔 -->
                         </div>
                         <div class="card-body">
@@ -139,7 +87,6 @@
 
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
                             모든 공지사항 목록
                         </div>
                         <div class="card-body">
@@ -173,7 +120,6 @@
 
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
                             모든 후기 목록
                         </div>
                         <div class="card-body">
@@ -211,7 +157,6 @@
 
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
                             모든 댓글 목록
                         </div>
                         <div class="card-body">
@@ -245,7 +190,6 @@
 
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
                             모든 대관신청 목록
                         </div>
                         <div class="card-body">
@@ -267,6 +211,7 @@
                                             <td>${rental.rentalNo}</td>
                                             <td>${rental.rentalStartDate}</td>
                                             <td>${rental.rentalEndDate}</td>
+                                            <td>${rental.artistNickName}</td>
                                             <td>${rental.galleryName}</td>
                                             <td>${rental.rentalResult}</td>
                                             <td>${rental.rentalStatus}</td>
@@ -284,7 +229,6 @@
 
                     <div class="card mb-4">
                         <div class="card-header">
-                            <i class="fas fa-table me-1"></i>
                             모든 예매 목록
                         </div>
                         <div class="card-body">

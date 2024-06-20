@@ -13,7 +13,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Rental {
-	
     private int rentalNo;
     private Date rentalApplyDate;
     private Date rentalStartDate;
@@ -23,6 +22,6 @@ public class Rental {
     private String rentalStatus;
     private int artistNo;
     private int galleryNo;
-    private String galleryName;    // 추가
-    private String artistNickName; // 추가
+    private String galleryName;
+    private String artistNickName;
 }
