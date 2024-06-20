@@ -14,15 +14,15 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Member {
-    private int memberNo;            // 회원번호
-    private String memberId;         // 회원아이디
-    private String memberPwd;        // 회원비밀번호
-    private String memberName;       // 회원이름
-    private String memberPhone;      // 전화번호
-    private String memberEmail;      // 이메일
-    private String memberAddress;    // 회원주소
-    private Date memberBirthday;     // 생일
-    private Date memberEnrollDate;   // 회원가입일
-    private char artistOngoing;      // 현재 작가여부
-    private char memberStatus;       // 회원상태
+    private int memberNo;
+    private String memberId;       
+    private String memberPwd;        
+    private String memberName;  
+    private String memberPhone; 
+    private String memberEmail; 
+    private String memberAddress; 
+    private Date memberBirthday;    
+    private Date memberEnrollDate;   
+    private String artistOngoing;   
+    private String memberStatus;   
 }

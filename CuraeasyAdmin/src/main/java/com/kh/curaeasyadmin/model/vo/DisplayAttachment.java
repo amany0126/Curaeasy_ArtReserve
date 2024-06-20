@@ -11,13 +11,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Notice {
-	
-	private int noticeNo;
-	private String noticeDate;
-	private String noticeTitle;
-	private String noticeContent;
-	private String noticeAttachment;
-	private String noticeStatus;
-	private int noticeCount;
+public class DisplayAttachment {
+    private int attachmentNo;
+    private String originName;
+    private String changeName;
+    private int imageLevel;
+    private String status;
+    private int displayNo;
 }

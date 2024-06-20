@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Member Management</title>
+    <title>Reserve Management</title>
     
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
@@ -39,11 +39,6 @@
             text-align: left;
             color: #333;
         }
-        .filter {
-            text-align: center;
-            margin-bottom: 20px;
-            float: right;
-        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -65,20 +60,6 @@
             background-color: #fff;
         }
     </style>
-    <script>
-        function filterTable() {
-            var filter = document.getElementById("authorFilter").value;
-            var rows = document.querySelectorAll("tbody tr");
-            rows.forEach(row => {
-                var authorStatus = row.querySelector("td:nth-child(9)").textContent.trim();
-                if (filter === "all" || authorStatus === filter) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        }
-    </script>
 </head>
 
 <body class="sb-nav-fixed">
@@ -93,49 +74,39 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">🧑‍🤝‍🧑 회원 목록 조회</h1>
+                    <h1 class="mt-4">🗓 예매 목록 조회</h1>
                     <div class="container">
-                        <div class="filter">
-                            <label for="authorFilter">작가 | 회원 필터:</label>
-                            <select id="authorFilter" onchange="filterTable()">
-                                <option value="all">전체</option>
-                                <option value="Y">작가 (Y)</option>
-                                <option value="N">일반회원 (N)</option>
-                            </select>
-                        </div>
                         <table id="datatablesSimple">
                             <thead>
                                 <tr>
+                                    <th>예매번호</th>
+                                    <th>예매수</th>
+                                    <th>결제코드</th>
+                                    <th>결제일</th>
+                                    <th>입장일</th>
+                                    <th>결제금액</th>
+                                    <th>예매상태</th>
                                     <th>회원번호</th>
-                                    <th>아이디</th>
-                                    <th>이름</th>
-                                    <th>연락처</th>
-                                    <th>이메일</th>
-                                    <th>주소</th>
-                                    <th>생년월일</th>
-                                    <th>가입일</th>
-                                    <th>작가여부</th>
-                                    <th>회원상태</th>
+                                    <th>전시번호</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="member" items="${memberList}">
-                  <tr>
-                    <td>${member.memberNo}</td>
-                    <td>${member.memberId}</td>
-                    <td>${member.memberName}</td>
-                    <td>${member.memberPhone}</td>
-                    <td>${member.memberEmail}</td>
-                    <td>${member.memberAddress}</td>
-                    <td>${member.memberBirthday}</td>
-                    <td>${member.memberEnrollDate}</td>
-                    <td>${member.artistOngoing}</td>
-                    <td>${member.memberStatus}</td>
-                </tr>
+                                <c:forEach var="reserve" items="${reserveList}">
+                                        <tr>
+                                            <td>${reserve.reserveNo}</td>
+                                            <td>${reserve.reserveCount}</td>
+                                            <td>${reserve.paymentCode}</td>
+                                            <td>${reserve.paymentDate}</td>
+                                            <td>${reserve.entranceDate}</td>
+                                            <td>${reserve.paymentPrice}</td>
+                                            <td>${reserve.reserveStatus}</td>
+                                            <td>${reserve.memberNo}</td>
+                                            <td>${reserve.displayNo}</td>
+                                        </tr>
                                 </c:forEach>
-                                <c:if test="${empty memberList}">
+                                <c:if test="${empty reserveList}">
                                     <tr>
-                                        <td colspan="10">등록된 회원이 없습니다.</td>
+                                        <td colspan="9">등록된 예매가 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>

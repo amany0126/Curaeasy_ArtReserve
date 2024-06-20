@@ -12,35 +12,40 @@ import com.kh.curaeasy.notice.model.vo.Notice;
 @Repository
 public class NoticeDao {
 	
-public int selectListCount(SqlSessionTemplate sqlSession) {
-		
-		return sqlSession.selectOne("noticeMapper.selectListCount");
-	}
-	
-
-	 public ArrayList<Notice> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
-	  
-	 int limit = pi.getBoardLimit(); int offset = (pi.getCurrentPage() - 1) *limit;
-	  
-	 RowBounds rowBounds = new RowBounds(offset, limit);
-	 
-	 return (ArrayList)sqlSession.selectList("noticeMapper.selectList", null,
-	 rowBounds); }
-	
-	public int insertNotice(SqlSessionTemplate sqlSession, Notice n) {
-		
-		return sqlSession.insert("noticeMapper.insertNotice", n);
-	}
-	
-	public int increaseCount(SqlSessionTemplate sqlSession, int noticeNo) {
-		
-		return sqlSession.update("noticeMapper.increaseCount", noticeNo);
-	}
-	
-	public Notice selectNotice(SqlSessionTemplate sqlSession, int noticeNo) {
-		
-		return sqlSession.selectOne("noticeMapper.selectNotice", noticeNo);
-	}
+    public int selectListCount(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectOne("noticeMapper.selectListCount");
+    }
+    
+    public ArrayList<Notice> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+        int limit = pi.getBoardLimit();
+        int offset = (pi.getCurrentPage() - 1) * limit;
+        RowBounds rowBounds = new RowBounds(offset, limit);
+        return (ArrayList)sqlSession.selectList("noticeMapper.selectList", null, rowBounds);
+    }
+    
+    public int insertNotice(SqlSessionTemplate sqlSession, Notice n) {
+        return sqlSession.insert("noticeMapper.insertNotice", n);
+    }
+    
+    public int increaseCount(SqlSessionTemplate sqlSession, int noticeNo) {
+        return sqlSession.update("noticeMapper.increaseCount", noticeNo);
+    }
+    
+    public Notice selectNotice(SqlSessionTemplate sqlSession, int noticeNo) {
+        return sqlSession.selectOne("noticeMapper.selectNotice", noticeNo);
+    }
+    
+    
+    
+    // 이전글 ID 조회
+    public Integer getPreviousNoticeId(SqlSessionTemplate sqlSession, int noticeNo) {
+        return sqlSession.selectOne("noticeMapper.getPreviousNoticeId", noticeNo);
+    }
+    
+    // 다음글 ID 조회
+    public Integer getNextNoticeId(SqlSessionTemplate sqlSession, int noticeNo) {
+        return sqlSession.selectOne("noticeMapper.getNextNoticeId", noticeNo);
+    }
 	
 	
 	

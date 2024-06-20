@@ -10,12 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Member Management</title>
+    <title>Exhibition Management</title>
     
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
@@ -39,11 +38,6 @@
             text-align: left;
             color: #333;
         }
-        .filter {
-            text-align: center;
-            margin-bottom: 20px;
-            float: right;
-        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -64,19 +58,14 @@
         table tr:nth-child(odd) {
             background-color: #fff;
         }
+        table tr:hover {
+            background-color: #e2e2e2;
+            cursor: pointer;
+        }
     </style>
     <script>
-        function filterTable() {
-            var filter = document.getElementById("authorFilter").value;
-            var rows = document.querySelectorAll("tbody tr");
-            rows.forEach(row => {
-                var authorStatus = row.querySelector("td:nth-child(9)").textContent.trim();
-                if (filter === "all" || authorStatus === filter) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
+        function goToDetail(displayNo) {
+            window.location.href = '${path}/displayDetail.ad?displayNo=' + displayNo;
         }
     </script>
 </head>
@@ -84,7 +73,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -93,49 +82,39 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">🧑‍🤝‍🧑 회원 목록 조회</h1>
+                    <h1 class="mt-4">📅 전시회 목록 조회</h1>
                     <div class="container">
-                        <div class="filter">
-                            <label for="authorFilter">작가 | 회원 필터:</label>
-                            <select id="authorFilter" onchange="filterTable()">
-                                <option value="all">전체</option>
-                                <option value="Y">작가 (Y)</option>
-                                <option value="N">일반회원 (N)</option>
-                            </select>
-                        </div>
                         <table id="datatablesSimple">
                             <thead>
                                 <tr>
-                                    <th>회원번호</th>
-                                    <th>아이디</th>
-                                    <th>이름</th>
-                                    <th>연락처</th>
-                                    <th>이메일</th>
-                                    <th>주소</th>
-                                    <th>생년월일</th>
-                                    <th>가입일</th>
-                                    <th>작가여부</th>
-                                    <th>회원상태</th>
+                                    <th>NO</th>
+                                    <th>전시명</th>
+                                    <th>내용</th>
+                                    <th>시작일</th>
+                                    <th>종료일</th>
+                                    <th>가격</th>
+                                    <th>상태</th>
+                                    <th>작가명</th>
+                                    <th>전시관명</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="member" items="${memberList}">
-                  <tr>
-                    <td>${member.memberNo}</td>
-                    <td>${member.memberId}</td>
-                    <td>${member.memberName}</td>
-                    <td>${member.memberPhone}</td>
-                    <td>${member.memberEmail}</td>
-                    <td>${member.memberAddress}</td>
-                    <td>${member.memberBirthday}</td>
-                    <td>${member.memberEnrollDate}</td>
-                    <td>${member.artistOngoing}</td>
-                    <td>${member.memberStatus}</td>
-                </tr>
+                                <c:forEach var="display" items="${displayList}">
+                                    <tr onclick="goToDetail('${display.displayNo}')">
+                                        <td>${display.displayNo}</td>
+                                        <td>${display.displayName}</td>
+                                        <td>${display.displayContent}</td>
+                                        <td>${display.displayStartDate}</td>
+                                        <td>${display.displayEndDate}</td>
+                                        <td>${display.displayPrice}</td>
+                                        <td>${display.displayStatus}</td>
+                                        <td>${display.artistNo}</td>
+                                        <td>${display.galleryNo}</td>
+                                    </tr>
                                 </c:forEach>
-                                <c:if test="${empty memberList}">
+                                <c:if test="${empty displayList}">
                                     <tr>
-                                        <td colspan="10">등록된 회원이 없습니다.</td>
+                                        <td colspan="9">등록된 전시가 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>

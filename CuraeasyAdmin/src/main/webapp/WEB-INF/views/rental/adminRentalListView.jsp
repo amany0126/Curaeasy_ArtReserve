@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Member Management</title>
+    <title>Rental Management</title>
     
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
@@ -39,11 +39,6 @@
             text-align: left;
             color: #333;
         }
-        .filter {
-            text-align: center;
-            margin-bottom: 20px;
-            float: right;
-        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -65,26 +60,12 @@
             background-color: #fff;
         }
     </style>
-    <script>
-        function filterTable() {
-            var filter = document.getElementById("authorFilter").value;
-            var rows = document.querySelectorAll("tbody tr");
-            rows.forEach(row => {
-                var authorStatus = row.querySelector("td:nth-child(9)").textContent.trim();
-                if (filter === "all" || authorStatus === filter) {
-                    row.style.display = "";
-                } else {
-                    row.style.display = "none";
-                }
-            });
-        }
-    </script>
 </head>
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -93,49 +74,33 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">🧑‍🤝‍🧑 회원 목록 조회</h1>
+                    <h1 class="mt-4">🗄 대관신청 목록 조회</h1>
                     <div class="container">
-                        <div class="filter">
-                            <label for="authorFilter">작가 | 회원 필터:</label>
-                            <select id="authorFilter" onchange="filterTable()">
-                                <option value="all">전체</option>
-                                <option value="Y">작가 (Y)</option>
-                                <option value="N">일반회원 (N)</option>
-                            </select>
-                        </div>
                         <table id="datatablesSimple">
                             <thead>
                                 <tr>
-                                    <th>회원번호</th>
-                                    <th>아이디</th>
-                                    <th>이름</th>
-                                    <th>연락처</th>
-                                    <th>이메일</th>
-                                    <th>주소</th>
-                                    <th>생년월일</th>
-                                    <th>가입일</th>
-                                    <th>작가여부</th>
-                                    <th>회원상태</th>
+                                    <th>대관번호</th>
+                                    <th>대관 시작일</th>
+                                    <th>대관 종료일</th>
+                                    <th>대관 상태</th>
+                                    <th>전시관 이름</th>
+                                    <th>작가 이름</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="member" items="${memberList}">
-                  <tr>
-                    <td>${member.memberNo}</td>
-                    <td>${member.memberId}</td>
-                    <td>${member.memberName}</td>
-                    <td>${member.memberPhone}</td>
-                    <td>${member.memberEmail}</td>
-                    <td>${member.memberAddress}</td>
-                    <td>${member.memberBirthday}</td>
-                    <td>${member.memberEnrollDate}</td>
-                    <td>${member.artistOngoing}</td>
-                    <td>${member.memberStatus}</td>
-                </tr>
-                                </c:forEach>
-                                <c:if test="${empty memberList}">
+                                <c:forEach var="rental" items="${rentalList}">
                                     <tr>
-                                        <td colspan="10">등록된 회원이 없습니다.</td>
+                                        <td>${rental.rentalNo}</td>
+                                        <td>${rental.rentalStartDate}</td>
+                                        <td>${rental.rentalEndDate}</td>
+                                        <td>${rental.rentalStatus}</td>
+                                        <td>${rental.galleryName}</td>
+                                        <td>${rental.artistNickName}</td>
+                                    </tr>
+                                </c:forEach>
+                                <c:if test="${empty rentalList}">
+                                    <tr>
+                                        <td colspan="6">등록된 대관신청이 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>
