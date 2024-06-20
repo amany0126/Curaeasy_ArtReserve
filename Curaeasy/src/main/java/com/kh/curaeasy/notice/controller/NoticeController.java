@@ -55,6 +55,56 @@ public class NoticeController {
 		return "notice/noticeListView";
 	}
 	
+
+	@GetMapping("noticeDetail.do")
+	public ModelAndView selectNotice(@RequestParam("nno") int nno, ModelAndView mv, Model model) {
+	    try {
+	        int result = noticeService.increaseCount(nno);
+
+	        System.out.println("공지 번호: " + nno);
+	        System.out.println("조회수 증가 결과: " + result);
+
+	        if(result > 0) {
+	            Notice n = noticeService.selectNotice(nno);
+
+	            System.out.println("공지 제목: " + n.getNoticeTitle());
+
+	            // 이전글과 다음글 ID 조회
+	            Integer previousNoticeId = noticeService.getPreviousNoticeId(nno);
+	            Integer nextNoticeId = noticeService.getNextNoticeId(nno);
+
+	            // 조회된 값 설정
+	            if (previousNoticeId != null) {
+	                mv.addObject("previousNoticeId", previousNoticeId);
+	            }
+	            if (nextNoticeId != null) {
+	                mv.addObject("nextNoticeId", nextNoticeId);
+	            }
+
+	            mv.addObject("n", n).setViewName("notice/noticeDetailView");
+	        } else {
+	            mv.addObject("errorMsg", "게시글 상세조회 실패")
+	              .setViewName("common/errorPage");
+	        }
+	    } catch (Exception e) {
+	        mv.addObject("errorMsg", "게시글 상세조회 중 오류 발생")
+	          .setViewName("common/errorPage");
+	        e.printStackTrace();
+	    }
+	    return mv;
+	}
+	
+    /*
+    Notice notice = noticeService.getNoticeById(noticeId);
+    model.addAttribute("notice", notice);
+
+    // 다음글과 이전글 ID를 모델에 추가
+    int previousNoticeId = noticeService.getPreviousNoticeId(noticeNo);
+    int nextNoticeId = noticeService.getNextNoticeId(noticeNo);
+    model.addAttribute("previousNoticeId", previousNoticeNo);
+    model.addAttribute("nextNoticeId", nextNoticeNo);
+    */
+	
 	/*
 	@GetMapping("noticeDetail.do")
 	public ModelAndView selectNotice(int nno,
@@ -77,39 +127,6 @@ public class NoticeController {
 		}
 		return mv;
 	}*/
-	@GetMapping("noticeDetail.do")
-	public ModelAndView selectNotice(@RequestParam("nno") int nno, ModelAndView mv) {
-	    try {
-
-	        int result = noticeService.increaseCount(nno);
-
-	        System.out.println("공지 번호: " + nno);
-	        System.out.println("조회수 증가 결과: " + result);
-	        
-	        
-
-	        if(result > 0) {
-
-	            Notice n = noticeService.selectNotice(nno);
-
-	            System.out.println("공지 제목: " + n.getNoticeTitle());
-
-	            mv.addObject("n", n).setViewName("notice/noticeDetailView");
-	        } else {
-	            mv.addObject("errorMsg", "게시글 상세조회 실패")
-	              .setViewName("common/errorPage");
-	        }
-	    } catch (Exception e) {
-
-	    	
-	        mv.addObject("errorMsg", "게시글 상세조회 중 오류 발생")
-	          .setViewName("common/errorPage");
-	        e.printStackTrace();
-	    }
-	    return mv;
-	}
-	
-	
 	
 	
 	

@@ -21,10 +21,17 @@ public interface NoticeService {
 	// 게시글 상세 조회
 	Notice selectNotice(int noticeNo);
 	
+    // 이전글 ID 조회
+    Integer getPreviousNoticeId(int noticeNo);
+
+    // 다음글 ID 조회
+    Integer getNextNoticeId(int noticeNo);
 	
 	
-	
-	
+    
+    
+    
+    
 	/* 이건 관리자만가능
 	// 게시글 삭제 서비스
 	int deleteNotice(int noticeNo);

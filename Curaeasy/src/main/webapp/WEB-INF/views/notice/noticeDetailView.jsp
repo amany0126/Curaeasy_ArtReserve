@@ -175,13 +175,13 @@
         <div class="notice-nav">
             <div class="nav-item">
                 <span>이전글</span>
-                    <a href="noticeDetail.do?cpage=${ requestScope.pi.currentPage - 1 }">이전게시글</a>
+                    <a href="noticeDetail.do?cpage=${ pi.currentPage - 1 }&nno=${ previousNoticeId }">이전게시글</a>
                 <span class="icon">&#8743;</span>
             </div>
             <div class="separator"></div>
             <div class="nav-item">
                 <span>다음글</span>
-                    <a href="noticeDetail.do?cpage=${ requestScope.pi.currentPage + 1 }">다음게시글</a>
+                    <a href="noticeDetail.do?cpage=${ pi.currentPage + 1 }&nno=${ nextNoticeId }">다음게시글</a>
                 <span class="icon">&#8744;</span>
             </div>
         </div>

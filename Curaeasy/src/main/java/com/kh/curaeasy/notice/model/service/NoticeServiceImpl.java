@@ -40,7 +40,19 @@ public class NoticeServiceImpl implements NoticeService{
 	public Notice selectNotice(int noticeNo) {
 		return noticeDao.selectNotice(sqlSession, noticeNo);
 	}
+	
+	
+	
 
+	@Override
+	public Integer getPreviousNoticeId(int noticeNo) {
+	    return noticeDao.getPreviousNoticeId(sqlSession, noticeNo);
+	}
+
+	@Override
+	public Integer getNextNoticeId(int noticeNo) {
+	    return noticeDao.getNextNoticeId(sqlSession, noticeNo);
+	}
 	
 	/* 관리자만가능
 	@Override
