@@ -19,29 +19,6 @@ public class AdminService {
     private SqlSessionTemplate sqlSession;
 
     // 메인 페이지
-    public ArrayList<Display> mainPageSelectDisplayList() {
-        return adminDao.mainPageSelectDisplayList(sqlSession);
-    }
-
-    public ArrayList<Notice> mainPageSelectNoticeList() {
-        return adminDao.mainPageSelectNoticeList(sqlSession);
-    }
-
-    public ArrayList<Review> mainPageSelectReviewList() {
-        return adminDao.mainPageSelectReviewList(sqlSession);
-    }
-
-    public ArrayList<Reply> mainPageSelectReplyList() {
-        return adminDao.mainPageSelectReplyList(sqlSession);
-    }
-
-    public ArrayList<Rental> mainPageSelectRentalList() {
-        return adminDao.mainPageSelectRentalList(sqlSession);
-    }
-
-    public ArrayList<Reserve> mainPageSelectReserveList() {
-        return adminDao.mainPageSelectReserveList(sqlSession);
-    }
 
     // 전시회 관리
     public ArrayList<Display> selectDisplayList() {

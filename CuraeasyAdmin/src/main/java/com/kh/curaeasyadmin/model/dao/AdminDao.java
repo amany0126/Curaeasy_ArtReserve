@@ -11,29 +11,6 @@ import com.kh.curaeasyadmin.model.vo.*;
 public class AdminDao {
 
     // 메인 페이지
-    public ArrayList<Display> mainPageSelectDisplayList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.mainPageSelectDisplayList");
-    }
-
-    public ArrayList<Notice> mainPageSelectNoticeList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.mainPageSelectNoticeList");
-    }
-
-    public ArrayList<Review> mainPageSelectReviewList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.mainPageSelectReviewList");
-    }
-
-    public ArrayList<Reply> mainPageSelectReplyList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.mainPageSelectReplyList");
-    }
-
-    public ArrayList<Rental> mainPageSelectRentalList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.mainPageSelectRentalList");
-    }
-
-    public ArrayList<Reserve> mainPageSelectReserveList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.mainPageSelectReserveList");
-    }
 
     // 전시회 관리
     public ArrayList<Display> selectDisplayList(SqlSessionTemplate sqlSession) {

@@ -1,6 +1,9 @@
 package com.kh.curaeasyadmin.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,24 +20,19 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    // 메인 페이지
-    @RequestMapping("/")
+    @RequestMapping("/admin.ad")
     public String index(Model model) {
-        ArrayList<Display> displayList = adminService.mainPageSelectDisplayList();
-        ArrayList<Notice> noticeList = adminService.mainPageSelectNoticeList();
-        ArrayList<Review> reviewList = adminService.mainPageSelectReviewList();
-        ArrayList<Reply> replyList = adminService.mainPageSelectReplyList();
-        ArrayList<Rental> rentalList = adminService.mainPageSelectRentalList();
-        ArrayList<Reserve> reserveList = adminService.mainPageSelectReserveList();
-        
-        model.addAttribute("displayList", displayList);
-        model.addAttribute("noticeList", noticeList);
-        model.addAttribute("reviewList", reviewList);
-        model.addAttribute("replyList", replyList);
-        model.addAttribute("rentalList", rentalList);
-        model.addAttribute("reserveList", reserveList);
-        
-        return "index";
+//        int countMember = adminService.getCountMember();
+//        int yearSales = adminService.getYearSales();
+//        int countDisplay = adminService.getCountDisplay();
+//        int pendingArtists = adminService.getPendingArtists();
+//
+//        model.addAttribute("countMember", countMember);
+//        model.addAttribute("yearSales", yearSales);
+//        model.addAttribute("countDisplay", countDisplay);
+//        model.addAttribute("pendingArtists", pendingArtists);
+
+        return "adminmain";
     }
 
     // 전시회 관리
@@ -44,17 +42,15 @@ public class AdminController {
         model.addAttribute("displayList", displayList);
         return "display/adminDisplayListView";
     }
-    
+
     @RequestMapping("displayDetail.ad")
     public String displayDetail(@RequestParam("displayNo") int displayNo, Model model) {
         Display display = adminService.selectDisplay(displayNo);
         model.addAttribute("display", display);
-        
-        System.out.println(display);
- 
+
         return "display/adminDisplayDetailView";
     }
-    
+
     @RequestMapping("updateDisplayForm.ad")
     public String updateDisplayForm(@RequestParam("displayNo") int displayNo, Model model) {
         Display display = adminService.selectDisplay(displayNo);
@@ -81,7 +77,6 @@ public class AdminController {
     public String rentalList(Model model) {
         ArrayList<Rental> rentalList = adminService.selectRentalList();
         model.addAttribute("rentalList", rentalList);
-        System.out.println(rentalList);
         return "rental/adminRentalListView";
     }
 

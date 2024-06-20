@@ -45,12 +45,18 @@
         }
         table th, table td {
             padding: 12px;
-            text-align: center;
+            text-align: left;
             border: 1px solid #ddd;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         table th {
             background-color: #f2f2f2;
             color: #333;
+        }
+        .truncate {
+            max-width: 200px; /* Adjust the width as needed */
         }
         table tr:nth-child(even) {
             background-color: #f9f9f9;
@@ -67,6 +73,19 @@
         function goToDetail(displayNo) {
             window.location.href = '${path}/displayDetail.ad?displayNo=' + displayNo;
         }
+
+        function truncateText(selector, maxLength) {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(element => {
+                if (element.textContent.length > maxLength) {
+                    element.textContent = element.textContent.slice(0, maxLength) + '...';
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            truncateText('.truncate', 20);
+        });
     </script>
 </head>
 
@@ -103,13 +122,13 @@
                                     <tr onclick="goToDetail('${display.displayNo}')">
                                         <td>${display.displayNo}</td>
                                         <td>${display.displayName}</td>
-                                        <td>${display.displayContent}</td>
+                                        <td class="truncate">${display.displayContent}</td>
                                         <td>${display.displayStartDate}</td>
                                         <td>${display.displayEndDate}</td>
                                         <td>${display.displayPrice}</td>
                                         <td>${display.displayStatus}</td>
-                                        <td>${display.artistNo}</td>
-                                        <td>${display.galleryNo}</td>
+                                        <td>${display.artistNickName}</td>
+                                        <td>${display.galleryName}</td>
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty displayList}">
