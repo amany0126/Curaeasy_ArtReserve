@@ -17,4 +17,57 @@
 		  FROM REVIEW
 		 WHERE MEMBER_NO = #{userNo}
 	</select>
+	
+	
+	<select id="selectListAllCount" resultType="_int" parameterType="string" >
+		SELECT count(*)
+		  FROM REVIEW R
+		  JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
+		 WHERE REVIEW_TITLE like '%'||#{search}||'%' or  MEMBER_ID like '%'||#{search}||'%' AND REVIEW_STATUS = 'Y'
+	</select>
+	<select id="selectAllList" resultMap="reviewResultSet"  parameterType="string">
+		SELECT REVIEW_TITLE,REVIEW_NO,REVIEW_COUNT,REVIEW_ENROLL_DATE,m.MEMBER_ID as "REVIEW_CONTENT"
+		  FROM REVIEW R
+          JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
+		 WHERE REVIEW_TITLE like '%'||#{search}||'%' or  MEMBER_ID like '%'||#{search}||'%' AND REVIEW_STATUS = 'Y'
+		 ORDER BY REVIEW_NO DESC
+	</select>
+	
+	
+	
+		<select id="selectTitleListCount" parameterType="string" resultType="_int">
+		SELECT count(*)
+		  FROM REVIEW R
+		  JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
+		 WHERE REVIEW_TITLE like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y'
+	</select>
+	<select id="selectTitleList" parameterType="string" resultMap="reviewResultSet">
+		SELECT REVIEW_TITLE,REVIEW_NO,REVIEW_COUNT,REVIEW_ENROLL_DATE,m.MEMBER_ID as "REVIEW_CONTENT"
+		  FROM REVIEW R
+          JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
+		  WHERE REVIEW_TITLE like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y'
+		 ORDER BY REVIEW_NO DESC
+	</select>
+	
+	
+	
+		<select id="selectWriterListCount" parameterType="string" resultType="_int">
+		SELECT count(*)
+		  FROM REVIEW R
+		  JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
+		 WHERE MEMBER_ID like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y'
+	</select>
+	<select id="selectWriterList" parameterType="string" resultMap="reviewResultSet">
+		SELECT REVIEW_TITLE,REVIEW_NO,REVIEW_COUNT,REVIEW_ENROLL_DATE,m.MEMBER_ID as "REVIEW_CONTENT"
+		  FROM REVIEW R
+          JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
+		  WHERE MEMBER_ID like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y'
+		 ORDER BY REVIEW_NO DESC
+	</select>
+	
+		<select id="ticket" resultType="_int" parameterType="_int" >
+		SELECT count(*)
+		  FROM RESERVE
+		 WHERE MEMBER_NO = #{userNo}
+	</select>
 </mapper>
