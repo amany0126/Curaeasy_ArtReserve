@@ -1,6 +1,7 @@
 package com.kh.curaeasy.member.controller;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.mail.MessagingException;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -444,6 +445,20 @@ public class MemberController {
 	public String checkEmail(String email) {
 		int count = memberService.checkEmail(email);
 		return (count>0)? "NNNNN" : "NNNNY";
+	}
+	
+	@RequestMapping("modifyLike.do")
+	@ResponseBody
+	public String modifyLike(int memberNo, int displayNo, boolean isIncrease) {
+		
+		HashMap<String, Object> param = new HashMap<String, Object>();
+		param.put("memberNo", memberNo);
+		param.put("displayNo", displayNo);
+		param.put("isIncrease", isIncrease);
+		
+		memberService.modifyLike(param);
+		
+		return "성공";
 	}
 }
 	

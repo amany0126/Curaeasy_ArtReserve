@@ -63,5 +63,6 @@ public class DisplayDao {
 	public ArrayList<DisplayAttachment> mydisplayList(SqlSessionTemplate sqlSession, int artistNo) {
 		return (ArrayList) sqlSession.selectList("displayMapper.mydisplayList", artistNo);
 	}
+	
 
 }

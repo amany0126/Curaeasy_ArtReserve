@@ -65,4 +65,5 @@ public class DisplayService {
 		// TODO Auto-generated method stub
 		return displayDao.mydisplayList(sqlSession,artistNo);
 	}
+	
 }

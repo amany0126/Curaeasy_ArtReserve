@@ -22,5 +22,6 @@ public class Display {
 	private String artistNo;
 	private String galleryNo;
 	private String imagePath;
+	private int likeCount;
 	
 }

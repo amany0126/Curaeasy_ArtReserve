@@ -114,15 +114,10 @@
         <div class="content-header">
             <h1>진행중인 전시</h1>
         </div>
-        <div class="search-box">
-            <form action="searchDisplay.do" method="get">
-                <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
-                <button type="submit">검색</button>
-            </form>
-        </div>
         <div class="exhibition-list">
             <c:forEach var="exhibition" items="${ onDisplayList }">
                 <div class="exhibition-item">
+                	<div style="text-align: right"><button name="${ exhibition.displayNo }" class="btn btn-outline-dark" onclick="likeCheck(this);">❤ ${ exhibition.likeCount }</button></div>
                     <a href="displayDetail.do?dno=${exhibition.displayNo}" style="text-decoration: none; color: black;" >
                         <img src="<c:url value='/resources/display/${exhibition.imagePath}' />" alt="전시 이미지">
                         <h2>${ exhibition.displayName }</h2>
@@ -137,6 +132,61 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(function() {
+
+        if("${sessionScope.loginUser}" === ""){
+            return false;
+        }
+
+        let displayNoList = ${requestScope.displayNoList}
+
+        displayNoList.forEach(function(element, index) {
+            let btn = $("button[name=" + element + "]")[0];
+            if(btn != undefined){
+                btn.className = "btn btn-danger";
+            }
+        });
+
+        if(displayNoList.length == 0){
+            return false;
+        }        
+    });
+
+    function likeCheck(event) {
+        
+        let isIncrease = $(event).hasClass("btn-outline-dark") ? true : false;
+
+        if("${sessionScope.loginUser}" === ""){
+            alert("로그인 후 이용 가능합니다.");
+            return false;
+        }
+
+        $.ajax({
+            url: "modifyLike.do",
+            method: "GET",
+            data : {
+                memberNo: "${sessionScope.loginUser.memberNo}",
+                displayNo: event.name,
+                isIncrease: isIncrease
+            },
+            success : function(result) {
+                if(isIncrease){
+                    event.className = "btn btn-danger"
+                    event.innerText = "❤ " + (Number(event.innerText.slice(2, 3)) + 1);
+                } else {
+                    event.className = "btn btn-outline-dark"                    
+                    event.innerText = "❤ " + (Number(event.innerText.slice(2, 3)) - 1);
+                }
+            },
+            error: function() {
+                console.log("좋아요 조작 ajax 실패")
+            }
+        });
+        
+    }
+</script>
 
 <jsp:include page="../common/footer.jsp" />
 

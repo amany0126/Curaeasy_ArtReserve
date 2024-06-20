@@ -1,5 +1,8 @@
 package com.kh.curaeasy.member.model.service;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -90,6 +93,19 @@ public class MemberService {
 
 	public int checkEmail(String email) {
 		return memberDao.checkEmail(sqlSession, email);
+	}
+	
+	public List<Integer> checkLikeList(int memberNo) {
+		return memberDao.checkLikeList(sqlSession, memberNo);
+	}
+
+	@Transactional
+	public Integer modifyLike(HashMap<String, Object> param) {
+		if((boolean) param.get("isIncrease")) {
+			return memberDao.addLike(sqlSession, param);
+		} else {
+			return memberDao.removeLike(sqlSession, param);
+		}
 	}
 
 }

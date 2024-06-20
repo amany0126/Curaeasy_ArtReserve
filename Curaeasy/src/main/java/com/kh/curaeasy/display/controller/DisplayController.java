@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +22,8 @@ import com.kh.curaeasy.display.model.vo.Display;
 import com.kh.curaeasy.display.model.vo.DisplayAttachment;
 import com.kh.curaeasy.member.model.vo.Member;
 import com.kh.curaeasy.rental.model.service.RentalService;
+import com.kh.curaeasy.member.model.service.MemberService;
+import com.kh.curaeasy.member.model.vo.Member;
 
 @Controller
 public class DisplayController {
@@ -27,13 +31,24 @@ public class DisplayController {
 	@Autowired
 	private DisplayService displayService;
 	@Autowired private RentalService rentalService;
+	
+	@Autowired
+	private MemberService memberService;
+
     
 	@RequestMapping("onDisplay.do")
-	public String onDisplayList(Model model) {
+	public String onDisplayList(Model model, HttpSession session) {
 	    // 현재 진행 중인 전시 목록 조회
 	    ArrayList<Display> list = displayService.selectOnDisplayList();
 	    
+	    List<Integer> likeDisplayList = null;
+	    if(session.getAttribute("loginUser") != null) {
+	    	// 좋아요 리스트 가져오기
+	    	likeDisplayList = memberService.checkLikeList(((Member)session.getAttribute("loginUser")).getMemberNo());
+	    }
+	    
 	    model.addAttribute("onDisplayList", list);
+	    model.addAttribute("displayNoList", likeDisplayList);
 	    
 	    return "display/onDisplayView";
 	}
