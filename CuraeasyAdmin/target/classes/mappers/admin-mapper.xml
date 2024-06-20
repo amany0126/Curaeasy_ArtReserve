@@ -235,6 +235,14 @@
         ORDER BY 
             DISPLAY_NO
     </select>
+    
+   <select id="selectDisplay" parameterType="int" resultMap="displayResultSet">
+        SELECT * FROM DISPLAY WHERE DISPLAY_NO = #{displayNo}
+    </select>
+    
+     <delete id="deleteDisplay">
+        DELETE FROM DISPLAY WHERE DISPLAY_NO = #{displayNo}
+    </delete>
 
     <select id="selectNoticeList" resultMap="noticeResultSet">
         SELECT 

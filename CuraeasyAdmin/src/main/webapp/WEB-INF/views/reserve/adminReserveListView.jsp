@@ -100,6 +100,8 @@
                                             <td>${reserve.entranceDate}</td>
                                             <td>${reserve.paymentPrice}</td>
                                             <td>${reserve.reserveStatus}</td>
+                                            <td>${reserve.memberNo}</td>
+                                            <td>${reserve.displayNo}</td>
                                         </tr>
                                 </c:forEach>
                                 <c:if test="${empty reserveList}">

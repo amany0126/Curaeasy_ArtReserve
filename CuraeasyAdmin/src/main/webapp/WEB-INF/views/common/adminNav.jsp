@@ -41,7 +41,7 @@
                 </a>
                 <div class="collapse" id="collapseNotices" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionNotices">
-                        <a class="nav-link" href="${path}/noticelist.ad">공지사항 관리</a>
+                        <a class="nav-link" href="${path}/noticeList.ad">공지사항 관리</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseReviews" aria-expanded="false" aria-controls="collapseReviews">

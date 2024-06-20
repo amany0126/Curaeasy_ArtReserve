@@ -48,6 +48,14 @@ public class AdminService {
         return adminDao.selectDisplayList(sqlSession);
     }
     
+    public Display selectDisplay(int displayNo) {
+        return adminDao.selectDisplay(sqlSession, displayNo);
+    }
+    
+    public void deleteDisplay(int displayNo) {
+        adminDao.deleteDisplay(sqlSession, displayNo);
+    }
+    
     // 전시관 관리
     public ArrayList<Gallery> selectGalleryList() {
         return adminDao.selectGalleryList(sqlSession);

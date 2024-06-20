@@ -39,6 +39,13 @@ public class AdminDao {
     public ArrayList<Display> selectDisplayList(SqlSessionTemplate sqlSession) {
         return (ArrayList) sqlSession.selectList("adminMapper.selectDisplayList");
     }
+    
+    public Display selectDisplay(SqlSessionTemplate sqlSession, int displayNo) {
+        return sqlSession.selectOne("adminMapper.selectDisplay", displayNo);
+    }
+    public void deleteDisplay(SqlSessionTemplate sqlSession, int displayNo) {
+        sqlSession.delete("adminMapper.deleteDisplay", displayNo);
+    }
 
     // 전시관 관리
     public ArrayList<Gallery> selectGalleryList(SqlSessionTemplate sqlSession) {
