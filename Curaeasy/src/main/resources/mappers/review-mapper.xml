@@ -172,4 +172,15 @@
 		 WHERE REVIEW_NO = #{reviewNo}
 		   AND MEMBER_NO = #{memberNo}
 	</delete>
+	<select id="selectReview" parameterType="_int" resultMap="reviewResultSet">
+		SELECT REVIEW_NO,
+			   REVIEW_TITLE,
+			   REVIEW_CONTENT,
+			   TO_CHAR(REVIEW_ENROLL_DATE, 'yyyy-mm-dd') AS REVIEW_ENROLL_DATE,
+			   REVIEW_IMAGE,
+			   MEMBER_ID AS MEMBER_NO
+		  FROM REVIEW R
+		  JOIN MEMBER M USING(MEMBER_NO)
+		 WHERE REVIEW_NO = #{rno}
+	</select>
 </mapper>

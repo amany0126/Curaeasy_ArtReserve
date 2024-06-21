@@ -124,7 +124,7 @@ public class ReviewController {
 		String setTitle = "["+displayName+"]"+r.getReviewTitle();
 		r.setReviewTitle(setTitle);
 		int userNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
-		r.setMemberNo(userNo);
+		r.setMemberNo(""+userNo);
 
 		ReviewListData.put("userNo", ""+userNo);
 		ReviewListData.put("displayName", displayName);
@@ -143,14 +143,14 @@ public class ReviewController {
 		
 	}
 	
-	@GetMapping(value = "updateReviewForm.re", produces = "text/html; charset=UTF-8")
+	@PostMapping(value = "updateReviewForm.re", produces = "text/html; charset=UTF-8")
 	public String updateReviewForm(int rno,Model model, HttpSession session){
 		
 		int userNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
 		Review r=new Review();
 		r.setReviewNo(rno);
-		r.setMemberNo(userNo);
+		r.setMemberNo(""+userNo);
 		
 		Review list =reviewService.updateData(r);
 		
@@ -178,7 +178,7 @@ public class ReviewController {
 	public String updateReview( MultipartFile reUpfile,Review r, String displayName ,Model model, HttpSession session) {
 		
 		int userNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
-		r.setMemberNo(userNo);
+		r.setMemberNo(""+userNo);
 		String originalFile = r.getReviewImage();
 		
 		String setTitle = "["+displayName+"]"+r.getReviewTitle();
@@ -237,23 +237,22 @@ public class ReviewController {
 		return changName;
 	}
 	@RequestMapping("reviewDetail.do")
-	public ModelAndView selectReview(ModelAndView mv, String rno) {
+	public ModelAndView selectReview(ModelAndView mv, int rno) {
 
 		// rno 파라미터가 없는 경우
-		if(rno == null) {
+		if(rno == 0) {
 			mv.addObject("errorMsg", "잘못된 접근입니다.")
 			  .setViewName("common/errorPage");
 			return mv;
-		}
+		}else {
 		
+		Review r = reviewService.selectReview(rno);
+		System.out.println(r);
 		mv.addObject("rno", rno)
+		  .addObject("r", r)
 		  .setViewName("review/reviewDetailView");
 		return mv;
-	}
-	
-	@GetMapping("updateReviewForm.re")
-	public String updateReviewForm(int rno) {
-		return "review";
+		}
 	}
 	
 	@RequestMapping(value="searchReplyList.do", produces = "application/json; charset=utf-8")

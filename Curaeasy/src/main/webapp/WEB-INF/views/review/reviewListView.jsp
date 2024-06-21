@@ -185,9 +185,10 @@
        		
 			$("#noticeList>tbody>tr").click(function() {
        			
-       			let nno = $(this).children().eq(0).text();
+       			let rno = $(this).children().eq(0).text();
        			
-       			location.href = "noticeDetail.do?nno=" + nno;
+       			
+       			location.href = "reviewDetail.do?rno=" + rno;
        		});
        		
        	});

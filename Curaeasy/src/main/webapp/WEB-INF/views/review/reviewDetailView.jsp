@@ -135,24 +135,35 @@
     <div class="content">
         <div class="review-info">
             <div class="exhibition-item">
-                <h2>제목</h2>
+            	<div>
+                <h2 style="display: inline;">제목 : ${ requestScope.r.reviewTitle }</h2>
                 <!-- <img src="resources/display/${requestScope.list[0].changeName}" alt="전시 이미지"> -->
                 
+                <div style="float: right;">
+                	<c:if test="${ sessionScope.loginUser.memberId eq requestScope.r.memberNo}">
+                	<form action="updateReviewForm.re" method="post" style="display: inline-block;">
+                		<input type="hidden" value=" ${ requestScope.rno }" name="rno">
+                		<button type="submit" class="btn btn-primary">수정하기</button>
+                	</form>
+                		<form action="delete.re" method="post" style="display: inline-block;" >
+                		<input type="hidden" value=" ${ requestScope.rno }" name="rno">
+                		<button type="submit" class="btn btn-primary" >삭제하기</button>
+                	</form>
+                	</c:if>
+                </div>
+                </div>
                 <div style="display: inline; float: left;">
-                    작성자
+                    작성자 : ${ requestScope.r.memberNo }
                 </div>
                 <div style="display: inline; float: right;">
-                    작성일
+                    작성일 : ${ requestScope.r.reviewEnrollDate }
                 </div>
             </div>
         </div>
         <div class="review-content">
-            <img src="resources/display/${ item.changeName }" alt="리뷰사진">
+            <img src="resources/reviewProfileImgs/${ requestScope.r.reviewImage  }" alt="리뷰사진">
             <p>
-                서울 예술의 전당 전시에 비해 전체 관람객의 수는 적었지만 윤이상국제음악콩쿨과 함께 한다는 의미도 있었던 전시였습니다. 통영이 국내에서 손꼽히는 관광지 중의 한 곳이라 여러 지방에서 관람객이 오셔서 전라도에서도 이런 전시를 해달라는 분도 계셨고 1회부터 다 참석하셨다는 분도 계셨습니다.
-                
-                개인적인 성과라면 윤이상국제음악콩쿨 심사위원 중 한분이고 1990년 인디애나폴리스 국제 바이올린 콩쿨 우승자인 바이올리니스트 파벨 베르만(Pavel Berman, 스위스 루가노 스비체라 이탈리아나 콘서바토리 교수)씨가 전시된 악기 중 하나를 골라 콩쿨 기간동안 사용했는데 마침 금년에 유튜브에 제작영상(Violinmaker – noframe)을 올리기 위해 만들었던 악기가 선택되었습니다.
-                
+                ${ requestScope.r.reviewContent  }
             </p>
         </div>
         <hr>
