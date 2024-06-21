@@ -161,4 +161,15 @@
 		   AND REVIEW_NO = #{reviewNo}
 		   AND MEMBER_NO = #{memberNo}
 	</delete>
+	
+	<delete id="deleteAllReply" parameterType="review">
+		DELETE FROM REPLY
+		 WHERE REVIEW_NO = #{reviewNo}
+	</delete>
+	
+	<delete id="deleteReview" parameterType="review">
+		DELETE FROM REVIEW
+		 WHERE REVIEW_NO = #{reviewNo}
+		   AND MEMBER_NO = #{memberNo}
+	</delete>
 </mapper>

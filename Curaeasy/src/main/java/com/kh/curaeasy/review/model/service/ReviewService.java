@@ -101,4 +101,9 @@ public class ReviewService {
 	public int deleteReply(Reply r) {
 		return reviewDao.deleteReply(sqlSession, r);
 	}
+
+	@Transactional
+	public int deleteReview(Review r) {
+		return reviewDao.deleteAllReply(sqlSession, r) * reviewDao.deleteReview(sqlSession, r);
+	}
 }

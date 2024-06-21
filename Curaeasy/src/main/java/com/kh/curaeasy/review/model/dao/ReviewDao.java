@@ -84,5 +84,11 @@ public class ReviewDao {
 	public int deleteReply(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.delete("reviewMapper.deleteReply", r);
 	}
+	public int deleteAllReply(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.delete("reviewMapper.deleteAllReply", r);
+	}
+	public int deleteReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.delete("reviewMapper.deleteReview", r);
+	}
 
 }
