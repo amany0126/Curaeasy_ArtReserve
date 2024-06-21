@@ -176,9 +176,41 @@
             D.DISPLAY_NO = #{displayNo}
     </select>
 
-    <delete id="deleteDisplay">
-        DELETE FROM DISPLAY WHERE DISPLAY_NO = #{displayNo}
-    </delete>
+     <select id="selectDisplayById" parameterType="int" resultMap="displayResultSet">
+        SELECT 
+            DISPLAY_NO,
+            DISPLAY_NAME,
+            DISPLAY_CONTENT,
+            DISPLAY_START_DATE,
+            DISPLAY_END_DATE,
+            DISPLAY_PRICE,
+            DISPLAY_STATUS,
+            ARTIST_NO,
+            GALLERY_NO
+        FROM DISPLAY
+        WHERE DISPLAY_NO = #{displayNo}
+    </select>
+
+    <!-- Update Display -->
+    <update id="updateDisplay" parameterType="display">
+        UPDATE DISPLAY
+        SET DISPLAY_NAME = #{displayName},
+            DISPLAY_CONTENT = #{displayContent},
+            DISPLAY_START_DATE = #{displayStartDate},
+            DISPLAY_END_DATE = #{displayEndDate},
+            DISPLAY_PRICE = #{displayPrice},
+            DISPLAY_STATUS = #{displayStatus},
+            ARTIST_NO = (SELECT ARTIST_NO FROM ARTIST WHERE ARTIST_NICKNAME = #{artistNickName}),
+            GALLERY_NO = (SELECT GALLERY_NO FROM GALLERY WHERE GALLERY_NAME = #{galleryName})
+        WHERE DISPLAY_NO = #{displayNo}
+    </update>
+
+    <!-- Update Display Status to End -->
+    <update id="deleteDisplay" parameterType="int">
+        UPDATE DISPLAY
+        SET DISPLAY_STATUS = '종료'
+        WHERE DISPLAY_NO = #{displayNo}
+    </update>
 	<!-- 공지사항 목록 조회 -->
     <select id="selectNoticeList" resultMap="noticeResultSet">
         SELECT 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.model.dao.AdminDao;
@@ -31,12 +32,24 @@ public class AdminService {
     }
     
     public Display selectDisplay(int displayNo) {
-        return adminDao.selectDisplay(sqlSession, displayNo);
+        return adminDao.selectDisplay(sqlSession,displayNo);
     }
     
-    public void deleteDisplay(int displayNo) {
-        adminDao.deleteDisplay(sqlSession, displayNo);
+    public Display getDisplayById(int displayNo) {
+        return adminDao.selectDisplayById(sqlSession,displayNo);
     }
+
+
+
+    @Transactional
+    public void updateDisplay(Display display) {
+        adminDao.updateDisplay(sqlSession,display);
+    }
+
+    public void updateDisplayStatusToEnd(int displayNo) {
+        adminDao.deleteDisplay(sqlSession,displayNo);
+    }
+    
     
     // 전시관 관리
     public int getGalleryListCount(String searchKeyword) {

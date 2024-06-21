@@ -139,6 +139,12 @@
             text-align: center;
             vertical-align: middle;
         }
+        
+        /* Disabled button style */
+        .btn-disabled {
+            background-color: grey;
+            pointer-events: none;
+        }
     </style>
     <script>
         function goToDetail(displayNo) {
@@ -250,11 +256,13 @@
                                     <th>상태</th>
                                     <th>작가명</th>
                                     <th>전시관명</th>
+                                    <th>수정하기</th>
+                                    <th>삭제하기</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="display" items="${displayList}">
-                                    <tr onclick="goToDetail('${display.displayNo}')">
+                                    <tr>
                                         <td>${display.displayNo}</td>
                                         <td>${display.displayName}</td>
                                         <td class="truncate">${display.displayContent}</td>
@@ -264,11 +272,18 @@
                                         <td>${display.displayStatus}</td>
                                         <td>${display.artistNickName}</td>
                                         <td>${display.galleryName}</td>
+                                        <td><button class="btn btn-warning" onclick="location.href='${path}/updateDisplay.ad?displayNo=${display.displayNo}'">수정하기</button></td>
+                                        <td>
+                                            <button class="btn <c:if test='${display.displayStatus == "종료"}'>btn-disabled</c:if> btn-danger"
+                                                    onclick="if('${display.displayStatus}' !== '종료') { location.href='${path}/deleteDisplay.ad?displayNo=${display.displayNo}'; } else { alert('이미 삭제처리된 전시회입니다.'); }">
+                                                삭제하기
+                                            </button>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty displayList}">
                                     <tr>
-                                        <td colspan="9">등록된 전시가 없습니다.</td>
+                                        <td colspan="11">등록된 전시가 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>
