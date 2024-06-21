@@ -22,4 +22,6 @@ public class Reserve {
     private String reserveStatus;
     private int memberNo;
     private int displayNo;
+    private String memberName;
+    private String displayName;
 }

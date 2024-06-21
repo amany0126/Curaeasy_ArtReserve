@@ -39,17 +39,20 @@ public class AdminController {
 
     // 전시회 관리
     @RequestMapping("displayList.ad")
-    public String displayList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
-        int listCount = adminService.getDisplayListCount(); // 전시회 리스트 총 개수
+    public String displayList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+                              @RequestParam(value="searchKeyword", defaultValue="") String searchKeyword,
+                              Model model) {
+        int listCount = adminService.getDisplayListCount(searchKeyword);
 
-        int pageLimit = 10; // 페이지 하단에 보여질 페이지 최대 개수
-        int boardLimit = 10; // 한 페이지에 보여질 게시글 최대 개수
+        int pageLimit = 10;
+        int boardLimit = 10;
 
         PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-        ArrayList<Display> displayList = adminService.selectDisplayList(pi);
+        ArrayList<Display> displayList = adminService.selectDisplayList(pi, searchKeyword);
 
         model.addAttribute("displayList", displayList);
         model.addAttribute("pi", pi);
+        model.addAttribute("searchKeyword", searchKeyword);
 
         return "display/adminDisplayListView";
     }
@@ -75,27 +78,76 @@ public class AdminController {
         return "redirect:displayList.ad";
     }
 
-    // 전시관 관리
+    // 전시관 목록 조회
     @RequestMapping("galleryList.ad")
-    public String galleryList(Model model) {
-        ArrayList<Gallery> galleryList = adminService.selectGalleryList();
+    public String galleryList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, 
+                              @RequestParam(value="searchKeyword", defaultValue="") String searchKeyword, 
+                              Model model) {
+        int listCount = adminService.getGalleryListCount(searchKeyword); // 전시관 리스트 총 개수
+
+        int pageLimit = 10; // 페이지 하단에 보여질 페이지 최대 개수
+        int boardLimit = 10; // 한 페이지에 보여질 게시글 최대 개수
+
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+        ArrayList<Gallery> galleryList = adminService.selectGalleryList(pi, searchKeyword);
+
         model.addAttribute("galleryList", galleryList);
+        model.addAttribute("pi", pi);
+
         return "gallery/adminGalleryListView";
+    }
+    
+    @RequestMapping("galleryDetail.ad")
+    public String galleryDetail(@RequestParam("galleryNo") int galleryNo, Model model) {
+        Gallery gallery = adminService.selectGallery(galleryNo);
+        model.addAttribute("gallery", gallery);
+
+        return "gallery/adminGalleryDetailView";
     }
 
     // 대관신청 관리
     @RequestMapping("rentalList.ad")
-    public String rentalList(Model model) {
-        ArrayList<Rental> rentalList = adminService.selectRentalList();
+    public String rentalList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+                             @RequestParam(value="searchCategory", required=false) String searchCategory,
+                             @RequestParam(value="searchKeyword", required=false) String searchKeyword,
+                             Model model) {
+        int listCount = adminService.getRentalListCount(searchCategory, searchKeyword); // 대관 리스트 총 개수
+        int pageLimit = 10; // 페이지 하단에 보여질 페이지 최대 개수
+        int boardLimit = 10; // 한 페이지에 보여질 게시글 최대 개수
+
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+        ArrayList<Rental> rentalList = adminService.selectRentalList(pi, searchCategory, searchKeyword);
+
         model.addAttribute("rentalList", rentalList);
+        model.addAttribute("pi", pi);
+        model.addAttribute("searchCategory", searchCategory);
+        model.addAttribute("searchKeyword", searchKeyword);
+
         return "rental/adminRentalListView";
     }
 
     // 예매 관리
     @RequestMapping("reserveList.ad")
-    public String reserveList(Model model) {
-        ArrayList<Reserve> reserveList = adminService.selectReserveList();
+    public String reserveList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+                              @RequestParam(value="searchCategory", required=false) String searchCategory,
+                              @RequestParam(value="searchValue", required=false) String searchValue,
+                              Model model) {
+
+        HashMap<String, String> map = new HashMap<>();
+        map.put("searchCategory", searchCategory);
+        map.put("searchValue", searchValue);
+
+        int listCount = adminService.getReserveListCount(map); // 예매 리스트 총 개수
+
+        int pageLimit = 10; // 페이지 하단에 보여질 페이지 최대 개수
+        int boardLimit = 10; // 한 페이지에 보여질 게시글 최대 개수
+
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+        ArrayList<Reserve> reserveList = adminService.selectReserveList(pi, map);
+
         model.addAttribute("reserveList", reserveList);
+        model.addAttribute("pi", pi);
+
         return "reserve/adminReserveListView";
     }
 

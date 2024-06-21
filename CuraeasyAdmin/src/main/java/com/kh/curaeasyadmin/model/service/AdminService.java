@@ -1,6 +1,7 @@
 package com.kh.curaeasyadmin.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,12 @@ public class AdminService {
 
     // 메인 페이지
     
-    public int getDisplayListCount() {
-        return adminDao.getDisplayListCount(sqlSession);
+    public int getDisplayListCount(String searchKeyword) {
+        return adminDao.getDisplayListCount(sqlSession, searchKeyword);
     }
 
-    public ArrayList<Display> selectDisplayList(PageInfo pi) {
-        return adminDao.selectDisplayList(sqlSession, pi);
+    public ArrayList<Display> selectDisplayList(PageInfo pi, String searchKeyword) {
+        return adminDao.selectDisplayList(sqlSession, pi, searchKeyword);
     }
     
     public Display selectDisplay(int displayNo) {
@@ -38,18 +39,35 @@ public class AdminService {
     }
     
     // 전시관 관리
-    public ArrayList<Gallery> selectGalleryList() {
-        return adminDao.selectGalleryList(sqlSession);
+    public int getGalleryListCount(String searchKeyword) {
+        return adminDao.getGalleryListCount(sqlSession, searchKeyword);
+    }
+
+    public ArrayList<Gallery> selectGalleryList(PageInfo pi, String searchKeyword) {
+        return adminDao.selectGalleryList(sqlSession, pi, searchKeyword);
+    }
+    
+    public Gallery selectGallery(int galleryNo) {
+        return adminDao.selectGallery(sqlSession, galleryNo);
     }
 
     // 대관신청 관리
-    public ArrayList<Rental> selectRentalList() {
-        return adminDao.selectRentalList(sqlSession);
+    public int getRentalListCount(String searchCategory, String searchKeyword) {
+        return adminDao.getRentalListCount(sqlSession, searchCategory, searchKeyword);
+    }
+
+    // 대관 목록 조회
+    public ArrayList<Rental> selectRentalList(PageInfo pi, String searchCategory, String searchKeyword) {
+        return adminDao.selectRentalList(sqlSession, pi, searchCategory, searchKeyword);
     }
 
     // 예매 관리
-    public ArrayList<Reserve> selectReserveList() {
-        return adminDao.selectReserveList(sqlSession);
+    public int getReserveListCount(HashMap<String, String> map) {
+        return adminDao.getReserveListCount(sqlSession, map);
+    }
+
+    public ArrayList<Reserve> selectReserveList(PageInfo pi, HashMap<String, String> map) {
+        return adminDao.selectReserveList(sqlSession, pi, map);
     }
 
     // 회원 관리

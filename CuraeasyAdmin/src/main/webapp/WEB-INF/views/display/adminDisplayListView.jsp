@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Exhibition Management</title>
+    <title>전시관리</title>
     
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
@@ -89,6 +89,10 @@
             margin-right: 10px;
             width: 200px; /* Adjust the width as needed */
         }
+        .search-bar select {
+            margin-right: 10px;
+            width: 150px; /* Adjust the width as needed */
+        }
         .search-bar button {
             margin-right: 5px;
         }
@@ -120,11 +124,21 @@
             cursor: default;
         }
    
-	    .pagination a.active {
-	        background-color: #007bff;
-	        color: white;
-	        border-color: #007bff;
-	    }
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        /* 테이블 배경색 흰색으로 설정 */
+        #datatablesSimple {
+            background-color: white;
+        }
+
+        /* 테이블 요소 중앙 정렬 */
+        #datatablesSimple th, #datatablesSimple td {
+            text-align: center;
+            vertical-align: middle;
+        }
     </style>
     <script>
         function goToDetail(displayNo) {
@@ -149,9 +163,46 @@
             });
         }
 
+        function formatDate() {
+            const dateElements = document.querySelectorAll('.date');
+            dateElements.forEach(element => {
+                let date = element.textContent;
+                element.textContent = date.split(" ")[0];
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             truncateText('.truncate', 20);
             formatPrice();
+            formatDate();
+            
+            // 검색 버튼 클릭 이벤트
+            $("#searchButton").click(function() {
+                performSearch();
+            });
+            
+            // 검색 입력창에서 Enter 키 눌렀을 때 이벤트
+            $("#searchInput").on("keypress", function(e) {
+                if (e.which == 13) { // Enter 키 코드
+                    performSearch();
+                }
+            });
+            
+            function performSearch() {
+                var searchValue = $("#searchInput").val().toLowerCase();
+                var searchCategory = $("#searchCategory").val();
+                $("table tbody tr").filter(function() {
+                    var textToSearch = $(this).find('td:eq(1)').text().toLowerCase(); // 기본 전시명 검색
+                    if (searchCategory === "displayName") {
+                        textToSearch = $(this).find('td:eq(1)').text().toLowerCase();
+                    } else if (searchCategory === "displayContent") {
+                        textToSearch = $(this).find('td:eq(2)').text().toLowerCase();
+                    } else if (searchCategory === "artistNickName") {
+                        textToSearch = $(this).find('td:eq(7)').text().toLowerCase();
+                    }
+                    $(this).toggle(textToSearch.indexOf(searchValue) > -1);
+                });
+            }
         });
     </script>
 </head>
@@ -162,6 +213,10 @@
         <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
+        <!-- Logout Button-->
+        <div class="ms-auto me-0 me-md-3 my-2 my-md-0">
+            <!--  <button class="logout-button" onclick="logout()">나가기</button> -->
+        </div>
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -172,7 +227,13 @@
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">📅 전시회 목록 조회</h1>
                     <div class="search-bar">
-                        <input type="text" id="searchInput" class="form-control" placeholder="전시명 입력">
+                        <select id="searchCategory" class="form-select">
+                            <option value="all">전체</option>
+                            <option value="displayName">전시명</option>
+                            <option value="displayContent">내용</option>
+                            <option value="artistNickName">작가명</option>
+                        </select>
+                        <input type="text" id="searchInput" class="form-control" placeholder="검색어 입력">
                         <button id="searchButton" class="btn btn-primary">검색</button>
                         <button class="btn btn-success btn-add-exhibition" onclick="window.location.href='${path}/addDisplay.ad'">전시 추가</button>
                     </div>
@@ -197,8 +258,8 @@
                                         <td>${display.displayNo}</td>
                                         <td>${display.displayName}</td>
                                         <td class="truncate">${display.displayContent}</td>
-                                        <td>${display.displayStartDate}</td>
-                                        <td>${display.displayEndDate}</td>
+                                        <td class="date">${display.displayStartDate}</td>
+                                        <td class="date">${display.displayEndDate}</td>
                                         <td class="price">${display.displayPrice}</td>
                                         <td>${display.displayStatus}</td>
                                         <td>${display.artistNickName}</td>
@@ -213,19 +274,19 @@
                             </tbody>
                         </table>
                     </div>
-					<ul class="pagination">
-					    <li>
-					        <a href="${path}/displayList.ad?currentPage=${pi.currentPage - 1}" class="${pi.currentPage == 1 ? 'disabled' : ''}"><</a>
-					    </li>
-					    <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
-					        <li>
-					            <a href="${path}/displayList.ad?currentPage=${p}" class="${pi.currentPage == p ? 'active' : ''}">${p}</a>
-					        </li>
-					    </c:forEach>
-					    <li>
-					        <a href="${path}/displayList.ad?currentPage=${pi.currentPage + 1}" class="${pi.currentPage == pi.maxPage ? 'disabled' : ''}">></a>
-					    </li>
-					</ul>
+                    <ul class="pagination">
+                        <li>
+                            <a href="${path}/displayList.ad?currentPage=${pi.currentPage - 1}" class="${pi.currentPage == 1 ? 'disabled' : ''}"><</a>
+                        </li>
+                        <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
+                            <li>
+                                <a href="${path}/displayList.ad?currentPage=${p}" class="${pi.currentPage == p ? 'active' : ''}">${p}</a>
+                            </li>
+                        </c:forEach>
+                        <li>
+                            <a href="${path}/displayList.ad?currentPage=${pi.currentPage + 1}" class="${pi.currentPage == pi.maxPage ? 'disabled' : ''}">></a>
+                        </li>
+                    </ul>
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -241,9 +302,21 @@
     <script>
         $(document).ready(function() {
             $("#searchButton").click(function() {
+                var searchCategory = $("#searchCategory").val();
                 var searchValue = $("#searchInput").val().toLowerCase();
+
                 $("table tbody tr").filter(function() {
-                    $(this).toggle($(this).find('td:eq(1)').text().toLowerCase().indexOf(searchValue) > -1);
+                    var cellValue;
+                    if (searchCategory === "displayName") {
+                        cellValue = $(this).find('td:eq(1)').text().toLowerCase();
+                    } else if (searchCategory === "displayContent") {
+                        cellValue = $(this).find('td:eq(2)').text().toLowerCase();
+                    } else if (searchCategory === "artistNickName") {
+                        cellValue = $(this).find('td:eq(7)').text().toLowerCase();
+                    } else {
+                        cellValue = $(this).text().toLowerCase();
+                    }
+                    $(this).toggle(cellValue.indexOf(searchValue) > -1);
                 });
             });
         });
