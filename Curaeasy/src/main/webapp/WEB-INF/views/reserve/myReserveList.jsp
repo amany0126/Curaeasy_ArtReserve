@@ -80,8 +80,8 @@
         td{
          text-align: center;}
 
-        td:hover { display: block; font-size: 15px; font-weight: 600; cursor: pointer; }
-        tr:hover { background-color: #fff; }
+        /* td:hover { display: block; font-size: 15px; font-weight: 600; cursor: pointer; } */
+        tr:hover { background-color: lightgray; }
 
     </style>
 </head>
@@ -121,23 +121,12 @@
         </table>
         
         
-        
+
         
         <!-- 페이징바 -->
         
-<!--        <script>
-		$(function() {
-       		
-			$("#noticeList>tbody>tr").click(function() {
-       			
-       			let nno = $(this).children().eq(0).text();
-       			
-       			location.href = "noticeDetail.do?nno=" + nno;
-       		});
-       		
-       	});
-       </script>
- -->
+    
+
         
         <!-- <div id="pagingArea">
                 <ul class="pagination">
@@ -204,7 +193,27 @@
     </div>
 </div>
 
-<jsp:include page="../common/footer.jsp" />
+<script>
+    $("#noticeList tbody tr").click(function() {
+        let f = document.createElement('form');
+        let dno = '${requestScope.dno}'
+    
+        let obj1;
+        obj1 = document.createElement('input');
+        obj1.setAttribute('type', 'hidden');
+        obj1.setAttribute('name', 'reserveNo');
+        obj1.setAttribute('value', this.children[0].innerText);
 
+        f.appendChild(obj1);
+        f.setAttribute('method', 'post');
+        f.setAttribute('action', 'reserveComplete.do');
+        
+        document.body.appendChild(f);
+        f.submit();
+        
+    })
+</script>
+<jsp:include page="../common/footer.jsp" />
+<form action="" method=""></form>
 </body>
 </html>

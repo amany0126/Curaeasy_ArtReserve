@@ -93,5 +93,8 @@ public class ReviewDao {
 	public Review selectReview(SqlSessionTemplate sqlSession, int rno) {
 		return sqlSession.selectOne("reviewMapper.selectReview", rno);
 	}
+	public int selectCount(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.update("reviewMapper.selectCount", rno);
+	}
 
 }

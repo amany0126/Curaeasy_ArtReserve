@@ -109,4 +109,9 @@ public class ReviewService {
 	public Review selectReview(int rno) {
 		return reviewDao.selectReview(sqlSession, rno);
 	}
+
+
+	public int selectCount(int rno) {
+		return reviewDao.selectCount(sqlSession, rno);
+	}
 }

@@ -128,7 +128,6 @@ s0.parentNode.insertBefore(s1,s0);
 			<c:remove var="alertMsg" scope="session"/>
 		</c:if>
         <div id="header-1">
-            <a href="reviewDetail.do"><button>asdf</button></a>
             <ul id="navi">
                 <li id="logo">
                     <a href="${pageContext.request.contextPath}/"><img src="resources/images/logo.png"></a>

@@ -126,19 +126,19 @@
         
         <!-- 페이징바 -->
         
-<!--        <script>
+    <script>
 		$(function() {
        		
 			$("#noticeList>tbody>tr").click(function() {
        			
-       			let nno = $(this).children().eq(0).text();
+       			let rno = $(this).children().eq(0).text();
        			
-       			location.href = "noticeDetail.do?nno=" + nno;
+       			location.href = "reviewDetail.do?rno=" + rno;
        		});
        		
        	});
        </script>
- -->
+
       <%--   
         <div id="pagingArea">
                 <ul class="pagination">
