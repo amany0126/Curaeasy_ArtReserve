@@ -294,7 +294,7 @@ public class ReviewController {
 		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
 		Review r = new Review();
-		r.setMemberNo(memberNo);
+		r.setMemberNo(""+memberNo);
 		r.setReviewNo(rno);
 		
 		int result = reviewService.deleteReview(r);
