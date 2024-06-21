@@ -102,7 +102,7 @@
         <c:if test="${ requestScope.ticket > 0}">
         <br><br>
         	<div class="search-box">
-        	<form action="reviewEnrollForm.do">
+        	<form action="reviewEnrollForm.re">
         		 <button type="submit" class="btn btn-info" style="float: right;">후기 작성</button>
         	</form>
         	</div>
