@@ -50,6 +50,22 @@ public class ReviewDao {
 	public int ticket(SqlSessionTemplate sqlSession, int userNo) {
 		return sqlSession.selectOne("reviewMapper.ticket",userNo);
 	}
+	public ArrayList<String> myNoReviewList(SqlSessionTemplate sqlSession, int userNo) {
+		return (ArrayList)sqlSession.selectList("reviewMapper.myNoReviewList",userNo);
+	}
+	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.insert("reviewMapper.insertReview", r);
+	}
+	public int upDateMyReviewList(SqlSessionTemplate sqlSession, Map<String, String> reviewListData) {
+		return sqlSession.update("reviewMapper.upDateMyReviewList",reviewListData);
+	}
+	public Review updateData(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.selectOne("reviewMapper.updateData",r);
+	}
+	public int updateReview(SqlSessionTemplate sqlSession, Review r) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("reviewMapper.updateReview",r);
+	}
 
 
 }

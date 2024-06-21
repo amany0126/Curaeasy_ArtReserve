@@ -68,6 +68,44 @@
 		<select id="ticket" resultType="_int" parameterType="_int" >
 		SELECT count(*)
 		  FROM RESERVE
-		 WHERE MEMBER_NO = #{userNo}
+		 WHERE MEMBER_NO =  #{userNo}  AND REVIEW_WRITED ='N' AND   SYSDATE   &gt;  ENTRANCE_DATE+ 1
 	</select>
+	
+		<select id="myNoReviewList" parameterType="_int" resultType="string">
+		        SELECT DISPLAY_NAME
+		  FROM RESERVE 
+          JOIN DISPLAY USING (DISPLAY_NO)
+		 WHERE MEMBER_NO =  #{userNo}  AND REVIEW_WRITED ='N' AND   SYSDATE   &gt;  ENTRANCE_DATE+ 1
+		 
+		 
+	</select>
+	<insert id="insertReview" parameterType="review">
+		 INSERT INTO REVIEW (REVIEW_NO,REVIEW_TITLE,REVIEW_CONTENT,REVIEW_IMAGE, MEMBER_NO)
+	             VALUES ( SEQ_REVIEW_NO.NEXTVAL,#{reviewTitle},#{reviewContent},#{reviewImage},#{memberNo} )
+	</insert>
+	
+		<update id="upDateMyReviewList" parameterType="hashmap">
+		UPDATE RESERVE
+		   SET REVIEW_WRITED = 'Y'
+		 WHERE MEMBER_NO = #{userNo} AND REVIEW_WRITED = 'N'  
+		 	   AND DISPLAY_NO = (select DISPLAY_NO
+		 	   					from DISPLAY
+		 	   					where DISPLAY_NAME = #{displayName})
+		  
+	</update>
+	<select id="updateData" parameterType="review" resultMap="reviewResultSet">
+		SELECT *
+		  FROM REVIEW
+		 WHERE REVIEW_NO = #{reviewNo} AND  MEMBER_NO =  #{memberNo} 
+	</select>
+	<update id="updateReview" parameterType="review">
+		UPDATE REVIEW
+		   SET REVIEW_TITLE = #{reviewTitle},
+			    REVIEW_CONTENT = #{reviewContent},
+			    REVIEW_IMAGE = #{reviewImage}
+		 WHERE MEMBER_NO = #{memberNo} AND REVIEW_NO = #{reviewNo}  
+		 	  
+		  
+	</update>
+	
 </mapper>
