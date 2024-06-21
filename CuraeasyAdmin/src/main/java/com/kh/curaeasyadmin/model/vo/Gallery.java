@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Gallery {
-	private String galleryNo;
+	private int galleryNo;
 	private String galleryName;
 	private String galleryPlace;
 	private String galleryInfo;
