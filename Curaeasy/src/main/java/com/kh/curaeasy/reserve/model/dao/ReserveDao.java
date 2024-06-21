@@ -21,5 +21,9 @@ public class ReserveDao {
 	public ArrayList<Reserve> selectReserveList(SqlSessionTemplate sqlSession, int memberNo) {
 		return (ArrayList) sqlSession.selectList("reserveMapper.selectReserveList", memberNo);
 	}
+
+	public Reserve selectReserve(SqlSessionTemplate sqlSession, int reserveNo) {
+		return sqlSession.selectOne("reserveMapper.selectReserve", reserveNo);
+	}
 	
 }

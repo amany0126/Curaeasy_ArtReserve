@@ -12,7 +12,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -90,8 +92,14 @@ public class ReserveController {
 	}
 	
 	@RequestMapping(value="reserveComplete.do", produces = "text/html; charset=utf-8")
-	public ModelAndView reserveComplete(ModelAndView mv, HttpSession session) {
-		Reserve r = rService.selectLastInsertedReserve(String.valueOf(((Member)session.getAttribute("loginUser")).getMemberNo()));
+	public ModelAndView reserveComplete(ModelAndView mv, HttpSession session,
+										@RequestParam(value="reserveNo", defaultValue="0") int reserveNo) {
+		Reserve r = null;
+		if(reserveNo == 0) { // 결제완료인 경우
+			r = rService.selectLastInsertedReserve(String.valueOf(((Member)session.getAttribute("loginUser")).getMemberNo()));
+		} else { // 결제내역에서 클릭한 경우
+			r = rService.selectReserve(reserveNo);
+		}
 		Display d = dService.selectDisplay(Integer.parseInt(r.getDisplayNo()));
 		mv.addObject("r", r)
 		  .addObject("d", d)

@@ -302,8 +302,7 @@
     
     function searchReplyList() {
         const rno = "${requestScope.rno}"
-        /* $("#comment-list").empty(""); */
-		let divList = "";
+        let divList = "";
         $.ajax({
             url: "searchReplyList.do",
             method: "GET",

@@ -40,6 +40,19 @@
 		 					   FROM RESERVE
 		 					  WHERE MEMBER_NO = #{memberNo})
 	</select>
+	<select id="selectReserve" resultMap="reserveResultSet" parameterType="_int">
+		SELECT RESERVE_NO,
+			   RESERVE_COUNT,
+			   PAYMENT_CODE,
+			   PAYMENT_DATE,
+			   TO_CHAR(ENTRANCE_DATE, 'YYYY-MM-DD') AS ENTRANCE_DATE,
+			   PAYMENT_PRICE,
+			   RESERVE_STATUS,
+			   MEMBER_NO,
+			   DISPLAY_NO
+		  FROM RESERVE
+		 WHERE RESERVE_NO = #{reserveNo}
+	</select>
 	
 	<select id="selectReserveList" parameterType="_int" resultMap="reserveResultSet">
 		SELECT RESERVE_NO,
