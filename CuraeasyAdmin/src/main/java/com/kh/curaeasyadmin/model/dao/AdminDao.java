@@ -35,10 +35,22 @@ public class AdminDao {
     public Display selectDisplay(SqlSessionTemplate sqlSession, int displayNo) {
         return sqlSession.selectOne("adminMapper.selectDisplay", displayNo);
     }
-    public void deleteDisplay(SqlSessionTemplate sqlSession, int displayNo) {
-        sqlSession.delete("adminMapper.deleteDisplay", displayNo);
+
+    
+
+    public Display selectDisplayById(SqlSessionTemplate sqlSession,int displayNo) {
+        return sqlSession.selectOne("adminMapper.selectDisplayById", displayNo);
     }
 
+    public int updateDisplay(SqlSessionTemplate sqlSession,Display display) {
+        return sqlSession.update("adminMapper.updateDisplay", display);
+    }
+
+    public void deleteDisplay(SqlSessionTemplate sqlSession,int displayNo) {
+        sqlSession.update("adminMapper.deleteDisplay", displayNo);
+    }
+    
+    
     // 전시관 관리
     public int getGalleryListCount(SqlSessionTemplate sqlSession, String searchKeyword) {
         return sqlSession.selectOne("adminMapper.getGalleryListCount", searchKeyword);

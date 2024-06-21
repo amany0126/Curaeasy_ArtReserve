@@ -8,8 +8,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.common.template.Pagination;
@@ -65,17 +68,34 @@ public class AdminController {
         return "display/adminDisplayDetailView";
     }
 
-    @RequestMapping("updateDisplayForm.ad")
-    public String updateDisplayForm(@RequestParam("displayNo") int displayNo, Model model) {
+    @GetMapping("/updateDisplay.ad")
+    public String showUpdateDisplayForm(@RequestParam("displayNo") int displayNo, Model model) {
         Display display = adminService.selectDisplay(displayNo);
         model.addAttribute("display", display);
         return "display/adminDisplayUpdateForm";
     }
 
-    @RequestMapping("deleteDisplay.ad")
-    public String deleteDisplay(@RequestParam("displayNo") int displayNo) {
-        adminService.deleteDisplay(displayNo);
-        return "redirect:displayList.ad";
+    @PostMapping("/updateDisplay.ad")
+    public String updateDisplay(Display display) {
+        adminService.updateDisplay(display);
+        return "redirect:/displayList.ad";
+    }
+
+    @RequestMapping("/deleteDisplay.ad")
+    public String deleteDisplay(@RequestParam("displayNo") int displayNo, RedirectAttributes redirectAttributes) {
+        Display display = adminService.getDisplayById(displayNo);
+        if ("종료".equals(display.getDisplayStatus())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "이미 삭제처리된 전시회입니다.");
+        } else {
+            adminService.updateDisplayStatusToEnd(displayNo);
+        }
+        return "redirect:/displayList.ad";
+    }
+
+    @PostMapping("/saveDisplay.ad")
+    public String saveDisplay(Display display) {
+        adminService.updateDisplay(display);
+        return "redirect:/displayList.ad";
     }
 
     // 전시관 목록 조회
