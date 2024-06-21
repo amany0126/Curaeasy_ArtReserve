@@ -86,24 +86,48 @@ public class AdminDao {
         return (ArrayList)sqlSession.selectList("adminMapper.selectReserveList", map, rowBounds);
     }
 
-    // 회원 관리
-    public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.selectMemberList");
+    // 공지사항
+    public int getNoticeListCount(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectOne("adminMapper.getNoticeListCount");
     }
 
-    // 작가 관리
-    public ArrayList<Artist> selectArtistList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.selectArtistList");
+    public ArrayList<Notice> selectNoticeList(SqlSessionTemplate sqlSession,PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return (ArrayList) sqlSession.selectList("adminMapper.selectNoticeList", null, rowBounds);
     }
 
-    // 공지사항 관리
-    public ArrayList<Notice> selectNoticeList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.selectNoticeList");
+    // 후기
+    public int getReviewListCount(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectOne("adminMapper.getReviewListCount");
     }
 
-    // 후기 관리
-    public ArrayList<Review> selectReviewList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.selectReviewList");
+    public ArrayList<Review> selectReviewList(SqlSessionTemplate sqlSession,PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return (ArrayList) sqlSession.selectList("adminMapper.selectReviewList", null, rowBounds);
+    }
+
+    // 일반 회원
+    public int getMemberListCount(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectOne("adminMapper.getMemberListCount");
+    }
+
+    public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession,PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return (ArrayList) sqlSession.selectList("adminMapper.selectMemberList", null, rowBounds);
+    }
+
+    // 작가
+    public int getArtistListCount(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectOne("adminMapper.getArtistListCount");
+    }
+
+    public ArrayList<Artist> selectArtistList(SqlSessionTemplate sqlSession,PageInfo pi) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        return (ArrayList) sqlSession.selectList("adminMapper.selectArtistList", null, rowBounds);
     }
     
     // 댓글 관리

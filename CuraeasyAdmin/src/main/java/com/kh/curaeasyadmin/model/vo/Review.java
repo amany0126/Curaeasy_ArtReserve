@@ -21,4 +21,5 @@ public class Review {
     private String reviewImage;
     private String reviewStatus;
     private int memberNo;
+    private String memberId;
 }

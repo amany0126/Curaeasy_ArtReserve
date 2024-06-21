@@ -151,36 +151,49 @@ public class AdminController {
         return "reserve/adminReserveListView";
     }
 
-    // 회원 관리
-    @RequestMapping("memberList.ad")
-    public String memberList(Model model) {
-        ArrayList<Member> memberList = adminService.selectMemberList();
-        model.addAttribute("memberList", memberList);
-        return "member/adminMemberListView";
-    }
-
-    // 작가 관리
-    @RequestMapping("artistList.ad")
-    public String artistList(Model model) {
-        ArrayList<Artist> artistList = adminService.selectArtistList();
-        model.addAttribute("artistList", artistList);
-        return "artist/adminArtistListView";
-    }
-
-    // 공지사항 관리
+ // 공지사항 목록 조회
     @RequestMapping("noticeList.ad")
-    public String noticeList(Model model) {
-        ArrayList<Notice> noticeList = adminService.selectNoticeList();
+    public String noticeList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+        int listCount = adminService.getNoticeListCount();
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+        ArrayList<Notice> noticeList = adminService.selectNoticeList(pi);
         model.addAttribute("noticeList", noticeList);
+        model.addAttribute("pi", pi);
         return "notice/adminNoticeListView";
     }
 
-    // 후기 관리
+    // 후기 목록 조회
     @RequestMapping("reviewList.ad")
-    public String reviewList(Model model) {
-        ArrayList<Review> reviewList = adminService.selectReviewList();
+    public String reviewList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+        int listCount = adminService.getReviewListCount();
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+        ArrayList<Review> reviewList = adminService.selectReviewList(pi);
         model.addAttribute("reviewList", reviewList);
+        model.addAttribute("pi", pi);
         return "review/adminReviewListView";
+    }
+
+    // 일반 회원 목록 조회
+    @RequestMapping("memberList.ad")
+    public String memberList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+        int listCount = adminService.getMemberListCount();
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+        ArrayList<Member> memberList = adminService.selectMemberList(pi);
+        model.addAttribute("memberList", memberList);
+        model.addAttribute("pi", pi);
+
+        return "member/adminMemberListView";
+    }
+
+    // 작가 목록 조회
+    @RequestMapping("artistList.ad")
+    public String artistList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+        int listCount = adminService.getArtistListCount();
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+        ArrayList<Artist> artistList = adminService.selectArtistList(pi);
+        model.addAttribute("artistList", artistList);
+        model.addAttribute("pi", pi);
+        return "artist/adminArtistListView";
     }
 
     // 댓글 관리

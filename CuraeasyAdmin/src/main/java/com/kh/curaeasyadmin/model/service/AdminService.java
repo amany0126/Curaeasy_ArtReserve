@@ -70,24 +70,40 @@ public class AdminService {
         return adminDao.selectReserveList(sqlSession, pi, map);
     }
 
-    // 회원 관리
-    public ArrayList<Member> selectMemberList() {
-        return adminDao.selectMemberList(sqlSession);
+    // 공지사항
+    public int getNoticeListCount() {
+        return adminDao.getNoticeListCount(sqlSession);
     }
 
-    // 작가 관리
-    public ArrayList<Artist> selectArtistList() {
-        return adminDao.selectArtistList(sqlSession);
+    public ArrayList<Notice> selectNoticeList(PageInfo pi) {
+        return adminDao.selectNoticeList(sqlSession,pi);
     }
 
-    // 공지사항 관리
-    public ArrayList<Notice> selectNoticeList() {
-        return adminDao.selectNoticeList(sqlSession);
+    // 후기
+    public int getReviewListCount() {
+        return adminDao.getReviewListCount(sqlSession);
     }
 
-    // 후기 관리
-    public ArrayList<Review> selectReviewList() {
-        return adminDao.selectReviewList(sqlSession);
+    public ArrayList<Review> selectReviewList(PageInfo pi) {
+        return adminDao.selectReviewList(sqlSession,pi);
+    }
+
+    // 일반 회원
+    public int getMemberListCount() {
+        return adminDao.getMemberListCount(sqlSession);
+    }
+
+    public ArrayList<Member> selectMemberList(PageInfo pi) {
+        return adminDao.selectMemberList(sqlSession,pi);
+    }
+
+    // 작가
+    public int getArtistListCount() {
+        return adminDao.getArtistListCount(sqlSession);
+    }
+
+    public ArrayList<Artist> selectArtistList(PageInfo pi) {
+        return adminDao.selectArtistList(sqlSession,pi);
     }
     
     // 댓글 관리
