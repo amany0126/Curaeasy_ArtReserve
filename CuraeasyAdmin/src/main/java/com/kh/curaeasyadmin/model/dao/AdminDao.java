@@ -1,6 +1,7 @@
 package com.kh.curaeasyadmin.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -18,13 +19,17 @@ public class AdminDao {
         return sqlSession.selectOne("adminMapper.getDisplayListCount");
     }
 	
-    // 전시회 관
+    // 전시회 관리
 	
-    public ArrayList<Display> selectDisplayList(SqlSessionTemplate sqlSession, PageInfo pi) {
+    public int getDisplayListCount(SqlSessionTemplate sqlSession, String searchKeyword) {
+        return sqlSession.selectOne("adminMapper.getDisplayListCount", searchKeyword);
+    }
+
+    public ArrayList<Display> selectDisplayList(SqlSessionTemplate sqlSession, PageInfo pi, String searchKeyword) {
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 
-        return (ArrayList)sqlSession.selectList("adminMapper.selectDisplayList", null, rowBounds);
+        return (ArrayList)sqlSession.selectList("adminMapper.selectDisplayList", searchKeyword, rowBounds);
     }
     
     public Display selectDisplay(SqlSessionTemplate sqlSession, int displayNo) {
@@ -35,18 +40,50 @@ public class AdminDao {
     }
 
     // 전시관 관리
-    public ArrayList<Gallery> selectGalleryList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.selectGalleryList");
+    public int getGalleryListCount(SqlSessionTemplate sqlSession, String searchKeyword) {
+        return sqlSession.selectOne("adminMapper.getGalleryListCount", searchKeyword);
+    }
+
+    public ArrayList<Gallery> selectGalleryList(SqlSessionTemplate sqlSession, PageInfo pi, String searchKeyword) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        
+        HashMap<String, Object> paramMap = new HashMap<>();
+        paramMap.put("searchKeyword", searchKeyword);
+
+        return (ArrayList)sqlSession.selectList("adminMapper.selectGalleryList", paramMap, rowBounds);
+    }
+    
+    public Gallery selectGallery(SqlSessionTemplate sqlSession, int galleryNo) {
+        return sqlSession.selectOne("adminMapper.selectGallery", galleryNo);
     }
 
     // 대관신청 관리
-    public ArrayList<Rental> selectRentalList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.selectRentalList");
+    public int getRentalListCount(SqlSessionTemplate sqlSession, String searchCategory, String searchKeyword) {
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("searchCategory", searchCategory);
+        paramMap.put("searchKeyword", searchKeyword);
+        return sqlSession.selectOne("adminMapper.getRentalListCount", paramMap);
+    }
+    public ArrayList<Rental> selectRentalList(SqlSessionTemplate sqlSession, PageInfo pi, String searchCategory, String searchKeyword) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        HashMap<String, String> paramMap = new HashMap<>();
+        paramMap.put("searchCategory", searchCategory);
+        paramMap.put("searchKeyword", searchKeyword);
+        return (ArrayList)sqlSession.selectList("adminMapper.selectRentalList", paramMap, rowBounds);
     }
 
     // 예매 관리
-    public ArrayList<Reserve> selectReserveList(SqlSessionTemplate sqlSession) {
-        return (ArrayList) sqlSession.selectList("adminMapper.selectReserveList");
+    public int getReserveListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+        return sqlSession.selectOne("adminMapper.getReserveListCount", map);
+    }
+
+    public ArrayList<Reserve> selectReserveList(SqlSessionTemplate sqlSession, PageInfo pi, HashMap<String, String> map) {
+        int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+        RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+
+        return (ArrayList)sqlSession.selectList("adminMapper.selectReserveList", map, rowBounds);
     }
 
     // 회원 관리

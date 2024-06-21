@@ -1,160 +1,175 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="adminMapper">
-    
-    <!-- Result Maps -->
-	<resultMap id="displayResultSet" type="com.kh.curaeasyadmin.model.vo.Display">
-	    <result column="DISPLAY_NO" property="displayNo" />
-	    <result column="DISPLAY_NAME" property="displayName" />
-	    <result column="DISPLAY_CONTENT" property="displayContent" />
-	    <result column="DISPLAY_START_DATE" property="displayStartDate" />
-	    <result column="DISPLAY_END_DATE" property="displayEndDate" />
-	    <result column="DISPLAY_PRICE" property="displayPrice" />
-	    <result column="DISPLAY_STATUS" property="displayStatus" />
-	    <result column="ARTIST_NO" property="artistNo" />
-	    <result column="GALLERY_NO" property="galleryNo" />
-	    <result column="IMAGE_PATH" property="imagePath" />
-	    <result column="GALLERY_NAME" property="galleryName" />
-	    <result column="ARTIST_NICKNAME" property="artistNickName" />
-	</resultMap>
 
-    <resultMap id="galleryResultSet" type="gallery">
-        <result column="GALLERY_NO" property="galleryNo" />
-        <result column="GALLERY_NAME" property="galleryName" />
-        <result column="GALLERY_PLACE" property="galleryPlace" />
-        <result column="GALLERY_INFO" property="galleryInfo" />
-        <result column="GALLERY_TYPE" property="galleryType" />
+    <!-- Result Maps -->
+    <resultMap id="displayResultSet" type="com.kh.curaeasyadmin.model.vo.Display">
+        <result column="DISPLAY_NO" property="displayNo"/>
+        <result column="DISPLAY_NAME" property="displayName"/>
+        <result column="DISPLAY_CONTENT" property="displayContent"/>
+        <result column="DISPLAY_START_DATE" property="displayStartDate"/>
+        <result column="DISPLAY_END_DATE" property="displayEndDate"/>
+        <result column="DISPLAY_PRICE" property="displayPrice"/>
+        <result column="DISPLAY_STATUS" property="displayStatus"/>
+        <result column="ARTIST_NO" property="artistNo"/>
+        <result column="GALLERY_NO" property="galleryNo"/>
+        <result column="IMAGE_PATH" property="imagePath"/>
+        <result column="GALLERY_NAME" property="galleryName"/>
+        <result column="ARTIST_NICKNAME" property="artistNickName"/>
+    </resultMap>
+
+    <resultMap id="galleryResultMap" type="gallery">
+        <result property="galleryNo" column="GALLERY_NO"/>
+        <result property="galleryName" column="GALLERY_NAME"/>
+        <result property="galleryPlace" column="GALLERY_PLACE"/>
+        <result property="galleryInfo" column="GALLERY_INFO"/>
+        <result property="galleryType" column="GALLERY_TYPE"/>
     </resultMap>
 
     <resultMap id="noticeResultSet" type="notice">
-        <result column="NOTICE_NO" property="noticeNo" />
-        <result column="NOTICE_TITLE" property="noticeTitle" />
-        <result column="NOTICE_CONTENT" property="noticeContent" />
-        <result column="NOTICE_DATE" property="noticeDate" />
-        <result column="NOTICE_ATTACHMENT" property="noticeAttachment" />
-        <result column="NOTICE_COUNT" property="noticeCount" />
-        <result column="NOTICE_STATUS" property="noticeStatus" />
-        <result column="NOTICE_COUNT" property="noticeCount" />
+        <result column="NOTICE_NO" property="noticeNo"/>
+        <result column="NOTICE_TITLE" property="noticeTitle"/>
+        <result column="NOTICE_CONTENT" property="noticeContent"/>
+        <result column="NOTICE_DATE" property="noticeDate"/>
+        <result column="NOTICE_ATTACHMENT" property="noticeAttachment"/>
+        <result column="NOTICE_COUNT" property="noticeCount"/>
+        <result column="NOTICE_STATUS" property="noticeStatus"/>
+        <result column="NOTICE_COUNT" property="noticeCount"/>
     </resultMap>
 
     <resultMap id="reviewResultSet" type="review">
-        <result column="REVIEW_NO" property="reviewNo" />
-        <result column="REVIEW_TITLE" property="reviewTitle" />
-        <result column="REVIEW_CONTENT" property="reviewContent" />
-        <result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate" />
-        <result column="REVIEW_COUNT" property="reviewCount" />
-        <result column="REVIEW_IMAGE" property="reviewImage" />
-        <result column="REVIEW_STATUS" property="reviewStatus" />
-        <result column="MEMBER_NO" property="memberNo" />
+        <result column="REVIEW_NO" property="reviewNo"/>
+        <result column="REVIEW_TITLE" property="reviewTitle"/>
+        <result column="REVIEW_CONTENT" property="reviewContent"/>
+        <result column="REVIEW_ENROLL_DATE" property="reviewEnrollDate"/>
+        <result column="REVIEW_COUNT" property="reviewCount"/>
+        <result column="REVIEW_IMAGE" property="reviewImage"/>
+        <result column="REVIEW_STATUS" property="reviewStatus"/>
+        <result column="MEMBER_NO" property="memberNo"/>
     </resultMap>
 
     <resultMap id="replyResultSet" type="reply">
-        <result column="REPLY_NO" property="replyNo" />
-        <result column="REPLY_CONTENT" property="replyContent" />
-        <result column="REPLY_ENROLL_DATE" property="replyEnrollDate" />
-        <result column="REPLY_STATUS" property="replyStatus" />
-        <result column="REVIEW_NO" property="reviewNo" />
-        <result column="MEMBER_NO" property="memberNo" />
+        <result column="REPLY_NO" property="replyNo"/>
+        <result column="REPLY_CONTENT" property="replyContent"/>
+        <result column="REPLY_ENROLL_DATE" property="replyEnrollDate"/>
+        <result column="REPLY_STATUS" property="replyStatus"/>
+        <result column="REVIEW_NO" property="reviewNo"/>
+        <result column="MEMBER_NO" property="memberNo"/>
     </resultMap>
 
-    <resultMap id="rentalResultSet" type="rental">
-        <result column="RENTAL_NO" property="rentalNo" />
-        <result column="RENTAL_APPLY_DATE" property="rentalApplyDate" />
-        <result column="RENTAL_START_DATE" property="rentalStartDate" />
-        <result column="RENTAL_END_DATE" property="rentalEndDate" />
-        <result column="RENTAL_CONTENT" property="rentalContent" />
-        <result column="RENTAL_RESULT" property="rentalResult" />
-        <result column="RENTAL_STATUS" property="rentalStatus" />
-        <result column="ARTIST_NO" property="artistNo" />
-        <result column="GALLERY_NO" property="galleryNo" />
+    <resultMap id="rentalResultMap" type="com.kh.curaeasyadmin.model.vo.Rental">
+        <result column="RENTAL_NO" property="rentalNo"/>
+        <result column="RENTAL_APPLY_DATE" property="rentalApplyDate"/>
+        <result column="RENTAL_START_DATE" property="rentalStartDate"/>
+        <result column="RENTAL_END_DATE" property="rentalEndDate"/>
+        <result column="RENTAL_CONTENT" property="rentalContent"/>
+        <result column="RENTAL_RESULT" property="rentalResult"/>
+        <result column="RENTAL_STATUS" property="rentalStatus"/>
+        <result column="ARTIST_NO" property="artistNo"/>
+        <result column="GALLERY_NO" property="galleryNo"/>
+        <result column="GALLERY_NAME" property="galleryName"/>
+        <result column="ARTIST_NICKNAME" property="artistNickName"/>
     </resultMap>
 
-    <resultMap id="reserveResultSet" type="reserve">
-        <result column="RESERVE_NO" property="reserveNo" />
-        <result column="RESERVE_COUNT" property="reserveCount" />
-        <result column="PAYMENT_CODE" property="paymentCode" />
-        <result column="PAYMENT_DATE" property="paymentDate" />
-        <result column="ENTRANCE_DATE" property="entranceDate" />
-        <result column="PAYMENT_PRICE" property="paymentPrice" />
-        <result column="RESERVE_STATUS" property="reserveStatus" />
-        <result column="MEMBER_NO" property="memberNo" />
-        <result column="DISPLAY_NO" property="displayNo" />
-    </resultMap>
+<resultMap id="reserveResultSet" type="com.kh.curaeasyadmin.model.vo.Reserve">
+    <result column="RESERVE_NO" property="reserveNo" />
+    <result column="RESERVE_COUNT" property="reserveCount" />
+    <result column="PAYMENT_CODE" property="paymentCode" />
+    <result column="PAYMENT_DATE" property="paymentDate" />
+    <result column="ENTRANCE_DATE" property="entranceDate" />
+    <result column="PAYMENT_PRICE" property="paymentPrice" />
+    <result column="RESERVE_STATUS" property="reserveStatus" />
+    <result column="MEMBER_NO" property="memberNo" />
+    <result column="DISPLAY_NO" property="displayNo" />
+    <result column="MEMBER_NAME" property="memberName" />
+    <result column="DISPLAY_NAME" property="displayName" />
+</resultMap>
 
-	<resultMap id="memberResultSet" type="member">
-	    <result column="MEMBER_NO" property="memberNo" />
-	    <result column="MEMBER_ID" property="memberId" />
-	    <result column="MEMBER_PWD" property="memberPwd" />
-	    <result column="MEMBER_NAME" property="memberName" />
-	    <result column="MEMBER_PHONE" property="memberPhone" />
-	    <result column="MEMBER_EMAIL" property="memberEmail" />
-	    <result column="MEMBER_ADDRESS" property="memberAddress" />
-	    <result column="MEMBER_BIRTHDAY" property="memberBirthday" />
-	    <result column="MEMBER_ENROLL_DATE" property="memberEnrollDate" />
-	    <result column="ARTIST_ONGOING" property="artistOngoing" />
-	    <result column="MEMBER_STATUS" property="memberStatus" />
-	</resultMap>
+
+    <resultMap id="memberResultSet" type="member">
+        <result column="MEMBER_NO" property="memberNo"/>
+        <result column="MEMBER_ID" property="memberId"/>
+        <result column="MEMBER_PWD" property="memberPwd"/>
+        <result column="MEMBER_NAME" property="memberName"/>
+        <result column="MEMBER_PHONE" property="memberPhone"/>
+        <result column="MEMBER_EMAIL" property="memberEmail"/>
+        <result column="MEMBER_ADDRESS" property="memberAddress"/>
+        <result column="MEMBER_BIRTHDAY" property="memberBirthday"/>
+        <result column="MEMBER_ENROLL_DATE" property="memberEnrollDate"/>
+        <result column="ARTIST_ONGOING" property="artistOngoing"/>
+        <result column="MEMBER_STATUS" property="memberStatus"/>
+    </resultMap>
 
     <resultMap id="artistResultSet" type="artist">
-        <result column="ARTIST_NO" property="artistNo" />
-        <result column="ARTIST_NICKNAME" property="artistNickName" />
-        <result column="ARTIST_ORDINAL" property="artistOrdinal" />
-        <result column="ARTIST_APPLY_DATE" property="artistApplyDate" />
-        <result column="ARTIST_APPLY_TITLE" property="artistApplyTitle" />
-        <result column="ARTIST_INTRODUCE" property="artistIntroduce" />
-        <result column="ARTIST_IMAGE" property="artistImage" />
-        <result column="ARTIST_RESULT" property="artistResult" />
-        <result column="ARTIST_STATUS" property="artistStatus" />
-        <result column="MEMBER_NO" property="memberNo" />
+        <result column="ARTIST_NO" property="artistNo"/>
+        <result column="ARTIST_NICKNAME" property="artistNickName"/>
+        <result column="ARTIST_ORDINAL" property="artistOrdinal"/>
+        <result column="ARTIST_APPLY_DATE" property="artistApplyDate"/>
+        <result column="ARTIST_APPLY_TITLE" property="artistApplyTitle"/>
+        <result column="ARTIST_INTRODUCE" property="artistIntroduce"/>
+        <result column="ARTIST_IMAGE" property="artistImage"/>
+        <result column="ARTIST_RESULT" property="artistResult"/>
+        <result column="ARTIST_STATUS" property="artistStatus"/>
+        <result column="MEMBER_NO" property="memberNo"/>
     </resultMap>
 
     <!-- Select Statements -->
 
-	<select id="getDisplayListCount" resultType="int">
-	    SELECT COUNT(*) FROM DISPLAY
-	</select>
-	
-	<select id="selectDisplayList" resultMap="displayResultSet">
-	    SELECT 
-	        D.DISPLAY_NO,
-	        D.DISPLAY_NAME,
-	        D.DISPLAY_CONTENT,
-	        D.DISPLAY_START_DATE,
-	        D.DISPLAY_END_DATE,
-	        D.DISPLAY_PRICE,
-	        D.DISPLAY_STATUS,
-	        A.ARTIST_NICKNAME,
-	        G.GALLERY_NAME
-	    FROM DISPLAY D
-	    JOIN ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
-	    JOIN GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
-	</select>
-    
-	<select id="selectDisplay" parameterType="int" resultMap="displayResultSet">
-	    SELECT 
-	        D.DISPLAY_NO,
-	        D.DISPLAY_NAME,
-	        D.DISPLAY_CONTENT,
-	        TO_CHAR(D.DISPLAY_START_DATE, 'YYYY-MM-DD') AS DISPLAY_START_DATE,
-	        TO_CHAR(D.DISPLAY_END_DATE, 'YYYY-MM-DD') AS DISPLAY_END_DATE,
-	        D.DISPLAY_PRICE,
-	        D.DISPLAY_STATUS,
-	        D.ARTIST_NO,
-	        D.GALLERY_NO,
-	        (SELECT CHANGE_NAME FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = D.DISPLAY_NO AND IMAGE_LEVEL = 1 AND ROWNUM = 1) AS IMAGE_PATH,
-	        G.GALLERY_NAME,
-	        A.ARTIST_NICKNAME
-	    FROM 
-	        DISPLAY D
-	    JOIN 
-	        GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
-	    JOIN 
-	        ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
-	    WHERE 
-	        D.DISPLAY_NO = #{displayNo}
-	</select>
-    
-     <delete id="deleteDisplay">
+    <select id="getDisplayListCount" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM DISPLAY D
+        JOIN ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
+        JOIN GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
+        WHERE D.DISPLAY_NAME LIKE '%' || #{searchKeyword} || '%'
+        OR D.DISPLAY_CONTENT LIKE '%' || #{searchKeyword} || '%'
+        OR A.ARTIST_NICKNAME LIKE '%' || #{searchKeyword} || '%'
+    </select>
+
+    <select id="selectDisplayList" parameterType="String" resultMap="displayResultSet">
+        SELECT 
+            D.DISPLAY_NO,
+            D.DISPLAY_NAME,
+            D.DISPLAY_CONTENT,
+            D.DISPLAY_START_DATE,
+            D.DISPLAY_END_DATE,
+            D.DISPLAY_PRICE,
+            D.DISPLAY_STATUS,
+            A.ARTIST_NICKNAME,
+            G.GALLERY_NAME
+        FROM DISPLAY D
+        JOIN ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
+        JOIN GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
+        WHERE D.DISPLAY_NAME LIKE '%' || #{searchKeyword} || '%'
+        OR D.DISPLAY_CONTENT LIKE '%' || #{searchKeyword} || '%'
+        OR A.ARTIST_NICKNAME LIKE '%' || #{searchKeyword} || '%'
+        ORDER BY D.DISPLAY_NO DESC
+    </select>
+
+    <select id="selectDisplay" parameterType="int" resultMap="displayResultSet">
+        SELECT 
+            D.DISPLAY_NO,
+            D.DISPLAY_NAME,
+            D.DISPLAY_CONTENT,
+            TO_CHAR(D.DISPLAY_START_DATE, 'YYYY-MM-DD') AS DISPLAY_START_DATE,
+            TO_CHAR(D.DISPLAY_END_DATE, 'YYYY-MM-DD') AS DISPLAY_END_DATE,
+            D.DISPLAY_PRICE,
+            D.DISPLAY_STATUS,
+            D.ARTIST_NO,
+            D.GALLERY_NO,
+            (SELECT CHANGE_NAME FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = D.DISPLAY_NO AND IMAGE_LEVEL = 1 AND ROWNUM = 1) AS IMAGE_PATH,
+            G.GALLERY_NAME,
+            A.ARTIST_NICKNAME
+        FROM 
+            DISPLAY D
+        JOIN 
+            GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
+        JOIN 
+            ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
+        WHERE 
+            D.DISPLAY_NO = #{displayNo}
+    </select>
+
+    <delete id="deleteDisplay">
         DELETE FROM DISPLAY WHERE DISPLAY_NO = #{displayNo}
     </delete>
 
@@ -173,58 +188,134 @@
             NOTICE_NO
     </select>
 
-	<select id="selectMemberList" resultMap="memberResultSet">
-	    SELECT 
-	        MEMBER_NO,
-	        MEMBER_ID,
-	        MEMBER_PWD,
-	        MEMBER_NAME,
-	        MEMBER_PHONE,
-	        MEMBER_EMAIL,
-	        MEMBER_ADDRESS,
-	        TO_CHAR(MEMBER_BIRTHDAY, 'YYYY-MM-DD') AS MEMBER_BIRTHDAY,
-	        TO_CHAR(MEMBER_ENROLL_DATE, 'YYYY-MM-DD') AS MEMBER_ENROLL_DATE,
-	        ARTIST_ONGOING,
-	        MEMBER_STATUS
-	    FROM 
-	        MEMBER
-	    ORDER BY 
-	        MEMBER_NO
-	</select>
-
-    <select id="selectRentalList" resultMap="rentalResultSet">
+    <select id="selectMemberList" resultMap="memberResultSet">
         SELECT 
-            RENTAL_NO,
-            TO_CHAR(RENTAL_APPLY_DATE, 'YYYY-MM-DD') AS RENTAL_APPLY_DATE,
-            TO_CHAR(RENTAL_START_DATE, 'YYYY-MM-DD') AS RENTAL_START_DATE,
-            TO_CHAR(RENTAL_END_DATE, 'YYYY-MM-DD') AS RENTAL_END_DATE,
-            RENTAL_CONTENT,
-            RENTAL_RESULT,
-            RENTAL_STATUS,
-            ARTIST_NO,
-            GALLERY_NO
-        FROM 
-            RENTAL
-        ORDER BY 
-            RENTAL_NO
-    </select>
-
-    <select id="selectReserveList" resultMap="reserveResultSet">
-        SELECT 
-            RESERVE_NO,
-            RESERVE_COUNT,
-            PAYMENT_CODE,
-            TO_CHAR(PAYMENT_DATE, 'YYYY-MM-DD') AS PAYMENT_DATE,
-            TO_CHAR(ENTRANCE_DATE, 'YYYY-MM-DD') AS ENTRANCE_DATE,
-            PAYMENT_PRICE,
-            RESERVE_STATUS,
             MEMBER_NO,
-            DISPLAY_NO
+            MEMBER_ID,
+            MEMBER_PWD,
+            MEMBER_NAME,
+            MEMBER_PHONE,
+            MEMBER_EMAIL,
+            MEMBER_ADDRESS,
+            TO_CHAR(MEMBER_BIRTHDAY, 'YYYY-MM-DD') AS MEMBER_BIRTHDAY,
+            TO_CHAR(MEMBER_ENROLL_DATE, 'YYYY-MM-DD') AS MEMBER_ENROLL_DATE,
+            ARTIST_ONGOING,
+            MEMBER_STATUS
         FROM 
-            RESERVE
+            MEMBER
         ORDER BY 
-            RESERVE_NO
+            MEMBER_NO
     </select>
+
+    <!-- 대관 목록 총 개수 조회 -->
+    <select id="getRentalListCount" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM RENTAL R
+        JOIN ARTIST A ON R.ARTIST_NO = A.ARTIST_NO
+        JOIN GALLERY G ON R.GALLERY_NO = G.GALLERY_NO
+        <where>
+            <if test="searchCategory != null and searchKeyword != null">
+                <if test="searchCategory == 'rentalNo'">
+                    R.RENTAL_NO LIKE '%' || #{searchKeyword} || '%'
+                </if>
+                <if test="searchCategory == 'galleryName'">
+                    G.GALLERY_NAME LIKE '%' || #{searchKeyword} || '%'
+                </if>
+                <if test="searchCategory == 'artistNickName'">
+                    A.ARTIST_NICKNAME LIKE '%' || #{searchKeyword} || '%'
+                </if>
+            </if>
+        </where>
+    </select>
+
+    <!-- 대관 목록 조회 -->
+    <select id="selectRentalList" parameterType="map" resultMap="rentalResultMap">
+        SELECT 
+            R.RENTAL_NO,
+            R.RENTAL_START_DATE,
+            R.RENTAL_END_DATE,
+            R.RENTAL_STATUS,
+            G.GALLERY_NAME,    
+            A.ARTIST_NICKNAME
+        FROM RENTAL R
+        JOIN ARTIST A ON R.ARTIST_NO = A.ARTIST_NO
+        JOIN GALLERY G ON R.GALLERY_NO = G.GALLERY_NO
+        <where>
+            <if test="searchCategory != null and searchKeyword != null">
+                <if test="searchCategory == 'rentalNo'">
+                    R.RENTAL_NO LIKE '%' || #{searchKeyword} || '%'
+                </if>
+                <if test="searchCategory == 'galleryName'">
+                    G.GALLERY_NAME LIKE '%' || #{searchKeyword} || '%'
+                </if>
+                <if test="searchCategory == 'artistNickName'">
+                    A.ARTIST_NICKNAME LIKE '%' || #{searchKeyword} || '%'
+                </if>
+            </if>
+        </where>
+        ORDER BY R.RENTAL_NO DESC
+    </select>
+
+    <!-- 예매 리스트 개수 조회 -->
+    <select id="getReserveListCount" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM RESERVE R
+        JOIN MEMBER M ON R.MEMBER_NO = M.MEMBER_NO
+        JOIN DISPLAY D ON R.DISPLAY_NO = D.DISPLAY_NO
+        <where>
+            <if test="searchCategory != null and searchCategory == 'reserveNo'">
+                AND R.RESERVE_NO LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="searchCategory != null and searchCategory == 'memberNo'">
+                AND R.MEMBER_NO LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="searchCategory != null and searchCategory == 'displayNo'">
+                AND R.DISPLAY_NO LIKE '%' || #{searchValue} || '%'
+            </if>
+            <if test="searchCategory == null or searchCategory == 'all'">
+                AND (R.RESERVE_NO LIKE '%' || #{searchValue} || '%'
+                OR R.MEMBER_NO LIKE '%' || #{searchValue} || '%'
+                OR R.DISPLAY_NO LIKE '%' || #{searchValue} || '%')
+            </if>
+        </where>
+    </select>
+
+    <!-- 예매 리스트 조회 -->
+<select id="selectReserveList" parameterType="map" resultMap="reserveResultSet">
+    SELECT 
+        R.RESERVE_NO,
+        R.RESERVE_COUNT,
+        R.PAYMENT_CODE,
+        TO_CHAR(R.PAYMENT_DATE, 'YYYY-MM-DD') AS PAYMENT_DATE,
+        TO_CHAR(R.ENTRANCE_DATE, 'YYYY-MM-DD') AS ENTRANCE_DATE,
+        R.PAYMENT_PRICE,
+        R.RESERVE_STATUS,
+        R.MEMBER_NO,
+        R.DISPLAY_NO,
+        M.MEMBER_NAME, <!-- 여기 추가 -->
+        D.DISPLAY_NAME <!-- 여기 추가 -->
+    FROM RESERVE R
+    JOIN MEMBER M ON R.MEMBER_NO = M.MEMBER_NO
+    JOIN DISPLAY D ON R.DISPLAY_NO = D.DISPLAY_NO
+    <where>
+        <if test="searchCategory != null and searchCategory == 'reserveNo'">
+            AND R.RESERVE_NO LIKE '%' || #{searchValue} || '%'
+        </if>
+        <if test="searchCategory != null and searchCategory == 'memberNo'">
+            AND R.MEMBER_NO LIKE '%' || #{searchValue} || '%'
+        </if>
+        <if test="searchCategory != null and searchCategory == 'displayNo'">
+            AND R.DISPLAY_NO LIKE '%' || #{searchValue} || '%'
+        </if>
+        <if test="searchCategory == null or searchCategory == 'all'">
+            AND (R.RESERVE_NO LIKE '%' || #{searchValue} || '%'
+            OR R.MEMBER_NO LIKE '%' || #{searchValue} || '%'
+            OR R.DISPLAY_NO LIKE '%' || #{searchValue} || '%')
+        </if>
+    </where>
+    ORDER BY R.RESERVE_NO DESC
+</select>
+
 
     <select id="selectReviewList" resultMap="reviewResultSet">
         SELECT 
@@ -256,17 +347,39 @@
             REPLY_NO
     </select>
 
-    <select id="selectGalleryList" resultMap="galleryResultSet">
+    <!-- 갤러리 리스트의 총 개수를 가져오는 쿼리 -->
+    <select id="getGalleryListCount" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM GALLERY
+        WHERE GALLERY_NAME LIKE '%' || #{searchKeyword} || '%'
+        OR GALLERY_PLACE LIKE '%' || #{searchKeyword} || '%'
+        OR GALLERY_TYPE LIKE '%' || #{searchKeyword} || '%'
+    </select>
+
+    <!-- 갤러리 리스트를 가져오는 쿼리 -->
+    <select id="selectGalleryList" parameterType="map" resultMap="galleryResultMap">
         SELECT 
             GALLERY_NO,
             GALLERY_NAME,
             GALLERY_PLACE,
             GALLERY_INFO,
             GALLERY_TYPE
-        FROM 
-            GALLERY
-        ORDER BY 
-            GALLERY_NO
+        FROM GALLERY
+        WHERE GALLERY_NAME LIKE '%' || #{searchKeyword} || '%'
+        OR GALLERY_PLACE LIKE '%' || #{searchKeyword} || '%'
+        OR GALLERY_TYPE LIKE '%' || #{searchKeyword} || '%'
+        ORDER BY GALLERY_NO DESC
+    </select>
+
+    <select id="selectGallery" parameterType="int" resultMap="galleryResultMap">
+        SELECT 
+            GALLERY_NO,
+            GALLERY_NAME,
+            GALLERY_PLACE,
+            GALLERY_INFO,
+            GALLERY_TYPE
+        FROM GALLERY
+        WHERE GALLERY_NO = #{galleryNo}
     </select>
 
     <select id="selectArtistList" resultMap="artistResultSet">
@@ -286,4 +399,5 @@
         ORDER BY 
             ARTIST_NO
     </select>
+
 </mapper>

@@ -144,11 +144,10 @@
         <br><br>
 
         	<div class="search-box">
-        	<form action="reviewEnrollForm.do">
-        		 <button type="submit" class="Search" style="float: right;">후기 작성</button>
-        </form>
 
-
+        	<form action="reviewEnrollForm.re">
+        		 <button type="submit" class="btn btn-info" style="float: right;">후기 작성</button>
+        	</form>
 
         	</div>
         </c:if>

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.curaeasy.common.model.vo.PageInfo;
 import com.kh.curaeasy.review.model.dao.ReviewDao;
@@ -60,4 +61,25 @@ public class ReviewService {
 	public int ticket(int userNo) {
 		return reviewDao.ticket(sqlSession,userNo);
 	}
+	public ArrayList<String> myNoReviewList(int userNo) {
+		return reviewDao.myNoReviewList(sqlSession,userNo);
+	}
+	@Transactional
+	public int insertReview(Review r, Map<String, String> reviewListData) {	
+		return  reviewDao.insertReview(sqlSession,r)*reviewDao.upDateMyReviewList(sqlSession,reviewListData);
+	
+	}
+
+	public Review updateData(Review r) {
+		return reviewDao.updateData(sqlSession,r);
+	}
+
+	@Transactional
+	public int updateReview(Review r) {
+		return reviewDao.updateReview(sqlSession,r);
+	}
+
+
+
+
 }
