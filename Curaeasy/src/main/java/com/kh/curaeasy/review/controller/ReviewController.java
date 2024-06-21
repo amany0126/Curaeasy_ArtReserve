@@ -21,8 +21,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.curaeasy.common.model.vo.PageInfo;
 import com.kh.curaeasy.common.template.Pagination;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 import com.kh.curaeasy.member.model.vo.Member;
 import com.kh.curaeasy.review.model.service.ReviewService;
+import com.kh.curaeasy.review.model.vo.Reply;
 import com.kh.curaeasy.review.model.vo.Review;
 
 @Controller
@@ -231,4 +237,57 @@ public class ReviewController {
 		}
 		return changName;
 	}
+	@RequestMapping("reviewDetail.do")
+	public ModelAndView selectReview(ModelAndView mv, String rno) {
+
+		// rno 파라미터가 없는 경우
+		if(rno == null) {
+			mv.addObject("errorMsg", "잘못된 접근입니다.")
+			  .setViewName("common/errorPage");
+			return mv;
+		}
+		
+		mv.addObject("rno", rno)
+		  .setViewName("review/reviewDetailView");
+		return mv;
+	}
+	
+	@GetMapping("updateReviewForm.re")
+	public String updateReviewForm(int rno) {
+		return "review";
+	}
+	
+	@RequestMapping(value="searchReplyList.do", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String searchReplyList(int rno) {
+		
+		ArrayList<Reply> list = reviewService.selectReplyList(rno);
+		
+		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping(value="insertReply.re", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String insertReply(Reply r) {
+		
+		int result = reviewService.insertReply(r);
+		
+		return String.valueOf(result);
+	}
+	
+	@RequestMapping(value="updateReply.re", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String updateReply(Reply r) {
+		
+		return String.valueOf(reviewService.updateReply(r));
+	}
+	
+	@RequestMapping(value="deleteReply.re", produces="text/html; charset=utf-8")
+	@ResponseBody
+	public String deleteReply(Reply r) {
+	
+		return String.valueOf(reviewService.deleteReply(r));
+		
+	}
+	
 }

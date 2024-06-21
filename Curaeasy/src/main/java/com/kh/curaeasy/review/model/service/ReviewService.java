@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.curaeasy.common.model.vo.PageInfo;
 import com.kh.curaeasy.review.model.dao.ReviewDao;
+import com.kh.curaeasy.review.model.vo.Reply;
 import com.kh.curaeasy.review.model.vo.Review;
 
 @Service
@@ -82,4 +83,22 @@ public class ReviewService {
 
 
 
+	public ArrayList<Reply> selectReplyList(int rno) {
+		return reviewDao.selectReplyList(sqlSession, rno);
+	}
+
+	@Transactional
+	public int insertReply(Reply r) {
+		return reviewDao.insertReply(sqlSession, r);
+	}
+	
+	@Transactional
+	public int updateReply(Reply r) {
+		return reviewDao.updateReply(sqlSession, r);
+	}
+
+	@Transactional
+	public int deleteReply(Reply r) {
+		return reviewDao.deleteReply(sqlSession, r);
+	}
 }
