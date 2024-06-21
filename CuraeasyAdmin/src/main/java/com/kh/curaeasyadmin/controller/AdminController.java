@@ -39,17 +39,20 @@ public class AdminController {
 
     // 전시회 관리
     @RequestMapping("displayList.ad")
-    public String displayList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
-        int listCount = adminService.getDisplayListCount(); // 전시회 리스트 총 개수
+    public String displayList(@RequestParam(value="currentPage", defaultValue="1") int currentPage,
+                              @RequestParam(value="searchKeyword", defaultValue="") String searchKeyword,
+                              Model model) {
+        int listCount = adminService.getDisplayListCount(searchKeyword);
 
-        int pageLimit = 10; // 페이지 하단에 보여질 페이지 최대 개수
-        int boardLimit = 10; // 한 페이지에 보여질 게시글 최대 개수
+        int pageLimit = 10;
+        int boardLimit = 10;
 
         PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-        ArrayList<Display> displayList = adminService.selectDisplayList(pi);
+        ArrayList<Display> displayList = adminService.selectDisplayList(pi, searchKeyword);
 
         model.addAttribute("displayList", displayList);
         model.addAttribute("pi", pi);
+        model.addAttribute("searchKeyword", searchKeyword);
 
         return "display/adminDisplayListView";
     }

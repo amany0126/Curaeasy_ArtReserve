@@ -21,12 +21,12 @@ public class AdminService {
 
     // 메인 페이지
     
-    public int getDisplayListCount() {
-        return adminDao.getDisplayListCount(sqlSession);
+    public int getDisplayListCount(String searchKeyword) {
+        return adminDao.getDisplayListCount(sqlSession, searchKeyword);
     }
 
-    public ArrayList<Display> selectDisplayList(PageInfo pi) {
-        return adminDao.selectDisplayList(sqlSession, pi);
+    public ArrayList<Display> selectDisplayList(PageInfo pi, String searchKeyword) {
+        return adminDao.selectDisplayList(sqlSession, pi, searchKeyword);
     }
     
     public Display selectDisplay(int displayNo) {

@@ -110,25 +110,35 @@
 
     <!-- Select Statements -->
 
-	<select id="getDisplayListCount" resultType="int">
-	    SELECT COUNT(*) FROM DISPLAY
-	</select>
-	
-	<select id="selectDisplayList" resultMap="displayResultSet">
-	    SELECT 
-	        D.DISPLAY_NO,
-	        D.DISPLAY_NAME,
-	        D.DISPLAY_CONTENT,
-	        D.DISPLAY_START_DATE,
-	        D.DISPLAY_END_DATE,
-	        D.DISPLAY_PRICE,
-	        D.DISPLAY_STATUS,
-	        A.ARTIST_NICKNAME,
-	        G.GALLERY_NAME
-	    FROM DISPLAY D
-	    JOIN ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
-	    JOIN GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
-	</select>
+    <select id="getDisplayListCount" parameterType="String" resultType="int">
+        SELECT COUNT(*)
+        FROM DISPLAY D
+        JOIN ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
+        JOIN GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
+        WHERE D.DISPLAY_NAME LIKE '%' || #{searchKeyword} || '%'
+        OR D.DISPLAY_CONTENT LIKE '%' || #{searchKeyword} || '%'
+        OR A.ARTIST_NICKNAME LIKE '%' || #{searchKeyword} || '%'
+    </select>
+
+    <select id="selectDisplayList" parameterType="String" resultMap="displayResultSet">
+        SELECT 
+            D.DISPLAY_NO,
+            D.DISPLAY_NAME,
+            D.DISPLAY_CONTENT,
+            D.DISPLAY_START_DATE,
+            D.DISPLAY_END_DATE,
+            D.DISPLAY_PRICE,
+            D.DISPLAY_STATUS,
+            A.ARTIST_NICKNAME,
+            G.GALLERY_NAME
+        FROM DISPLAY D
+        JOIN ARTIST A ON D.ARTIST_NO = A.ARTIST_NO
+        JOIN GALLERY G ON D.GALLERY_NO = G.GALLERY_NO
+        WHERE D.DISPLAY_NAME LIKE '%' || #{searchKeyword} || '%'
+        OR D.DISPLAY_CONTENT LIKE '%' || #{searchKeyword} || '%'
+        OR A.ARTIST_NICKNAME LIKE '%' || #{searchKeyword} || '%'
+        ORDER BY D.DISPLAY_NO DESC
+    </select>
     
 	<select id="selectDisplay" parameterType="int" resultMap="displayResultSet">
 	    SELECT 

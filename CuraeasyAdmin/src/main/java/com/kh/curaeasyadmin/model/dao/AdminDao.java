@@ -18,13 +18,17 @@ public class AdminDao {
         return sqlSession.selectOne("adminMapper.getDisplayListCount");
     }
 	
-    // 전시회 관
+    // 전시회 관리
 	
-    public ArrayList<Display> selectDisplayList(SqlSessionTemplate sqlSession, PageInfo pi) {
+    public int getDisplayListCount(SqlSessionTemplate sqlSession, String searchKeyword) {
+        return sqlSession.selectOne("adminMapper.getDisplayListCount", searchKeyword);
+    }
+
+    public ArrayList<Display> selectDisplayList(SqlSessionTemplate sqlSession, PageInfo pi, String searchKeyword) {
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 
-        return (ArrayList)sqlSession.selectList("adminMapper.selectDisplayList", null, rowBounds);
+        return (ArrayList)sqlSession.selectList("adminMapper.selectDisplayList", searchKeyword, rowBounds);
     }
     
     public Display selectDisplay(SqlSessionTemplate sqlSession, int displayNo) {
