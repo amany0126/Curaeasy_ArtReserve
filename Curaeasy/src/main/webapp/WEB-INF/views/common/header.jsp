@@ -32,20 +32,21 @@
    
 
     <style>
-
         div { box-sizing: border-box;}
-        #logo img{ width:100%; height: 100%; margin-left:0px; margin-right: 0px; }
+        #logo img{ width: 200px; height: 200px; margin-left:0px; margin-right: 0px; }
         #logo a:hover { background-color: transparent !important; }
         #header { 
             background-color: #333; box-shadow: 20px 10px 15px 10px lightgray; 
         }
         #header-1 {
             height:160px;
-            width : 1500px;
+            width : 100%;
             display: flex;
             flex-wrap: wrap;
             margin: auto;
             background-color: #333; color: #fff; 
+            box-shadow: 0 0 15px #333;
+            
         }
         #navi { 
             padding: 0; 
@@ -101,6 +102,8 @@
         }
         #navi li:hover > ul { display: block; }
         
+
+        .signup-link { margin-left: 30px;}
     </style>
 </head>
 <body>
@@ -166,12 +169,10 @@ s0.parentNode.insertBefore(s1,s0);
                     </ul>
                     
                 </li>
-            </ul>
-		
-		
-            <div id="user-actions">
-                <ul>
-                    <li>
+
+
+                <div id="user-actions">
+                <li>
                     <br>
                   		<c:choose>
 		                <c:when test="${empty sessionScope.loginUser}">
@@ -180,19 +181,22 @@ s0.parentNode.insertBefore(s1,s0);
 		                       <!--  <a data-toggle="modal" data-target="#loginModal" class="signup-link"><i class="fas fa-sign-in-alt"></i> 로그인</a> <br> -->
 		                        <a href="loginPage.me" class="signup-link"><i  class="fas fa-sign-in-alt"></i> 로그인</a> <br>
 		                        <a href="enrollForm.me" class="signup-link"><i class="fas fa-user-plus"></i> 회원가입</a> <br>
-		                        <a href="#" class="schedule-link"><i class="far fa-calendar-alt icon"></i> 스케줄</a>
+		                        <a href="#" class="signup-link"><i class="far fa-calendar-alt icon"></i> 스케줄</a>
 		                </c:when>
 						<c:otherwise>
 		              		<!-- 로그인 후 -->
 		                   <%--  <label class="signup-link">${sessionScope.loginUser.memberName}님 환영합니다</label><!--  &nbsp;&nbsp; --><br> --%>
 		                    <a href="myPage.me" class="signup-link"><i class="fas fa-user-plus" ></i>마이페이지</a><br>
-		                    <a href="#" class="schedule-link"><i class="far fa-calendar-alt icon"></i>스케줄</a><br>
+		                    <a href="#" class="signup-link"><i class="far fa-calendar-alt icon"></i>스케줄</a><br>
 		                    <a href="logout.me" class="signup-link"><i class="fas fa-sign-in-alt"></i>로그아웃</a><br>
 						</c:otherwise>
 		                </c:choose>
                     </li>
-                </ul>
-            </div>
+                </div>
+            </ul>
+
+
+
 	
         </div>
     </div>

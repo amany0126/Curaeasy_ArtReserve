@@ -5,19 +5,43 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>curaeasy</title>
+
+<title>마이페이지</title>
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
     <style> 
 
            .innerOuter {
             border:0px solid lightgray;
-            width:80%;
+            width:70%;
             margin: 0%;
-            padding:5% 10%;
+            padding: 5% ;
             background-color:white;
             display: inline-block;
-            float: right;
+			margin-left: 0px;
         }
-		button { border-radius: 50px !important;}
+
+		h1, label {
+			/* 폰트 */
+			font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :larger;
+            font-style :oblique; 
+		}
+		button { 
+			
+			border-radius: 50px !important;
+			border : 1px solid black;
+			background-color: white;
+
+			font-size: 15px;
+			padding: 5px 10px; 
+		}
+
+		h1 { padding-bottom: 50px;}
 
     </style>
 </head>
@@ -28,7 +52,7 @@
         <br><br>
         <div class="innerOuter">
 			<div class="content">
-            <h2>마이페이지</h2>
+            <h1>&#128486; 마이페이지 &#128487;</h1>
             <form action="update.me" method="post">
                 <div class="form-group">
                     <label for="userId">* 아이디 : </label>
@@ -60,11 +84,11 @@
                     
                 </div> 
                 <br>
-                <div class="btns" align="center">
+                <div class="btns" >
                 <!--     <a href="enrollForm.at"> <button type="button" class="btn btn-light">작가신청</button></a> -->
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#PwdChange">비밀번호 변경하기</button>
-                    <button type="submit" class="btn btn-primary">수정하기</button>
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
+                    - 비밀번호를 변경하고싶어요!  &#128073;  <button type="button"  data-toggle="modal" data-target="#PwdChange">비밀번호 변경하기</button><br><br><br>
+                    - 정보를 수정할래요! &#128073; <button type="submit" >수정하기</button> <br><br><br>
+					- 탈퇴 할래요! &#128073; <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
                 </div>
             </form>
         </div>

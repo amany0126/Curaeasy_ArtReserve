@@ -28,7 +28,8 @@
         font-weight: 400;
         font-style: normal;
     }
-    .footer { background-color: #333; color: #fff; padding: 40px 20px; }
+    .footer { background-color: #333; color: #fff; padding: 40px 20px; 
+        box-shadow: 0 0 15px #333;}
     .footer-container {
         display: flex;
         flex-wrap: wrap;

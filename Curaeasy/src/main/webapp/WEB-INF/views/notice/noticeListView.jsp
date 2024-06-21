@@ -112,10 +112,12 @@
         <div class="content-header">
             <h1>&#128486; 공지사항 &#128487;</h1>
         </div>
+        <!--
         <div class="search-box">
             <input type="text" placeholder="검색어를 입력하세요" />
             <button>검색</button>
         </div>
+        -->
         <table id="noticeList" class="notice-list">
             <thead>
                 <tr>
@@ -127,26 +129,6 @@
                 </tr>
             </thead>
             <tbody>
-            <!--
-                <tr>
-                    <td><b class="noti_b">공지</b></td>
-                    <td>
-                        <a href="noticeDetail.do" class="subject">
-                            [공고 제2024-102호] 2024 인천아트플랫폼 정기대관(6월~12월) 결과 공고
-                        </a>
-                    </td>
-                    <td>2024-05-28</td>
-                </tr>
-                <tr>
-                    <td><b class="noti_b">공지</b></td>
-                    <td>
-                        <a href="noticeDetail.do" class="subject">
-                            [공고 제2024-86호] 2024 인천아트플랫폼 보안인력 운영 용역 소액 수의 견적 제출 안내 공고
-                        </a>
-                    </td>
-                    <td>2024-05-21</td>
-                </tr>
-                 추가적인 공지사항 항목들 -->
                 
                 
                 <c:forEach var="n" items="${ requestScope.list }">
