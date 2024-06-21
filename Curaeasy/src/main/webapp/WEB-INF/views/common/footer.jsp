@@ -26,6 +26,7 @@
             color: #fff; 
             padding: 40px 20px; 
             clear: both; /* 충돌 방지용 */
+            box-shadow: 0 0 15px #333;
         }
         .footer-container {
             display: flex;

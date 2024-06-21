@@ -8,6 +8,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+    <!--검색돋보기-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <title>후기 게시글목록</title>
 
@@ -15,11 +23,14 @@
     <style>
         .innerOuter {
             border:0px solid lightgray;
-            width:80%;
+            width:70%;
             margin:auto;
-            padding:5% 10%;
-            background-color:white;
-			margin-top: 5px;
+            padding: 3% 5%;
+			margin-top: 30px;
+            margin-bottom: 100px;
+
+            background-color :#e7e6e6;
+            border-radius: 20px;
         }
         .search-box {
             display: flex;
@@ -28,11 +39,39 @@
         }
 
         .content-header {
-            margin-bottom: 20px;     
+            margin-bottom: 20px;
+
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :larger;
+            font-style :oblique;  
         }
-        .content-header h1 {
-            font-size: 2em;
+        /*button,option,input { border-radius: 20px !important;  }*/
+
+        #SearchFunction {padding: 0px 20px 20px;}
+        #SearchFunction button{
+            border-radius: 20px;
+            width: 70px; height: 35px;
+            background-color: white; 
+
         }
+        #SearchFunction button:hover { background-color: gray; }
+        #SearchFunction input{
+            border-radius: 20px;
+            display: inline;
+            width: 350px;
+        }
+        #SearchFunction>select{
+            border-radius: 20px; width: 100px;
+            display: inline;
+            width : 150px;
+        }
+
+
+
+
+
 
 
 
@@ -57,7 +96,7 @@
         }
         .pagination {
             text-align: center;
-            margin-top: 35px;
+            margin-top: 50px;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -85,26 +124,32 @@
 <div class="innerOuter">
     <div class="content">
         <div class="content-header">
-            <h1>작성한 후기 게시글 목록</h1>
+            <h1>&#128486; 후기게시글 목록 &#128487;</h1>
         </div>
+
        <div class="search-box" style="float: right">
-       <form action="review.do">
-            <select name="category" id="category" class="form-control"  style="display: inline; width: 130px;">
+       
+        <form action="review.do" id="SearchFunction">
+            <select name="category" id="category" class="form-control" >
                 <option value="">전체</option>
                 <option value="writer">작성자</option>
                 <option value="title">제목</option>
             </select>
-            <input type="search" name="search" id="search" placeholder="검색어" value="${ requestScope.search }" style="display: inline; width: 250px;" class="form-control">
-            <button type="submit" class="form-control btn btn-info" style="display: inline; width: 100px;">검색</button>
+            <input type="search" name="search" id="search" placeholder="검색어를 입력하세요." value="${ requestScope.search }" style="display: inline; " class="form-control">
+            <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
         	</form>
         	<br><br>
         </div>
         <c:if test="${ requestScope.ticket > 0}">
         <br><br>
+
         	<div class="search-box">
         	<form action="reviewEnrollForm.do">
-        		 <button type="submit" class="btn btn-info" style="float: right;">후기 작성</button>
-        	</form>
+        		 <button type="submit" class="Search" style="float: right;">후기 작성</button>
+        </form>
+
+
+
         	</div>
         </c:if>
         <br>

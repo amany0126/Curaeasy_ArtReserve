@@ -13,10 +13,19 @@
         .sidbar{
             display: inline-block;
             float : left;
-            margin-top: 9%;
+            margin-top: 7.5%;
             padding-left :3% ;
             width: 20%
         }
+
+        .sidbar>ul {
+            margin : 30px 0px 40px;
+        }
+        .sidbar>ul>li:hover {
+           background-color: rgb(227, 227, 235); font-weight: bold;
+        }
+        .sidbar>ul>li { padding-top: 12px; }
+
         hr{
             background: black;
         }
@@ -40,15 +49,15 @@
     <div class="sidbar">
         <hr style="height: 3px">
         <ul>
-            <li><a href="myPage.me">마이페이지</a></li>
-            <li><a href="reserveList.me">결제내역조회</a></li>
-            <li><a href="myReviewList.re">작성한 후기 목록</a></li>
-            <li><a href="enrollForm.at">작가신청</a></li>
+            <li><a href="myPage.me">- 마이페이지</a></li>
+            <li><a href="reserveList.me">- 결제내역조회</a></li>
+            <li><a href="myReviewList.re">- 작성한 후기 목록</a></li>
+            <li><a href="enrollForm.at">- 작가신청</a></li>
         </ul>
         <hr style="height: 3px">
         <ul>
-            <li><a href="rentalList.re">대관 신청 조회</a></li>
-            <li><a href="exhibition.do ">전시회 관련 조회</a></li>
+            <li><a href="rentalList.re">- 대관 신청 조회</a></li>
+            <li><a href="exhibition.do ">- 전시회 관련 조회</a></li>
         </ul>
     </div>
 </body>
