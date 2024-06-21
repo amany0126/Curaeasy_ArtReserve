@@ -89,8 +89,12 @@ public class ReviewDao {
 	}
 	public int deleteReview(SqlSessionTemplate sqlSession, Review r) {
 		return sqlSession.delete("reviewMapper.deleteReview", r);
+	}
 	public Review selectReview(SqlSessionTemplate sqlSession, int rno) {
 		return sqlSession.selectOne("reviewMapper.selectReview", rno);
+	}
+	public int selectCount(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.update("reviewMapper.selectCount", rno);
 	}
 
 }

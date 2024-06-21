@@ -105,8 +105,13 @@ public class ReviewService {
 	@Transactional
 	public int deleteReview(Review r) {
 		return reviewDao.deleteAllReply(sqlSession, r) * reviewDao.deleteReview(sqlSession, r);
-
+	}
 	public Review selectReview(int rno) {
 		return reviewDao.selectReview(sqlSession, rno);
+	}
+
+
+	public int selectCount(int rno) {
+		return reviewDao.selectCount(sqlSession, rno);
 	}
 }

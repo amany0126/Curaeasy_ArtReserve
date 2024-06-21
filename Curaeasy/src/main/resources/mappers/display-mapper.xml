@@ -181,5 +181,6 @@
 		    SELECT *
 		      FROM DISPLAY 
 		     WHERE ARTIST_NO =#{artistNo}
+		     ORDER BY DISPLAY_NO DESC
 		</select>
 </mapper>

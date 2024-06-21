@@ -145,7 +145,7 @@
                 		<input type="hidden" value=" ${ requestScope.rno }" name="rno">
                 		<button type="submit" class="btn btn-primary">수정하기</button>
                 	</form>
-                		<form action="delete.re" method="post" style="display: inline-block;" >
+                		<form action="deleteReview.re" method="post" style="display: inline-block;" >
                 		<input type="hidden" value=" ${ requestScope.rno }" name="rno">
                 		<button type="submit" class="btn btn-primary" >삭제하기</button>
                 	</form>
@@ -183,12 +183,12 @@
                         </div>
                     </c:otherwise>
                 </c:choose>
-            <div id="comment-list">
+            <div id="comment-list" style="height: auto ">
                 
             </div>
         </div>
         <div class="back-to-list">
-            <a href="onDisplay.do">목록으로 가기</a>
+            <a href="review.do">목록으로 가기</a>
         </div>
     </div>
 </div>
@@ -198,6 +198,7 @@
 <script>
     $(function() {
         searchReplyList();
+        setInterval(searchReplyList, 1000);
     });
 
     function clickEdit(e) {
@@ -301,8 +302,8 @@
     
     function searchReplyList() {
         const rno = "${requestScope.rno}"
-        $("#comment-list").empty();
-
+        /* $("#comment-list").empty(""); */
+		let divList = "";
         $.ajax({
             url: "searchReplyList.do",
             method: "GET",
@@ -314,6 +315,7 @@
                 if(result.size == 0){
                     return;
                 }
+                
                 $("#count").text(result.length);
                 result.forEach(function(element, index) {
                     
@@ -351,8 +353,11 @@
                     }
                     $div.append($(`<p>\${element.replyContent}</p>`));
 
-                    $div.appendTo($("#comment-list"));
+                    divList += $div.html();
+                    // console.log($div)
+                    // console.log($divList)
                 })
+                $("#comment-list").html(divList)
             },
             error: function() {
                 console.log("리뷰 조회 ajax 실패")

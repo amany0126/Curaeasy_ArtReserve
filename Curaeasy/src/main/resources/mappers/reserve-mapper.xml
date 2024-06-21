@@ -53,5 +53,6 @@
 		  FROM RESERVE R
 		  LEFT JOIN DISPLAY D ON (R.DISPLAY_NO = D.DISPLAY_NO)
 		 WHERE MEMBER_NO = #{memberNo}
+		 ORDER BY RESERVE_NO DESC
 	</select>
 </mapper>

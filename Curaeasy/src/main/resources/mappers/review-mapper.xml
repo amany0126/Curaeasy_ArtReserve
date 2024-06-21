@@ -26,6 +26,7 @@
 		SELECT *
 		  FROM REVIEW
 		 WHERE MEMBER_NO = #{userNo}
+		 ORDER BY REVIEW_NO DESC
 	</select>
 	
 	
@@ -183,4 +184,11 @@
 		  JOIN MEMBER M USING(MEMBER_NO)
 		 WHERE REVIEW_NO = #{rno}
 	</select>
+	
+		<update id="selectCount" parameterType="_int" >
+		UPDATE REVIEW
+		   SET REVIEW_COUNT = REVIEW_COUNT+1
+		 WHERE REVIEW_STATUS = 'Y'
+		   AND REVIEW_NO = #{rno}	
+	</update>
 </mapper>

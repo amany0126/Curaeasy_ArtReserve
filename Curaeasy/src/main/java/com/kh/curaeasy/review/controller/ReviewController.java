@@ -201,7 +201,7 @@ public class ReviewController {
 		int result = reviewService.updateReview(r);
 		if(result>0) {
 			session.setAttribute("alertMsg", "후기 수정에 성공 했습니다");
-			return "redirect:/review.do";
+			return "redirect:/reviewDetail.do?rno="+r.getReviewNo();
 		}else {
 			model.addAttribute("errorMsg", "후기 수정에 실패 했습니다");
 			return "/common/errorPage";
@@ -238,16 +238,18 @@ public class ReviewController {
 	}
 	@RequestMapping("reviewDetail.do")
 	public ModelAndView selectReview(ModelAndView mv, int rno) {
-
+		
+		
+		
 		// rno 파라미터가 없는 경우
 		if(rno == 0) {
 			mv.addObject("errorMsg", "잘못된 접근입니다.")
 			  .setViewName("common/errorPage");
 			return mv;
 		}else {
-		
+			System.out.println(rno);
+		reviewService.selectCount(rno);
 		Review r = reviewService.selectReview(rno);
-		System.out.println(r);
 		mv.addObject("rno", rno)
 		  .addObject("r", r)
 		  .setViewName("review/reviewDetailView");
@@ -288,15 +290,17 @@ public class ReviewController {
 		
 	}
 	
-	@RequestMapping(value="삭제하기")
+	@RequestMapping(value="deleteReview.re")
 	public String deleteReview(int rno, HttpSession session, Model model) {
 		
 		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
-		Review r = new Review();
-		r.setMemberNo(memberNo);
-		r.setReviewNo(rno);
+
 		
+		
+		Review r = new Review();
+		r.setMemberNo(""+memberNo);
+		r.setReviewNo(rno);
 		int result = reviewService.deleteReview(r);
 		
 		if(result>0) {
