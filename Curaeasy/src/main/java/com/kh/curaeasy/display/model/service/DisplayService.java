@@ -69,7 +69,9 @@ public class DisplayService {
 	
 		return displayDao.selectDisplayNo(sqlSession,displayName);
 	}
-
+	public ArrayList<Display> selectDisplayList() {
+		return displayDao.selectDisplayList(sqlSession);
+	}
 
 	
 }

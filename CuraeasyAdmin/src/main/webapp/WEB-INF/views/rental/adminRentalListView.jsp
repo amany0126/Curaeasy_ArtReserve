@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8" />
@@ -74,7 +75,7 @@
         .truncate {
             max-width: 200px; /* Adjust the width as needed */
         }
-        .btn-add-exhibition {
+        .btn-add-rental {
             margin-right: 10px;
         }
         .search-bar {
@@ -137,6 +138,12 @@
             text-align: center;
             vertical-align: middle;
         }
+        
+        /* Disabled button style */
+        .btn-disabled {
+            background-color: grey;
+            pointer-events: none;
+        }
     </style>
     <script>
         function goToDetail(rentalNo) {
@@ -152,15 +159,6 @@
             });
         }
 
-        function formatPrice() {
-            const priceElements = document.querySelectorAll('.price');
-            priceElements.forEach(element => {
-                let price = element.textContent;
-                price = parseInt(price).toLocaleString() + '원';
-                element.textContent = price;
-            });
-        }
-
         function formatDate() {
             const dateElements = document.querySelectorAll('.date');
             dateElements.forEach(element => {
@@ -171,7 +169,6 @@
 
         document.addEventListener("DOMContentLoaded", function() {
             truncateText('.truncate', 20);
-            formatPrice();
             formatDate();
             
             // 검색 버튼 클릭 이벤트
@@ -191,12 +188,12 @@
                 var searchCategory = $("#searchCategory").val();
                 $("table tbody tr").filter(function() {
                     var textToSearch = $(this).find('td:eq(1)').text().toLowerCase(); // 기본 전시명 검색
-                    if (searchCategory === "displayName") {
-                        textToSearch = $(this).find('td:eq(1)').text().toLowerCase();
-                    } else if (searchCategory === "displayContent") {
-                        textToSearch = $(this).find('td:eq(2)').text().toLowerCase();
+                    if (searchCategory === "rentalNo") {
+                        textToSearch = $(this).find('td:eq(0)').text().toLowerCase();
+                    } else if (searchCategory === "galleryName") {
+                        textToSearch = $(this).find('td:eq(4)').text().toLowerCase();
                     } else if (searchCategory === "artistNickName") {
-                        textToSearch = $(this).find('td:eq(7)').text().toLowerCase();
+                        textToSearch = $(this).find('td:eq(5)').text().toLowerCase();
                     }
                     $(this).toggle(textToSearch.indexOf(searchValue) > -1);
                 });
@@ -223,7 +220,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">🏢 대관 목록 조회</h1>
+                   <h1 class="mt-4">🏢 대관 목록 조회</h1>
                     <div class="search-bar">
                         <select id="searchCategory" class="form-select">
                             <option value="all">전체</option>
@@ -244,22 +241,31 @@
                                     <th>대관 상태</th>
                                     <th>전시관 이름</th>
                                     <th>작가 이름</th>
+                                    <th>수정하기</th>
+                                    <th>취소하기</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="rental" items="${rentalList}">
-                                    <tr onclick="goToDetail('${rental.rentalNo}')">
+                                    <tr>
                                         <td>${rental.rentalNo}</td>
                                         <td class="date">${rental.rentalStartDate}</td>
                                         <td class="date">${rental.rentalEndDate}</td>
-                                        <td>${rental.rentalStatus}</td>
+                                        <td>${rental.rentalStatus == 'Y' ? '대관중' : '취소됨'}</td>
                                         <td>${rental.galleryName}</td>
                                         <td>${rental.artistNickName}</td>
+                                        <td><button class="btn btn-warning" onclick="location.href='${path}/updateRental.ad?rentalNo=${rental.rentalNo}'">수정하기</button></td>
+                                        <td>
+                                            <button class="btn <c:if test='${rental.rentalStatus == "N"}'>btn-disabled</c:if> btn-danger"
+                                                    onclick="if('${rental.rentalStatus}' !== 'N') { location.href='${path}/updateRentalStatus.ad?rentalNo=${rental.rentalNo}'; } else { alert('이미 취소된 대관입니다.'); }">
+                                                취소하기
+                                            </button>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty rentalList}">
                                     <tr>
-                                        <td colspan="6">등록된 대관신청이 없습니다.</td>
+                                        <td colspan="8">등록된 대관이 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>

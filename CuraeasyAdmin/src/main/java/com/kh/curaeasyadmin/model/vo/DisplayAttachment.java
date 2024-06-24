@@ -17,5 +17,5 @@ public class DisplayAttachment {
     private String changeName;
     private int imageLevel;
     private String status;
-    private int displayNo;
+    private String displayNo;
 }

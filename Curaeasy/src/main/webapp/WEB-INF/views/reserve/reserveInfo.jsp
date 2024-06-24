@@ -373,8 +373,8 @@
             channelKey: "channel-key-8a64eb4c-73f0-4030-ad51-49182281cbf1",
             paymentId: paymentId,
             orderName: "Curaeasy",
-            // totalAmount: '${requestScope.price}',
-            totalAmount: 1000,
+            totalAmount: '${requestScope.price}',
+            // totalAmount: 1000,
             currency: "CURRENCY_KRW",
             payMethod: "CARD",
             customer: {

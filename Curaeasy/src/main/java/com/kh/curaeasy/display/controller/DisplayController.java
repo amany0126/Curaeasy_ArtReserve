@@ -46,26 +46,40 @@ public class DisplayController {
 	    	likeDisplayList = memberService.checkLikeList(((Member)session.getAttribute("loginUser")).getMemberNo());
 	    }
 	    
-	    model.addAttribute("onDisplayList", list);
+	    model.addAttribute("list", list);
 	    model.addAttribute("displayNoList", likeDisplayList);
 	    
 	    return "display/onDisplayView";
 	}
     @RequestMapping("upcomingDisplay.do")
-    public String upcomingDisplay(Model model) {
+    public String upcomingDisplay(Model model, HttpSession session) {
     	// 진행 예정 전시 목록 조회
 	    ArrayList<Display> list = displayService.selectUpcomingDisplayList();
 	    
-	    model.addAttribute("upcomingDisplayList", list);
+	    List<Integer> likeDisplayList = null;
+	    if(session.getAttribute("loginUser") != null) {
+	    	// 좋아요 리스트 가져오기
+	    	likeDisplayList = memberService.checkLikeList(((Member)session.getAttribute("loginUser")).getMemberNo());
+	    }
+	    
+	    model.addAttribute("list", list);
+	    model.addAttribute("displayNoList", likeDisplayList);
     	
         return "display/upcomingDisplayView";
     }
     @RequestMapping("offDisplay.do")
-    public String closedDisplay(Model model) {
+    public String closedDisplay(Model model, HttpSession session) {
     	// 마감 전시 목록 조회
 	    ArrayList<Display> list = displayService.selectClosedDisplayList();
 	    
-	    model.addAttribute("closedDisplayList", list);
+	    List<Integer> likeDisplayList = null;
+	    if(session.getAttribute("loginUser") != null) {
+	    	// 좋아요 리스트 가져오기
+	    	likeDisplayList = memberService.checkLikeList(((Member)session.getAttribute("loginUser")).getMemberNo());
+	    }
+	    
+	    model.addAttribute("list", list);
+	    model.addAttribute("displayNoList", likeDisplayList);
 	    
         return "display/closedDisplayView";
     }

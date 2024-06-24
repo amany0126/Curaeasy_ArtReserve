@@ -138,6 +138,12 @@
             text-align: center;
             vertical-align: middle;
         }
+        
+        /* Disabled button style */
+        .btn-disabled {
+            background-color: grey;
+            pointer-events: none;
+        }
     </style>
     <script>
         function goToDetail(reserveNo) {
@@ -248,11 +254,12 @@
                                     <th>예매상태</th>
                                     <th>예약자명</th>
                                     <th>예약전시</th>
+                                    <th>환불하기</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="reserve" items="${reserveList}">
-                                    <tr onclick="goToDetail('${reserve.reserveNo}')">
+                                    <tr>
                                         <td>${reserve.reserveNo}</td>
                                         <td>${reserve.reserveCount}</td>
                                         <td>${reserve.paymentCode}</td>
@@ -262,11 +269,17 @@
                                         <td>${reserve.reserveStatus}</td>
                                         <td>${reserve.memberName}</td>
                                         <td>${reserve.displayName}</td>
+                                        <td>
+                                            <button class="btn <c:if test='${reserve.reserveStatus == "환불완료"}'>btn-disabled</c:if> btn-danger"
+                                                    onclick="if('${reserve.reserveStatus}' !== '환불완료') { location.href='${path}/updateReserveStatus.ad?reserveNo=${reserve.reserveNo}'; } else { alert('이미 환불된 예매입니다.'); }">
+                                                환불하기
+                                            </button>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty reserveList}">
                                     <tr>
-                                        <td colspan="9">등록된 예매가 없습니다.</td>
+                                        <td colspan="10">등록된 예매가 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>
