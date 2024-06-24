@@ -110,8 +110,7 @@
         .pagination a.active {
             font-weight: bold;
         }
-        .search-box>input { border-radius: 20px;}
-        .search-box>button { border-radius: 20px;}
+        .search-box input,button { border-radius: 20px !important}
 
     </style>
 </head>

@@ -15,12 +15,17 @@
           display: inline;
         }
         .innerOuter {
-            border:1px solid lightgray;
-            width:65%;
-            margin:auto;
+            border:0px solid lightgray;
+            width:70%;
+            margin:auto; margin-top: 50px; margin-bottom: 50px;
             padding:5% 10%;
             background-color:white;
         }
+
+        #reviewContent { resize: none; width: 100%; height: 400px; }
+        img { border-radius: 20px; border-style : ridge;}
+        #but>button{ border-radius: 20px; width: 130px; background-color: white;}
+        #but>button:hover { background-color: lightgray; }
     </style>
 </head>
 <body>
@@ -56,8 +61,8 @@
                        
                     </div>
                     <div align="center" id="but">
-                        <button type="button" class="btn btn-info" onclick="history.back()">뒤로가기</button>
-                        <button type="submit" class="btn btn-primary">후기 작성하기</button>
+                        <button type="button" onclick="history.back()">뒤로가기</button>
+                        <button type="submit">후기 작성하기</button>
                     </div>
                 </form>
             </div>

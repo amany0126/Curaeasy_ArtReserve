@@ -100,8 +100,6 @@
             color: #777;
             padding: 50px 0;
         }
-        .search-box>input { border-radius: 20px;}
-        .search-box>button { border-radius: 20px;}
         .pagination {
             text-align: center;
             margin-top: 20px;
@@ -117,6 +115,9 @@
         .pagination a.active {
             font-weight: bold;
         }
+
+
+        .search-box input,button {border-radius: 20px !important;}
     </style>
 </head>
 <body>

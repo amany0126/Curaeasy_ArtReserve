@@ -12,12 +12,14 @@
     <!-- Include Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+
     <title>전시회 예매</title>
     <style>
         .form-container {
-            border: 1px solid lightgray;
+            border: 0px solid lightgray;
             width: 80%;
-            margin: auto;
+            margin: auto; margin-top: 50px; margin-bottom: 50px;
             padding: 2rem;
             background-color: white;
         }
@@ -54,6 +56,7 @@
             font-size: 2rem;
             font-weight: bold;
             margin-bottom: 1.5rem;
+
         }
         .form-section-title {
             font-weight: bold;

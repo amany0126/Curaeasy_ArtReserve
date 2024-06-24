@@ -14,9 +14,8 @@
     <title>수시대관신청</title>
     <style>
         .form-container {
-            border: 1px solid lightgray;
             width: 80%;
-            margin: auto;
+            margin: auto; margin-top: 50px; margin-bottom: 50px;
             padding: 2rem;
             background-color: white;
         }

@@ -12,9 +12,8 @@
     <title>전시신청</title>
     <style>
         .form-container {
-            border: 1px solid lightgray;
-            width: 60%;
-            margin: auto;
+            width: 70%;
+            margin: auto; margin-top: 50px; margin-bottom: 50px;
             padding: 2rem;
             background-color: white;
         }
@@ -61,6 +60,10 @@
         .form-inline .form-group:last-child {
             margin-right: 0;
         }
+
+        textarea{ resize: none; width: 100%; height: 400px; }
+        .form-footer>button:hover{ background-color: black; color : white; }
+        .form-section-title {margin-top: 50px;}
     </style>
 </head>
 <body>
