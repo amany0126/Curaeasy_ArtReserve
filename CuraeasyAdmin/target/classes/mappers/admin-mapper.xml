@@ -198,12 +198,25 @@
             DISPLAY_PRICE,
             DISPLAY_STATUS,
             ARTIST_NO,
-            GALLERY_NO
+            GALLERY_NO,
+            (SELECT CHANGE_NAME FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = #{displayNo} AND IMAGE_LEVEL = 1 AND ROWNUM = 1) AS IMAGE_PATH
         FROM DISPLAY
         WHERE DISPLAY_NO = #{displayNo}
     </select>
+    
+    <select id="selectAttachmentsByDisplayNo" parameterType="int" resultMap="displayAttachmentResultMap">
+        SELECT 
+            ATTACHMENT_NO,
+            ORIGIN_NAME,
+            CHANGE_NAME,
+            IMAGE_LEVEL,
+            STATUS,
+            DISPLAY_NO
+        FROM DISPLAY_ATTACHMENT
+        WHERE DISPLAY_NO = #{displayNo}
+    </select>
 
-    <update id="updateDisplay" parameterType="com.kh.curaeasyadmin.model.vo.Display">
+   <update id="displayUpdate" parameterType="com.kh.curaeasyadmin.model.vo.Display">
         UPDATE DISPLAY
         SET DISPLAY_NAME = #{displayName},
             DISPLAY_CONTENT = #{displayContent},
@@ -215,6 +228,13 @@
             GALLERY_NO = (SELECT GALLERY_NO FROM GALLERY WHERE GALLERY_NAME = #{galleryName})
         WHERE DISPLAY_NO = #{displayNo}
     </update>
+		
+	<update id="displayAttUpdate" parameterType="com.kh.curaeasyadmin.model.vo.DisplayAttachment">
+        UPDATE DISPLAY_ATTACHMENT
+        SET CHANGE_NAME = #{changeName}
+        WHERE DISPLAY_NO = #{displayNo}
+    </update>
+    
 
     <update id="deleteDisplay" parameterType="int">
         UPDATE DISPLAY
@@ -233,7 +253,7 @@
     <!-- Insert display attachment -->
     <insert id="addDisplayAttachment" parameterType="com.kh.curaeasyadmin.model.vo.DisplayAttachment">
         INSERT INTO DISPLAY_ATTACHMENT (ATTACHMENT_NO, ORIGIN_NAME, CHANGE_NAME, IMAGE_LEVEL, STATUS, DISPLAY_NO)
-        VALUES (SEQ_DISPLAY_ATTACHMENT_NO.NEXTVAL, #{originName}, #{changeName}, #{imageLevel}, #{status}, SEQ_DISPLAY_NO.CURRVAL)
+        VALUES (SEQ_DISPLAY_ATTACHMENT_NO.NEXTVAL, #{originName}, #{changeName}, #{imageLevel}, #{status}, #{displayNo})
     </insert>
 
     <!-- 전시관 관리 -->
@@ -572,5 +592,8 @@
         ORDER BY 
             REPLY_NO
     </select>
-
+	
+	<select id="selectAttachments" parameterType="_int" resultMap="displayAttachmentResultMap">
+        SELECT * FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = #{displayNo}
+    </select>
 </mapper>

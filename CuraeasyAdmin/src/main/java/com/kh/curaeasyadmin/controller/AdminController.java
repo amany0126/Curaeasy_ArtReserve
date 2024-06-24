@@ -24,7 +24,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.common.template.Pagination;
 import com.kh.curaeasyadmin.model.service.AdminService;
-import com.kh.curaeasyadmin.model.vo.*;
+import com.kh.curaeasyadmin.model.vo.Artist;
+import com.kh.curaeasyadmin.model.vo.Display;
+import com.kh.curaeasyadmin.model.vo.DisplayAttachment;
+import com.kh.curaeasyadmin.model.vo.Gallery;
+import com.kh.curaeasyadmin.model.vo.Member;
+import com.kh.curaeasyadmin.model.vo.Notice;
+import com.kh.curaeasyadmin.model.vo.Rental;
+import com.kh.curaeasyadmin.model.vo.Reply;
+import com.kh.curaeasyadmin.model.vo.Reserve;
+import com.kh.curaeasyadmin.model.vo.Review;
 
 @Controller
 public class AdminController {
@@ -67,19 +76,55 @@ public class AdminController {
     @GetMapping("/updateDisplay.ad")
     public String showUpdateDisplayForm(@RequestParam("displayNo") int displayNo, Model model) {
         Display display = adminService.selectDisplay(displayNo);
-        model.addAttribute("display", display);
+        DisplayAttachment attachments = adminService.selectAttachments(displayNo);
         
-        System.out.println(display);
+        
+        
+        System.out.println(attachments);
+        model.addAttribute("display", display);
+        model.addAttribute("attachments", attachments);
+//        System.out.println(display);
         return "display/adminDisplayUpdateForm";
     }
 
     @PostMapping("/updateDisplay.ad")
-    public String updateDisplay(Display display) {
-        adminService.updateDisplay(display);
+    public String updateDisplay(@ModelAttribute Display display, @RequestParam("attachments") MultipartFile reUpfile, HttpSession session) {
+       DisplayAttachment attachments = new DisplayAttachment();  
+       attachments.setDisplayNo(display.getDisplayNo());
+       
+       String originalFile = display.getImagePath();
+       
+       int result = 0;
+		if(reUpfile.getSize() == 0) {
+		
+		}else {	
+			String realPath= "C:\\Curaeasy_ArtReserve\\Curaeasy\\src\\main\\webapp\\resources\\display\\"+originalFile;
+			new File(realPath).delete();	
+			String changImgName = saveFile(reUpfile, session);
+			
+			System.out.println(reUpfile);
+			System.out.println(changImgName);
+			attachments.setChangeName(changImgName);
+			
+			result = adminService.updateDisplay(display,attachments);
+		}
+		if (result > 0) { // 성공
+			// 일회성 알람문구를 담아 메인 페이지로 url 재요청
+			// 첨부파일 업데이트
+			session.setAttribute("alertMsg", "정보 변경에 성공 하였습니다.");
+		} else { // 실패
+			
+			// 에러문구 담아서 에러페이지로 포워딩
+		session.setAttribute("alertMsg", "정보 변경에 실패하셨습니다");
+			// /WEB-INF/views/common/errorPage.jsp
+		}
         return "redirect:/displayList.ad";
     }
+    private String savePath(MultipartFile reUpfile, HttpSession session) {
+		return null;
+	}
 
-    @RequestMapping("/deleteDisplay.ad")
+	@RequestMapping("/deleteDisplay.ad")
     public String deleteDisplay(@RequestParam("displayNo") int displayNo, RedirectAttributes redirectAttributes) {
         Display display = adminService.getDisplayById(displayNo);
         if ("종료".equals(display.getDisplayStatus())) {

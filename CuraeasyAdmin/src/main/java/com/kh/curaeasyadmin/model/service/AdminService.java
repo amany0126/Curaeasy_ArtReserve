@@ -40,10 +40,12 @@ public class AdminService {
         return adminDao.selectDisplayById(sqlSession, displayNo);
     }
 
-    @Transactional
-    public void updateDisplay(Display display) {
-        adminDao.updateDisplay(sqlSession, display);
+    public ArrayList<DisplayAttachment> selectAttachmentsByDisplayNo(int displayNo) {
+        return adminDao.selectAttachmentsByDisplayNo(sqlSession, displayNo);
     }
+
+    
+  
 
     public void updateDisplayStatusToEnd(int displayNo) {
         adminDao.deleteDisplay(sqlSession, displayNo);
@@ -196,4 +198,13 @@ public class AdminService {
     public ArrayList<Reply> selectReplyList() {
         return adminDao.selectReplyList(sqlSession);
     }
+    
+    @Transactional
+	public int updateDisplay(Display display, DisplayAttachment attachments) {
+		return adminDao.displayUpdate(sqlSession,display)*adminDao.displayAttUpdate(sqlSession,attachments);
+	}
+
+	public DisplayAttachment selectAttachments(int displayNo) {
+		 return adminDao.selectAttachments(sqlSession,displayNo);
+	}
 }

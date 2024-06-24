@@ -32,6 +32,12 @@ public class AdminDao {
     public Display selectDisplayById(SqlSessionTemplate sqlSession, int displayNo) {
         return sqlSession.selectOne("adminMapper.selectDisplayById", displayNo);
     }
+    
+    public ArrayList<DisplayAttachment> selectAttachmentsByDisplayNo(SqlSessionTemplate sqlSession, int displayNo) {
+        return (ArrayList)sqlSession.selectList("adminMapper.selectAttachmentsByDisplayNo", displayNo);
+    }
+    
+    
 
     public int updateDisplay(SqlSessionTemplate sqlSession, Display display) {
         return sqlSession.update("adminMapper.updateDisplay", display);
@@ -186,4 +192,16 @@ public class AdminDao {
     public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession) {
         return (ArrayList)sqlSession.selectList("adminMapper.selectReplyList");
     }
+
+	public int displayUpdate(SqlSessionTemplate sqlSession, Display display) {
+		return sqlSession.update("adminMapper.displayUpdate", display);
+	}
+
+	public int displayAttUpdate(SqlSessionTemplate sqlSession, DisplayAttachment attachments) {
+		return sqlSession.update("adminMapper.displayAttUpdate", attachments);
+	}
+
+	public DisplayAttachment selectAttachments(SqlSessionTemplate sqlSession, int displayNo) {
+		return sqlSession.selectOne("adminMapper.selectAttachments", displayNo);
+	}
 }
