@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>작가관리</title>
+    <title>전시관리</title>
     
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
@@ -76,7 +76,7 @@
         .truncate {
             max-width: 200px; /* Adjust the width as needed */
         }
-        .btn-add-artist {
+        .btn-add-exhibition {
             margin-right: 10px;
         }
         .search-bar {
@@ -139,16 +139,10 @@
             text-align: center;
             vertical-align: middle;
         }
-        
-        /* Disabled button style */
-        .btn-disabled {
-            background-color: grey;
-            pointer-events: none;
-        }
     </style>
     <script>
-        function goToDetail(artistNo) {
-            window.location.href = '${path}/artistDetail.ad?artistNo=' + artistNo;
+        function goToDetail(noticeNo) {
+            window.location.href = '${path}/noticeDetail.ad?noticeNo=' + noticeNo;
         }
 
         function truncateText(selector, maxLength) {
@@ -160,17 +154,35 @@
             });
         }
 
+        function formatPrice() {
+            const priceElements = document.querySelectorAll('.price');
+            priceElements.forEach(element => {
+                let price = element.textContent;
+                price = parseInt(price).toLocaleString() + '원';
+                element.textContent = price;
+            });
+        }
+
         function formatDate() {
             const dateElements = document.querySelectorAll('.date');
             dateElements.forEach(element => {
                 let date = element.textContent;
-                element.textContent = date.split(" ")[0];
+                element.textContent = date.split(" ")[0] + ' ' + date.split(" ")[1].slice(0, 5);
+            });
+        }
+
+        function formatAttachment() {
+            const attachmentElements = document.querySelectorAll('.attachment');
+            attachmentElements.forEach(element => {
+                element.textContent = element.textContent ? 'Y' : 'N';
             });
         }
 
         document.addEventListener("DOMContentLoaded", function() {
             truncateText('.truncate', 20);
+            formatPrice();
             formatDate();
+            formatAttachment();
             
             // 검색 버튼 클릭 이벤트
             $("#searchButton").click(function() {
@@ -189,11 +201,9 @@
                 var searchCategory = $("#searchCategory").val();
                 $("table tbody tr").filter(function() {
                     var textToSearch;
-                    if (searchCategory === "artistNickName") {
+                    if (searchCategory === "noticeTitle") {
                         textToSearch = $(this).find('td:eq(1)').text().toLowerCase();
-                    } else if (searchCategory === "artistApplyTitle") {
-                        textToSearch = $(this).find('td:eq(4)').text().toLowerCase();
-                    } else if (searchCategory === "artistOrdinal") {
+                    } else if (searchCategory === "noticeContent") {
                         textToSearch = $(this).find('td:eq(2)').text().toLowerCase();
                     } else {
                         textToSearch = $(this).text().toLowerCase();
@@ -202,7 +212,6 @@
                 });
             }
         });
-        
     </script>
 </head>
 
@@ -224,88 +233,61 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">🖌️ 작가 목록 조회</h1>
+                    <h1 class="mt-4">📢 공지사항 목록 조회</h1>  
                     <div class="search-bar">
                         <select id="searchCategory" class="form-select">
                             <option value="all">전체</option>
-                            <option value="artistNickName">작가명</option>
-                            <option value="artistApplyTitle">신청제목</option>
-                            <option value="artistOrdinal">작가 기수</option>
+                            <option value="noticeTitle">제목</option>
+                            <option value="noticeContent">내용</option>
                         </select>
                         <input type="text" id="searchInput" class="form-control" placeholder="검색어 입력">
                         <button id="searchButton" class="btn btn-primary">검색</button>
-                        <button class="btn btn-success btn-add-artist" onclick="window.location.href='${path}/addArtist.ad'">작가 추가</button>
+                        <button class="btn btn-success btn-add-exhibition" onclick="window.location.href='${path}/addNotice.ad'">공지 추가</button>
                     </div>
                     <div class="table-responsive">
                         <table id="datatablesSimple" class="table table-striped table-bordered">
                             <thead>
                                 <tr style="background-color: #007bff; color: white;">
-                                    <th>작가번호</th>
-                                    <th>예명</th>
-                                    <th>작가 기수</th>
-                                    <th>신청일</th>
-                                    <th>신청제목</th>
-                                    <th>소개</th>
-                                    <th>이미지</th>
-                                    <th>결과</th>
+                                   <th>공지번호</th>
+                                    <th>제목</th>
+                                    <th>내용</th>
+                                    <th>작성일</th>
+                                    <th>첨부파일</th>
+                                    <th>조회수</th>
                                     <th>상태</th>
-                                    <th>회원번호</th>
-                                    <th>수정하기</th>
-                                    <th>작가승인</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="artist" items="${artistList}">
-                                    <tr>
-                                        <td>${artist.artistNo}</td>
-                                        <td>${artist.artistNickName}</td>
-                                        <td>${artist.artistOrdinal}</td>
-                                        <td class="date">${artist.artistApplyDate}</td>
-                                        <td>${artist.artistApplyTitle}</td>
-                                        <td>${artist.artistIntroduce}</td>
-                                        <td>${artist.artistImage}</td>
-                                        <td>${artist.artistResult == 'N' ? '승인대기' : '처리완료'}</td>
-                                        <td>${artist.artistStatus == 'Y' ? '가입중' : '탈퇴됨'}</td>
-                                        <td>${artist.memberNo}</td>
-	                                        <td><button class="btn btn-warning" onclick="location.href='${path}/updateArtist.ad?artistNo=${artist.artistNo}'">수정하기</button></td>
-										<td>
-										    <button class="btn ${artist.artistResult == 'N' ? 'btn-primary' : 'btn-disabled'}"
-										            onclick="${artist.artistResult == 'N' ? 'confirmApproval(\'${artist.artistNo}\')' : ''}">
-										        작가승인
-										    </button>
-										</td>
-
-                                    </tr>
+                                <c:forEach var="notice" items="${noticeList}">
+                                        <tr onclick="goToDetail(${notice.noticeNo})">
+                                            <td>${notice.noticeNo}</td>
+                                            <td>${notice.noticeTitle}</td>
+                                            <td>${notice.noticeContent}</td>
+                                            <td class="date">${notice.noticeDate}</td>
+                                            <td class="attachment">${notice.noticeAttachment}</td>
+                                            <td>${notice.noticeCount}</td>
+                                            <td>${notice.noticeStatus}</td>
+                                        </tr>
                                 </c:forEach>
-                                <c:if test="${empty artistList}">
+                                <c:if test="${empty noticeList}">
                                     <tr>
-                                        <td colspan="12">등록된 작가가 없습니다.</td>
+                                        <td colspan="7">등록된 공지사항이 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>
                         </table>
-                        
-					     <script>
-						function confirmApproval(artistNo) {
-						    if (confirm("작가를 승인하시겠습니까?")) {
-						        window.location.href = '${path}/approveArtist.ad?artistNo=' + artistNo + '&status=Y';
-						    } else {
-						        window.location.href = '${path}/approveArtist.ad?artistNo=' + artistNo + '&status=N';
-						    }
-						}
-						</script>
                     </div>
                     <ul class="pagination">
                         <li>
-                            <a href="${path}/artistList.ad?currentPage=${pi.currentPage - 1}" class="${pi.currentPage == 1 ? 'disabled' : ''}"><</a>
+                            <a href="${path}/noticeList.ad?currentPage=${pi.currentPage - 1}" class="${pi.currentPage == 1 ? 'disabled' : ''}"><</a>
                         </li>
                         <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
                             <li>
-                                <a href="${path}/artistList.ad?currentPage=${p}" class="${pi.currentPage == p ? 'active' : ''}">${p}</a>
+                                <a href="${path}/noticeList.ad?currentPage=${p}" class="${pi.currentPage == p ? 'active' : ''}">${p}</a>
                             </li>
                         </c:forEach>
                         <li>
-                            <a href="${path}/artistList.ad?currentPage=${pi.currentPage + 1}" class="${pi.currentPage == pi.maxPage ? 'disabled' : ''}">></a>
+                            <a href="${path}/noticeList.ad?currentPage=${pi.currentPage + 1}" class="${pi.currentPage == pi.maxPage ? 'disabled' : ''}">></a>
                         </li>
                     </ul>
                 </div>
@@ -319,5 +301,26 @@
             </footer>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $("#searchButton").click(function() {
+                var searchCategory = $("#searchCategory").val();
+                var searchValue = $("#searchInput").val().toLowerCase();
+
+                $("table tbody tr").filter(function() {
+                    var cellValue;
+                    if (searchCategory === "noticeTitle") {
+                        cellValue = $(this).find('td:eq(1)').text().toLowerCase();
+                    } else if (searchCategory === "noticeContent") {
+                        cellValue = $(this).find('td:eq(2)').text().toLowerCase();
+                    } else {
+                        cellValue = $(this).text().toLowerCase();
+                    }
+                    $(this).toggle(cellValue.indexOf(searchValue) > -1);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>회원 수정</title>
+    <title>작가 정보 수정</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -38,9 +38,18 @@
         .form-group label {
             font-weight: bold;
         }
-        .btn-primary {
+        .btn-primary, .btn-secondary {
             width: 100px;
             margin-top: 20px;
+        }
+        .preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .preview img {
+            max-width: 150px;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -57,50 +66,32 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container">
-                    <h1 class="mt-4">회원 수정</h1>
-                    <form action="${path}/updateMember.ad" method="post">
-                        <input type="hidden" name="memberNo" value="${member.memberNo}" />
+                    <h1 class="mt-4">작가 정보 수정</h1>
+                    <form action="${path}/updateArtist.ad" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="artistNo" value="${artist.artistNo}" />
                         <div class="form-group mb-3">
-                            <label for="memberId">아이디</label>
-                            <input type="text" class="form-control" id="memberId" name="memberId" value="${member.memberId}" readonly>
+                            <label for="artistNickName">예명</label>
+                            <input type="text" class="form-control" id="artistNickName" name="artistNickName" value="${artist.artistNickName}" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="memberName">이름</label>
-                            <input type="text" class="form-control" id="memberName" name="memberName" value="${member.memberName}" required>
+                            <label for="artistOrdinal">작가 기수</label>
+                            <input type="number" class="form-control" id="artistOrdinal" name="artistOrdinal" value="${artist.artistOrdinal}" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="memberPhone">연락처</label>
-                            <input type="text" class="form-control" id="memberPhone" name="memberPhone" value="${member.memberPhone}" required>
+                            <label for="artistIntroduce">소개</label>
+                            <textarea class="form-control" id="artistIntroduce" name="artistIntroduce" rows="3" required>${artist.artistIntroduce}</textarea>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="memberEmail">이메일</label>
-                            <input type="email" class="form-control" id="memberEmail" name="memberEmail" value="${member.memberEmail}" required>
+                            <label for="artistImage">썸네일 이미지</label>
+                            <input type="file" class="form-control-file" id="artistImage" name="artistImage">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="memberAddress">주소</label>
-                            <input type="text" class="form-control" id="memberAddress" name="memberAddress" value="${member.memberAddress}" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="memberBirthday">생년월일</label>
-                            <input type="date" class="form-control" id="memberBirthday" name="memberBirthday" value="${member.memberBirthday}" readonly>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="memberEnrollDate">가입일</label>
-                            <input type="text" class="form-control" id="memberEnrollDate" name="memberEnrollDate" value="${member.memberEnrollDate}" readonly>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="memberStatus">회원상태</label>
-                            <select class="form-control" id="memberStatus" name="memberStatus" required>
-                                <option value="Y" ${member.memberStatus == 'Y' ? 'selected' : ''}>가입중</option>
-                                <option value="N" ${member.memberStatus == 'N' ? 'selected' : ''}>탈퇴됨</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="artistOngoing">작가여부</label>
-                            <select class="form-control" id="artistOngoing" name="artistOngoing" required>
-                                <option value="Y" ${member.artistOngoing == 'Y' ? 'selected' : ''}>작가회원</option>
-                                <option value="N" ${member.artistOngoing == 'N' ? 'selected' : ''}>일반회원</option>
-                            </select>
+                            <label>현재 썸네일 이미지</label>
+                            <c:if test="${artist.artistImage != null}">
+                                <div class="preview">
+                                    <img src="${path}/resources/artist_images/${artist.artistImage}" alt="Artist Thumbnail">
+                                </div>
+                            </c:if>
                         </div>
                         <button type="submit" class="btn btn-primary">수정하기</button>
                         <button type="button" class="btn btn-secondary" onclick="history.back();">취소하기</button>

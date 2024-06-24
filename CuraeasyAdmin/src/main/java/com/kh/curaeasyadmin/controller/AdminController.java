@@ -5,13 +5,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -311,6 +314,53 @@ public class AdminController {
         model.addAttribute("artistList", artistList);
         model.addAttribute("pi", pi);
         return "artist/adminArtistListView";
+    }
+    
+    @RequestMapping("/approveArtist.ad")
+    public String approveArtist(@RequestParam("artistNo") int artistNo, @RequestParam("status") String status, RedirectAttributes redirectAttributes) {
+        if ("approve".equals(status)) {
+            adminService.approveArtist(artistNo);
+        } else if ("reject".equals(status)) {
+            adminService.rejectArtist(artistNo);
+        }
+        redirectAttributes.addFlashAttribute("message", "작가 승인이 완료되었습니다.");
+        return "redirect:/artistList.ad";
+    }
+    
+    @PostMapping("/updateArtist.ad")
+    public String updateArtist(@ModelAttribute Artist artist, @RequestParam("artistImage") MultipartFile file, HttpServletRequest request) {
+        if (!file.isEmpty()) {
+            String renameFileName = saveFile(file, request);
+            if (renameFileName != null) {
+                artist.setArtistImage(renameFileName);
+            }
+        }
+        adminService.updateArtist(artist);
+        return "redirect:/artistList.ad";
+    }
+
+    private String saveFile(MultipartFile file, HttpServletRequest request) {
+        String root = request.getSession().getServletContext().getRealPath("resources");
+        String savePath = root + "/artist_images";
+        File folder = new File(savePath);
+
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
+        String originalFileName = file.getOriginalFilename();
+        String renameFileName = UUID.randomUUID().toString() + "_" + originalFileName;
+
+        String renamePath = folder + "/" + renameFileName;
+
+        try {
+            file.transferTo(new File(renamePath));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return renameFileName;
     }
 
     // 댓글 관리

@@ -170,6 +170,18 @@ public class AdminDao {
         return (ArrayList)sqlSession.selectList("adminMapper.selectArtistList", null, rowBounds);
     }
     
+    public int updateArtistStatus(SqlSessionTemplate sqlSession, int artistNo, String result, String status) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("artistNo", artistNo);
+        params.put("artistResult", result);
+        params.put("artistStatus", status);
+        return sqlSession.update("adminMapper.updateArtistStatus", params);
+    }
+    
+    public void updateArtist(SqlSessionTemplate sqlSession, Artist artist) {
+        sqlSession.update("adminMapper.updateArtist", artist);
+    }
+    
     // 댓글 관리
     public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession) {
         return (ArrayList)sqlSession.selectList("adminMapper.selectReplyList");

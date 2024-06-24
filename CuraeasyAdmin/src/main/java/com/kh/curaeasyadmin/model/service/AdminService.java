@@ -177,6 +177,21 @@ public class AdminService {
         return adminDao.selectArtistList(sqlSession, pi);
     }
     
+    @Transactional
+    public void updateArtist(Artist artist) {
+        adminDao.updateArtist(sqlSession, artist);
+    }
+    
+    @Transactional
+    public void approveArtist(int artistNo) {
+        adminDao.updateArtistStatus(sqlSession, artistNo, "Y", "Y");
+    }
+
+    @Transactional
+    public void rejectArtist(int artistNo) {
+        adminDao.updateArtistStatus(sqlSession, artistNo, "Y", "N");
+    }
+    
     // 댓글 관리
     public ArrayList<Reply> selectReplyList() {
         return adminDao.selectReplyList(sqlSession);

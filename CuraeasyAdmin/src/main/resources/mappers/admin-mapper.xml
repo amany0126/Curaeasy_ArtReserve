@@ -542,6 +542,21 @@
     <select id="getArtistListCount" resultType="int">
         SELECT COUNT(*) FROM ARTIST
     </select>
+    
+    <update id="updateArtistStatus" parameterType="map">
+    UPDATE ARTIST
+    SET ARTIST_RESULT = #{artistResult}, ARTIST_STATUS = #{artistStatus}
+    WHERE ARTIST_NO = #{artistNo}
+	</update>
+	
+	<update id="updateArtist" parameterType="Artist">
+    UPDATE ARTIST
+    SET ARTIST_NICKNAME = #{artistNickName},
+        ARTIST_ORDINAL = #{artistOrdinal},
+        ARTIST_INTRODUCE = #{artistIntroduce},
+        ARTIST_IMAGE = #{artistImage}
+    WHERE ARTIST_NO = #{artistNo}
+	</update>
 
     <!-- 댓글 관리 -->
     <select id="selectReplyList" resultMap="replyResultSet">
