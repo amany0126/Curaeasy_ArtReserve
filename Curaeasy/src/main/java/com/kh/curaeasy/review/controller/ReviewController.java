@@ -298,11 +298,6 @@ public class ReviewController {
 		Review r = new Review();
 		r.setMemberNo(""+memberNo);
 		r.setReviewNo(rno);
-		
-		
-		Review r = new Review();
-		r.setMemberNo(""+memberNo);
-		r.setReviewNo(rno);
 		int result = reviewService.deleteReview(r);
 		
 		if(result>0) {

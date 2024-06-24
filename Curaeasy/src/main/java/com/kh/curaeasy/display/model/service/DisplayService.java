@@ -62,8 +62,11 @@ public class DisplayService {
 	}
 
 	public ArrayList<DisplayAttachment> mydisplayList(int artistNo) {
-		// TODO Auto-generated method stub
 		return displayDao.mydisplayList(sqlSession,artistNo);
+	}
+
+	public ArrayList<Display> selectDisplayList() {
+		return displayDao.selectDisplayList(sqlSession);
 	}
 	
 }
