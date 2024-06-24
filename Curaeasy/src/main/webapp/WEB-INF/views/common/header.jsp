@@ -156,18 +156,11 @@ s0.parentNode.insertBefore(s1,s0);
                     </ul>
                 </li>
                 <li>
-                    <a href="notice.do">소식 | 정보</a>
+                    <a href="#">게시판 | 관람후기</a>
                     <ul>
                         <li><a href="notice.do">공지사항</a></li>
-                        <li><a href="#">게시판</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="review.do">사용자후기</a>
-                    <ul>
                         <li><a href="review.do">관람후기</a></li>
                     </ul>
-                    
                 </li>
 
 
