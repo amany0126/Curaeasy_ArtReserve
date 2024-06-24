@@ -2,7 +2,6 @@ package com.kh.curaeasyadmin.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,16 +26,6 @@ public class AdminController {
 
     @RequestMapping("/admin.ad")
     public String index(Model model) {
-//        int countMember = adminService.getCountMember();
-//        int yearSales = adminService.getYearSales();
-//        int countDisplay = adminService.getCountDisplay();
-//        int pendingArtists = adminService.getPendingArtists();
-//
-//        model.addAttribute("countMember", countMember);
-//        model.addAttribute("yearSales", yearSales);
-//        model.addAttribute("countDisplay", countDisplay);
-//        model.addAttribute("pendingArtists", pendingArtists);
-
         return "adminmain";
     }
 
@@ -64,7 +53,6 @@ public class AdminController {
     public String displayDetail(@RequestParam("displayNo") int displayNo, Model model) {
         Display display = adminService.selectDisplay(displayNo);
         model.addAttribute("display", display);
-
         return "display/adminDisplayDetailView";
     }
 
@@ -98,7 +86,7 @@ public class AdminController {
         return "redirect:/displayList.ad";
     }
 
-    // 전시관 목록 조회
+    // 전시관 관리
     @RequestMapping("galleryList.ad")
     public String galleryList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, 
                               @RequestParam(value="searchKeyword", defaultValue="") String searchKeyword, 
@@ -113,7 +101,6 @@ public class AdminController {
 
         model.addAttribute("galleryList", galleryList);
         model.addAttribute("pi", pi);
-
         return "gallery/adminGalleryListView";
     }
     
@@ -121,7 +108,6 @@ public class AdminController {
     public String galleryDetail(@RequestParam("galleryNo") int galleryNo, Model model) {
         Gallery gallery = adminService.selectGallery(galleryNo);
         model.addAttribute("gallery", gallery);
-
         return "gallery/adminGalleryDetailView";
     }
 
@@ -152,7 +138,6 @@ public class AdminController {
                               @RequestParam(value="searchCategory", required=false) String searchCategory,
                               @RequestParam(value="searchValue", required=false) String searchValue,
                               Model model) {
-
         HashMap<String, String> map = new HashMap<>();
         map.put("searchCategory", searchCategory);
         map.put("searchValue", searchValue);
@@ -167,11 +152,10 @@ public class AdminController {
 
         model.addAttribute("reserveList", reserveList);
         model.addAttribute("pi", pi);
-
         return "reserve/adminReserveListView";
     }
 
- // 공지사항 목록 조회
+    // 공지사항 관리
     @RequestMapping("noticeList.ad")
     public String noticeList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
         int listCount = adminService.getNoticeListCount();
@@ -182,7 +166,7 @@ public class AdminController {
         return "notice/adminNoticeListView";
     }
 
-    // 후기 목록 조회
+    // 후기 관리
     @RequestMapping("reviewList.ad")
     public String reviewList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
         int listCount = adminService.getReviewListCount();
@@ -193,7 +177,7 @@ public class AdminController {
         return "review/adminReviewListView";
     }
 
-    // 일반 회원 목록 조회
+    // 일반회원 관리
     @RequestMapping("memberList.ad")
     public String memberList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
         int listCount = adminService.getMemberListCount();
@@ -201,11 +185,10 @@ public class AdminController {
         ArrayList<Member> memberList = adminService.selectMemberList(pi);
         model.addAttribute("memberList", memberList);
         model.addAttribute("pi", pi);
-
         return "member/adminMemberListView";
     }
 
-    // 작가 목록 조회
+    // 작가 관리
     @RequestMapping("artistList.ad")
     public String artistList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
         int listCount = adminService.getArtistListCount();
