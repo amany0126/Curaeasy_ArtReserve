@@ -69,5 +69,9 @@ public class DisplayDao {
 		return sqlSession.selectOne("displayMapper.selectDisplayNo", displayName);
 	}
 	
+	public ArrayList<Display> selectDisplayList(SqlSessionTemplate sqlSession) {
+		return (ArrayList) sqlSession.selectList("displayMapper.selectDisplayList");
+	}
+	
 
 }
