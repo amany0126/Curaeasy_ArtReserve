@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta charset="utf-8" />
@@ -66,7 +65,7 @@
         .truncate {
             max-width: 200px; /* Adjust the width as needed */
         }
-        .btn-add-exhibition {
+        .btn-add-gallery {
             margin-right: 10px;
         }
         .search-bar {
@@ -167,7 +166,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">🏛️ 전시관 목록 조회</h1>>
+                    <h1 class="mt-4">🏛️ 전시관 목록 조회</h1>
                     <div class="search-bar">
                         <select id="searchCategory" class="form-select">
                             <option value="all">전체</option>
@@ -177,6 +176,7 @@
                         </select>
                         <input type="text" id="searchInput" class="form-control" placeholder="검색어 입력">
                         <button id="searchButton" class="btn btn-primary">검색</button>
+                        <button class="btn btn-success btn-add-gallery" onclick="window.location.href='${path}/addGallery.ad'">전시관 추가</button>
                     </div>
                     <div class="table-responsive">
                         <table id="datatablesSimple" class="table table-striped table-bordered">
@@ -187,21 +187,25 @@
                                     <th>위치</th>
                                     <th>설명</th>
                                     <th>종류</th>
+                                    <th>수정하기</th>
+                                    <th>삭제하기</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="gallery" items="${galleryList}">
-                                    <tr onclick="goToDetail('${gallery.galleryNo}')">
+                                    <tr>
                                         <td>${gallery.galleryNo}</td>
                                         <td>${gallery.galleryName}</td>
                                         <td>${gallery.galleryPlace}</td>
                                         <td class="truncate">${gallery.galleryInfo}</td>
                                         <td>${gallery.galleryType}</td>
+                                        <td><button class="btn btn-warning" onclick="location.href='${path}/updateGallery.ad?galleryNo=${gallery.galleryNo}'">수정하기</button></td>
+                                        <td><button class="btn btn-danger" onclick="location.href='${path}/deleteGallery.ad?galleryNo=${gallery.galleryNo}'">삭제하기</button></td>
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty galleryList}">
                                     <tr>
-                                        <td colspan="5">등록된 전시관이 없습니다.</td>
+                                        <td colspan="7">등록된 전시관이 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>

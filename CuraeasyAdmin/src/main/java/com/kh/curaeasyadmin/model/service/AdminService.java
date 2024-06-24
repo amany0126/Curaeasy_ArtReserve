@@ -2,7 +2,9 @@ package com.kh.curaeasyadmin.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +48,17 @@ public class AdminService {
     public void updateDisplayStatusToEnd(int displayNo) {
         adminDao.deleteDisplay(sqlSession, displayNo);
     }
+    
+    @Transactional
+    public void addDisplay(Display display, ArrayList<DisplayAttachment> attachmentList) {
+        adminDao.addDisplay(sqlSession, display);
+        if (attachmentList != null && !attachmentList.isEmpty()) {
+            for (DisplayAttachment attachment : attachmentList) {
+                attachment.setDisplayNo(display.getDisplayNo());
+                adminDao.addDisplayAttachment(sqlSession, attachment);
+            }
+        }
+    }
 
     // 전시관 관리
     public int getGalleryListCount(String searchKeyword) {
@@ -55,19 +68,54 @@ public class AdminService {
     public ArrayList<Gallery> selectGalleryList(PageInfo pi, String searchKeyword) {
         return adminDao.selectGalleryList(sqlSession, pi, searchKeyword);
     }
-    
+
     public Gallery selectGallery(int galleryNo) {
         return adminDao.selectGallery(sqlSession, galleryNo);
     }
 
-    // 대관신청 관리
-    public int getRentalListCount(String searchCategory, String searchKeyword) {
-        return adminDao.getRentalListCount(sqlSession, searchCategory, searchKeyword);
+    @Transactional
+    public void updateGallery(Gallery gallery) {
+        adminDao.updateGallery(sqlSession, gallery);
     }
 
-    // 대관 목록 조회
+    @Transactional
+    public void deleteGallery(int galleryNo) {
+        adminDao.deleteGallery(sqlSession, galleryNo);
+    }
+    
+    public void addGallery(Gallery gallery) {
+        adminDao.addGallery(sqlSession, gallery);
+    }
+    
+    // 대관신청 관리
+    
+    public int getRentalListCount(String searchCategory, String searchKeyword) {
+        Map<String, String> params = new HashMap<>();
+        params.put("searchCategory", searchCategory);
+        params.put("searchKeyword", searchKeyword);
+        return adminDao.getRentalListCount(sqlSession, params);
+    }
+
     public ArrayList<Rental> selectRentalList(PageInfo pi, String searchCategory, String searchKeyword) {
-        return adminDao.selectRentalList(sqlSession, pi, searchCategory, searchKeyword);
+        Map<String, String> params = new HashMap<>();
+        params.put("searchCategory", searchCategory);
+        params.put("searchKeyword", searchKeyword);
+        return adminDao.selectRentalList(sqlSession, pi, params);
+    }
+    
+    public Rental getRentalByNo(int rentalNo) {
+        return adminDao.selectRentalByNo(sqlSession, rentalNo);
+    }
+
+    @Transactional
+    public boolean updateRentalStatus(int rentalNo) {
+        int result = adminDao.updateRentalStatus(sqlSession, rentalNo);
+        return result > 0;
+    }
+
+    @Transactional
+    public void updateRental(Rental rental) {
+        adminDao.updateRental(sqlSession, rental);
     }
 
     // 예매 관리
@@ -104,6 +152,20 @@ public class AdminService {
 
     public ArrayList<Member> selectMemberList(PageInfo pi) {
         return adminDao.selectMemberList(sqlSession, pi);
+    }
+
+    public Member getMemberById(int memberNo) {
+        return adminDao.selectMemberById(sqlSession, memberNo);
+    }
+
+    @Transactional
+    public void updateMember(Member member) {
+        adminDao.updateMember(sqlSession, member);
+    }
+
+    @Transactional
+    public void updateMemberStatus(int memberNo) {
+        adminDao.updateMemberStatus(sqlSession, memberNo);
     }
 
     // 작가 관리

@@ -2,6 +2,7 @@ package com.kh.curaeasyadmin.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -39,6 +40,14 @@ public class AdminDao {
     public void deleteDisplay(SqlSessionTemplate sqlSession, int displayNo) {
         sqlSession.update("adminMapper.deleteDisplay", displayNo);
     }
+    
+    public int addDisplay(SqlSessionTemplate sqlSession, Display display) {
+        return sqlSession.insert("adminMapper.addDisplay", display);
+    }
+
+    public int addDisplayAttachment(SqlSessionTemplate sqlSession, DisplayAttachment attachment) {
+        return sqlSession.insert("adminMapper.addDisplayAttachment", attachment);
+    }
 
     // 전시관 관리
     public int getGalleryListCount(SqlSessionTemplate sqlSession, String searchKeyword) {
@@ -48,30 +57,50 @@ public class AdminDao {
     public ArrayList<Gallery> selectGalleryList(SqlSessionTemplate sqlSession, PageInfo pi, String searchKeyword) {
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+        
         HashMap<String, Object> paramMap = new HashMap<>();
         paramMap.put("searchKeyword", searchKeyword);
+
         return (ArrayList)sqlSession.selectList("adminMapper.selectGalleryList", paramMap, rowBounds);
     }
-    
+
     public Gallery selectGallery(SqlSessionTemplate sqlSession, int galleryNo) {
         return sqlSession.selectOne("adminMapper.selectGallery", galleryNo);
     }
 
-    // 대관신청 관리
-    public int getRentalListCount(SqlSessionTemplate sqlSession, String searchCategory, String searchKeyword) {
-        HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("searchCategory", searchCategory);
-        paramMap.put("searchKeyword", searchKeyword);
-        return sqlSession.selectOne("adminMapper.getRentalListCount", paramMap);
+    public int updateGallery(SqlSessionTemplate sqlSession, Gallery gallery) {
+        return sqlSession.update("adminMapper.updateGallery", gallery);
     }
 
-    public ArrayList<Rental> selectRentalList(SqlSessionTemplate sqlSession, PageInfo pi, String searchCategory, String searchKeyword) {
+    public void deleteGallery(SqlSessionTemplate sqlSession, int galleryNo) {
+        sqlSession.update("adminMapper.deleteGallery", galleryNo);
+    }
+    
+    public int addGallery(SqlSessionTemplate sqlSession, Gallery gallery) {
+        return sqlSession.insert("adminMapper.addGallery", gallery);
+    }
+
+    // 대관신청 관리
+    public int getRentalListCount(SqlSessionTemplate sqlSession, Map<String, String> params) {
+        return sqlSession.selectOne("adminMapper.getRentalListCount", params);
+    }
+
+    public ArrayList<Rental> selectRentalList(SqlSessionTemplate sqlSession, PageInfo pi, Map<String, String> params) {
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-        HashMap<String, String> paramMap = new HashMap<>();
-        paramMap.put("searchCategory", searchCategory);
-        paramMap.put("searchKeyword", searchKeyword);
-        return (ArrayList)sqlSession.selectList("adminMapper.selectRentalList", paramMap, rowBounds);
+        return (ArrayList) sqlSession.selectList("adminMapper.selectRentalList", params, rowBounds);
+    }
+    
+    public Rental selectRentalByNo(SqlSessionTemplate sqlSession, int rentalNo) {
+        return sqlSession.selectOne("adminMapper.selectRentalByNo", rentalNo);
+    }
+
+    public int updateRentalStatus(SqlSessionTemplate sqlSession, int rentalNo) {
+        return sqlSession.update("adminMapper.updateRentalStatus", rentalNo);
+    }
+
+    public int updateRental(SqlSessionTemplate sqlSession, Rental rental) {
+        return sqlSession.update("adminMapper.updateRental", rental);
     }
 
     // 예매 관리
@@ -116,6 +145,18 @@ public class AdminDao {
         int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
         return (ArrayList)sqlSession.selectList("adminMapper.selectMemberList", null, rowBounds);
+    }
+
+    public Member selectMemberById(SqlSessionTemplate sqlSession, int memberNo) {
+        return sqlSession.selectOne("adminMapper.getMemberById", memberNo);
+    }
+
+    public int updateMember(SqlSessionTemplate sqlSession, Member member) {
+        return sqlSession.update("adminMapper.updateMember", member);
+    }
+
+    public int updateMemberStatus(SqlSessionTemplate sqlSession, int memberNo) {
+        return sqlSession.update("adminMapper.updateMemberStatus", memberNo);
     }
 
     // 작가 관리
