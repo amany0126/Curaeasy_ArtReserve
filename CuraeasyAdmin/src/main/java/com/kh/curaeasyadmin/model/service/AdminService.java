@@ -145,7 +145,7 @@ public class AdminService {
         return adminDao.selectReviewList(sqlSession, pi);
     }
 
-    // 일반회원 관리
+    // 회원 관리
     public int getMemberListCount() {
         return adminDao.getMemberListCount(sqlSession);
     }
@@ -155,18 +155,18 @@ public class AdminService {
     }
 
     public Member getMemberById(int memberNo) {
-        return adminDao.selectMemberById(sqlSession, memberNo);
+        return adminDao.getMemberById(sqlSession, memberNo);
     }
 
-    @Transactional
-    public void updateMember(Member member) {
-        adminDao.updateMember(sqlSession, member);
+    public int updateMember(Member member) {
+        return adminDao.updateMember(sqlSession, member);
     }
 
-    @Transactional
-    public void updateMemberStatus(int memberNo) {
-        adminDao.updateMemberStatus(sqlSession, memberNo);
+    public int updateMemberStatus(int memberNo) {
+        return adminDao.updateMemberStatus(sqlSession, memberNo);
     }
+
+
 
     // 작가 관리
     public int getArtistListCount() {

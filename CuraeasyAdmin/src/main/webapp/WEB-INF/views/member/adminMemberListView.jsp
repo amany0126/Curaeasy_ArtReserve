@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>전시관리</title>
+    <title>회원관리</title>
     
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
@@ -75,7 +75,7 @@
         .truncate {
             max-width: 200px; /* Adjust the width as needed */
         }
-        .btn-add-exhibition {
+        .btn-add-member {
             margin-right: 10px;
         }
         .search-bar {
@@ -138,10 +138,17 @@
             text-align: center;
             vertical-align: middle;
         }
+        .btn-disabled {
+        background-color: grey;
+        border-color: grey;
+        color: white;
+        cursor: not-allowed;
+        pointer-events: none;
+    	}
     </style>
     <script>
-        function goToDetail(displayNo) {
-            window.location.href = '${path}/displayDetail.ad?displayNo=' + displayNo;
+        function goToDetail(memberNo) {
+            window.location.href = '${path}/updateMember.ad?memberNo=' + memberNo;
         }
 
         function truncateText(selector, maxLength) {
@@ -150,15 +157,6 @@
                 if (element.textContent.length > maxLength) {
                     element.textContent = element.textContent.slice(0, maxLength) + '...';
                 }
-            });
-        }
-
-        function formatPrice() {
-            const priceElements = document.querySelectorAll('.price');
-            priceElements.forEach(element => {
-                let price = element.textContent;
-                price = parseInt(price).toLocaleString() + '원';
-                element.textContent = price;
             });
         }
 
@@ -172,7 +170,6 @@
 
         document.addEventListener("DOMContentLoaded", function() {
             truncateText('.truncate', 20);
-            formatPrice();
             formatDate();
             
             // 검색 버튼 클릭 이벤트
@@ -251,29 +248,43 @@
                                     <th>가입일</th>
                                     <th>작가여부</th>
                                     <th>회원상태</th>
+                                    <th>수정하기</th>
+                                    <th>탈퇴하기</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <c:forEach var="member" items="${memberList}">
-                                    <tr>
-                                        <td>${member.memberNo}</td>
-                                        <td>${member.memberId}</td>
-                                        <td>${member.memberName}</td>
-                                        <td>${member.memberPhone}</td>
-                                        <td>${member.memberEmail}</td>
-                                        <td>${member.memberAddress}</td>
-                                        <td>${member.memberBirthday}</td>
-                                        <td>${member.memberEnrollDate}</td>
-                                        <td>${member.artistOngoing}</td>
-                                        <td>${member.memberStatus}</td>
-                                    </tr>
-                                </c:forEach>
-                                <c:if test="${empty memberList}">
-                                    <tr>
-                                        <td colspan="10">등록된 회원이 없습니다.</td>
-                                    </tr>
-                                </c:if>
-                            </tbody>
+							<tbody>
+							    <c:forEach var="member" items="${memberList}">
+							        <tr>
+							            <td>${member.memberNo}</td>
+							            <td>${member.memberId}</td>
+							            <td>${member.memberName}</td>
+							            <td>${member.memberPhone}</td>
+							            <td>${member.memberEmail}</td>
+							            <td>${member.memberAddress}</td>
+							            <td>${member.memberBirthday}</td>
+							            <td>${member.memberEnrollDate}</td>
+							            <td>${member.artistOngoing == 'Y' ? '작가회원' : '일반회원'}</td>
+							            <td>${member.memberStatus == 'Y' ? '가입중' : '탈퇴됨'}</td>
+							            <td>
+							                <button class="btn btn-warning" onclick="location.href='${path}/updateMember.ad?memberNo=${member.memberNo}'">수정하기</button>
+							            </td>
+							            <td>
+							                <button class="btn ${member.memberStatus == 'N' ? 'btn-disabled' : 'btn-danger'}"
+							                        onclick="if('${member.memberStatus}' !== 'N') { location.href='${path}/updateMemberStatus.ad?memberNo=${member.memberNo}'; } else { alert('이미 탈퇴된 회원입니다.'); }">
+							                    탈퇴하기
+							                </button>
+							            </td>
+							        </tr>
+							    </c:forEach>
+							    <c:if test="${empty memberList}">
+							        <tr>
+							            <td colspan="12">등록된 회원이 없습니다.</td>
+							        </tr>
+							    </c:if>
+							</tbody>
+	
+
+
                         </table>
                     </div>
                     <ul class="pagination">

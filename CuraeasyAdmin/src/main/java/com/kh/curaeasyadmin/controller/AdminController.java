@@ -266,8 +266,9 @@ public class AdminController {
         model.addAttribute("pi", pi);
         return "review/adminReviewListView";
     }
+    
+    // 멤버 관리
 
-    // 회원 관리
     @RequestMapping("memberList.ad")
     public String memberList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
         int listCount = adminService.getMemberListCount();
@@ -298,6 +299,8 @@ public class AdminController {
         adminService.updateMemberStatus(memberNo);
         return "redirect:/memberList.ad";
     }
+    
+    
 
     // 작가 관리
     @RequestMapping("artistList.ad")

@@ -439,7 +439,7 @@
         SELECT COUNT(*) FROM REVIEW
     </select>
 
-    <!-- 일반회원 관리 -->
+	<!-- 회원 관리 -->
     <select id="selectMemberList" resultMap="memberResultSet">
         SELECT 
             MEMBER_NO,
@@ -462,6 +462,63 @@
     <select id="getMemberListCount" resultType="int">
         SELECT COUNT(*) FROM MEMBER
     </select>
+
+    <select id="getMemberById" parameterType="int" resultMap="memberResultSet">
+        SELECT 
+            MEMBER_NO,
+            MEMBER_ID,
+            MEMBER_PWD,
+            MEMBER_NAME,
+            MEMBER_PHONE,
+            MEMBER_EMAIL,
+            MEMBER_ADDRESS,
+            MEMBER_BIRTHDAY,
+            MEMBER_ENROLL_DATE,
+            ARTIST_ONGOING,
+            MEMBER_STATUS
+        FROM 
+            MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+    <select id="selectMemberById" parameterType="int" resultType="com.kh.curaeasyadmin.model.vo.Member">
+        SELECT 
+            MEMBER_NO,
+            MEMBER_ID,
+            MEMBER_NAME,
+            MEMBER_PHONE,
+            MEMBER_EMAIL,
+            MEMBER_ADDRESS,
+            MEMBER_BIRTHDAY,
+            MEMBER_ENROLL_DATE,
+            MEMBER_STATUS,
+            ARTIST_ONGOING
+        FROM 
+            MEMBER
+        WHERE 
+            MEMBER_NO = #{memberNo}
+    </select>
+
+    <!-- Update a member's details -->
+    <update id="updateMember" parameterType="com.kh.curaeasyadmin.model.vo.Member">
+        UPDATE MEMBER
+        SET 
+            MEMBER_NAME = #{memberName},
+            MEMBER_PHONE = #{memberPhone},
+            MEMBER_EMAIL = #{memberEmail},
+            MEMBER_ADDRESS = #{memberAddress},
+            MEMBER_STATUS = #{memberStatus},
+            ARTIST_ONGOING = #{artistOngoing}
+        WHERE 
+            MEMBER_NO = #{memberNo}
+    </update>
+
+    <update id="updateMemberStatus" parameterType="int">
+        UPDATE MEMBER
+        SET MEMBER_STATUS = 'N'
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
+
 
     <!-- 작가 관리 -->
     <select id="selectArtistList" resultMap="artistResultSet">

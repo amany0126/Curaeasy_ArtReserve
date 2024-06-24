@@ -136,7 +136,7 @@ public class AdminDao {
         return (ArrayList)sqlSession.selectList("adminMapper.selectReviewList", null, rowBounds);
     }
 
-    // 일반회원 관리
+    // 회원 관리
     public int getMemberListCount(SqlSessionTemplate sqlSession) {
         return sqlSession.selectOne("adminMapper.getMemberListCount");
     }
@@ -147,7 +147,7 @@ public class AdminDao {
         return (ArrayList)sqlSession.selectList("adminMapper.selectMemberList", null, rowBounds);
     }
 
-    public Member selectMemberById(SqlSessionTemplate sqlSession, int memberNo) {
+    public Member getMemberById(SqlSessionTemplate sqlSession, int memberNo) {
         return sqlSession.selectOne("adminMapper.getMemberById", memberNo);
     }
 
