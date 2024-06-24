@@ -21,8 +21,7 @@ public class AdminService {
     @Autowired
     private SqlSessionTemplate sqlSession;
 
-    // 메인 페이지
-    
+    // 전시회 관리
     public int getDisplayListCount(String searchKeyword) {
         return adminDao.getDisplayListCount(sqlSession, searchKeyword);
     }
@@ -32,25 +31,22 @@ public class AdminService {
     }
     
     public Display selectDisplay(int displayNo) {
-        return adminDao.selectDisplay(sqlSession,displayNo);
+        return adminDao.selectDisplay(sqlSession, displayNo);
     }
     
     public Display getDisplayById(int displayNo) {
-        return adminDao.selectDisplayById(sqlSession,displayNo);
+        return adminDao.selectDisplayById(sqlSession, displayNo);
     }
-
-
 
     @Transactional
     public void updateDisplay(Display display) {
-        adminDao.updateDisplay(sqlSession,display);
+        adminDao.updateDisplay(sqlSession, display);
     }
 
     public void updateDisplayStatusToEnd(int displayNo) {
-        adminDao.deleteDisplay(sqlSession,displayNo);
+        adminDao.deleteDisplay(sqlSession, displayNo);
     }
-    
-    
+
     // 전시관 관리
     public int getGalleryListCount(String searchKeyword) {
         return adminDao.getGalleryListCount(sqlSession, searchKeyword);
@@ -83,40 +79,40 @@ public class AdminService {
         return adminDao.selectReserveList(sqlSession, pi, map);
     }
 
-    // 공지사항
+    // 공지사항 관리
     public int getNoticeListCount() {
         return adminDao.getNoticeListCount(sqlSession);
     }
 
     public ArrayList<Notice> selectNoticeList(PageInfo pi) {
-        return adminDao.selectNoticeList(sqlSession,pi);
+        return adminDao.selectNoticeList(sqlSession, pi);
     }
 
-    // 후기
+    // 후기 관리
     public int getReviewListCount() {
         return adminDao.getReviewListCount(sqlSession);
     }
 
     public ArrayList<Review> selectReviewList(PageInfo pi) {
-        return adminDao.selectReviewList(sqlSession,pi);
+        return adminDao.selectReviewList(sqlSession, pi);
     }
 
-    // 일반 회원
+    // 일반회원 관리
     public int getMemberListCount() {
         return adminDao.getMemberListCount(sqlSession);
     }
 
     public ArrayList<Member> selectMemberList(PageInfo pi) {
-        return adminDao.selectMemberList(sqlSession,pi);
+        return adminDao.selectMemberList(sqlSession, pi);
     }
 
-    // 작가
+    // 작가 관리
     public int getArtistListCount() {
         return adminDao.getArtistListCount(sqlSession);
     }
 
     public ArrayList<Artist> selectArtistList(PageInfo pi) {
-        return adminDao.selectArtistList(sqlSession,pi);
+        return adminDao.selectArtistList(sqlSession, pi);
     }
     
     // 댓글 관리

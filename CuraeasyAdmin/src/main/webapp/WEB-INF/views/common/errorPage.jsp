@@ -17,7 +17,7 @@
 			<br>
 
 			<h1 align="center" style="color: red;">
-				<%= errorMsg %>
+				${ requestScope.errorMsg }
 			</h1>
 
 			<%@ include file="adminNav.jsp" %>

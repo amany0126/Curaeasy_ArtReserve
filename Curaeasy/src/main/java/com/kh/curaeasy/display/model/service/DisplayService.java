@@ -62,14 +62,11 @@ public class DisplayService {
 	}
 
 	public ArrayList<DisplayAttachment> mydisplayList(int artistNo) {
-		// TODO Auto-generated method stub
 		return displayDao.mydisplayList(sqlSession,artistNo);
 	}
 
 	public int selectDisplayNo(String displayName) {
-		System.out.println("1");
-		System.out.println(sqlSession);
-		System.out.println("1");
+	
 		return displayDao.selectDisplayNo(sqlSession,displayName);
 	}
 

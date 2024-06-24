@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
-
 <html>
 <head>
     <meta charset="utf-8" />
@@ -11,8 +10,10 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>전시 수정</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="${path}/resources/js/scripts.js"></script>
     <style>
         body {
@@ -30,121 +31,52 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            text-align: left;
+            text-align: center;
             color: #333;
+            margin-bottom: 20px;
         }
-        .table-responsive {
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control-file {
+            margin-top: 10px;
+        }
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .attachment-item img {
+            max-width: 100px;
+            margin-right: 10px;
+        }
+        .attachment-item p {
+            margin: 0;
+            flex: 1;
+        }
+        .attachment-item button {
+            margin-left: 10px;
+        }
+        .btn-primary, .btn-danger {
+            width: 100px;
             margin-top: 20px;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        table th, table td {
-            padding: 12px;
-            text-align: left;
-            border: 1px solid #ddd;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        table th {
-            background-color: #007bff;
-            color: white;
-        }
-        table td {
-            background-color: #f8f9fc;
-        }
-        table tr:nth-child(even) {
-            background-color: #f1f1f1;
-        }
-        table tr:nth-child(odd) {
-            background-color: #f8f9fc;
-        }
-        table tr:hover {
-            background-color: #d1d3e2;
-            cursor: pointer;
-        }
-        .truncate {
-            max-width: 200px; /* Adjust the width as needed */
-        }
-        .btn-add-exhibition {
-            margin-right: 10px;
-        }
-        .search-bar {
+        .preview {
             display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        .search-bar input {
-            margin-right: 10px;
-            width: 200px; /* Adjust the width as needed */
-        }
-        .search-bar select {
-            margin-right: 10px;
-            width: 150px; /* Adjust the width as needed */
-        }
-        .search-bar button {
-            margin-right: 5px;
-        }
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            list-style: none;
-            padding: 0;
-        }
-        .pagination li {
-            margin: 0 5px;
-        }
-        .pagination a {
-            display: block;
-            padding: 8px 16px;
-            text-decoration: none;
-            color: #007bff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .pagination a:hover {
-            background-color: #007bff;
-            color: white;
-        }
-        .pagination a.disabled {
-            color: #ddd;
-            pointer-events: none;
-            cursor: default;
-        }
-   
-        .pagination a.active {
-            background-color: #007bff;
-            color: white;
-            border-color: #007bff;
-        }
-        /* 테이블 배경색 흰색으로 설정 */
-        #datatablesSimple {
-            background-color: white;
-        }
-
-        /* 테이블 요소 중앙 정렬 */
-        #datatablesSimple th, #datatablesSimple td {
-            text-align: center;
-            vertical-align: middle;
+        .preview img {
+            max-width: 150px;
+            margin-top: 10px;
         }
     </style>
 </head>
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <!-- Navbar Brand-->
         <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
-        <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
-        <!-- Logout Button-->
-        <div class="ms-auto me-0 me-md-3 my-2 my-md-0">
-            <!--  <button class="logout-button" onclick="logout()">나가기</button> -->
-        </div>
     </nav>
     <div id="layoutSidenav">
         <div id="layoutSidenav_nav">
@@ -152,31 +84,31 @@
         </div>
         <div id="layoutSidenav_content">
             <main>
-                <div class="container-fluid px-4">
+                <div class="container">
                     <h1 class="mt-4">전시 수정</h1>
                     <form action="${path}/updateDisplay.ad" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="displayNo" value="${display.displayNo}" />
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="displayName">전시명</label>
                             <input type="text" class="form-control" id="displayName" name="displayName" value="${display.displayName}" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="displayContent">내용</label>
                             <textarea class="form-control" id="displayContent" name="displayContent" rows="3" required>${display.displayContent}</textarea>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="displayStartDate">시작일</label>
                             <input type="date" class="form-control" id="displayStartDate" name="displayStartDate" value="${display.displayStartDate}" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="displayEndDate">종료일</label>
                             <input type="date" class="form-control" id="displayEndDate" name="displayEndDate" value="${display.displayEndDate}" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="displayPrice">가격</label>
                             <input type="number" class="form-control" id="displayPrice" name="displayPrice" value="${display.displayPrice}" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="displayStatus">상태</label>
                             <select class="form-control" id="displayStatus" name="displayStatus" required>
                                 <option value="예정" ${display.displayStatus == '예정' ? 'selected' : ''}>예정</option>
@@ -185,13 +117,31 @@
                                 <option value="폐기" ${display.displayStatus == '폐기' ? 'selected' : ''}>폐기</option>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="artistNickName">작가명</label>
                             <input type="text" class="form-control" id="artistNickName" name="artistNickName" value="${display.artistNickName}" required>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-3">
                             <label for="galleryName">전시관명</label>
                             <input type="text" class="form-control" id="galleryName" name="galleryName" value="${display.galleryName}" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="attachments">첨부파일 추가</label>
+                            <input type="file" class="form-control-file" id="attachments" name="attachments" multiple>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>현재 첨부파일</label>
+                            <c:forEach var="attachment" items="${attachments}">
+                                <div class="attachment-item">
+                                    <img src="${path}/resources/attachment_image/${attachment.changeName}" alt="${attachment.originName}">
+                                    <p>${attachment.originName}</p>
+                                    <button type="button" class="btn btn-danger btn-delete-attachment" data-attachment-no="${attachment.attachmentNo}">삭제</button>
+                                </div>
+                            </c:forEach>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>첨부파일 미리보기</label>
+                            <div id="preview" class="preview"></div>
                         </div>
                         <button type="submit" class="btn btn-primary">수정하기</button>
                     </form>
@@ -206,5 +156,50 @@
             </footer>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.btn-delete-attachment').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (confirm('정말 이 파일을 삭제하시겠습니까?')) {
+                        const attachmentNo = this.dataset.attachmentNo;
+                        fetch('${path}/deleteAttachment.ad', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ attachmentNo: attachmentNo })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                this.closest('.attachment-item').remove();
+                            } else {
+                                alert('파일 삭제에 실패했습니다.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                });
+            });
+
+            document.getElementById('attachments').addEventListener('change', function(event) {
+                const files = event.target.files;
+                const preview = document.getElementById('preview');
+                preview.innerHTML = '';
+                for (const file of files) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        preview.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

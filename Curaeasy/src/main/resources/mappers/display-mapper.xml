@@ -188,4 +188,13 @@
 		      FROM DISPLAY 
 		     WHERE DISPLAY_NAME = #{displayName}
 		</select>
+		
+	<select id="selectDisplayList" resultMap="displayResultSet">
+			SELECT DISPLAY_NO,
+				   DISPLAY_NAME,
+				   TO_CHAR(DISPLAY_START_DATE, 'yyyy-mm-dd') AS DISPLAY_START_DATE,
+				   TO_CHAR(DISPLAY_END_DATE, 'yyyy-mm-dd') AS DISPLAY_END_DATE,
+				   DISPLAY_STATUS
+			  FROM DISPLAY
+	</select>
 </mapper>
