@@ -111,6 +111,8 @@
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
         }
+
+        button:hover{transform: translateY(10px); cursor:pointer; }
         
 
         
@@ -188,7 +190,7 @@
             </div>
         </div>
         <div class="back-to-list">
-            <a href="review.do">목록으로 가기</a>
+            <a id="back" href="review.do">목록으로 가기</a>
         </div>
     </div>
 </div>

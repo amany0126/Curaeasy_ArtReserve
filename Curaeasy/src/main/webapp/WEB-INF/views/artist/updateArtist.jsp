@@ -14,12 +14,14 @@
           display: inline;
         }
         .innerOuter {
-            border:1px solid lightgray;
-            width:65%;
+            border:0px solid lightgray;
+            width:70%;
             margin:auto;
             padding:5% 10%;
             background-color:white;
         }
+        #but>button{border-radius: 20px; width: 160px; height: 40px; background-color: white;}
+        #but>button:hover{transform: translateY(10px); background-color: black; color:white;}
     </style>
 </head>
 <body>
@@ -55,8 +57,8 @@
                         <input type="file" class="form-control-file border" id="artistImage" name="reUpfile"  onchange="loadImg(this, 1)"  style="display: none;"  accept="image/png, image/jpeg" /> <br>
                     </div>
                     <div align="center" id="but">
-                        <button type="button" class="btn btn-info" onclick="history.back()">뒤로가기</button>
-                        <button type="submit" class="btn btn-primary">작가 정보 수정하기</button>
+                        <button type="button"onclick="history.back()">뒤로가기</button>
+                        <button type="submit" >작가 정보 수정하기</button>
                     </div>
                 </form>
             </div>

@@ -26,7 +26,7 @@
             width:70%;
             margin:auto;
             padding: 3% 5%;
-			margin-top: 30px;
+			margin-top: 30px; 
             margin-bottom: 100px;
 
             background-color :#e7e6e6;
@@ -66,17 +66,15 @@
             border-radius: 20px; width: 100px;
             display: inline;
             width : 150px;
+            
         }
+        #SearchFunction{
+            position: absolute;
+            top: 270px;
+            left: 50%;
+            transform: translate(-50%, -50%);
 
-
-
-
-
-
-
-
-
-
+        }
         .notice-list {
             width: 100%;
             border-collapse: collapse;
@@ -115,6 +113,13 @@
       /*   td:hover { display: block; font-size: 15px; font-weight: 600; cursor: pointer; } */
         tbody > tr:hover { background-color: lightgray;  }
 
+        #ReviewBtn {
+            margin-bottom: 100px;
+            right:400px;
+            background-color: white; border-radius: 20px; width:130px; height: 40px;
+        }
+        #ReviewBtn:hover{ transform: translateX(20px); background-color: #333; color:white;}
+
     </style>
 </head>
 <body>
@@ -125,7 +130,11 @@
     <div class="content">
         <div class="content-header">
             <h1>&#128486; 후기게시글 목록 &#128487;</h1>
+            <form action="reviewEnrollForm.re">
+                <button id="ReviewBtn" type="submit" style="float: right;">후기 작성하기</button>
+           </form>
         </div>
+        
 
        <div class="search-box" style="float: right">
        
@@ -143,13 +152,6 @@
         <c:if test="${ requestScope.ticket > 0}">
         <br><br>
 
-        	<div class="search-box">
-
-        	<form action="reviewEnrollForm.re">
-        		 <button type="submit" class="btn btn-info" style="float: right;">후기 작성</button>
-        	</form>
-
-        	</div>
         </c:if>
         <br>
         <table id="noticeList" class="notice-list">
