@@ -31,4 +31,8 @@ public class ReserveService {
 	public ArrayList<Reserve> selectReserveList(int memberNo) {
 		return rDao.selectReserveList(sqlSession, memberNo);
 	}
+
+	public Reserve selectReserve(int reserveNo) {
+		return rDao.selectReserve(sqlSession, reserveNo);
+	}
 }

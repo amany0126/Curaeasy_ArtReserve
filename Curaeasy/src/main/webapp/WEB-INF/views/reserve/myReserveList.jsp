@@ -9,10 +9,23 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+        <!--폰트-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
     <title>나의 대관일자</title>
 
 
     <style>
+        h1 {
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :larger;
+            font-style :oblique;      
+        }
+
         .innerOuter {
             border:0px solid lightgray;
             width:80%;
@@ -80,8 +93,8 @@
         td{
          text-align: center;}
 
-        td:hover { display: block; font-size: 15px; font-weight: 600; cursor: pointer; }
-        tr:hover { background-color: #fff; }
+        /* td:hover { display: block; font-size: 15px; font-weight: 600; cursor: pointer; } */
+        tr:hover { background-color: lightgray; }
 
     </style>
 </head>
@@ -121,23 +134,12 @@
         </table>
         
         
-        
+
         
         <!-- 페이징바 -->
         
-<!--        <script>
-		$(function() {
-       		
-			$("#noticeList>tbody>tr").click(function() {
-       			
-       			let nno = $(this).children().eq(0).text();
-       			
-       			location.href = "noticeDetail.do?nno=" + nno;
-       		});
-       		
-       	});
-       </script>
- -->
+    
+
         
         <!-- <div id="pagingArea">
                 <ul class="pagination">
@@ -204,7 +206,27 @@
     </div>
 </div>
 
-<jsp:include page="../common/footer.jsp" />
+<script>
+    $("#noticeList tbody tr").click(function() {
+        let f = document.createElement('form');
+        let dno = '${requestScope.dno}'
+    
+        let obj1;
+        obj1 = document.createElement('input');
+        obj1.setAttribute('type', 'hidden');
+        obj1.setAttribute('name', 'reserveNo');
+        obj1.setAttribute('value', this.children[0].innerText);
 
+        f.appendChild(obj1);
+        f.setAttribute('method', 'post');
+        f.setAttribute('action', 'reserveComplete.do');
+        
+        document.body.appendChild(f);
+        f.submit();
+        
+    })
+</script>
+<jsp:include page="../common/footer.jsp" />
+<form action="" method=""></form>
 </body>
 </html>

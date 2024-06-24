@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.curaeasy.common.model.vo.PageInfo;
+import com.kh.curaeasy.review.model.vo.Reply;
 import com.kh.curaeasy.review.model.vo.Review;
 
 @Repository
@@ -67,5 +68,33 @@ public class ReviewDao {
 		return sqlSession.update("reviewMapper.updateReview",r);
 	}
 
+
+	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int rno) {
+		return (ArrayList)sqlSession.selectList("reviewMapper.selectReplyList", rno);
+	}
+
+	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("reviewMapper.insertReply", r);
+	}
+
+	public int updateReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("reviewMapper.updateReply", r);
+	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.delete("reviewMapper.deleteReply", r);
+	}
+	public int deleteAllReply(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.delete("reviewMapper.deleteAllReply", r);
+	}
+	public int deleteReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("reviewMapper.deleteReview", r);
+	}
+	public Review selectReview(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.selectOne("reviewMapper.selectReview", rno);
+	}
+	public int selectCount(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.update("reviewMapper.selectCount", rno);
+	}
 
 }

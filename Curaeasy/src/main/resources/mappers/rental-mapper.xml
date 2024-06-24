@@ -52,5 +52,6 @@
 			SELECT *
 		 	  FROM RENTAL
 		 WHERE ARTIST_NO = #{artistNo} 
+		 ORDER BY RENTAL_NO DESC
 	</select>
 </mapper>

@@ -7,8 +7,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <title>대관신청</title>
     <style>
+        h1{
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-style :oblique;      
+        }
         .coronation {
             display: flex;
             flex-direction: row;
@@ -56,7 +67,7 @@
 
 <div class="container">
     <div class="innerOuter">
-        <h3>대관신청</h3>
+        <h1>대관신청</h1>
         <hr style="border: 1px solid black;">
         
         <div class="coronation">

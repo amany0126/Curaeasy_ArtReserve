@@ -2,14 +2,16 @@ package com.kh.curaeasyadmin.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.common.template.Pagination;
@@ -24,16 +26,6 @@ public class AdminController {
 
     @RequestMapping("/admin.ad")
     public String index(Model model) {
-//        int countMember = adminService.getCountMember();
-//        int yearSales = adminService.getYearSales();
-//        int countDisplay = adminService.getCountDisplay();
-//        int pendingArtists = adminService.getPendingArtists();
-//
-//        model.addAttribute("countMember", countMember);
-//        model.addAttribute("yearSales", yearSales);
-//        model.addAttribute("countDisplay", countDisplay);
-//        model.addAttribute("pendingArtists", pendingArtists);
-
         return "adminmain";
     }
 
@@ -61,24 +53,40 @@ public class AdminController {
     public String displayDetail(@RequestParam("displayNo") int displayNo, Model model) {
         Display display = adminService.selectDisplay(displayNo);
         model.addAttribute("display", display);
-
         return "display/adminDisplayDetailView";
     }
 
-    @RequestMapping("updateDisplayForm.ad")
-    public String updateDisplayForm(@RequestParam("displayNo") int displayNo, Model model) {
+    @GetMapping("/updateDisplay.ad")
+    public String showUpdateDisplayForm(@RequestParam("displayNo") int displayNo, Model model) {
         Display display = adminService.selectDisplay(displayNo);
         model.addAttribute("display", display);
         return "display/adminDisplayUpdateForm";
     }
 
-    @RequestMapping("deleteDisplay.ad")
-    public String deleteDisplay(@RequestParam("displayNo") int displayNo) {
-        adminService.deleteDisplay(displayNo);
-        return "redirect:displayList.ad";
+    @PostMapping("/updateDisplay.ad")
+    public String updateDisplay(Display display) {
+        adminService.updateDisplay(display);
+        return "redirect:/displayList.ad";
     }
 
-    // 전시관 목록 조회
+    @RequestMapping("/deleteDisplay.ad")
+    public String deleteDisplay(@RequestParam("displayNo") int displayNo, RedirectAttributes redirectAttributes) {
+        Display display = adminService.getDisplayById(displayNo);
+        if ("종료".equals(display.getDisplayStatus())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "이미 삭제처리된 전시회입니다.");
+        } else {
+            adminService.updateDisplayStatusToEnd(displayNo);
+        }
+        return "redirect:/displayList.ad";
+    }
+
+    @PostMapping("/saveDisplay.ad")
+    public String saveDisplay(Display display) {
+        adminService.updateDisplay(display);
+        return "redirect:/displayList.ad";
+    }
+
+    // 전시관 관리
     @RequestMapping("galleryList.ad")
     public String galleryList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, 
                               @RequestParam(value="searchKeyword", defaultValue="") String searchKeyword, 
@@ -93,7 +101,6 @@ public class AdminController {
 
         model.addAttribute("galleryList", galleryList);
         model.addAttribute("pi", pi);
-
         return "gallery/adminGalleryListView";
     }
     
@@ -101,7 +108,6 @@ public class AdminController {
     public String galleryDetail(@RequestParam("galleryNo") int galleryNo, Model model) {
         Gallery gallery = adminService.selectGallery(galleryNo);
         model.addAttribute("gallery", gallery);
-
         return "gallery/adminGalleryDetailView";
     }
 
@@ -132,7 +138,6 @@ public class AdminController {
                               @RequestParam(value="searchCategory", required=false) String searchCategory,
                               @RequestParam(value="searchValue", required=false) String searchValue,
                               Model model) {
-
         HashMap<String, String> map = new HashMap<>();
         map.put("searchCategory", searchCategory);
         map.put("searchValue", searchValue);
@@ -147,40 +152,51 @@ public class AdminController {
 
         model.addAttribute("reserveList", reserveList);
         model.addAttribute("pi", pi);
-
         return "reserve/adminReserveListView";
-    }
-
-    // 회원 관리
-    @RequestMapping("memberList.ad")
-    public String memberList(Model model) {
-        ArrayList<Member> memberList = adminService.selectMemberList();
-        model.addAttribute("memberList", memberList);
-        return "member/adminMemberListView";
-    }
-
-    // 작가 관리
-    @RequestMapping("artistList.ad")
-    public String artistList(Model model) {
-        ArrayList<Artist> artistList = adminService.selectArtistList();
-        model.addAttribute("artistList", artistList);
-        return "artist/adminArtistListView";
     }
 
     // 공지사항 관리
     @RequestMapping("noticeList.ad")
-    public String noticeList(Model model) {
-        ArrayList<Notice> noticeList = adminService.selectNoticeList();
+    public String noticeList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+        int listCount = adminService.getNoticeListCount();
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+        ArrayList<Notice> noticeList = adminService.selectNoticeList(pi);
         model.addAttribute("noticeList", noticeList);
+        model.addAttribute("pi", pi);
         return "notice/adminNoticeListView";
     }
 
     // 후기 관리
     @RequestMapping("reviewList.ad")
-    public String reviewList(Model model) {
-        ArrayList<Review> reviewList = adminService.selectReviewList();
+    public String reviewList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+        int listCount = adminService.getReviewListCount();
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+        ArrayList<Review> reviewList = adminService.selectReviewList(pi);
         model.addAttribute("reviewList", reviewList);
+        model.addAttribute("pi", pi);
         return "review/adminReviewListView";
+    }
+
+    // 일반회원 관리
+    @RequestMapping("memberList.ad")
+    public String memberList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+        int listCount = adminService.getMemberListCount();
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+        ArrayList<Member> memberList = adminService.selectMemberList(pi);
+        model.addAttribute("memberList", memberList);
+        model.addAttribute("pi", pi);
+        return "member/adminMemberListView";
+    }
+
+    // 작가 관리
+    @RequestMapping("artistList.ad")
+    public String artistList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
+        int listCount = adminService.getArtistListCount();
+        PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+        ArrayList<Artist> artistList = adminService.selectArtistList(pi);
+        model.addAttribute("artistList", artistList);
+        model.addAttribute("pi", pi);
+        return "artist/adminArtistListView";
     }
 
     // 댓글 관리

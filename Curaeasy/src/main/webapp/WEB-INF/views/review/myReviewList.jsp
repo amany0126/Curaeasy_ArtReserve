@@ -9,10 +9,23 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+        
     <title>후기 게시글목록</title>
 
 
     <style>
+        h1 {
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :larger;
+            font-style :oblique;  
+        }
+
         .innerOuter {
             border:0px solid lightgray;
             width:80%;
@@ -126,19 +139,19 @@
         
         <!-- 페이징바 -->
         
-<!--        <script>
+    <script>
 		$(function() {
        		
 			$("#noticeList>tbody>tr").click(function() {
        			
-       			let nno = $(this).children().eq(0).text();
+       			let rno = $(this).children().eq(0).text();
        			
-       			location.href = "noticeDetail.do?nno=" + nno;
+       			location.href = "reviewDetail.do?rno=" + rno;
        		});
        		
        	});
        </script>
- -->
+
       <%--   
         <div id="pagingArea">
                 <ul class="pagination">

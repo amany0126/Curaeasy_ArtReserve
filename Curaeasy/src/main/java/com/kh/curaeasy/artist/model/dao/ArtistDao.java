@@ -26,4 +26,12 @@ public class ArtistDao {
 		return sqlSession.selectOne("artistMapper.selectArtistNo", memberNo);
 	}
 
+	public Artist ArtistDate(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("artistMapper.ArtistDate", memberNo);
+	}
+
+	public int updateArtist(SqlSessionTemplate sqlSession, Artist at) {
+		return sqlSession.update("artistMapper.updateArtist", at);
+	}
+
 }

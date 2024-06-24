@@ -5,12 +5,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
     <title>입주작가</title>
     <style>
+        h1{
+      
+        }
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
         }
         .container {
             max-width: 1200px;
@@ -27,6 +35,13 @@
             margin-bottom: 20px;
             padding-top: 20px;
             padding-bottom: 50px;
+
+
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :larger;
+            font-style :oblique;
         }
         .content-header h1 {
             font-size: 2em;

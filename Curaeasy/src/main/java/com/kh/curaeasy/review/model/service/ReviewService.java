@@ -9,7 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.curaeasy.common.model.vo.PageInfo;
+import com.kh.curaeasy.reserve.model.dao.ReserveDao;
+import com.kh.curaeasy.reserve.model.vo.Reserve;
 import com.kh.curaeasy.review.model.dao.ReviewDao;
+import com.kh.curaeasy.review.model.vo.Reply;
 import com.kh.curaeasy.review.model.vo.Review;
 
 @Service
@@ -21,6 +24,8 @@ public class ReviewService {
 	@Autowired
 	private ReviewDao reviewDao;
 
+	@Autowired
+	private ReserveDao rDao;
 	
 	public ArrayList<Review> myReviewList(int userNo) {
 		return reviewDao.myReviewList(sqlSession,userNo);
@@ -82,4 +87,41 @@ public class ReviewService {
 
 
 
+	public ArrayList<Reply> selectReplyList(int rno) {
+		return reviewDao.selectReplyList(sqlSession, rno);
+	}
+
+	@Transactional
+	public int insertReply(Reply r) {
+		return reviewDao.insertReply(sqlSession, r);
+	}
+	
+	@Transactional
+	public int updateReply(Reply r) {
+		return reviewDao.updateReply(sqlSession, r);
+	}
+
+	@Transactional
+	public int deleteReply(Reply r) {
+		return reviewDao.deleteReply(sqlSession, r);
+	}
+
+	@Transactional
+	public int deleteReview(Review r, Reserve re) {
+		return reviewDao.deleteAllReply(sqlSession, r) + 
+				reviewDao.deleteReview(sqlSession, r)*
+				rDao.deleteReview(sqlSession,re)
+				;
+	}
+	public Review selectReview(int rno) {
+		return reviewDao.selectReview(sqlSession, rno);
+	}
+
+
+	public int selectCount(int rno) {
+		return reviewDao.selectCount(sqlSession, rno);
+	}
+
+
+	
 }

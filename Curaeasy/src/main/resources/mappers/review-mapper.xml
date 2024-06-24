@@ -11,25 +11,36 @@
 		<result column="REVIEW_CONTENT" property="reviewContent" />
 		<result column="MEMBER_NO" property="memberNo" />
 	</resultMap>
+	
+	<resultMap id="replyResultSet" type="reply">
+		<result column="REPLY_NO" property="replyNo" />
+		<result column="REPLY_CONTENT" property="replyContent" />
+		<result column="REPLY_ENROLL_DATE" property="replyEnrollDate" />
+		<result column="REPLY_STATUS" property="replyStatus" />
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="MEMBER_ID" property="memberNo" />
+	</resultMap>
 
 	<select id="myReviewList" parameterType="_int" resultMap="reviewResultSet">
 		SELECT *
 		  FROM REVIEW
-		 WHERE MEMBER_NO = #{userNo}
+		 WHERE MEMBER_NO = #{userNo} AND REVIEW_STATUS = 'Y'
+		 ORDER BY REVIEW_NO DESC
 	</select>
 	
 	
 	<select id="selectListAllCount" resultType="_int" parameterType="string" >
 		SELECT count(*)
 		  FROM REVIEW R
-		  JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
-		 WHERE REVIEW_TITLE like '%'||#{search}||'%' or  MEMBER_ID like '%'||#{search}||'%' AND REVIEW_STATUS = 'Y'
+		   JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
+		 WHERE( REVIEW_TITLE like '%'||#{search}||'%' or  MEMBER_ID like '%'||#{search}||'%' )AND REVIEW_STATUS = 'Y'
 	</select>
 	<select id="selectAllList" resultMap="reviewResultSet"  parameterType="string">
 		SELECT REVIEW_TITLE,REVIEW_NO,REVIEW_COUNT,REVIEW_ENROLL_DATE,m.MEMBER_ID as "REVIEW_CONTENT"
 		  FROM REVIEW R
-          JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
-		 WHERE REVIEW_TITLE like '%'||#{search}||'%' or  MEMBER_ID like '%'||#{search}||'%' AND REVIEW_STATUS = 'Y'
+           JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
+		 WHERE (REVIEW_TITLE like '%'||#{search}||'%' or  MEMBER_ID like '%'||#{search}||'%') AND REVIEW_STATUS = 'Y' 
 		 ORDER BY REVIEW_NO DESC
 	</select>
 	
@@ -39,7 +50,7 @@
 		SELECT count(*)
 		  FROM REVIEW R
 		  JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
-		 WHERE REVIEW_TITLE like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y'
+		 WHERE REVIEW_TITLE like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y' 
 	</select>
 	<select id="selectTitleList" parameterType="string" resultMap="reviewResultSet">
 		SELECT REVIEW_TITLE,REVIEW_NO,REVIEW_COUNT,REVIEW_ENROLL_DATE,m.MEMBER_ID as "REVIEW_CONTENT"
@@ -55,7 +66,7 @@
 		SELECT count(*)
 		  FROM REVIEW R
 		  JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
-		 WHERE MEMBER_ID like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y'
+		 WHERE MEMBER_ID like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y' 
 	</select>
 	<select id="selectWriterList" parameterType="string" resultMap="reviewResultSet">
 		SELECT REVIEW_TITLE,REVIEW_NO,REVIEW_COUNT,REVIEW_ENROLL_DATE,m.MEMBER_ID as "REVIEW_CONTENT"
@@ -108,4 +119,77 @@
 		  
 	</update>
 	
+	<select id="selectReplyList" parameterType="_int" resultMap="replyResultSet">
+		SELECT REPLY_NO,
+			   REPLY_CONTENT,
+			   TO_CHAR(REPLY_ENROLL_DATE, 'yyyy-mm-dd') AS REPLY_ENROLL_DATE,
+			   REPLY_STATUS,
+			   REVIEW_NO,
+		       MEMBER_ID
+		  FROM REPLY R
+		  JOIN MEMBER M ON (M.MEMBER_NO = R.MEMBER_NO)
+		 WHERE REPLY_STATUS = 'Y'
+		   AND R.REVIEW_NO = #{bno}	
+		 ORDER BY REPLY_NO DESC
+	</select>
+	
+	<insert id="insertReply" parameterType="reply">
+		INSERT INTO REPLY(REPLY_NO,
+						  REPLY_CONTENT,
+						  REPLY_ENROLL_DATE,
+						  REPLY_STATUS,
+						  REVIEW_NO,
+						  MEMBER_NO)
+					VALUES(SEQ_REPLY_NO.NEXTVAL,
+						   #{replyContent},
+						   SYSDATE,
+						   DEFAULT,
+						   #{reviewNo},
+						   #{memberNo})
+	</insert>
+	
+	<update id="updateReply" parameterType="reply">
+		UPDATE REPLY
+		   SET REPLY_CONTENT = #{replyContent}
+		 WHERE REPLY_NO = #{replyNo}
+		   AND REVIEW_NO = #{reviewNo}
+		   AND MEMBER_NO = #{memberNo}
+	</update>
+	
+	<delete id="deleteReply" parameterType="reply">
+		DELETE FROM REPLY
+		 WHERE REPLY_NO = #{replyNo}
+		   AND REVIEW_NO = #{reviewNo}
+		   AND MEMBER_NO = #{memberNo}
+	</delete>
+	
+	<delete id="deleteAllReply" parameterType="review">
+		DELETE FROM REPLY
+		 WHERE REVIEW_NO = #{reviewNo}
+	</delete>
+	
+	<update id="deleteReview" parameterType="review">
+		UPDATE REVIEW
+		   SET REVIEW_STATUS = 'N'
+		 WHERE REVIEW_NO = #{reviewNo}
+		   AND MEMBER_NO = #{memberNo}
+	</update>
+	<select id="selectReview" parameterType="_int" resultMap="reviewResultSet">
+		SELECT REVIEW_NO,
+			   REVIEW_TITLE,
+			   REVIEW_CONTENT,
+			   TO_CHAR(REVIEW_ENROLL_DATE, 'yyyy-mm-dd') AS REVIEW_ENROLL_DATE,
+			   REVIEW_IMAGE,
+			   MEMBER_ID AS MEMBER_NO
+		  FROM REVIEW R
+		  JOIN MEMBER M USING(MEMBER_NO)
+		 WHERE REVIEW_NO = #{rno}
+	</select>
+	
+		<update id="selectCount" parameterType="_int" >
+		UPDATE REVIEW
+		   SET REVIEW_COUNT = REVIEW_COUNT+1
+		 WHERE REVIEW_STATUS = 'Y'
+		   AND REVIEW_NO = #{rno}	
+	</update>
 </mapper>

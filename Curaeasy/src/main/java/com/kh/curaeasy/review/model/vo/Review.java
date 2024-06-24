@@ -21,5 +21,5 @@ public class Review {
 	private Date reviewEnrollDate;
 	private int reviewCount;
 	private String reviewContent;
-	private int memberNo;
+	private String memberNo;
 }

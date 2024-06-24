@@ -35,4 +35,13 @@ public class ArtistService {
 		return artistDao.selectArtistNo(sqlSession,memberNo);
 	}
 
+	public Artist ArtistDate(int memberNo) {
+		return artistDao.ArtistDate(sqlSession,memberNo);
+	}
+	@Transactional
+	public int updateArtist(Artist at) {
+		// TODO Auto-generated method stub
+		return artistDao.updateArtist(sqlSession,at);
+	}
+
 }

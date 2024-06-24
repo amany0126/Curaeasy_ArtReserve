@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.kh.curaeasy.artist.model.service.ArtistService;
 import com.kh.curaeasy.artist.model.vo.Artist;
 import com.kh.curaeasy.member.model.vo.Member;
+import com.kh.curaeasy.review.model.vo.Review;
 
 @Controller
 public class ArtistController {
@@ -64,9 +65,9 @@ public class ArtistController {
 	}
 	
 	@PostMapping(value = "insertArtist.at",  produces = "text/html; charset=UTF-8")
-	public String insertMember(MultipartFile upfile,Artist at, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String insertArtist(MultipartFile upfile,Artist at, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		
-		System.out.println(upfile);
+//		System.out.println(upfile);
 		String changImgName = savePath(upfile, session);		
 		at.setArtistImage(changImgName);
 		at.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
@@ -117,6 +118,63 @@ public class ArtistController {
 			e.printStackTrace();
 		}
 		return changName;
+	}
+	@RequestMapping(value = "updateForm.at", produces = "text/html; charset=UTF-8")
+	public String UpdateFormArtist( Model model,  HttpSession session) {
+		
+		
+		int memberNo = (((Member)session.getAttribute("loginUser")).getMemberNo());
+		Artist list = artistService.ArtistDate(memberNo);
+		
+		if(list == null) {
+			model.addAttribute("errorMsg", "올바르지 않은 접근입니다");
+			// /WEB-INF/views/common/errorPage.jsp
+			return "/common/errorPage";
+		}else {
+			model.addAttribute("list", list);
+			return "artist/updateArtist";
+		}
+		
+		
+		
+	}
+	@PostMapping(value = "updateArtist.at",  produces = "text/html; charset=UTF-8")
+	public String updateArtist(MultipartFile reUpfile,Artist at, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	
+		
+		
+		int memberNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
+		at.setMemberNo(memberNo);
+		String originalFile = at.getArtistImage();
+		
+		if(reUpfile.getSize() == 0) {
+			
+			Artist list =artistService.ArtistDate(memberNo);
+			at.setArtistImage(list.getArtistImage());
+		}else {
+			String realPath= "/resources/artistProfileImgs"+originalFile;
+			new File(realPath).delete();
+			
+			String changImgName = savePath(reUpfile, session);	
+			at.setArtistImage(changImgName);
+	
+		}
+		int result = artistService.updateArtist(at);
+		if (result > 0) { // 성공
+			// 일회성 알람문구를 담아 메인 페이지로 url 재요청
+			model.addAttribute("eventMsg", "작가 정보 변경에 성공 하였습니다.");
+			return "/common/eventPage";
+		} else { // 실패
+			
+			// 에러문구 담아서 에러페이지로 포워딩
+			model.addAttribute("errorMsg", "작가 정보 변경에 실패하셨습니다");
+			// /WEB-INF/views/common/errorPage.jsp
+			return "/common/errorPage";
+
+		}
+		
+		
+		
 	}
 }
 

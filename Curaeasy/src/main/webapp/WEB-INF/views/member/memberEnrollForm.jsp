@@ -107,11 +107,13 @@
 				let $checkPwdInput = $("#enrollForm input[id=checkPwd]");
 				let $checkEmailInput = $("#enrollForm input[id=email]");
 				let $checkPhoneInput = $("#enrollForm input[id=phone]");
+				
 				$userIdInput.keyup(checkId); 
 				$userPwdInput.keyup(ckeckPwd); // 1차
 				$checkPwdInput.keyup(valPwd); // 중복
 				$checkEmailInput.keyup(checkEmail); // 중복
 				$checkPhoneInput.keyup(checkPhone); // 중복
+				
 			});
 			function checkId() {
 				const $idInput = $("#enrollForm input[id=userId]")
@@ -121,7 +123,7 @@
 					// ajax 를 요청해서 중복체크 하기!!
 					// (유료 DB 제품은 실행하는 쿼리문의 갯수가 몇개냐에 따라 요금제가 지정됨)
 						let checkId =  $idInput.val();
-						console.log(checkId);
+						/* console.log(checkId); */
 					if(checkId.length >=5 ){
 						// 5글자 이상일때
 						// ajxa 로 아이디 중복확인 요청보내기
@@ -438,6 +440,7 @@
 				$("#checkResultPhone").hide(); 
 				$("#enrollForm input[id=okPhone]").val("N");
 			}	
+			checkdSudmit();
 			
 		}
 		function checkdSudmit() {
@@ -449,9 +452,10 @@
 			let okemailval =okemail.val();
 			let okPhone =$("#enrollForm input[id=okPhone]");
 			let okPhoneval =okPhone.val();
-			/* console.log(okid.val());
-			console.log(okPwd2.val());
-			console.log(okemailval); */
+			/* console.log(okidval);
+			console.log(okPwd2val); 
+			console.log(okemailval); 
+			console.log(okPhoneval);  */
 			if(okidval == "Y" && okPwd2val == "Y" && okemailval =="Y"  && okPhoneval =="Y"){
 				$("#enrollForm button[type=submit]").attr("disabled",false)
 			}else{

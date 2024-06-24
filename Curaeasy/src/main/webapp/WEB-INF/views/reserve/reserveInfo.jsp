@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
 
     <title>전시회 예매</title>
     <style>
@@ -53,9 +58,13 @@
             border-radius: 0.25rem;
         }
         .form-header {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :xx-large;
+            font-style :oblique;      
 
         }
         .form-section-title {
@@ -91,6 +100,8 @@
             display: flex;
             gap: 1rem;
         }
+
+        .form-footer1>button:hover {transform: translateY(10px); cursor: pointer; }
     </style>
 </head>
 <body>

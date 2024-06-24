@@ -13,17 +13,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.kh.curaeasy.display.model.service.DisplayService;
 import com.kh.curaeasy.display.model.vo.Display;
 import com.kh.curaeasy.display.model.vo.DisplayAttachment;
-import com.kh.curaeasy.member.model.vo.Member;
-import com.kh.curaeasy.rental.model.service.RentalService;
 import com.kh.curaeasy.member.model.service.MemberService;
 import com.kh.curaeasy.member.model.vo.Member;
+import com.kh.curaeasy.rental.model.service.RentalService;
 
 @Controller
 public class DisplayController {
@@ -156,6 +155,14 @@ public class DisplayController {
     	model.addAttribute("list", list);
     	
         return "display/myDisplayList";
+    }
+    
+    @RequestMapping(value="displayCalander.do", produces = "application/json")
+    public String displayCalendar(Model model) {
+    	
+    	ArrayList<Display> list = displayService.selectDisplayList();
+    	model.addAttribute("list", new Gson().toJson(list));
+    	return "display/displayCalendar";
     }
     
 }

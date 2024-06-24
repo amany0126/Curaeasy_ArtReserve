@@ -8,6 +8,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+
 <title>작가신청</title>
     <style>
         .radio{
@@ -25,7 +32,15 @@
         #reviewContent { resize: none; width: 100%; height: 400px; }
         img { border-radius: 20px; border-style : ridge;}
         #but>button{ border-radius: 20px; width: 130px; background-color: white;}
-        #but>button:hover { background-color: lightgray; }
+        #but>button:hover { background-color: black;color:white; }
+        h3 {
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :xx-large;
+            font-style :oblique;     
+        }
+        button:hover{transform: translateY(10px); }
     </style>
 </head>
 <body>

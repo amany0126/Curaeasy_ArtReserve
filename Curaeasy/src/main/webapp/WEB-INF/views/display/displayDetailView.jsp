@@ -69,10 +69,15 @@
         .back-to-list { text-align: center; margin-top: 30px; margin-bottom: 50px; }
         .back-to-list a {
             text-decoration: none;
-            color: #fff;
-            background-color: #333;
+            color: black;
+            background-color: white;
             padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 20px;
+            border :  1px solid black;
+        }
+        .back-to-list a:hover {
+            background-color: black; color:white;
+            /*transform: translateY(10px); a라 안됨*/
         }
         hr {
             border: 0;
@@ -127,6 +132,9 @@
     .fc-day-sat a {
         color: blue;
     }
+
+
+
     </style>
 
 </head>

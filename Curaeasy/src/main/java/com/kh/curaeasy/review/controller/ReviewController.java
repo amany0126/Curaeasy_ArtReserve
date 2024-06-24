@@ -16,18 +16,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.curaeasy.common.model.vo.PageInfo;
 import com.kh.curaeasy.common.template.Pagination;
+import com.kh.curaeasy.display.model.service.DisplayService;
 import com.kh.curaeasy.member.model.vo.Member;
+import com.kh.curaeasy.reserve.model.vo.Reserve;
 import com.kh.curaeasy.review.model.service.ReviewService;
+import com.kh.curaeasy.review.model.vo.Reply;
 import com.kh.curaeasy.review.model.vo.Review;
 
 @Controller
 public class ReviewController {
 	@Autowired private ReviewService reviewService;
+	@Autowired private DisplayService displayService;
 	
 	private Map<String, String> ReviewListData = Collections.synchronizedMap(new HashMap<>());
 	@GetMapping(value = "review.do", produces = "text/html; charset=UTF-8")
@@ -90,9 +98,9 @@ public class ReviewController {
 		
 		ArrayList<Review> list = reviewService.myReviewList(userNo);
 		
-		for (Review review : list) {
-			System.out.println(review);
-		}
+		/*
+		 * for (Review review : list) { System.out.println(review); }
+		 */
 		model.addAttribute("list",list);
 		return "review/myReviewList";
 	}
@@ -119,7 +127,7 @@ public class ReviewController {
 		String setTitle = "["+displayName+"]"+r.getReviewTitle();
 		r.setReviewTitle(setTitle);
 		int userNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
-		r.setMemberNo(userNo);
+		r.setMemberNo(""+userNo);
 
 		ReviewListData.put("userNo", ""+userNo);
 		ReviewListData.put("displayName", displayName);
@@ -138,14 +146,14 @@ public class ReviewController {
 		
 	}
 	
-	@GetMapping(value = "updateReviewForm.re", produces = "text/html; charset=UTF-8")
+	@PostMapping(value = "updateReviewForm.re", produces = "text/html; charset=UTF-8")
 	public String updateReviewForm(int rno,Model model, HttpSession session){
 		
 		int userNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
 		Review r=new Review();
 		r.setReviewNo(rno);
-		r.setMemberNo(userNo);
+		r.setMemberNo(""+userNo);
 		
 		Review list =reviewService.updateData(r);
 		
@@ -173,13 +181,12 @@ public class ReviewController {
 	public String updateReview( MultipartFile reUpfile,Review r, String displayName ,Model model, HttpSession session) {
 		
 		int userNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
-		r.setMemberNo(userNo);
+		r.setMemberNo(""+userNo);
 		String originalFile = r.getReviewImage();
 		
 		String setTitle = "["+displayName+"]"+r.getReviewTitle();
 		r.setReviewTitle(setTitle);
 		
-		System.out.println(reUpfile);
 		
 		if(reUpfile.getSize() == 0) {
 			
@@ -196,7 +203,7 @@ public class ReviewController {
 		int result = reviewService.updateReview(r);
 		if(result>0) {
 			session.setAttribute("alertMsg", "후기 수정에 성공 했습니다");
-			return "redirect:/review.do";
+			return "redirect:/reviewDetail.do?rno="+r.getReviewNo();
 		}else {
 			model.addAttribute("errorMsg", "후기 수정에 실패 했습니다");
 			return "/common/errorPage";
@@ -231,4 +238,100 @@ public class ReviewController {
 		}
 		return changName;
 	}
+	@RequestMapping("reviewDetail.do")
+	public ModelAndView selectReview(ModelAndView mv, int rno) {
+		
+		
+		
+		// rno 파라미터가 없는 경우
+		if(rno == 0) {
+			mv.addObject("errorMsg", "잘못된 접근입니다.")
+			  .setViewName("common/errorPage");
+			return mv;
+		}else {
+			/* System.out.println(rno); */
+		reviewService.selectCount(rno);
+		Review r = reviewService.selectReview(rno);
+		mv.addObject("rno", rno)
+		  .addObject("r", r)
+		  .setViewName("review/reviewDetailView");
+		return mv;
+		}
+	}
+	
+	@RequestMapping(value="searchReplyList.do", produces = "application/json; charset=utf-8")
+	@ResponseBody
+	public String searchReplyList(int rno) {
+		
+		ArrayList<Reply> list = reviewService.selectReplyList(rno);
+		
+		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping(value="insertReply.re", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String insertReply(Reply r) {
+		
+		int result = reviewService.insertReply(r);
+		
+		return String.valueOf(result);
+	}
+	
+	@RequestMapping(value="updateReply.re", produces = "text/html; charset=utf-8")
+	@ResponseBody
+	public String updateReply(Reply r) {
+		
+		return String.valueOf(reviewService.updateReply(r));
+	}
+	
+	@RequestMapping(value="deleteReply.re", produces="text/html; charset=utf-8")
+	@ResponseBody
+	public String deleteReply(Reply r) {
+	
+		return String.valueOf(reviewService.deleteReply(r));
+		
+	}
+	
+	@RequestMapping(value="deleteReview.re")
+	public String deleteReview(Review r,int rno, HttpSession session, Model model) {
+		
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+
+		
+		r.setMemberNo(""+memberNo);
+		r.setReviewNo(rno);
+		
+		Review r2 = reviewService.selectReview(rno);
+		String Title =r2.getReviewTitle();
+		String displayName = Title.substring(Title.indexOf("[")+1,(Title.indexOf("]")));
+		
+		
+		//System.out.println(rno);
+		System.out.println(displayName);
+		
+		
+		// new 구문 쓰면 sqlSession이 생성안되서 null이됩니다. 
+		int displayNo = displayService.selectDisplayNo(displayName);
+		System.out.println(displayNo);
+		
+		Reserve re = new Reserve();
+		re.setMemberNo(""+memberNo);
+		re.setDisplayNo(""+displayNo);
+		int result = reviewService.deleteReview(r,re);
+		
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "삭제 성공 했습니다");
+			return "redirect:/review.do";
+		}else {
+			model.addAttribute("errorMsg", "삭제 실패 했습니다");
+			return "/common/errorPage";
+		}
+		
+
+		
+		
+	}
+	
 }
