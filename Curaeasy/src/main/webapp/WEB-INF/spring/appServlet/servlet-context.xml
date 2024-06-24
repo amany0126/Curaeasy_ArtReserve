@@ -40,6 +40,7 @@
 		<interceptor>
 			<!-- 권한체크가 필요한 요청들을 mapping 으로 다 나열하면 됨-->
 			<mapping path="/calendar.re" />
+			<mapping path="/inrollFrom.re" />
 			<beans:bean class="com.kh.curaeasy.common.interceptor.ArtistInterceptor" 
 						id="ArtistInterceptor" />	 
 		</interceptor>

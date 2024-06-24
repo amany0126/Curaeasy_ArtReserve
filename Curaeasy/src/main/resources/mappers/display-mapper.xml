@@ -177,7 +177,7 @@
 	<select id="mydisplayList" resultMap="displayResultSet">
 		    SELECT *
 		      FROM DISPLAY 
-		     WHERE ARTIST_NO =#{artistNo}
+		     WHERE ARTIST_NO =#{artistNo}  AND DISPLAY_STATUS != '종료'
 		     ORDER BY DISPLAY_NO DESC
 		</select>
 		<select id="selectDisplayNo"  parameterType="string" resultType="_int">
