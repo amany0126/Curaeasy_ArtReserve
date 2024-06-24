@@ -133,7 +133,7 @@
                             <label>현재 첨부파일</label>
                             <c:forEach var="attachment" items="${attachments}">
                                 <div class="attachment-item">
-                                    <img src="${path}/resources/attachment_image/${attachment.changeName}" alt="${attachment.originName}">
+                                    <img src="'C:\\Curaeasy_ArtReserve\\Curaeasy\\src\\main\\webapp\\resources\\display\\'+${attachment.changeName}" alt="${attachment.originName}">
                                     <p>${attachment.originName}</p>
                                     <button type="button" class="btn btn-danger btn-delete-attachment" data-attachment-no="${attachment.attachmentNo}">삭제</button>
                                 </div>

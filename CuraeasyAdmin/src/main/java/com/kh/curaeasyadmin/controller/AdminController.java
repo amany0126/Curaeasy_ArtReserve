@@ -68,6 +68,8 @@ public class AdminController {
     public String showUpdateDisplayForm(@RequestParam("displayNo") int displayNo, Model model) {
         Display display = adminService.selectDisplay(displayNo);
         model.addAttribute("display", display);
+        
+        System.out.println(display);
         return "display/adminDisplayUpdateForm";
     }
 
@@ -117,7 +119,8 @@ public class AdminController {
         int ranNum = (int) (Math.random() * 90000 + 10000);
         String ext = originName.substring(originName.lastIndexOf("."));
         String changeName = currentTime + ranNum + ext;
-        String savePath = session.getServletContext().getRealPath("/resources/attachment_image/");
+        String savePath = "C:\\Curaeasy_ArtReserve\\Curaeasy\\src\\main\\webapp\\resources\\display\\";
+        System.out.println(savePath);
         try {
             file.transferTo(new File(savePath + changeName));
         } catch (Exception e) {
