@@ -49,9 +49,19 @@
 		   AND ARTIST_STATUS = 'Y'
 		 ORDER BY ARTIST_ORDINAL DESC, ARTIST_NO DESC
 	</select>
-		<select id="selectArtistNo" resultType="_int" parameterType="_int">
+	<select id="selectArtistNo" resultType="_int" parameterType="_int" >
 		SELECT COUNT(*)
 		 	  FROM ARTIST
 		 WHERE MEMBER_NO = #{memberNo} 
 	</select>
+		<select id="ArtistDate" parameterType="_int"  resultMap="artistResultSet">
+		SELECT *
+		 	  FROM ARTIST
+		 WHERE MEMBER_NO = #{memberNo} 
+	</select>
+		<update id="updateArtist" parameterType="artist">
+		UPDATE ARTIST
+		   SET ARTIST_INTRODUCE = #{artistIntroduce}, ARTIST_IMAGE = #{artistImage}
+		 WHERE MEMBER_NO = #{memberNo}
+	</update>
 </mapper>

@@ -25,7 +25,7 @@
 	<select id="myReviewList" parameterType="_int" resultMap="reviewResultSet">
 		SELECT *
 		  FROM REVIEW
-		 WHERE MEMBER_NO = #{userNo}
+		 WHERE MEMBER_NO = #{userNo} AND REVIEW_STATUS = 'Y'
 		 ORDER BY REVIEW_NO DESC
 	</select>
 	
@@ -33,14 +33,14 @@
 	<select id="selectListAllCount" resultType="_int" parameterType="string" >
 		SELECT count(*)
 		  FROM REVIEW R
-		  JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
-		 WHERE REVIEW_TITLE like '%'||#{search}||'%' or  MEMBER_ID like '%'||#{search}||'%' AND REVIEW_STATUS = 'Y'
+		   JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
+		 WHERE( REVIEW_TITLE like '%'||#{search}||'%' or  MEMBER_ID like '%'||#{search}||'%' )AND REVIEW_STATUS = 'Y'
 	</select>
 	<select id="selectAllList" resultMap="reviewResultSet"  parameterType="string">
 		SELECT REVIEW_TITLE,REVIEW_NO,REVIEW_COUNT,REVIEW_ENROLL_DATE,m.MEMBER_ID as "REVIEW_CONTENT"
 		  FROM REVIEW R
-          JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
-		 WHERE REVIEW_TITLE like '%'||#{search}||'%' or  MEMBER_ID like '%'||#{search}||'%' AND REVIEW_STATUS = 'Y'
+           JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
+		 WHERE (REVIEW_TITLE like '%'||#{search}||'%' or  MEMBER_ID like '%'||#{search}||'%') AND REVIEW_STATUS = 'Y' 
 		 ORDER BY REVIEW_NO DESC
 	</select>
 	
@@ -50,7 +50,7 @@
 		SELECT count(*)
 		  FROM REVIEW R
 		  JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
-		 WHERE REVIEW_TITLE like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y'
+		 WHERE REVIEW_TITLE like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y' 
 	</select>
 	<select id="selectTitleList" parameterType="string" resultMap="reviewResultSet">
 		SELECT REVIEW_TITLE,REVIEW_NO,REVIEW_COUNT,REVIEW_ENROLL_DATE,m.MEMBER_ID as "REVIEW_CONTENT"
@@ -66,7 +66,7 @@
 		SELECT count(*)
 		  FROM REVIEW R
 		  JOIN MEMBER M ON (R.MEMBER_NO = M.MEMBER_NO)
-		 WHERE MEMBER_ID like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y'
+		 WHERE MEMBER_ID like '%'||#{search}||'%' AND  REVIEW_STATUS = 'Y' 
 	</select>
 	<select id="selectWriterList" parameterType="string" resultMap="reviewResultSet">
 		SELECT REVIEW_TITLE,REVIEW_NO,REVIEW_COUNT,REVIEW_ENROLL_DATE,m.MEMBER_ID as "REVIEW_CONTENT"
@@ -168,11 +168,12 @@
 		 WHERE REVIEW_NO = #{reviewNo}
 	</delete>
 	
-	<delete id="deleteReview" parameterType="review">
-		DELETE FROM REVIEW
+	<update id="deleteReview" parameterType="review">
+		UPDATE REVIEW
+		   SET REVIEW_STATUS = 'N'
 		 WHERE REVIEW_NO = #{reviewNo}
 		   AND MEMBER_NO = #{memberNo}
-	</delete>
+	</update>
 	<select id="selectReview" parameterType="_int" resultMap="reviewResultSet">
 		SELECT REVIEW_NO,
 			   REVIEW_TITLE,

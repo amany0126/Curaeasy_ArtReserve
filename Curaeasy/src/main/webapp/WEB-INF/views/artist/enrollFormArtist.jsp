@@ -46,10 +46,11 @@
                         <input type="url" class="form-control" id="artistIntroduce" placeholder="포트폴리오 주소 기입" name="artistIntroduce" maxlength="100px" required> <br>
                         <!-- <textarea class="form-control" rows="5" id="artistIntroduce" name="artistIntroduce" placeholder="한글 100글자 이하" maxlength="100px" required></textarea> -->
                         <br>
-                        <label for="">* 프로필이미지 :</label><br>
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5aSSsOYE2kGFloVt8UbHgjAwZ6Z7GaCpbDQ&s" width="200px" alt="프로필이미지" id="artistPreviewImage" class="rounded" >
-                        <br><br>
-                        <input type="file" class="form-control-file border" id="artistImage" name="upfile" onchange="loadImg(this, 1)" required> <br>
+                        <label for="">* 프로필이미지 : (※이미지 클릭후 사진 삽입)</label><br>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5aSSsOYE2kGFloVt8UbHgjAwZ6Z7GaCpbDQ&s" width="200px" alt="프로필이미지" id="artistPreviewImage" class="rounded" ><br>
+                        <input type="text" disabled style="background-color: white; border: 0; color: green;" id="artistPreviewImageOk" value="기존 이미지">
+						<br><br>
+                        <input type="file" class="form-control-file border" id="artistImage" name="upfile" onchange="loadImg(this, 1)" required accept="image/png, image/jpeg" style="display: none;"> <br>
                     </div>
                     <div align="center" id="but">
                         <button type="button" class="btn btn-info" onclick="history.back()">뒤로가기</button>
@@ -126,12 +127,16 @@
 			reader.readAsDataURL(inputFile.files[0]);
 			reader.onload=function(e){
 				switch(num){
-				case 1 : $("#artistPreviewImage").attr("src",e.target.result); break
+				case 1 : $("#artistPreviewImage").attr("src",e.target.result); 
+				$("#artistPreviewImageOk").val("새로운 이미지 첨부됨").show().css("color","green");
+				break
 			}
 		};
 		}else{
 			switch(num){
-				case 1 : $("#artistPreviewImage").attr("src","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5aSSsOYE2kGFloVt8UbHgjAwZ6Z7GaCpbDQ&s"); break
+				case 1 : $("#artistPreviewImage").attr("src","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5aSSsOYE2kGFloVt8UbHgjAwZ6Z7GaCpbDQ&s"); 
+				$("#artistPreviewImageOk").val("기존 이미지").show().css("color","green");
+				break
 			}
 		}
 	};

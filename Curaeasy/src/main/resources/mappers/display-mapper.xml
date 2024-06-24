@@ -183,4 +183,9 @@
 		     WHERE ARTIST_NO =#{artistNo}
 		     ORDER BY DISPLAY_NO DESC
 		</select>
+		<select id="selectDisplayNo"  parameterType="string" resultType="_int">
+		    SELECT DISPLAY_NO
+		      FROM DISPLAY 
+		     WHERE DISPLAY_NAME = #{displayName}
+		</select>
 </mapper>

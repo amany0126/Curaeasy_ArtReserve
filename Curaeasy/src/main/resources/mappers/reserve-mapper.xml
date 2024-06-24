@@ -11,6 +11,7 @@
 		<result column="RESERVE_STATUS" property="reserveStatus" />
 		<result column="MEMBER_NO" property="memberNo" />
 		<result column="DISPLAY_NO" property="displayNo" />
+		<result column="REVIEW_WRITED" property="reviewWrited" />
 	</resultMap>
 	<insert id="insertReserve" parameterType="reserve">
 		INSERT INTO RESERVE
@@ -68,4 +69,10 @@
 		 WHERE MEMBER_NO = #{memberNo}
 		 ORDER BY RESERVE_NO DESC
 	</select>
+	<update id="deleteReview" parameterType="reserve" >
+		UPDATE RESERVE 
+		   SET REVIEW_WRITED = 'N'
+		 WHERE REVIEW_WRITED = 'Y'
+		   AND MEMBER_NO = #{memberNo} AND DISPLAY_NO = #{displayNo}
+	</update>
 </mapper>

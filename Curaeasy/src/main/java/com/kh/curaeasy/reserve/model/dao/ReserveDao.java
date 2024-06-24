@@ -25,5 +25,9 @@ public class ReserveDao {
 	public Reserve selectReserve(SqlSessionTemplate sqlSession, int reserveNo) {
 		return sqlSession.selectOne("reserveMapper.selectReserve", reserveNo);
 	}
+
+	public int deleteReview(SqlSessionTemplate sqlSession, Reserve re) {
+		return sqlSession.update("reserveMapper.deleteReview", re);
+	}
 	
 }
