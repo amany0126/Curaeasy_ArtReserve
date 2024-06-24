@@ -44,10 +44,10 @@
         .form-group input,
         .form-group textarea,
         .form-group select {
-            /* flex: 1; */
+            /* /* flex: 1; */
             padding: 0.5rem;
             border: 1px solid #CED4DA;
-            border-radius: 0.25rem;
+            border-radius: 0.25rem; 
         }
         .form-header {
             font-size: 2rem;

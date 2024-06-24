@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -9,13 +10,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Grandiflora+One&display=swap" rel="stylesheet">
-    <title>마감된 전시</title>
-    
+
+    <title>현재 전시</title>
     <style>
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: auto;
             padding: 20px;
+            margin-bottom: 50px;
         }
         .header, .footer {
             background-color: #f8f8f8;
@@ -23,7 +25,14 @@
             text-align: center;
         }
         .content {
-            padding: 20px;
+            padding: 0px;
+        }
+        .content-header {
+            margin-bottom: 20px;
+        }
+        .content-header h1 {
+            font-size: 2em;
+            margin: 0 0 10px 0;
         }
         .tab-menu {
             display: flex;
@@ -41,13 +50,6 @@
         .tab-menu a.active {
             border-bottom: 2px solid #333;
             font-weight: bold;
-        }
-        .content-header {
-            margin-bottom: 20px;
-        }
-        .content-header h1 {
-            font-size: 2em;
-            margin: 0 0 10px 0;
         }
         .search-box {
             display: flex;
@@ -75,7 +77,7 @@
         .exhibition-item {
             width: 30%;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 100px;
         }
         .exhibition-item img {
             width: 100%;
@@ -84,7 +86,6 @@
             border-radius: 20px;
             border-style: ridge;
             box-shadow: 0 0 10px gray;
-            filter: blur(5px);
         }
         .exhibition-item h2 {
             font-size: 1.5em;
@@ -95,24 +96,8 @@
             line-height: 1.5;
             margin-bottom: 10px;
         }
-        .pagination {
-            text-align: center;
-            margin-top: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .pagination a {
-            margin: 0 5px;
-            text-decoration: none;
-            color: #333;
-        }
-        .pagination a.active {
-            font-weight: bold;
-        }
         .search-box>input { border-radius: 20px;}
         .search-box>button { border-radius: 20px;}
-
     </style>
 </head>
 <body>
@@ -129,33 +114,46 @@
         <div class="content-header">
             <h1>마감된 전시</h1>
         </div>
-        <div class="search-box">
-            <form action="searchOffDisplay.do" method="get">
-                <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
-                <button type="submit">검색</button>
-            </form>
-        </div>
         <div class="exhibition-list">
-            <c:forEach var="exhibition" items="${ offDisplayList }">
+            <c:forEach var="exhibition" items="${ list }">
                 <div class="exhibition-item">
-                    <img src="<c:url value='/resources/display/${exhibition.imagePath}' />" alt="전시 이미지">
-                    <h2>${ exhibition.displayName }</h2>
-                    <p>${ exhibition.displayStartDate } ~ ${ exhibition.displayEndDate }</p>
+                	<!-- <div style="text-align: right"><button name="${ exhibition.displayNo }" class="btn btn-outline-dark" onclick="likeCheck(this);">❤ ${ exhibition.likeCount }</button></div> -->
+                    <!-- <a href="displayDetail.do?dno=${exhibition.displayNo}" style="text-decoration: none; color: black;" > -->
+                        <img src="<c:url value='/resources/display/${exhibition.imagePath}' />" alt="전시 이미지">
+                        <h2>${ exhibition.displayName }</h2>
+                        <p>${ exhibition.displayContent }</p>
+                        <p>${ exhibition.displayStartDate } ~ ${ exhibition.displayEndDate }</p>
+                    </a>
                 </div>
             </c:forEach>
-            <c:if test="${ empty offDisplayList }">
-                <div class="no-exhibition">마감된 전시가 없습니다.</div>
+            <c:if test="${ empty list }">
+                <div class="no-exhibition">종료된 전시가 없습니다.</div>
             </c:if>
-        </div>
-        <div class="pagination">
-            <a href="#" class="prev">«</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#" class="next">»</a>
         </div>
     </div>
 </div>
+
+<script>
+    $(function() {
+
+        if("${sessionScope.loginUser}" === ""){
+            return false;
+        }
+
+        let displayNoList = ${requestScope.displayNoList}
+
+        displayNoList.forEach(function(element, index) {
+            let btn = $("button[name=" + element + "]")[0];
+            if(btn != undefined){
+                btn.className = "btn btn-danger";
+            }
+        });
+
+        if(displayNoList.length == 0){
+            return false;
+        }        
+    });
+</script>
 
 <jsp:include page="../common/footer.jsp" />
 

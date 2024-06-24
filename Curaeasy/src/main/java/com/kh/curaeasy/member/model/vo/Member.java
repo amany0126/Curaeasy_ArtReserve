@@ -23,6 +23,6 @@ public class Member {
     private String memberAddress;    // 회원주소
     private Date memberBirthday;     // 생일
     private Date memberEnrollDate;   // 회원가입일
-    private char artistOngoing;      // 현재 작가여부
-    private char memberStatus;       // 회원상태
+    private String artistOngoing;      // 현재 작가여부
+    private String memberStatus;       // 회원상태
 }

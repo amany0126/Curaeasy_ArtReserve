@@ -21,4 +21,5 @@ public class Reserve {
 	private String reserveStatus;
 	private String memberNo;
 	private String displayNo;
+	private String reviewWrited;
 }

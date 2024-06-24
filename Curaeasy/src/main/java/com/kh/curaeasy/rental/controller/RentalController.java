@@ -92,6 +92,9 @@ public class RentalController {
 		int checkEndDay = rentalService.checkEndDay(rn);
 		int checkStdDay = rentalService.checkStdDay(rn);
 		
+		System.out.println(count);
+		System.out.println(checkEndDay);
+		System.out.println(checkStdDay);
 
 		
 		return (checkStdDay+count+checkEndDay !=0)? "NNNNN" : "NNNNY";

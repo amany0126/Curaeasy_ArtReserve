@@ -156,18 +156,11 @@ s0.parentNode.insertBefore(s1,s0);
                     </ul>
                 </li>
                 <li>
-                    <a href="notice.do">소식 | 정보</a>
+                    <a href="#">게시판 | 관람후기</a>
                     <ul>
                         <li><a href="notice.do">공지사항</a></li>
-                        <li><a href="#">게시판</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="review.do">사용자후기</a>
-                    <ul>
                         <li><a href="review.do">관람후기</a></li>
                     </ul>
-                    
                 </li>
 
 
@@ -181,13 +174,13 @@ s0.parentNode.insertBefore(s1,s0);
 		                       <!--  <a data-toggle="modal" data-target="#loginModal" class="signup-link"><i class="fas fa-sign-in-alt"></i> 로그인</a> <br> -->
 		                        <a href="loginPage.me" class="signup-link"><i  class="fas fa-sign-in-alt"></i> 로그인</a> <br>
 		                        <a href="enrollForm.me" class="signup-link"><i class="fas fa-user-plus"></i> 회원가입</a> <br>
-		                        <a href="#" class="signup-link"><i class="far fa-calendar-alt icon"></i> 스케줄</a>
+		                        <a href="displayCalander.do" class="signup-link"><i class="far fa-calendar-alt icon"></i> 스케줄</a>
 		                </c:when>
 						<c:otherwise>
 		              		<!-- 로그인 후 -->
 		                   <%--  <label class="signup-link">${sessionScope.loginUser.memberName}님 환영합니다</label><!--  &nbsp;&nbsp; --><br> --%>
 		                    <a href="myPage.me" class="signup-link"><i class="fas fa-user-plus" ></i>마이페이지</a><br>
-		                    <a href="#" class="signup-link"><i class="far fa-calendar-alt icon"></i>스케줄</a><br>
+		                    <a href="displayCalander.do" class="signup-link"><i class="far fa-calendar-alt icon"></i>스케줄</a><br>
 		                    <a href="logout.me" class="signup-link"><i class="fas fa-sign-in-alt"></i>로그아웃</a><br>
 						</c:otherwise>
 		                </c:choose>

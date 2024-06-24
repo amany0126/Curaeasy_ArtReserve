@@ -25,7 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.kh.curaeasy.common.model.vo.PageInfo;
 import com.kh.curaeasy.common.template.Pagination;
+import com.kh.curaeasy.display.model.service.DisplayService;
 import com.kh.curaeasy.member.model.vo.Member;
+import com.kh.curaeasy.reserve.model.vo.Reserve;
 import com.kh.curaeasy.review.model.service.ReviewService;
 import com.kh.curaeasy.review.model.vo.Reply;
 import com.kh.curaeasy.review.model.vo.Review;
@@ -33,6 +35,7 @@ import com.kh.curaeasy.review.model.vo.Review;
 @Controller
 public class ReviewController {
 	@Autowired private ReviewService reviewService;
+	@Autowired private DisplayService displayService;
 	
 	private Map<String, String> ReviewListData = Collections.synchronizedMap(new HashMap<>());
 	@GetMapping(value = "review.do", produces = "text/html; charset=UTF-8")
@@ -95,9 +98,9 @@ public class ReviewController {
 		
 		ArrayList<Review> list = reviewService.myReviewList(userNo);
 		
-		for (Review review : list) {
-			System.out.println(review);
-		}
+		/*
+		 * for (Review review : list) { System.out.println(review); }
+		 */
 		model.addAttribute("list",list);
 		return "review/myReviewList";
 	}
@@ -184,7 +187,6 @@ public class ReviewController {
 		String setTitle = "["+displayName+"]"+r.getReviewTitle();
 		r.setReviewTitle(setTitle);
 		
-		System.out.println(reUpfile);
 		
 		if(reUpfile.getSize() == 0) {
 			
@@ -247,7 +249,7 @@ public class ReviewController {
 			  .setViewName("common/errorPage");
 			return mv;
 		}else {
-			System.out.println(rno);
+			/* System.out.println(rno); */
 		reviewService.selectCount(rno);
 		Review r = reviewService.selectReview(rno);
 		mv.addObject("rno", rno)
@@ -291,19 +293,33 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="deleteReview.re")
-	public String deleteReview(int rno, HttpSession session, Model model) {
+	public String deleteReview(Review r,int rno, HttpSession session, Model model) {
 		
 		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
-		Review r = new Review();
+
+		
 		r.setMemberNo(""+memberNo);
 		r.setReviewNo(rno);
 		
+		Review r2 = reviewService.selectReview(rno);
+		String Title =r2.getReviewTitle();
+		String displayName = Title.substring(Title.indexOf("[")+1,(Title.indexOf("]")));
 		
-		Review r = new Review();
-		r.setMemberNo(""+memberNo);
-		r.setReviewNo(rno);
-		int result = reviewService.deleteReview(r);
+		
+		//System.out.println(rno);
+		System.out.println(displayName);
+		
+		
+		// new 구문 쓰면 sqlSession이 생성안되서 null이됩니다. 
+		int displayNo = displayService.selectDisplayNo(displayName);
+		System.out.println(displayNo);
+		
+		Reserve re = new Reserve();
+		re.setMemberNo(""+memberNo);
+		re.setDisplayNo(""+displayNo);
+		int result = reviewService.deleteReview(r,re);
+		
 		
 		if(result>0) {
 			session.setAttribute("alertMsg", "삭제 성공 했습니다");
@@ -313,6 +329,7 @@ public class ReviewController {
 			return "/common/errorPage";
 		}
 		
+
 		
 		
 	}
