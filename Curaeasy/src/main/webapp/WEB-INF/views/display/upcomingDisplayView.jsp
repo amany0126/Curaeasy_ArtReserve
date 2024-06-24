@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -10,12 +11,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Grandiflora+One&display=swap" rel="stylesheet">
 
-    <title>예정 전시</title>
+    <title>현재 전시</title>
     <style>
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: auto;
             padding: 20px;
+            margin-bottom: 50px;
         }
         .header, .footer {
             background-color: #f8f8f8;
@@ -23,7 +25,7 @@
             text-align: center;
         }
         .content {
-            padding: 20px;
+            padding: 0px;
         }
         .content-header {
             margin-bottom: 20px;
@@ -94,29 +96,8 @@
             line-height: 1.5;
             margin-bottom: 10px;
         }
-        .no-exhibition {
-            text-align: center;
-            font-size: 1.5em;
-            color: #777;
-            padding: 50px 0;
-        }
         .search-box>input { border-radius: 20px;}
         .search-box>button { border-radius: 20px;}
-        .pagination {
-            text-align: center;
-            margin-top: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .pagination a {
-            margin: 0 5px;
-            text-decoration: none;
-            color: #333;
-        }
-        .pagination a.active {
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
@@ -131,35 +112,81 @@
             <a href="offDisplay.do">지난전시</a>
         </div>
         <div class="content-header">
-            <h1>예정 전시</h1>
-        </div>
-        <div class="search-box">
-            <form action="searchUpcomingDisplay.do" method="get">
-                <input type="text" name="keyword" placeholder="검색어를 입력하세요" />
-                <button type="submit">검색</button>
-            </form>
+            <h1>예정된 전시</h1>
         </div>
         <div class="exhibition-list">
-            <c:forEach var="exhibition" items="${ upcomingDisplayList }">
+            <c:forEach var="exhibition" items="${ list }">
                 <div class="exhibition-item">
-                    <img src="<c:url value='/resources/display/${exhibition.imagePath}' />" alt="전시 이미지">
-                    <h2>${ exhibition.displayName }</h2>
-                    <p>${ exhibition.displayStartDate } ~ ${ exhibition.displayEndDate }</p>
+                	<div style="text-align: right"><button name="${ exhibition.displayNo }" class="btn btn-outline-dark" onclick="likeCheck(this);">❤ ${ exhibition.likeCount }</button></div>
+                    <a href="displayDetail.do?dno=${exhibition.displayNo}" style="text-decoration: none; color: black;" >
+                        <img src="<c:url value='/resources/display/${exhibition.imagePath}' />" alt="전시 이미지">
+                        <h2>${ exhibition.displayName }</h2>
+                        <p>${ exhibition.displayContent }</p>
+                        <p>${ exhibition.displayStartDate } ~ ${ exhibition.displayEndDate }</p>
+                    </a>
                 </div>
             </c:forEach>
-            <c:if test="${ empty upcomingDisplayList }">
+            <c:if test="${ empty list }">
                 <div class="no-exhibition">예정된 전시가 없습니다.</div>
             </c:if>
         </div>
-        <div class="pagination">
-            <a href="#" class="prev">«</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#" class="next">»</a>
-        </div>
     </div>
 </div>
+
+<script>
+    $(function() {
+
+        if("${sessionScope.loginUser}" === ""){
+            return false;
+        }
+
+        let displayNoList = ${requestScope.displayNoList}
+
+        displayNoList.forEach(function(element, index) {
+            let btn = $("button[name=" + element + "]")[0];
+            if(btn != undefined){
+                btn.className = "btn btn-danger";
+            }
+        });
+
+        if(displayNoList.length == 0){
+            return false;
+        }        
+    });
+
+    function likeCheck(event) {
+        
+        let isIncrease = $(event).hasClass("btn-outline-dark") ? true : false;
+
+        if("${sessionScope.loginUser}" === ""){
+            alert("로그인 후 이용 가능합니다.");
+            return false;
+        }
+
+        $.ajax({
+            url: "modifyLike.do",
+            method: "GET",
+            data : {
+                memberNo: "${sessionScope.loginUser.memberNo}",
+                displayNo: event.name,
+                isIncrease: isIncrease
+            },
+            success : function(result) {
+                if(isIncrease){
+                    event.className = "btn btn-danger"
+                    event.innerText = "❤ " + (Number(event.innerText.slice(2, 3)) + 1);
+                } else {
+                    event.className = "btn btn-outline-dark"                    
+                    event.innerText = "❤ " + (Number(event.innerText.slice(2, 3)) - 1);
+                }
+            },
+            error: function() {
+                console.log("좋아요 조작 ajax 실패")
+            }
+        });
+        
+    }
+</script>
 
 <jsp:include page="../common/footer.jsp" />
 

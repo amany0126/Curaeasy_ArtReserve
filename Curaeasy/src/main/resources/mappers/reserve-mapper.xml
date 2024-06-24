@@ -23,7 +23,8 @@
 						   #{paymentPrice},
 						   DEFAULT,
 						   #{memberNo},
-						   #{displayNo}
+						   #{displayNo},
+						   DEFAULT
 					)
 	</insert>
 	<select id="selectLastInsertedReserve" resultMap="reserveResultSet" parameterType="string">

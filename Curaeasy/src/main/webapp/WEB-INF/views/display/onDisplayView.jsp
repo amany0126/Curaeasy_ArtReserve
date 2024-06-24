@@ -115,7 +115,7 @@
             <h1>진행중인 전시</h1>
         </div>
         <div class="exhibition-list">
-            <c:forEach var="exhibition" items="${ onDisplayList }">
+            <c:forEach var="exhibition" items="${ list }">
                 <div class="exhibition-item">
                 	<div style="text-align: right"><button name="${ exhibition.displayNo }" class="btn btn-outline-dark" onclick="likeCheck(this);">❤ ${ exhibition.likeCount }</button></div>
                     <a href="displayDetail.do?dno=${exhibition.displayNo}" style="text-decoration: none; color: black;" >
@@ -126,7 +126,7 @@
                     </a>
                 </div>
             </c:forEach>
-            <c:if test="${ empty onDisplayList }">
+            <c:if test="${ empty list }">
                 <div class="no-exhibition">진행중인 전시가 없습니다.</div>
             </c:if>
         </div>

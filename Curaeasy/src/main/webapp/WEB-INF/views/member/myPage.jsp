@@ -62,7 +62,7 @@
                     <input type="text" class="form-control" id="userName" value="${sessionScope.loginUser.memberName}" name="memberName" required> <br>
 
                     <label for="email"> &nbsp; 이메일 : </label>
-                    <input type="text" class="form-control" id="email" value="${sessionScope.loginUser.memberEmail}" name="memberEmail"> <br>
+                    <input type="text" class="form-control" id="email" value="${sessionScope.loginUser.memberEmail}" name="memberEmail" disabled> <br>
 
                    <!--  <label for="age"> &nbsp; Age : </label>
                     <input type="number" class="form-control" id="age" value="30" name=""> <br> -->
