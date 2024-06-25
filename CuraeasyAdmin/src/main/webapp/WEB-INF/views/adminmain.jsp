@@ -47,7 +47,7 @@
                             <div class="card bg-primary text-white mb-4">
                                 <div class="card-body">회원수</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <div class="small text-white">1234</div>
+                                    <div class="small text-white">${memberCount}</div>
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                             <div class="card bg-success text-white mb-4">
                                 <div class="card-body">당해 매출액</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <div class="small text-white">₩1,234,567</div>
+                                    <div class="small text-white">₩${sales}</div>
                                 </div>
                             </div>
                         </div>
@@ -63,7 +63,7 @@
                             <div class="card bg-warning text-white mb-4">
                                 <div class="card-body">전시 수</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <div class="small text-white">56</div>
+                                    <div class="small text-white">${exhibitionCount}</div>
                                 </div>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                             <div class="card bg-danger text-white mb-4">
                                 <div class="card-body">작가 승인 대기 중</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <div class="small text-white">7</div>
+                                    <div class="small text-white">${artistsAwaitingApproval}</div>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +114,24 @@
         </div>
     </div>
 
-    <script>
+    <script type="text/javascript">
+        // Initialize monthly data with zero counts
+        var monthlyData = Array(12).fill(0);
+
+        // Overwrite with actual data from the server
+        <c:forEach items="${monthlyReservations}" var="data">
+            monthlyData[${data.month - 1}] = ${data.count}; // Subtract 1 for zero-based index
+        </c:forEach>
+
+        var topDisplaysLabels = [];
+        var topDisplaysCounts = [];
+
+        // Populate top displays data
+        <c:forEach items="${topDisplays}" var="display">
+            topDisplaysLabels.push('전시' + ${display.displayNo});
+            topDisplaysCounts.push(${display.totalReservations});
+        </c:forEach>
+
         // Monthly Reservation Chart
         var ctx1 = document.getElementById('monthlyReservationChart').getContext('2d');
         var monthlyReservationChart = new Chart(ctx1, {
@@ -123,7 +140,7 @@
                 labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
                 datasets: [{
                     label: '예매수',
-                    data: [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120],
+                    data: monthlyData,  // Monthly data with zero counts for months with no data
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
@@ -143,10 +160,10 @@
         var top5ExhibitionsChart = new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: ["전시1", "전시2", "전시3", "전시4", "전시5"],
+                labels: topDisplaysLabels,
                 datasets: [{
                     label: '예매량',
-                    data: [150, 120, 100, 80, 60],
+                    data: topDisplaysCounts,
                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
                     borderColor: 'rgba(153, 102, 255, 1)',
                     borderWidth: 1

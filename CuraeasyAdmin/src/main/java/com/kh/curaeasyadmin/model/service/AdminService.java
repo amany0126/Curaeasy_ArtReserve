@@ -2,6 +2,7 @@ package com.kh.curaeasyadmin.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -22,6 +23,32 @@ public class AdminService {
     
     @Autowired
     private SqlSessionTemplate sqlSession;
+    
+    // 대시보드 관련
+    
+    public int getMemberCount() {
+        return adminDao.getMemberCount(sqlSession);
+    }
+
+    public int getCurrentYearSales() {
+        return adminDao.getCurrentYearSales(sqlSession);
+    }
+
+    public int getExhibitionCount() {
+        return adminDao.getExhibitionCount(sqlSession);
+    }
+
+    public int getArtistsAwaitingApproval() {
+        return adminDao.getArtistsAwaitingApproval(sqlSession);
+    }
+    
+    public List<Map<String, Object>> getTop5Displays() {
+        return adminDao.getTop5Displays(sqlSession);
+    }
+
+    public List<Map<String, Object>> getMonthlyReservationCounts() {
+        return adminDao.getMonthlyReservationCounts(sqlSession);
+    }
 
     // 전시회 관리
     public int getDisplayListCount(String searchKeyword) {
