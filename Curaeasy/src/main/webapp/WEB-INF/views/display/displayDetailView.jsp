@@ -15,43 +15,35 @@
         }
         .container {
             max-width: 1200px;
-            margin: auto;
+            margin: auto; margin-top: 50px;
             padding: 20px;
+
         }
         .header, .footer {
             background-color: #f8f8f8;
             padding: 20px;
             text-align: center;
         }
-        .content {
-            padding: 20px;
-        }
+        .content { padding: 20px; }
         .content-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
         }
-        .content-header h1 {
-            font-size: 2em;
-            margin: 0;
-        }
+        .content-header h1 { font-size: 2em; margin: 0; }
         .exhibition-details {
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
         }
-        .exhibition-item {
-            width: 45%;
-        }
+        .exhibition-item { width: 45%; }
         .exhibition-item img {
             width: 100%;
             height: auto;
             object-fit: cover;
         }
-        .exhibition-info {
-            width: 45%;
-        }
+        .exhibition-info { width: 45%; }
         .exhibition-item table {
             width: 100%;
             border-collapse: collapse;
@@ -61,12 +53,8 @@
             padding: 8px;
             text-align: left;
         }
-        .exhibition-item th {
-            background-color: #f2f2f2;
-        }
-        .exhibition-intro {
-            margin-top: 40px;
-        }
+        .exhibition-item th { background-color: #f2f2f2; }
+        .exhibition-intro { margin-top: 40px; }
         .exhibition-intro h2 {
             font-size: 1.8em;
             margin-bottom: 20px;
@@ -77,31 +65,27 @@
             object-fit: cover;
             margin-bottom: 20px;
         }
-        .exhibition-intro p {
-            font-size: 1em;
-            line-height: 1.5;
-        }
-        .back-to-list {
-            text-align: center;
-            margin-top: 20px;
-        }
+        .exhibition-intro p { font-size: 1em; line-height: 1.5; }
+        .back-to-list { text-align: center; margin-top: 30px; margin-bottom: 50px; }
         .back-to-list a {
             text-decoration: none;
-            color: #fff;
-            background-color: #333;
+            color: black;
+            background-color: white;
             padding: 10px 20px;
-            border-radius: 5px;
+            border-radius: 20px;
+            border :  1px solid black;
+        }
+        .back-to-list a:hover {
+            background-color: black; color:white;
+            /*transform: translateY(10px); a라 안됨*/
         }
         hr {
             border: 0;
             border-top: 2px solid #ccc;
-            margin: 20px 0;
+            margin: 30px 0;
         }
 
-        #calendar-container a{
-            color: black;
-            text-decoration: none;
-        }
+        #calendar-container a{ color: black; text-decoration: none;}
     </style>
 
     <!-- jQuery UI CSS -->
@@ -148,6 +132,9 @@
     .fc-day-sat a {
         color: blue;
     }
+
+
+
     </style>
 
 </head>

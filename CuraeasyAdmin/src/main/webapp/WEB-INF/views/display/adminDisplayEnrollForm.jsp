@@ -9,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>전시 수정</title>
+    <title>전시 추가</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -41,23 +41,7 @@
         .form-control-file {
             margin-top: 10px;
         }
-        .attachment-item {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .attachment-item img {
-            max-width: 100px;
-            margin-right: 10px;
-        }
-        .attachment-item p {
-            margin: 0;
-            flex: 1;
-        }
-        .attachment-item button {
-            margin-left: 10px;
-        }
-        .btn-primary, .btn-danger {
+        .btn-primary {
             width: 100px;
             margin-top: 20px;
         }
@@ -85,64 +69,54 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container">
-                    <h1 class="mt-4">전시 수정</h1>
-                    <form action="${path}/updateDisplay.ad" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="displayNo" value="${ requestScope.display.displayNo}" />
+                    <h1 class="mt-4">전시 추가</h1>
+                    <form action="${path}/addDisplay.ad" method="post" enctype="multipart/form-data">
                         <div class="form-group mb-3">
                             <label for="displayName">전시명</label>
-                            <input type="text" class="form-control" id="displayName" name="displayName" value="${ requestScope.display.displayName}" required>
+                            <input type="text" class="form-control" id="displayName" name="displayName" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="displayContent">내용</label>
-                            <textarea class="form-control" id="displayContent" name="displayContent" rows="3" required>${ requestScope.display.displayContent}</textarea>
+                            <textarea class="form-control" id="displayContent" name="displayContent" rows="3" required></textarea>
                         </div>
                         <div class="form-group mb-3">
                             <label for="displayStartDate">시작일</label>
-                            <input type="date" class="form-control" id="displayStartDate" name="displayStartDate" value="${ requestScope.display.displayStartDate}" required>
+                            <input type="date" class="form-control" id="displayStartDate" name="displayStartDate" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="displayEndDate">종료일</label>
-                            <input type="date" class="form-control" id="displayEndDate" name="displayEndDate" value="${ requestScope.display.displayEndDate}" required>
+                            <input type="date" class="form-control" id="displayEndDate" name="displayEndDate" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="displayPrice">가격</label>
-                            <input type="number" class="form-control" id="displayPrice" name="displayPrice" value="${ requestScope.display.displayPrice}" required>
+                            <input type="number" class="form-control" id="displayPrice" name="displayPrice" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="displayStatus">상태</label>
                             <select class="form-control" id="displayStatus" name="displayStatus" required>
-                                <option value="예정" ${ requestScope.display.displayStatus == '예정' ? 'selected' : ''}>예정</option>
-                                <option value="진행" ${ requestScope.display.displayStatus == '진행' ? 'selected' : ''}>진행</option>
-                                <option value="종료" ${ requestScope.display.displayStatus == '종료' ? 'selected' : ''}>종료</option>
-                                <option value="폐기" ${ requestScope.display.displayStatus == '폐기' ? 'selected' : ''}>폐기</option>
+                                <option value="예정">예정</option>
+                                <option value="진행">진행</option>
+                                <option value="종료">종료</option>
+                                <option value="폐기">폐기</option>
                             </select>
                         </div>
                         <div class="form-group mb-3">
                             <label for="artistNickName">작가명</label>
-                            <input type="text" class="form-control" id="artistNickName" name="artistNickName" value="${ requestScope.display.artistNickName}" required>
+                            <input type="text" class="form-control" id="artistNickName" name="artistNickName" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="galleryName">전시관명</label>
-                            <input type="text" class="form-control" id="galleryName" name="galleryName" value="${ requestScope.display.galleryName}" required>
+                            <input type="text" class="form-control" id="galleryName" name="galleryName" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="attachments">첨부파일 추가</label>
                             <input type="file" class="form-control-file" id="attachments" name="attachments" multiple>
                         </div>
                         <div class="form-group mb-3">
-                            <label>현재 첨부파일</label>
-                                <div class="attachment-item">
-                                    <img src="../../../curaeasy/resources/display/${requestScope.attachments.changeName}" alt="${ requestScope.attachments.originName}">
-                                    <p>${attachments.originName}</p>
-                                    <button type="button" class="btn btn-danger btn-delete-attachment" data-attachment-no="${ requestScope.attachments.attachmentNo}">삭제</button>
-                                </div>
-                        </div>
-                        <div class="form-group mb-3">
                             <label>첨부파일 미리보기</label>
                             <div id="preview" class="preview"></div>
                         </div>
-                        <button type="submit" class="btn btn-primary">수정하기</button>
-                        <button type="button" class="btn btn-secondary" onclick="history.back();">취소하기</button>
+                        <button type="submit" class="btn btn-primary">추가하기</button>
                     </form>
                 </div>
             </main>
@@ -158,32 +132,6 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll('.btn-delete-attachment').forEach(button => {
-                button.addEventListener('click', function() {
-                    if (confirm('정말 이 파일을 삭제하시겠습니까?')) {
-                        const attachmentNo = this.dataset.attachmentNo;
-                        fetch('${path}/deleteAttachment.ad', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ attachmentNo: attachmentNo })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                this.closest('.attachment-item').remove();
-                            } else {
-                                alert('파일 삭제에 실패했습니다.');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-                    }
-                });
-            });
-
             document.getElementById('attachments').addEventListener('change', function(event) {
                 const files = event.target.files;
                 const preview = document.getElementById('preview');

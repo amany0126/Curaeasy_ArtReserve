@@ -19,9 +19,18 @@
         <result column="GALLERY_NAME" property="galleryName"/>
         <result column="ARTIST_NICKNAME" property="artistNickName"/>
     </resultMap>
+    
+    <resultMap id="displayAttachmentResultMap" type="com.kh.curaeasyadmin.model.vo.DisplayAttachment">
+        <result column="ATTACHMENT_NO" property="attachmentNo"/>
+        <result column="ORIGIN_NAME" property="originName"/>
+        <result column="CHANGE_NAME" property="changeName"/>
+        <result column="IMAGE_LEVEL" property="imageLevel"/>
+        <result column="STATUS" property="status"/>
+        <result column="DISPLAY_NO" property="displayNo"/>
+    </resultMap>
 
     <!-- 전시관 Result Map -->
-    <resultMap id="galleryResultMap" type="gallery">
+    <resultMap id="galleryResultMap" type="com.kh.curaeasyadmin.model.vo.Gallery">
         <result property="galleryNo" column="GALLERY_NO"/>
         <result property="galleryName" column="GALLERY_NAME"/>
         <result property="galleryPlace" column="GALLERY_PLACE"/>
@@ -113,7 +122,7 @@
     </resultMap>
 
     <!-- 댓글 Result Map -->
-    <resultMap id="replyResultSet" type="reply">
+    <resultMap id="replyResultSet" type="com.kh.curaeasyadmin.model.vo.Reply">
         <result column="REPLY_NO" property="replyNo"/>
         <result column="REPLY_CONTENT" property="replyContent"/>
         <result column="REPLY_ENROLL_DATE" property="replyEnrollDate"/>
@@ -189,12 +198,25 @@
             DISPLAY_PRICE,
             DISPLAY_STATUS,
             ARTIST_NO,
-            GALLERY_NO
+            GALLERY_NO,
+            (SELECT CHANGE_NAME FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = #{displayNo} AND IMAGE_LEVEL = 1 AND ROWNUM = 1) AS IMAGE_PATH
         FROM DISPLAY
         WHERE DISPLAY_NO = #{displayNo}
     </select>
+    
+    <select id="selectAttachmentsByDisplayNo" parameterType="int" resultMap="displayAttachmentResultMap">
+        SELECT 
+            ATTACHMENT_NO,
+            ORIGIN_NAME,
+            CHANGE_NAME,
+            IMAGE_LEVEL,
+            STATUS,
+            DISPLAY_NO
+        FROM DISPLAY_ATTACHMENT
+        WHERE DISPLAY_NO = #{displayNo}
+    </select>
 
-    <update id="updateDisplay" parameterType="display">
+   <update id="displayUpdate" parameterType="com.kh.curaeasyadmin.model.vo.Display">
         UPDATE DISPLAY
         SET DISPLAY_NAME = #{displayName},
             DISPLAY_CONTENT = #{displayContent},
@@ -206,94 +228,136 @@
             GALLERY_NO = (SELECT GALLERY_NO FROM GALLERY WHERE GALLERY_NAME = #{galleryName})
         WHERE DISPLAY_NO = #{displayNo}
     </update>
+		
+	<update id="displayAttUpdate" parameterType="com.kh.curaeasyadmin.model.vo.DisplayAttachment">
+        UPDATE DISPLAY_ATTACHMENT
+        SET CHANGE_NAME = #{changeName}
+        WHERE DISPLAY_NO = #{displayNo}
+    </update>
+    
 
     <update id="deleteDisplay" parameterType="int">
         UPDATE DISPLAY
         SET DISPLAY_STATUS = '종료'
         WHERE DISPLAY_NO = #{displayNo}
     </update>
+    
+    <!-- Insert new display -->
+    <insert id="addDisplay" parameterType="com.kh.curaeasyadmin.model.vo.Display">
+        INSERT INTO DISPLAY (DISPLAY_NO, DISPLAY_NAME, DISPLAY_CONTENT, DISPLAY_START_DATE, DISPLAY_END_DATE, DISPLAY_PRICE, DISPLAY_STATUS, ARTIST_NO, GALLERY_NO)
+        VALUES (SEQ_DISPLAY_NO.NEXTVAL, #{displayName}, #{displayContent}, #{displayStartDate}, #{displayEndDate}, #{displayPrice}, #{displayStatus},
+                (SELECT ARTIST_NO FROM ARTIST WHERE ARTIST_NICKNAME = #{artistNickName}),
+                (SELECT GALLERY_NO FROM GALLERY WHERE GALLERY_NAME = #{galleryName}))
+    </insert>
+
+    <!-- Insert display attachment -->
+    <insert id="addDisplayAttachment" parameterType="com.kh.curaeasyadmin.model.vo.DisplayAttachment">
+        INSERT INTO DISPLAY_ATTACHMENT (ATTACHMENT_NO, ORIGIN_NAME, CHANGE_NAME, IMAGE_LEVEL, STATUS, DISPLAY_NO)
+        VALUES (SEQ_DISPLAY_ATTACHMENT_NO.NEXTVAL, #{originName}, #{changeName}, #{imageLevel}, #{status}, #{displayNo})
+    </insert>
 
     <!-- 전시관 관리 -->
-    <select id="getGalleryListCount" parameterType="String" resultType="int">
-        SELECT COUNT(*)
-        FROM GALLERY
-        WHERE GALLERY_NAME LIKE '%' || #{searchKeyword} || '%'
-        OR GALLERY_PLACE LIKE '%' || #{searchKeyword} || '%'
-        OR GALLERY_TYPE LIKE '%' || #{searchKeyword} || '%'
+	<select id="getGalleryListCount" parameterType="String" resultType="int">
+	    SELECT COUNT(*)
+	    FROM GALLERY
+	    WHERE GALLERY_NAME LIKE '%' || #{searchKeyword} || '%'
+	    OR GALLERY_PLACE LIKE '%' || #{searchKeyword} || '%'
+	    OR GALLERY_TYPE LIKE '%' || #{searchKeyword} || '%'
+	</select>
+	
+	<select id="selectGalleryList" parameterType="map" resultMap="galleryResultMap">
+	    SELECT 
+	        GALLERY_NO,
+	        GALLERY_NAME,
+	        GALLERY_PLACE,
+	        GALLERY_INFO,
+	        GALLERY_TYPE
+	    FROM GALLERY
+	    WHERE GALLERY_NAME LIKE '%' || #{searchKeyword} || '%'
+	    OR GALLERY_PLACE LIKE '%' || #{searchKeyword} || '%'
+	    OR GALLERY_TYPE LIKE '%' || #{searchKeyword} || '%'
+	    ORDER BY GALLERY_NO DESC
+	</select>
+	
+	<select id="selectGallery" parameterType="int" resultMap="galleryResultMap">
+	    SELECT 
+	        GALLERY_NO,
+	        GALLERY_NAME,
+	        GALLERY_PLACE,
+	        GALLERY_INFO,
+	        GALLERY_TYPE
+	    FROM GALLERY
+	    WHERE GALLERY_NO = #{galleryNo}
+	</select>
+	
+	<update id="updateGallery" parameterType="com.kh.curaeasyadmin.model.vo.Gallery">
+	    UPDATE GALLERY
+	    SET GALLERY_NAME = #{galleryName},
+	        GALLERY_PLACE = #{galleryPlace},
+	        GALLERY_INFO = #{galleryInfo},
+	        GALLERY_TYPE = #{galleryType}
+	    WHERE GALLERY_NO = #{galleryNo}
+	</update>
+	
+	<insert id="addGallery" parameterType="com.kh.curaeasyadmin.model.vo.Gallery">
+        INSERT INTO GALLERY (GALLERY_NO, GALLERY_NAME, GALLERY_PLACE, GALLERY_INFO, GALLERY_TYPE)
+        VALUES (SEQ_GALLERY_NO.NEXTVAL, #{galleryName}, #{galleryPlace}, #{galleryInfo}, #{galleryType})
+    </insert>
+	
+	<update id="deleteGallery" parameterType="int">
+	    DELETE FROM GALLERY
+	    WHERE GALLERY_NO = #{galleryNo}
+	</update>
+	
+
+	<!-- 대관신청 관리 -->
+	<select id="getRentalListCount" parameterType="map" resultType="int">
+	    SELECT COUNT(*)
+	    FROM RENTAL R
+	    LEFT JOIN GALLERY G ON R.GALLERY_NO = G.GALLERY_NO
+	    LEFT JOIN ARTIST A ON R.ARTIST_NO = A.ARTIST_NO
+	    <where>
+	        <if test="searchCategory != null and searchCategory != '' and searchKeyword != null and searchKeyword != ''">
+	            ${searchCategory} LIKE '%' || #{searchKeyword} || '%'
+	        </if>
+	    </where>
+	</select>
+	
+	<select id="selectRentalList" parameterType="map" resultMap="rentalResultMap">
+	    SELECT R.*, G.GALLERY_NAME, A.ARTIST_NICKNAME
+	    FROM RENTAL R
+	    LEFT JOIN GALLERY G ON R.GALLERY_NO = G.GALLERY_NO
+	    LEFT JOIN ARTIST A ON R.ARTIST_NO = A.ARTIST_NO
+	    <where>
+	        <if test="searchCategory != null and searchCategory != '' and searchKeyword != null and searchKeyword != ''">
+	            ${searchCategory} LIKE '%' || #{searchKeyword} || '%'
+	        </if>
+	    </where>
+	    ORDER BY R.RENTAL_NO DESC
+	</select>
+
+    
+    <select id="selectRentalByNo" parameterType="int" resultMap="rentalResultMap">
+        SELECT * FROM RENTAL WHERE RENTAL_NO = #{rentalNo}
     </select>
 
-    <select id="selectGalleryList" parameterType="map" resultMap="galleryResultMap">
-        SELECT 
-            GALLERY_NO,
-            GALLERY_NAME,
-            GALLERY_PLACE,
-            GALLERY_INFO,
-            GALLERY_TYPE
-        FROM GALLERY
-        WHERE GALLERY_NAME LIKE '%' || #{searchKeyword} || '%'
-        OR GALLERY_PLACE LIKE '%' || #{searchKeyword} || '%'
-        OR GALLERY_TYPE LIKE '%' || #{searchKeyword} || '%'
-        ORDER BY GALLERY_NO DESC
-    </select>
-
-    <select id="selectGallery" parameterType="int" resultMap="galleryResultMap">
-        SELECT 
-            GALLERY_NO,
-            GALLERY_NAME,
-            GALLERY_PLACE,
-            GALLERY_INFO,
-            GALLERY_TYPE
-        FROM GALLERY
-        WHERE GALLERY_NO = #{galleryNo}
-    </select>
-
-    <!-- 대관신청 관리 -->
-    <select id="getRentalListCount" parameterType="map" resultType="int">
-        SELECT COUNT(*)
-        FROM RENTAL R
-        JOIN ARTIST A ON R.ARTIST_NO = A.ARTIST_NO
-        JOIN GALLERY G ON R.GALLERY_NO = G.GALLERY_NO
-        <where>
-            <if test="searchCategory != null and searchKeyword != null">
-                <if test="searchCategory == 'rentalNo'">
-                    R.RENTAL_NO LIKE '%' || #{searchKeyword} || '%'
-                </if>
-                <if test="searchCategory == 'galleryName'">
-                    G.GALLERY_NAME LIKE '%' || #{searchKeyword} || '%'
-                </if>
-                <if test="searchCategory == 'artistNickName'">
-                    A.ARTIST_NICKNAME LIKE '%' || #{searchKeyword} || '%'
-                </if>
-            </if>
-        </where>
-    </select>
-
-    <select id="selectRentalList" parameterType="map" resultMap="rentalResultMap">
-        SELECT 
-            R.RENTAL_NO,
-            R.RENTAL_START_DATE,
-            R.RENTAL_END_DATE,
-            R.RENTAL_STATUS,
-            G.GALLERY_NAME,    
-            A.ARTIST_NICKNAME
-        FROM RENTAL R
-        JOIN ARTIST A ON R.ARTIST_NO = A.ARTIST_NO
-        JOIN GALLERY G ON R.GALLERY_NO = G.GALLERY_NO
-        <where>
-            <if test="searchCategory != null and searchKeyword != null">
-                <if test="searchCategory == 'rentalNo'">
-                    R.RENTAL_NO LIKE '%' || #{searchKeyword} || '%'
-                </if>
-                <if test="searchCategory == 'galleryName'">
-                    G.GALLERY_NAME LIKE '%' || #{searchKeyword} || '%'
-                </if>
-                <if test="searchCategory == 'artistNickName'">
-                    A.ARTIST_NICKNAME LIKE '%' || #{searchKeyword} || '%'
-                </if>
-            </if>
-        </where>
-        ORDER BY R.RENTAL_NO DESC
-    </select>
+    <update id="updateRentalStatus" parameterType="int">
+        UPDATE RENTAL
+        SET RENTAL_STATUS = 'N'
+        WHERE RENTAL_NO = #{rentalNo}
+    </update>
+    
+    <update id="updateRental" parameterType="com.kh.curaeasyadmin.model.vo.Rental">
+        UPDATE RENTAL
+        SET 
+            RENTAL_START_DATE = #{rentalStartDate},
+            RENTAL_END_DATE = #{rentalEndDate},
+            RENTAL_STATUS = #{rentalStatus},
+            GALLERY_NO = #{galleryNo},
+            ARTIST_NO = #{artistNo}
+        WHERE RENTAL_NO = #{rentalNo}
+    </update>
+   
 
     <!-- 예매 관리 -->
     <select id="getReserveListCount" parameterType="map" resultType="int">
@@ -395,7 +459,7 @@
         SELECT COUNT(*) FROM REVIEW
     </select>
 
-    <!-- 일반회원 관리 -->
+	<!-- 회원 관리 -->
     <select id="selectMemberList" resultMap="memberResultSet">
         SELECT 
             MEMBER_NO,
@@ -419,6 +483,63 @@
         SELECT COUNT(*) FROM MEMBER
     </select>
 
+    <select id="getMemberById" parameterType="int" resultMap="memberResultSet">
+        SELECT 
+            MEMBER_NO,
+            MEMBER_ID,
+            MEMBER_PWD,
+            MEMBER_NAME,
+            MEMBER_PHONE,
+            MEMBER_EMAIL,
+            MEMBER_ADDRESS,
+            MEMBER_BIRTHDAY,
+            MEMBER_ENROLL_DATE,
+            ARTIST_ONGOING,
+            MEMBER_STATUS
+        FROM 
+            MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+
+    <select id="selectMemberById" parameterType="int" resultType="com.kh.curaeasyadmin.model.vo.Member">
+        SELECT 
+            MEMBER_NO,
+            MEMBER_ID,
+            MEMBER_NAME,
+            MEMBER_PHONE,
+            MEMBER_EMAIL,
+            MEMBER_ADDRESS,
+            MEMBER_BIRTHDAY,
+            MEMBER_ENROLL_DATE,
+            MEMBER_STATUS,
+            ARTIST_ONGOING
+        FROM 
+            MEMBER
+        WHERE 
+            MEMBER_NO = #{memberNo}
+    </select>
+
+    <!-- Update a member's details -->
+    <update id="updateMember" parameterType="com.kh.curaeasyadmin.model.vo.Member">
+        UPDATE MEMBER
+        SET 
+            MEMBER_NAME = #{memberName},
+            MEMBER_PHONE = #{memberPhone},
+            MEMBER_EMAIL = #{memberEmail},
+            MEMBER_ADDRESS = #{memberAddress},
+            MEMBER_STATUS = #{memberStatus},
+            ARTIST_ONGOING = #{artistOngoing}
+        WHERE 
+            MEMBER_NO = #{memberNo}
+    </update>
+
+    <update id="updateMemberStatus" parameterType="int">
+        UPDATE MEMBER
+        SET MEMBER_STATUS = 'N'
+        WHERE MEMBER_NO = #{memberNo}
+    </update>
+
+
     <!-- 작가 관리 -->
     <select id="selectArtistList" resultMap="artistResultSet">
         SELECT 
@@ -441,6 +562,21 @@
     <select id="getArtistListCount" resultType="int">
         SELECT COUNT(*) FROM ARTIST
     </select>
+    
+    <update id="updateArtistStatus" parameterType="map">
+    UPDATE ARTIST
+    SET ARTIST_RESULT = #{artistResult}, ARTIST_STATUS = #{artistStatus}
+    WHERE ARTIST_NO = #{artistNo}
+	</update>
+	
+	<update id="updateArtist" parameterType="Artist">
+    UPDATE ARTIST
+    SET ARTIST_NICKNAME = #{artistNickName},
+        ARTIST_ORDINAL = #{artistOrdinal},
+        ARTIST_INTRODUCE = #{artistIntroduce},
+        ARTIST_IMAGE = #{artistImage}
+    WHERE ARTIST_NO = #{artistNo}
+	</update>
 
     <!-- 댓글 관리 -->
     <select id="selectReplyList" resultMap="replyResultSet">
@@ -456,5 +592,8 @@
         ORDER BY 
             REPLY_NO
     </select>
-
+	
+	<select id="selectAttachments" parameterType="_int" resultMap="displayAttachmentResultMap">
+        SELECT * FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = #{displayNo}
+    </select>
 </mapper>

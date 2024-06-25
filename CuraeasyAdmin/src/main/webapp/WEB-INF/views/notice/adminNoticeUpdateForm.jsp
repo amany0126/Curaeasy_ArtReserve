@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -9,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>대관 관리</title>
+    <title>전시관리</title>
     
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
@@ -75,7 +76,7 @@
         .truncate {
             max-width: 200px; /* Adjust the width as needed */
         }
-        .btn-add-rental {
+        .btn-add-exhibition {
             margin-right: 10px;
         }
         .search-bar {
@@ -138,16 +139,10 @@
             text-align: center;
             vertical-align: middle;
         }
-        
-        /* Disabled button style */
-        .btn-disabled {
-            background-color: grey;
-            pointer-events: none;
-        }
     </style>
     <script>
-        function goToDetail(rentalNo) {
-            window.location.href = '${path}/rentalDetail.ad?rentalNo=' + rentalNo;
+        function goToDetail(noticeNo) {
+            window.location.href = '${path}/noticeDetail.ad?noticeNo=' + noticeNo;
         }
 
         function truncateText(selector, maxLength) {
@@ -159,17 +154,35 @@
             });
         }
 
+        function formatPrice() {
+            const priceElements = document.querySelectorAll('.price');
+            priceElements.forEach(element => {
+                let price = element.textContent;
+                price = parseInt(price).toLocaleString() + '원';
+                element.textContent = price;
+            });
+        }
+
         function formatDate() {
             const dateElements = document.querySelectorAll('.date');
             dateElements.forEach(element => {
                 let date = element.textContent;
-                element.textContent = date.split(" ")[0];
+                element.textContent = date.split(" ")[0] + ' ' + date.split(" ")[1].slice(0, 5);
+            });
+        }
+
+        function formatAttachment() {
+            const attachmentElements = document.querySelectorAll('.attachment');
+            attachmentElements.forEach(element => {
+                element.textContent = element.textContent ? 'Y' : 'N';
             });
         }
 
         document.addEventListener("DOMContentLoaded", function() {
             truncateText('.truncate', 20);
+            formatPrice();
             formatDate();
+            formatAttachment();
             
             // 검색 버튼 클릭 이벤트
             $("#searchButton").click(function() {
@@ -187,13 +200,13 @@
                 var searchValue = $("#searchInput").val().toLowerCase();
                 var searchCategory = $("#searchCategory").val();
                 $("table tbody tr").filter(function() {
-                    var textToSearch = $(this).find('td:eq(1)').text().toLowerCase(); // 기본 전시명 검색
-                    if (searchCategory === "rentalNo") {
-                        textToSearch = $(this).find('td:eq(0)').text().toLowerCase();
-                    } else if (searchCategory === "galleryName") {
-                        textToSearch = $(this).find('td:eq(4)').text().toLowerCase();
-                    } else if (searchCategory === "artistNickName") {
-                        textToSearch = $(this).find('td:eq(5)').text().toLowerCase();
+                    var textToSearch;
+                    if (searchCategory === "noticeTitle") {
+                        textToSearch = $(this).find('td:eq(1)').text().toLowerCase();
+                    } else if (searchCategory === "noticeContent") {
+                        textToSearch = $(this).find('td:eq(2)').text().toLowerCase();
+                    } else {
+                        textToSearch = $(this).text().toLowerCase();
                     }
                     $(this).toggle(textToSearch.indexOf(searchValue) > -1);
                 });
@@ -220,52 +233,45 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                   <h1 class="mt-4">🏢 대관 목록 조회</h1>
+                    <h1 class="mt-4">📢 공지사항 목록 조회</h1>  
                     <div class="search-bar">
                         <select id="searchCategory" class="form-select">
                             <option value="all">전체</option>
-                            <option value="rentalNo">대관번호</option>
-                            <option value="galleryName">전시관 이름</option>
-                            <option value="artistNickName">작가 이름</option>
+                            <option value="noticeTitle">제목</option>
+                            <option value="noticeContent">내용</option>
                         </select>
                         <input type="text" id="searchInput" class="form-control" placeholder="검색어 입력">
                         <button id="searchButton" class="btn btn-primary">검색</button>
+                        <button class="btn btn-success btn-add-exhibition" onclick="window.location.href='${path}/addNotice.ad'">공지 추가</button>
                     </div>
                     <div class="table-responsive">
                         <table id="datatablesSimple" class="table table-striped table-bordered">
                             <thead>
                                 <tr style="background-color: #007bff; color: white;">
-                                    <th>대관번호</th>
-                                    <th>대관 시작일</th>
-                                    <th>대관 종료일</th>
-                                    <th>대관 상태</th>
-                                    <th>전시관 이름</th>
-                                    <th>작가 이름</th>
-                                    <th>수정하기</th>
-                                    <th>취소하기</th>
+                                   <th>공지번호</th>
+                                    <th>제목</th>
+                                    <th>내용</th>
+                                    <th>작성일</th>
+                                    <th>첨부파일</th>
+                                    <th>조회수</th>
+                                    <th>상태</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach var="rental" items="${rentalList}">
-                                    <tr>
-                                        <td>${rental.rentalNo}</td>
-                                        <td class="date">${rental.rentalStartDate}</td>
-                                        <td class="date">${rental.rentalEndDate}</td>
-                                        <td>${rental.rentalStatus == 'Y' ? '대관중' : '취소됨'}</td>
-                                        <td>${rental.galleryName}</td>
-                                        <td>${rental.artistNickName}</td>
-                                        <td><button class="btn btn-warning" onclick="location.href='${path}/updateRental.ad?rentalNo=${rental.rentalNo}'">수정하기</button></td>
-                                        <td>
-                                            <button class="btn <c:if test='${rental.rentalStatus == "N"}'>btn-disabled</c:if> btn-danger"
-                                                    onclick="if('${rental.rentalStatus}' !== 'N') { location.href='${path}/updateRentalStatus.ad?rentalNo=${rental.rentalNo}'; } else { alert('이미 취소된 대관입니다.'); }">
-                                                취소하기
-                                            </button>
-                                        </td>
-                                    </tr>
+                                <c:forEach var="notice" items="${noticeList}">
+                                        <tr onclick="goToDetail(${notice.noticeNo})">
+                                            <td>${notice.noticeNo}</td>
+                                            <td>${notice.noticeTitle}</td>
+                                            <td>${notice.noticeContent}</td>
+                                            <td class="date">${notice.noticeDate}</td>
+                                            <td class="attachment">${notice.noticeAttachment}</td>
+                                            <td>${notice.noticeCount}</td>
+                                            <td>${notice.noticeStatus}</td>
+                                        </tr>
                                 </c:forEach>
-                                <c:if test="${empty rentalList}">
+                                <c:if test="${empty noticeList}">
                                     <tr>
-                                        <td colspan="8">등록된 대관이 없습니다.</td>
+                                        <td colspan="7">등록된 공지사항이 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>
@@ -273,15 +279,15 @@
                     </div>
                     <ul class="pagination">
                         <li>
-                            <a href="${path}/rentalList.ad?currentPage=${pi.currentPage - 1}" class="${pi.currentPage == 1 ? 'disabled' : ''}"><</a>
+                            <a href="${path}/noticeList.ad?currentPage=${pi.currentPage - 1}" class="${pi.currentPage == 1 ? 'disabled' : ''}"><</a>
                         </li>
                         <c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
                             <li>
-                                <a href="${path}/rentalList.ad?currentPage=${p}" class="${pi.currentPage == p ? 'active' : ''}">${p}</a>
+                                <a href="${path}/noticeList.ad?currentPage=${p}" class="${pi.currentPage == p ? 'active' : ''}">${p}</a>
                             </li>
                         </c:forEach>
                         <li>
-                            <a href="${path}/rentalList.ad?currentPage=${pi.currentPage + 1}" class="${pi.currentPage == pi.maxPage ? 'disabled' : ''}">></a>
+                            <a href="${path}/noticeList.ad?currentPage=${pi.currentPage + 1}" class="${pi.currentPage == pi.maxPage ? 'disabled' : ''}">></a>
                         </li>
                     </ul>
                 </div>
@@ -304,12 +310,10 @@
 
                 $("table tbody tr").filter(function() {
                     var cellValue;
-                    if (searchCategory === "rentalNo") {
-                        cellValue = $(this).find('td:eq(0)').text().toLowerCase();
-                    } else if (searchCategory === "galleryName") {
-                        cellValue = $(this).find('td:eq(4)').text().toLowerCase();
-                    } else if (searchCategory === "artistNickName") {
-                        cellValue = $(this).find('td:eq(5)').text().toLowerCase();
+                    if (searchCategory === "noticeTitle") {
+                        cellValue = $(this).find('td:eq(1)').text().toLowerCase();
+                    } else if (searchCategory === "noticeContent") {
+                        cellValue = $(this).find('td:eq(2)').text().toLowerCase();
                     } else {
                         cellValue = $(this).text().toLowerCase();
                     }

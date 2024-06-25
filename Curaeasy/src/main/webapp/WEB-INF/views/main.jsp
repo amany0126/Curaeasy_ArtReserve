@@ -209,7 +209,8 @@
     </style>
 </head>
 <body>
-    <jsp:include page="common/header.jsp" />
+    <jsp:include page="common/header.jsp" />.
+
 
     <!-- Content 영역 -->
     <div id="content-area">

@@ -96,8 +96,25 @@
             line-height: 1.5;
             margin-bottom: 10px;
         }
-        .search-box>input { border-radius: 20px;}
-        .search-box>button { border-radius: 20px;}
+
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .pagination a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #333;
+        }
+        .pagination a.active {
+            font-weight: bold;
+        }
+        .search-box input,button { border-radius: 20px !important}
+
+
     </style>
 </head>
 <body>

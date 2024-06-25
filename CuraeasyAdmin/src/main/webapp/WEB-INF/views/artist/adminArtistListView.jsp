@@ -139,6 +139,12 @@
             text-align: center;
             vertical-align: middle;
         }
+        
+        /* Disabled button style */
+        .btn-disabled {
+            background-color: grey;
+            pointer-events: none;
+        }
     </style>
     <script>
         function goToDetail(artistNo) {
@@ -196,6 +202,7 @@
                 });
             }
         });
+        
     </script>
 </head>
 
@@ -233,7 +240,7 @@
                         <table id="datatablesSimple" class="table table-striped table-bordered">
                             <thead>
                                 <tr style="background-color: #007bff; color: white;">
-                                   <th>작가번호</th>
+                                    <th>작가번호</th>
                                     <th>예명</th>
                                     <th>작가 기수</th>
                                     <th>신청일</th>
@@ -243,30 +250,50 @@
                                     <th>결과</th>
                                     <th>상태</th>
                                     <th>회원번호</th>
+                                    <th>수정하기</th>
+                                    <th>작가승인</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="artist" items="${artistList}">
-                                    <tr onclick="goToDetail(${artist.artistNo})">
-                                          <td>${artist.artistNo}</td>
-                                            <td>${artist.artistNickName}</td>
-                                            <td>${artist.artistOrdinal}</td>
-                                            <td>${artist.artistApplyDate}</td>
-                                            <td>${artist.artistApplyTitle}</td>
-                                            <td>${artist.artistIntroduce}</td>
-                                            <td>${artist.artistImage}</td>
-                                            <td>${artist.artistResult}</td>
-                                            <td>${artist.artistStatus}</td>
-                                            <td>${artist.memberNo}</td>
+                                    <tr>
+                                        <td>${artist.artistNo}</td>
+                                        <td>${artist.artistNickName}</td>
+                                        <td>${artist.artistOrdinal}</td>
+                                        <td class="date">${artist.artistApplyDate}</td>
+                                        <td>${artist.artistApplyTitle}</td>
+                                        <td>${artist.artistIntroduce}</td>
+                                        <td>${artist.artistImage}</td>
+                                        <td>${artist.artistResult == 'N' ? '승인대기' : '처리완료'}</td>
+                                        <td>${artist.artistStatus == 'Y' ? '가입중' : '탈퇴됨'}</td>
+                                        <td>${artist.memberNo}</td>
+	                                        <td><button class="btn btn-warning" onclick="location.href='${path}/updateArtist.ad?artistNo=${artist.artistNo}'">수정하기</button></td>
+										<td>
+										    <button class="btn ${artist.artistResult == 'N' ? 'btn-primary' : 'btn-disabled'}"
+										            onclick="${artist.artistResult == 'N' ? 'confirmApproval(\'${artist.artistNo}\')' : ''}">
+										        작가승인
+										    </button>
+										</td>
+
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty artistList}">
                                     <tr>
-                                        <td colspan="10">등록된 작가가 없습니다.</td>
+                                        <td colspan="12">등록된 작가가 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>
                         </table>
+                        
+					     <script>
+						function confirmApproval(artistNo) {
+						    if (confirm("작가를 승인하시겠습니까?")) {
+						        window.location.href = '${path}/approveArtist.ad?artistNo=' + artistNo + '&status=Y';
+						    } else {
+						        window.location.href = '${path}/approveArtist.ad?artistNo=' + artistNo + '&status=N';
+						    }
+						}
+						</script>
                     </div>
                     <ul class="pagination">
                         <li>

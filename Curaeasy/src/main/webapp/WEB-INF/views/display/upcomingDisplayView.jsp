@@ -11,7 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Grandiflora+One&display=swap" rel="stylesheet">
 
-    <title>현재 전시</title>
+    <title>예정 전시</title>
+
     <style>
         .container {
             max-width: 100%;
@@ -29,6 +30,13 @@
         }
         .content-header {
             margin-bottom: 20px;
+
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :larger;
+            font-style :oblique;  
+
         }
         .content-header h1 {
             font-size: 2em;
@@ -96,8 +104,32 @@
             line-height: 1.5;
             margin-bottom: 10px;
         }
-        .search-box>input { border-radius: 20px;}
-        .search-box>button { border-radius: 20px;}
+
+        .no-exhibition {
+            text-align: center;
+            font-size: 1.5em;
+            color: #777;
+            padding: 50px 0;
+        }
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        .pagination a {
+            margin: 0 5px;
+            text-decoration: none;
+            color: #333;
+        }
+        .pagination a.active {
+            font-weight: bold;
+        }
+
+
+        .search-box input,button {border-radius: 20px !important;}
+
     </style>
 </head>
 <body>

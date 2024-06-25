@@ -14,12 +14,14 @@
           display: inline;
         }
         .innerOuter {
-            border:1px solid lightgray;
-            width:65%;
+            border:0px solid lightgray;
+            width:70%; margin-top: 50px; margin-bottom: 50px;
             margin:auto;
             padding:5% 10%;
             background-color:white;
         }
+		#but>button{ border-radius: 20px; width: 130px; background-color: white;}
+        #but>button:hover { background-color: lightgray; color:black; transform: translateY(10px);}
     </style>
 </head>
 <body>
@@ -53,8 +55,8 @@
                         <input type="file" class="form-control-file border" id="artistImage" name="upfile" onchange="loadImg(this, 1)" required accept="image/png, image/jpeg" style="display: none;"> <br>
                     </div>
                     <div align="center" id="but">
-                        <button type="button" class="btn btn-info" onclick="history.back()">뒤로가기</button>
-                        <button type="submit" class="btn btn-primary" disabled>작가 신청하기</button>
+                        <button type="button"  onclick="history.back()">뒤로가기</button>
+                        <button type="submit" disabled>작가 신청하기</button>
                     </div>
                 </form>
             </div>

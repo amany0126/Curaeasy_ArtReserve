@@ -13,7 +13,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Artist {
-	private int artistNo;
+	private String artistNo;
 	private String artistNickName;
 	private String artistOrdinal;
 	private Date  artistApplyDate;

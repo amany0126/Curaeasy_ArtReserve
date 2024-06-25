@@ -55,7 +55,7 @@
             margin: 5px 0;
         }
 
-        .homeReturn:hover { background-color: #999; }
+        .homeReturn:hover { background-color: black; color:white; }
 
         .details { text-align: left; margin-bottom: 30px; }
         .details table { width: 50%; border-collapse: collapse; }
@@ -63,7 +63,7 @@
         .details th { text-align: center; width: 20%;}
 
         button { 
-            background-color: #555; color:white; border-radius: 20px;  cursor: pointer;
+            background-color: white; color:white;  color:black; border-radius: 20px;  cursor: pointer;
             width: 150px; height: 40px; font-size : 15px;
         }
 
@@ -74,6 +74,9 @@
             border-left: none; 
             border-right: none; 
         }
+
+
+        .homeReturn:hover{transform: translateY(10px);}
 
 
     </style>

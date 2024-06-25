@@ -11,12 +11,25 @@
     <!-- Include Flatpickr CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
     <title>수시대관신청</title>
     <style>
+        h1{
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :larger;
+            font-style :oblique; 
+        }
+
         .form-container {
-            border: 1px solid lightgray;
             width: 80%;
-            margin: auto;
+            margin: auto; margin-top: 50px; margin-bottom: 50px;
             padding: 2rem;
             background-color: white;
         }
@@ -94,7 +107,7 @@
 <br><br>
 <div class="">
     <div class="form-container">
-        <h2 class="form-header">수시대관신청</h2>
+        <h1 class="form-header">수시대관신청</h1>
         <p>큐레이지 수시대관신청</p>
         <form action="applyRrental.re" method="post" enctype="multipart/form-data">
             <div class="form-section">

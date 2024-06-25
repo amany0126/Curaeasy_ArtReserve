@@ -12,9 +12,8 @@
     <title>전시신청</title>
     <style>
         .form-container {
-            border: 1px solid lightgray;
-            width: 60%;
-            margin: auto;
+            width: 70%;
+            margin: auto; margin-top: 50px; margin-bottom: 50px;
             padding: 2rem;
             background-color: white;
         }
@@ -61,6 +60,11 @@
         .form-inline .form-group:last-child {
             margin-right: 0;
         }
+
+        textarea{ resize: none; width: 100%; height: 400px; }
+        .form-footer>button{ border-radius: 20px; width: 100px; height:30px; background-color: white;}
+        .form-footer>button:hover{ background-color: black; color : white; transform: translateY(10px); }
+        .form-section-title {margin-top: 50px;}
     </style>
 </head>
 <body>
@@ -116,7 +120,7 @@
                 <input type="file" id="detailFile4" name="upfile" accept="image/*">
             </div>
             <div class="form-footer">
-                <button type="submit" class="btn btn-primary" onclick="return checkAvailability();">제출</button>
+                <button type="submit" onclick="return checkAvailability();">제출</button>
             </div>
         </form>
     </div>

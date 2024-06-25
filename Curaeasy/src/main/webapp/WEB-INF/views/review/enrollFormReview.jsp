@@ -8,6 +8,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--폰트-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
+
 <title>작가신청</title>
     <style>
         .radio{
@@ -15,12 +22,25 @@
           display: inline;
         }
         .innerOuter {
-            border:1px solid lightgray;
-            width:65%;
-            margin:auto;
+            border:0px solid lightgray;
+            width:70%;
+            margin:auto; margin-top: 50px; margin-bottom: 50px;
             padding:5% 10%;
             background-color:white;
         }
+
+        #reviewContent { resize: none; width: 100%; height: 400px; }
+        img { border-radius: 20px; border-style : ridge;}
+        #but>button{ border-radius: 20px; width: 130px; background-color: white;}
+        #but>button:hover { background-color: black;color:white; }
+        h3 {
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :xx-large;
+            font-style :oblique;     
+        }
+        button:hover{transform: translateY(10px); }
     </style>
 </head>
 <body>
@@ -56,8 +76,8 @@
                        
                     </div>
                     <div align="center" id="but">
-                        <button type="button" class="btn btn-info" onclick="history.back()">뒤로가기</button>
-                        <button type="submit" class="btn btn-primary">후기 작성하기</button>
+                        <button type="button" onclick="history.back()">뒤로가기</button>
+                        <button type="submit">후기 작성하기</button>
                     </div>
                 </form>
             </div>
