@@ -104,7 +104,6 @@
         </div>
         <div class="tab-menu">
             <a href="rentalInfo.do" class="active">대관안내</a>
-            <a href="requirements.do">자격조건</a>
         </div>
         <div class="section">
             <h2>인천아트플랫폼 대관 일정 및 안내</h2>

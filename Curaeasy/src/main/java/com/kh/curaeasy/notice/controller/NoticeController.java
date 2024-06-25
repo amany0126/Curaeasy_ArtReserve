@@ -65,6 +65,7 @@ public class NoticeController {
 	        System.out.println("조회수 증가 결과: " + result);
 
 	        if(result > 0) {
+	        	
 	            Notice n = noticeService.selectNotice(nno);
 
 	            System.out.println("공지 제목: " + n.getNoticeTitle());
