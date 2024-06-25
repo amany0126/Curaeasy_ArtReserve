@@ -146,7 +146,7 @@
 	                    		첨부파일이 없습니다.
 	                    	</c:when>
 	                    	<c:otherwise>
-                        		<img src="${ n.noticeAttachment }" >
+                        		<img src="resources/notice/${ n.noticeAttachment }" >
                         	</c:otherwise>
                         </c:choose>
                     </td>
