@@ -276,7 +276,6 @@
               }else{
              
               if(info.jsEvent.toElement.className.includes("fc-bg-event fc-event fc-event-start fc-event-end fc-event-future")){
-                  alert('예약가능한 일자')
                   let f = document.createElement('form');
                     let dno = '${requestScope.dno}'
                 
@@ -309,7 +308,7 @@
                     document.body.appendChild(f);
                     f.submit();
             }else{
-                  alert('예약이 안될때 ');
+                  alert('선택하신 일자는 예약이 불가능합니다 ');
               }
             }
               // window.open("https://www.google.com/"); // 오픈할 사이트 등록

@@ -76,7 +76,7 @@
         .truncate {
             max-width: 200px; /* Adjust the width as needed */
         }
-        .btn-add-exhibition {
+        .btn-add-review {
             margin-right: 10px;
         }
         .search-bar {
@@ -107,7 +107,7 @@
             margin: 0 5px;
         }
         .pagination a {
-            display: block;
+            display:block;
             padding: 8px 16px;
             text-decoration: none;
             color: #007bff;
@@ -123,21 +123,13 @@
             pointer-events: none;
             cursor: default;
         }
-   
         .pagination a.active {
             background-color: #007bff;
             color: white;
             border-color: #007bff;
         }
-        /* 테이블 배경색 흰색으로 설정 */
-        #datatablesSimple {
-            background-color: white;
-        }
-
-        /* 테이블 요소 중앙 정렬 */
-        #datatablesSimple th, #datatablesSimple td {
-            text-align: center;
-            vertical-align: middle;
+        .btn-edit, .btn-delete {
+            cursor: pointer;
         }
     </style>
     <script>
@@ -223,7 +215,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                     <h1 class="mt-4">✍ 후기 목록 조회</h1>
+                   <h1 class="mt-4">✍ 후기 목록 조회</h1>
                     <div class="search-bar">
                         <select id="searchCategory" class="form-select">
                             <option value="all">전체</option>
@@ -245,24 +237,28 @@
                                     <th>이미지</th>
                                     <th>상태</th>
                                     <th>아이디</th>
+                                    <th>수정</th>
+                                    <th>삭제</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="review" items="${reviewList}">
-                                        <tr>
-                                            <td>${review.reviewNo}</td>
-                                            <td>${review.reviewTitle}</td>
-                                            <td class="truncate">${review.reviewContent}</td>
-                                            <td class="date">${review.reviewEnrollDate}</td>
-                                            <td>${review.reviewCount}</td>
-                                            <td>${review.reviewImage}</td>
-                                            <td>${review.reviewStatus}</td>
-                                            <td>${review.memberId}</td>
-                                        </tr>
+                                    <tr>
+                                        <td>${review.reviewNo}</td>
+                                        <td class="truncate">${review.reviewTitle}</td>
+                                        <td class="truncate">${review.reviewContent}</td>
+                                        <td class="date">${review.reviewEnrollDate}</td>
+                                        <td>${review.reviewCount}</td>
+                                        <td class="attachment">${review.reviewImage}</td>
+                                        <td>${review.reviewStatus == 'Y' ? '게시중' : '삭제됨'}</td>
+                                        <td>${review.memberId}</td>
+                                        <td><button class="btn btn-warning btn-edit" onclick="location.href='${path}/updateReview.ad?reviewNo=${review.reviewNo}'">수정하기</button></td>
+                                        <td><button class="btn btn-danger btn-delete" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='${path}/deleteReview.ad?reviewNo=${review.reviewNo}'; }">삭제하기</button></td>
+                                    </tr>
                                 </c:forEach>
                                 <c:if test="${empty reviewList}">
                                     <tr>
-                                        <td colspan="8">등록된 후기가 없습니다.</td>
+                                        <td colspan="10">등록된 후기가 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>

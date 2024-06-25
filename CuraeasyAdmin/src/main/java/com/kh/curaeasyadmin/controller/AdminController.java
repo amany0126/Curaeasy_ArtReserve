@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +43,28 @@ public class AdminController {
     private AdminService adminService;
 
     @RequestMapping("/admin.ad")
-    public String index() {
+    public String index(Model model) {
+    	
+    	int memberCount = adminService.getMemberCount();
+    	int sales = adminService.getCurrentYearSales();
+    	int exhibitionCount = adminService.getExhibitionCount();
+    	int artistsAwaitingApproval = adminService.getArtistsAwaitingApproval();
+    	
+    	List<Map<String, Object>> monthlyReservations = adminService.getMonthlyReservationCounts();
+    	List<Map<String, Object>> top5display = adminService.getTop5Displays();
+    	
+    	
+    	model.addAttribute("memberCount",memberCount);
+        model.addAttribute("sales",sales);
+        model.addAttribute("exhibitionCount", exhibitionCount);
+        model.addAttribute("artistsAwaitingApproval",artistsAwaitingApproval );
+        
+        model.addAttribute("monthlyReservations",monthlyReservations );
+        model.addAttribute("top5display",top5display );
+        
+        System.out.println(monthlyReservations);
+        System.out.println(top5display);
+        
         return "adminmain";
     }
 
@@ -253,6 +275,7 @@ public class AdminController {
     public String updateRental(@RequestParam("rentalNo") int rentalNo, Model model) {
         Rental rental = adminService.getRentalByNo(rentalNo);
         model.addAttribute("rental", rental);
+        System.out.println(rental);
         return "rental/adminRentalUpdateForm";
     }
 

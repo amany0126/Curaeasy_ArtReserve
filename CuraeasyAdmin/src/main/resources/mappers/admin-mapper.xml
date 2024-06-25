@@ -130,9 +130,60 @@
         <result column="REVIEW_NO" property="reviewNo"/>
         <result column="MEMBER_NO" property="memberNo"/>
     </resultMap>
+    
+    <!-- 대시보드 관련 result map -->
+    <resultMap id="monthlyReservationsResultMap" type="com.kh.curaeasyadmin.model.vo.MonthlyReservation">
+    	<result column="month" property="month" />
+    	<result column="count" property="count" />
+	</resultMap>
+
+	<resultMap id="topDisplayResultMap" type="com.kh.curaeasyadmin.model.vo.TopDisplay">
+	    <result column="DISPLAY_NO" property="displayNo" />
+	    <result column="total_reservations" property="totalReservations" />
+	</resultMap>
 
     <!-- Select Statements -->
+    
+    <!-- 대시보드 -->
+    
+    <select id="getMemberCount" resultType="int">
+        SELECT COUNT(*) FROM member
+    </select>
 
+    <select id="getCurrentYearSales" resultType="int">
+		SELECT SUM(PAYMENT_PRICE * RESERVE_COUNT) AS total_sales
+		FROM RESERVE
+		WHERE EXTRACT(YEAR FROM PAYMENT_DATE) = 2024
+    </select>
+
+    <select id="getDisplayCount" resultType="int">
+        SELECT COUNT(*) FROM "DISPLAY"
+    </select>
+
+    <select id="getArtistsAwaitingApproval" resultType="int">
+       SELECT COUNT(*) FROM ARTIST WHERE ARTIST_RESULT = 'N'
+    </select>
+    
+	<select id="getTop5Displays" resultMap="topDisplayResultMap">
+		SELECT * FROM (
+		    SELECT DISPLAY_NO, SUM(RESERVE_COUNT) AS total_reservations
+		    FROM RESERVE
+		    GROUP BY DISPLAY_NO
+		    ORDER BY SUM(RESERVE_COUNT) DESC
+		)
+		WHERE ROWNUM &lt;= 5
+	</select>
+
+	<select id="getMonthlyReservationCounts" resultMap="monthlyReservationsResultMap">
+	    SELECT EXTRACT(MONTH FROM PAYMENT_DATE) AS month, SUM(RESERVE_COUNT) AS count
+	    FROM RESERVE
+	    WHERE EXTRACT(YEAR FROM PAYMENT_DATE) = EXTRACT(YEAR FROM SYSDATE)
+	    GROUP BY EXTRACT(MONTH FROM PAYMENT_DATE)
+	    ORDER BY EXTRACT(MONTH FROM PAYMENT_DATE)
+	</select>
+    
+    
+    
     <!-- 전시회 관리 -->
     <select id="getDisplayListCount" parameterType="String" resultType="int">
         SELECT COUNT(*)
@@ -214,6 +265,10 @@
             DISPLAY_NO
         FROM DISPLAY_ATTACHMENT
         WHERE DISPLAY_NO = #{displayNo}
+    </select>
+    
+    <select id="selectAttachments" parameterType="_int" resultMap="displayAttachmentResultMap">
+        SELECT * FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = #{displayNo}
     </select>
 
    <update id="displayUpdate" parameterType="com.kh.curaeasyadmin.model.vo.Display">
@@ -337,25 +392,39 @@
 	</select>
 
     
-    <select id="selectRentalByNo" parameterType="int" resultMap="rentalResultMap">
-        SELECT * FROM RENTAL WHERE RENTAL_NO = #{rentalNo}
-    </select>
+	<select id="selectRentalByNo" parameterType="int" resultMap="rentalResultMap">
+	    SELECT 
+	        R.RENTAL_NO, 
+	        R.RENTAL_APPLY_DATE, 
+	        R.RENTAL_START_DATE, 
+	        R.RENTAL_END_DATE, 
+	        R.RENTAL_CONTENT, 
+	        R.RENTAL_RESULT, 
+	        R.RENTAL_STATUS, 
+	        R.GALLERY_NO, 
+	        R.ARTIST_NO, 
+	        G.GALLERY_NAME, 
+	        A.ARTIST_NICKNAME
+	    FROM RENTAL R
+	    LEFT JOIN GALLERY G ON R.GALLERY_NO = G.GALLERY_NO
+	    LEFT JOIN ARTIST A ON R.ARTIST_NO = A.ARTIST_NO
+	    WHERE R.RENTAL_NO = #{rentalNo}
+	</select>
 
     <update id="updateRentalStatus" parameterType="int">
         UPDATE RENTAL
-        SET RENTAL_STATUS = 'N'
+        SET RENTAL_STATUS = 'Y'
+        ,RENTAL_RESULT = '승인됨'
         WHERE RENTAL_NO = #{rentalNo}
     </update>
     
     <update id="updateRental" parameterType="com.kh.curaeasyadmin.model.vo.Rental">
-        UPDATE RENTAL
-        SET 
-            RENTAL_START_DATE = #{rentalStartDate},
-            RENTAL_END_DATE = #{rentalEndDate},
-            RENTAL_STATUS = #{rentalStatus},
-            GALLERY_NO = #{galleryNo},
-            ARTIST_NO = #{artistNo}
-        WHERE RENTAL_NO = #{rentalNo}
+	    UPDATE RENTAL
+	    SET 
+	        RENTAL_START_DATE = #{rentalStartDate},
+	        RENTAL_END_DATE = #{rentalEndDate},
+	        RENTAL_STATUS = #{rentalStatus}
+	    WHERE RENTAL_NO = #{rentalNo}
     </update>
    
 
@@ -439,21 +508,24 @@
     </select>
 
     <!-- 후기 관리 -->
-    <select id="selectReviewList" resultMap="reviewResultSet">
-        SELECT 
-            REVIEW_NO,
-            REVIEW_TITLE,
-            REVIEW_CONTENT,
-            REVIEW_ENROLL_DATE,
-            REVIEW_COUNT,
-            REVIEW_IMAGE,
-            REVIEW_STATUS,
-            MEMBER_NO
-        FROM 
-            REVIEW
-        ORDER BY 
-            REVIEW_NO DESC
-    </select>
+	<select id="selectReviewList" resultMap="reviewResultSet">
+	    SELECT 
+	        R.REVIEW_NO,
+	        R.REVIEW_TITLE,
+	        R.REVIEW_CONTENT,
+	        R.REVIEW_ENROLL_DATE,
+	        R.REVIEW_COUNT,
+	        R.REVIEW_IMAGE,
+	        R.REVIEW_STATUS,
+	        R.MEMBER_NO,
+	        M.MEMBER_ID
+	    FROM 
+	        REVIEW R
+	    JOIN 
+	        MEMBER M ON R.MEMBER_NO = M.MEMBER_NO
+	    ORDER BY 
+	        R.REVIEW_NO DESC
+	</select>
 
     <select id="getReviewListCount" resultType="int">
         SELECT COUNT(*) FROM REVIEW
@@ -593,7 +665,5 @@
             REPLY_NO
     </select>
 	
-	<select id="selectAttachments" parameterType="_int" resultMap="displayAttachmentResultMap">
-        SELECT * FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = #{displayNo}
-    </select>
+
 </mapper>

@@ -1,170 +1,198 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
-    <!--폰트-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<!--폰트-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap"
+	rel="stylesheet">
 
-    <title>나의 대관일자</title>
-
-
-    <style>
-        h1{
-            /* 폰트 */
-            font-family: "Do Hyeon", sans-serif;
-            font-weight: 400;
-            font-style :oblique;    
-        }
-
-        .innerOuter {
-            border:0px solid lightgray;
-            width:80%;
-            height : 800px;
-            padding:5% 10%;
-            background-color:white;
-            display: inline-block;
-            float: right;
-        }
-		button { border-radius: 50px !important;}
-
-        .content {
-        width:80%;
-            padding: 0px;
-            
-        }
-        .content-header {
-            margin-bottom: 20px;     
-        }
-        .content-header h1 {
-            font-size: 2em;
-        }
-        .search-box {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 20px;
-        }
-        .search-box>input { border-radius: 20px;}
-        .search-box>button { border-radius: 20px;}
+<title>나의 대관일자</title>
 
 
+<style>
+h1 {
+	/* 폰트 */
+	font-family: "Do Hyeon", sans-serif;
+	font-weight: 400;
+	font-style: oblique;
+}
 
+.innerOuter {
+	border: 0px solid lightgray;
+	width: 80%;
+	height: 800px;
+	padding: 5% 10%;
+	background-color: white;
+	display: inline-block;
+	float: right;
+}
 
-        .notice-list {
-            width: 100%;
-            border-collapse: collapse;
-            
-        }
-        .notice-list th, .notice-list td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-        .notice-list th {
-            background-color: #f2f2f2;
-            border : none; 
-            height: 60px;
-            border-top: 3px solid; border-bottom: 3px solid; 
-            text-align: center;
-        }
-        .pagination {
-            text-align: center;
-            margin-top: 35px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-        .pagination a {
-            margin: 0 5px;
-            text-decoration: none;
-            color: #333;
-        }
-        .pagination a.active {
-            font-weight: bold;
-        }
-        td{
-         text-align: center;}
+button {
+	border-radius: 50px !important;
+}
 
-      /*   td:hover { display: block; font-size: 15px; font-weight: 600; cursor: pointer; } */
-        tbody > tr:hover { background-color: lightgray;  }
+.content {
+	width: 80%;
+	padding: 0px;
+}
 
-    </style>
+.content-header {
+	margin-bottom: 20px;
+}
+
+.content-header h1 {
+	font-size: 2em;
+}
+
+.search-box {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 20px;
+}
+
+.search-box>input {
+	border-radius: 20px;
+}
+
+.search-box>button {
+	border-radius: 20px;
+}
+
+.notice-list {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.notice-list th, .notice-list td {
+	border: 1px solid #ddd;
+	padding: 10px;
+	text-align: center;
+}
+
+.notice-list th {
+	background-color: #f2f2f2;
+	border: none;
+	height: 60px;
+	border-top: 3px solid;
+	border-bottom: 3px solid;
+	text-align: center;
+}
+
+.pagination {
+	text-align: center;
+	margin-top: 35px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.pagination a {
+	margin: 0 5px;
+	text-decoration: none;
+	color: #333;
+}
+
+.pagination a.active {
+	font-weight: bold;
+}
+
+td {
+	text-align: center;
+}
+
+/*   td:hover { display: block; font-size: 15px; font-weight: 600; cursor: pointer; } */
+tbody>tr:hover {
+	background-color: lightgray;
+}
+</style>
 </head>
 <body>
 
-<jsp:include page="../common/header.jsp" />
-<jsp:include page="../common/mainPageSidbar.jsp" />
-<br><br>
-<div class="innerOuter">
-    <div class="content">
-        <div class="content-header">
-            <h1>대관 예약 일자</h1>
-        </div>
-    <!--     <div class="search-box">
+	<jsp:include page="../common/header.jsp" />
+	<jsp:include page="../common/mainPageSidbar.jsp" />
+	<br>
+	<br>
+	<div class="innerOuter">
+		<div class="content">
+			<div class="content-header">
+				<h1>대관 예약 일자</h1>
+			</div>
+			<!--     <div class="search-box">
             <input type="text" placeholder="대관장소를 입력하세요" />
             <button>검색</button>
         </div> -->
-        <table id="noticeList" class="notice-list">
-            <thead>
-                <tr>
-                    <th>대관신청번호</th>
-                    <th>대관장소</th>
-                    <th>대관 시작일</th>
-                    <th>대관 종료일</th>
-                    <th>승인여부</th>
-                </tr>
-            </thead>
-            <tbody>                
-                <c:forEach var="n" items="${ requestScope.list }">
-                		<tr>
-                			<td>${ n.rentalNo }</td>
-                			<td>
-                				<c:choose>
-								    <c:when test="${n.galleryNo eq '1'}">
-								       	제 1 전시관
+			<table id="noticeList" class="notice-list">
+				<thead>
+					<tr>
+						<th>대관신청번호</th>
+						<th>대관장소</th>
+						<th>대관 시작일</th>
+						<th>대관 종료일</th>
+						<th>승인여부</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:choose>
+						<c:when test="${ empty requestScope.list }">
+							<tr>
+								<td colspan="6">조회된 대관 내역이 없습니다.</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<c:forEach var="n" items="${ requestScope.list }">
+								<tr>
+									<td>${ n.rentalNo }</td>
+									<td><c:choose>
+											<c:when test="${n.galleryNo eq '1'}">
+								       	제1 전시관
 								    </c:when>
-								    <c:when test="${n.galleryNo eq '2'}">
-								       	제 2 전시관
+											<c:when test="${n.galleryNo eq '2'}">
+								       	제2 전시관
 								    </c:when>
-								    <c:when test="${n.galleryNo eq '3'}">
-								       	제 3 전시관
+											<c:when test="${n.galleryNo eq '3'}">
+								       	제3 전시관
 								    </c:when>
-								    <c:when test="${n.galleryNo eq '4'}">
-								       	제 4 전시관
+											<c:when test="${n.galleryNo eq '4'}">
+								       	제4 전시관
 								    </c:when>
-								    <c:when test="${n.galleryNo eq '5'}">
-								       	제 5 전시관
+											<c:when test="${n.galleryNo eq '5'}">
+								       	제5 전시관
 								    </c:when>
-								    <c:when test="${n.galleryNo eq '6'}">
-								       	제 6 전시관
+											<c:when test="${n.galleryNo eq '6'}">
+								       	제6 전시관
 								    </c:when>
-								</c:choose>
+										</c:choose></td>
+									<td>${ n.rentalStartDate }</td>
+									<td>${ n.rentalEndDate }</td>
+									<td>${ n.rentalResult }</td>
+								</tr>
+							</c:forEach>
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
 
-                			
-                			</td>
-                			<td>${ n.rentalStartDate }</td>
-                            <td>${ n.rentalEndDate }</td>
-                			<td>${ n.rentalResult }</td>
-                		</tr>
-                </c:forEach>
-            </tbody>
-        </table>
-        
-        
-        
-        
-        <!-- 페이징바 -->
-        
-<!--        <script>
+
+
+
+			<!-- 페이징바 -->
+
+			<!--        <script>
 		$(function() {
        		
 			$("#noticeList>tbody>tr").click(function() {
@@ -177,7 +205,7 @@
        	});
        </script>
  -->
-      <%--   
+			<%--   
         <div id="pagingArea">
                 <ul class="pagination">
                 
@@ -238,12 +266,12 @@
                     </c:choose>
                 </ul>
             </div> --%>
-            
-            
-    </div>
-</div>
 
-<jsp:include page="../common/footer.jsp" />
+
+		</div>
+	</div>
+
+	<jsp:include page="../common/footer.jsp" />
 
 </body>
 </html>
