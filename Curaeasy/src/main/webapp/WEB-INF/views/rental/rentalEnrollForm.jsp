@@ -78,7 +78,7 @@
                 <p><b>제 1 전시장</b></p>
                 <p>A동 1층 전시장 1은 지상 1, 2층에 걸친 약 200평의 규모를 갖추고 있습니다. 인천아트플랫폼에서 가장 규모가 큰 전시장으로 문화체육광관부 1종 미술관으로 등록되어 있습니다. 주로 인천아트플랫폼 자체 기획전시를 개최하고 있으며, 별도 로비 공간이 있습니다. 규모가 큰 개인전과 그룹 전시에 적합한 전시 공간입니다.</p>
                 <div class="btn-group">
-                    <button class="btn btn-outline-dark">공간안내</button>
+                    
                     <button class="btn btn-dark" onclick="PTR(1)">수시대관신청</button>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                 <p><b>제 2 전시장</b></p>
                 <p>전시장 2는 인천아트플랫폼 중앙광장에 위치한 36평 규모의 전시 공간입니다. 천장이 높은 구조로 회화, 사진, 설치 등 작은 규모의 기획전이나 개인전 개최에 용이합니다.</p>
                 <div class="btn-group">
-                    <button class="btn btn-outline-dark">공간안내</button>
+                    
                     <button class="btn btn-dark" onclick="PTR(2)">수시대관신청</button>
                 </div>
             </div>
@@ -109,7 +109,7 @@
                 <p><b>제 3 전시장</b></p>
                 <p>전시장 3은 인천아트플랫폼 서쪽에 위치한 100평 규모의 전시 공간입니다. 현대미술, 미디어아트, 퍼포먼스 등 다양한 형태의 전시가 가능한 공간으로, 최신 기술을 활용한 전시도 용이합니다.</p>
                 <div class="btn-group">
-                    <button class="btn btn-outline-dark">공간안내</button>
+                    
                     <button class="btn btn-dark" onclick="PTR(3)">수시대관신청</button>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                 <p><b>제 4 전시장</b></p>
                 <p>A동 4층 전시장 1은 지상 1, 2층에 걸친 약 200평의 규모를 갖추고 있습니다. 인천아트플랫폼에서 가장 규모가 큰 전시장으로 문화체육광관부 1종 미술관으로 등록되어 있습니다. 주로 인천아트플랫폼 자체 기획전시를 개최하고 있으며, 별도 로비 공간이 있습니다. 규모가 큰 개인전과 그룹 전시에 적합한 전시 공간입니다.</p>
                 <div class="btn-group">
-                    <button class="btn btn-outline-dark">공간안내</button>
+                    
                     <button class="btn btn-dark" onclick="PTR(4)">수시대관신청</button>
                 </div>
             </div>
@@ -137,7 +137,7 @@
                 <p><b>제 5 전시장</b></p>
                 <p>전시장 5는 인천아트플랫폼 중앙광장에 위치한 36평 규모의 전시 공간입니다. 천장이 높은 구조로 회화, 사진, 설치 등 작은 규모의 기획전이나 개인전 개최에 용이합니다.</p>
                 <div class="btn-group">
-                    <button class="btn btn-outline-dark">공간안내</button>
+                    
                     <button class="btn btn-dark" onclick="PTR(5)">수시대관신청</button>
                 </div>
             </div>
@@ -152,7 +152,7 @@
                 <p><b>제 6 전시장</b></p>
                 <p>전시장 6은 인천아트플랫폼 서쪽에 위치한 100평 규모의 전시 공간입니다. 현대미술, 미디어아트, 퍼포먼스 등 다양한 형태의 전시가 가능한 공간으로, 최신 기술을 활용한 전시도 용이합니다.</p>
                 <div class="btn-group">
-                    <button class="btn btn-outline-dark">공간안내</button>
+                    
                     <button class="btn btn-dark" onclick="PTR(6)">수시대관신청</button>
                 </div>
             </div>
