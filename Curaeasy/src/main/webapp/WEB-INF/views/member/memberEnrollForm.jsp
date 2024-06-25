@@ -23,6 +23,8 @@
             background-color:white;
 			margin-top: 5px;
         }
+		.btns>button{ border-radius: 20px; width: 130px; background-color: white; }
+		.btns>button:hover { background-color: black;color:white; transform: translateY(10px);}
     </style>
 </head>
 </head>
@@ -94,8 +96,8 @@
                 </div> 
                 <br>
                 <div class="btns" align="center">
-                    <button type="submit" class="btn btn-primary" disabled="disabled" >회원가입</button>
-                    <button type="reset" class="btn btn-danger">초기화</button>
+                    <button type="submit" disabled="disabled" >회원가입</button>
+                    <button type="reset">초기화</button>
                 </div>
             </form>
         </div>

@@ -23,7 +23,7 @@
         .container {
             max-width: 1200px;
             margin: auto;
-            margin-bottom: 100px;
+            margin-bottom: 70%;
             padding: 20px;
             margin-top: 80px; background-color :#e7e6e6;
             box-shadow: 0 0 10px gray;
@@ -90,10 +90,15 @@
             justify-content: center;
         }
         .pagination a {
-            margin: 0 5px;
-            text-decoration: none;
-            color: #333;
+            color: white;
+            float: left;
+            padding: 8px 10px;
+            text-decoration: none; 
+            border-radius: 20%;
+            background-color: white; color:black;
+            margin : 0px 4px;
         }
+        .pagination a:hover{background-color: black; color:white;}
         .pagination a.active {
             font-weight: bold;
         }
@@ -171,15 +176,15 @@
                 
                 	<c:choose>
                 	<c:when test="${ requestScope.pi.currentPage eq 1 }">	
-                    	<li class="page-item disabled">
+                    	<li >
                     		<a class="page-link" href="#">⇦</a>
                     	</li>
                     </c:when>
                     <c:otherwise>
-                    	<li class="page-item">
+                    	<li class="page-item disabled">
                     		<a class="page-link" 
                     		   href="notice.do?cpage=${ requestScope.pi.currentPage - 1 }">
-                    			Previous
+                               ⇦
                     		</a>
                     	</li>
                     </c:otherwise>
@@ -192,14 +197,14 @@
                     	<c:choose>	   
                     	<c:when test="${ requestScope.pi.currentPage ne p }">
                     		<li class="page-item">
-		                    	<a class="page-link" href="notice.do?cpage=${ p }">
+		                    	<a href="notice.do?cpage=${ p }">
 									${ p }
 								</a>
 		                    </li>
                     	</c:when>
                     	<c:otherwise>
                     		<li class="page-item active">
-		                    	<a class="page-link">
+		                    	<a >
 									${ p }
 								</a>
 		                    </li>
@@ -211,7 +216,7 @@
                     <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
 	                    <li class="page-item disabled">
 	                    	<a class="page-link" href="#">
-	                    		Next
+	                    		⇨
 	                    	</a>
 	                    </li>
                     </c:when>

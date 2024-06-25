@@ -31,6 +31,7 @@
 
             background-color :#e7e6e6;
             border-radius: 20px;
+            box-shadow: 0 0 10px gray;
         }
         .search-box {
             display: flex;
@@ -65,12 +66,11 @@
         #SearchFunction>select{
             border-radius: 20px; width: 100px;
             display: inline;
-            width : 150px;
             
         }
         #SearchFunction{
             position: absolute;
-            top: 270px;
+            top: 430px;
             left: 50%;
             transform: translate(-50%, -50%);
 
@@ -94,21 +94,32 @@
         }
         .pagination {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 35px;
             width: 100%;
             display: flex;
             justify-content: center;
         }
         .pagination a {
-            margin: 0 5px;
-            text-decoration: none;
-            color: #333;
+            color: white;
+            float: left;
+            padding: 8px 10px;
+            text-decoration: none; 
+            border-radius: 20%;
+            background-color: white; color:black;
+            margin : 0px 4px;
         }
+        .pagination a:hover{background-color: black; color:white;}
         .pagination a.active {
             font-weight: bold;
         }
+
+
         td{
          text-align: center;}
+        
+
+
+
 
       /*   td:hover { display: block; font-size: 15px; font-weight: 600; cursor: pointer; } */
         tbody > tr:hover { background-color: lightgray;  }
@@ -119,6 +130,8 @@
             background-color: white; border-radius: 20px; width:130px; height: 40px;
         }
         #ReviewBtn:hover{ transform: translateX(20px); background-color: #333; color:white;}
+
+
 
     </style>
 </head>
@@ -181,7 +194,6 @@
         
         
         <!-- 페이징바 -->
-        
       <script>
 		$(function() {
        		
@@ -217,7 +229,7 @@
                     	<li class="page-item">
                     		<a class="page-link" 
                     		   href="review.do?cpage=${ requestScope.pi.currentPage - 1 }&category=${ requestScope.category }&search=${ requestScope.search }">
-                    			Previous
+                               ⇦
                     		</a>
                     	</li>
                     </c:otherwise>
@@ -230,14 +242,14 @@
                     	<c:choose>	   
                     	<c:when test="${ requestScope.pi.currentPage ne p }">
                     		<li class="page-item">
-		                    	<a class="page-link" href="review.do?cpage=${ p }&category=${ requestScope.category }&search=${ requestScope.search }">
+		                    	<a href="review.do?cpage=${ p }&category=${ requestScope.category }&search=${ requestScope.search }">
 									${ p }
 								</a>
 		                    </li>
                     	</c:when>
                     	<c:otherwise>
                     		<li class="page-item active">
-		                    	<a class="page-link">
+		                    	<a>
 									${ p }
 								</a>
 		                    </li>
@@ -249,7 +261,7 @@
                     <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
 	                    <li class="page-item disabled">
 	                    	<a class="page-link" href="#">
-	                    		Next
+	                    		⇨
 	                    	</a>
 	                    </li>
                     </c:when>

@@ -11,12 +11,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Grandiflora+One&display=swap" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+
     <title>예정 전시</title>
 
     <style>
+        h1{
+            /* 폰트 */
+            font-family: "Do Hyeon", sans-serif;
+            font-weight: 400;
+            font-size :larger;
+            font-style :oblique;  
+        }
+        .exhibition-item>div {
+            margin-bottom: 10px;
+        }
         .container {
             max-width: 100%;
-            margin: auto;
+            margin: auto; margin-top: 50px; margin-bottom: 50px;
             padding: 20px;
             margin-bottom: 50px;
         }
@@ -93,7 +105,6 @@
             object-fit: cover;
             border-radius: 20px;
             border-style: ridge;
-            box-shadow: 0 0 10px gray;
         }
         .exhibition-item h2 {
             font-size: 1.5em;
@@ -127,6 +138,10 @@
             font-weight: bold;
         }
 
+        .exhibition-item img:hover{
+            box-shadow: 0 0 10px gray;
+        }
+
 
         .search-box input,button {border-radius: 20px !important;}
 
@@ -149,7 +164,7 @@
         <div class="exhibition-list">
             <c:forEach var="exhibition" items="${ list }">
                 <div class="exhibition-item">
-                	<div style="text-align: right"><button name="${ exhibition.displayNo }" class="btn btn-outline-dark" onclick="likeCheck(this);">❤ ${ exhibition.likeCount }</button></div>
+                	<div d="luv" style="text-align: right"><button name="${ exhibition.displayNo }" class="btn btn-outline-dark" onclick="likeCheck(this);">❤ ${ exhibition.likeCount }</button></div>
                     <a href="displayDetail.do?dno=${exhibition.displayNo}" style="text-decoration: none; color: black;" >
                         <img src="<c:url value='/resources/display/${exhibition.imagePath}' />" alt="전시 이미지">
                         <h2>${ exhibition.displayName }</h2>

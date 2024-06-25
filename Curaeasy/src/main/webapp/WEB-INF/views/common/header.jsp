@@ -15,10 +15,7 @@
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
     <!--로그인스타일-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!--폰트-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" >
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Poor+Story&display=swap" rel="stylesheet">
+
 	
 	<!-- alertify 연동 구문 -->
 	<!-- JavaScript -->
@@ -29,9 +26,9 @@
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/default.min.css"/>
 	<!-- Semantic UI theme -->
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.14.0/build/css/themes/semantic.min.css"/>
-   
 
     <style>
+
         div { box-sizing: border-box;}
         #logo img{ width: 200px; height: 200px; margin-left:0px; margin-right: 0px; }
         #logo a:hover { background-color: transparent !important; }
@@ -46,7 +43,6 @@
             margin: auto;
             background-color: #333; color: #fff; 
             box-shadow: 0 0 15px #333;
-            
         }
         #navi { 
             padding: 0; 
