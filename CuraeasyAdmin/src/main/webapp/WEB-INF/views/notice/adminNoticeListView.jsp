@@ -139,6 +139,12 @@
             text-align: center;
             vertical-align: middle;
         }
+        
+        /* Disabled button style */
+        .btn-disabled {
+            background-color: grey;
+            pointer-events: none;
+        }
     </style>
     <script>
         function goToDetail(noticeNo) {
@@ -154,35 +160,8 @@
             });
         }
 
-        function formatPrice() {
-            const priceElements = document.querySelectorAll('.price');
-            priceElements.forEach(element => {
-                let price = element.textContent;
-                price = parseInt(price).toLocaleString() + '원';
-                element.textContent = price;
-            });
-        }
-
-        function formatDate() {
-            const dateElements = document.querySelectorAll('.date');
-            dateElements.forEach(element => {
-                let date = element.textContent;
-                element.textContent = date.split(" ")[0] + ' ' + date.split(" ")[1].slice(0, 5);
-            });
-        }
-
-        function formatAttachment() {
-            const attachmentElements = document.querySelectorAll('.attachment');
-            attachmentElements.forEach(element => {
-                element.textContent = element.textContent ? 'Y' : 'N';
-            });
-        }
-
         document.addEventListener("DOMContentLoaded", function() {
             truncateText('.truncate', 20);
-            formatPrice();
-            formatDate();
-            formatAttachment();
             
             // 검색 버튼 클릭 이벤트
             $("#searchButton").click(function() {
@@ -200,13 +179,11 @@
                 var searchValue = $("#searchInput").val().toLowerCase();
                 var searchCategory = $("#searchCategory").val();
                 $("table tbody tr").filter(function() {
-                    var textToSearch;
+                    var textToSearch = $(this).find('td:eq(1)').text().toLowerCase(); // 기본 제목 검색
                     if (searchCategory === "noticeTitle") {
                         textToSearch = $(this).find('td:eq(1)').text().toLowerCase();
                     } else if (searchCategory === "noticeContent") {
                         textToSearch = $(this).find('td:eq(2)').text().toLowerCase();
-                    } else {
-                        textToSearch = $(this).text().toLowerCase();
                     }
                     $(this).toggle(textToSearch.indexOf(searchValue) > -1);
                 });
@@ -255,23 +232,27 @@
                                     <th>첨부파일</th>
                                     <th>조회수</th>
                                     <th>상태</th>
+                                    <th>수정하기</th>
+                                    <th>삭제하기</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="notice" items="${noticeList}">
-                                        <tr onclick="goToDetail(${notice.noticeNo})">
-                                            <td>${notice.noticeNo}</td>
-                                            <td>${notice.noticeTitle}</td>
-                                            <td>${notice.noticeContent}</td>
-                                            <td class="date">${notice.noticeDate}</td>
-                                            <td class="attachment">${notice.noticeAttachment}</td>
-                                            <td>${notice.noticeCount}</td>
-                                            <td>${notice.noticeStatus}</td>
-                                        </tr>
+                                    <tr>
+                                        <td>${notice.noticeNo}</td>
+                                        <td>${notice.noticeTitle}</td>
+                                        <td>${notice.noticeContent}</td>
+                                        <td>${notice.noticeDate}</td>
+										<td>${not empty notice.noticeAttachment ? 'Y' : 'N'}</td>
+                                        <td>${notice.noticeCount}</td>
+                                        <td>${notice.noticeStatus == 'Y' ? '게시중' : '삭제됨'}</td>
+                                        <td><button class="btn btn-warning" onclick="location.href='${path}/updateNotice.ad?noticeNo=${notice.noticeNo}'">수정하기</button></td>
+                                        <td><button class="btn btn-danger" onclick="if(confirm('정말로 삭제하시겠습니까?')){ location.href='${path}/deleteNotice.ad?noticeNo=${notice.noticeNo}'; }">삭제하기</button></td>
+                                    </tr>
                                 </c:forEach>
                                 <c:if test="${empty noticeList}">
                                     <tr>
-                                        <td colspan="7">등록된 공지사항이 없습니다.</td>
+                                        <td colspan="9">등록된 공지사항이 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>
@@ -301,26 +282,5 @@
             </footer>
         </div>
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $("#searchButton").click(function() {
-                var searchCategory = $("#searchCategory").val();
-                var searchValue = $("#searchInput").val().toLowerCase();
-
-                $("table tbody tr").filter(function() {
-                    var cellValue;
-                    if (searchCategory === "noticeTitle") {
-                        cellValue = $(this).find('td:eq(1)').text().toLowerCase();
-                    } else if (searchCategory === "noticeContent") {
-                        cellValue = $(this).find('td:eq(2)').text().toLowerCase();
-                    } else {
-                        cellValue = $(this).text().toLowerCase();
-                    }
-                    $(this).toggle(cellValue.indexOf(searchValue) > -1);
-                });
-            });
-        });
-    </script>
 </body>
 </html>

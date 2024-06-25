@@ -239,10 +239,11 @@
                                     <th>대관 시작일</th>
                                     <th>대관 종료일</th>
                                     <th>대관 상태</th>
+                                    <th>승인 결과</th>
                                     <th>전시관 이름</th>
                                     <th>작가 이름</th>
                                     <th>수정하기</th>
-                                    <th>취소하기</th>
+                                    <th>승인</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -252,20 +253,21 @@
                                         <td class="date">${rental.rentalStartDate}</td>
                                         <td class="date">${rental.rentalEndDate}</td>
                                         <td>${rental.rentalStatus == 'Y' ? '대관중' : '취소됨'}</td>
+                                        <td>${rental.rentalResult}</td>
                                         <td>${rental.galleryName}</td>
                                         <td>${rental.artistNickName}</td>
                                         <td><button class="btn btn-warning" onclick="location.href='${path}/updateRental.ad?rentalNo=${rental.rentalNo}'">수정하기</button></td>
                                         <td>
                                             <button class="btn <c:if test='${rental.rentalStatus == "N"}'>btn-disabled</c:if> btn-danger"
                                                     onclick="if('${rental.rentalStatus}' !== 'N') { location.href='${path}/updateRentalStatus.ad?rentalNo=${rental.rentalNo}'; } else { alert('이미 취소된 대관입니다.'); }">
-                                                취소하기
+                                                승인하기
                                             </button>
                                         </td>
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty rentalList}">
                                     <tr>
-                                        <td colspan="8">등록된 대관이 없습니다.</td>
+                                        <td colspan="9">등록된 대관이 없습니다.</td>
                                     </tr>
                                 </c:if>
                             </tbody>

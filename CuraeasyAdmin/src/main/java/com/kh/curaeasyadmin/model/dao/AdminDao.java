@@ -2,6 +2,7 @@ package com.kh.curaeasyadmin.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -13,6 +14,34 @@ import com.kh.curaeasyadmin.model.vo.*;
 
 @Repository
 public class AdminDao {
+	
+	// 대시보드 관련
+	
+    public int getMemberCount(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectOne("adminMapper.getMemberCount");
+    }
+
+    public int getCurrentYearSales(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectOne("adminMapper.getCurrentYearSales");
+    }
+
+    public int getExhibitionCount(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectOne("adminMapper.getDisplayCount");
+    }
+
+    public int getArtistsAwaitingApproval(SqlSessionTemplate sqlSession) {
+    	return sqlSession.selectOne("adminMapper.getArtistsAwaitingApproval");
+    
+    }
+    
+    public List<Map<String, Object>> getTop5Displays(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectList("adminMapper.getTop5Displays");
+    }
+
+
+    public List<Map<String, Object>> getMonthlyReservationCounts(SqlSessionTemplate sqlSession) {
+        return sqlSession.selectList("adminMapper.getMonthlyReservationCounts");
+    }
 
     // 전시회 관리
     public int getDisplayListCount(SqlSessionTemplate sqlSession, String searchKeyword) {
@@ -204,4 +233,5 @@ public class AdminDao {
 	public DisplayAttachment selectAttachments(SqlSessionTemplate sqlSession, int displayNo) {
 		return sqlSession.selectOne("adminMapper.selectAttachments", displayNo);
 	}
+
 }

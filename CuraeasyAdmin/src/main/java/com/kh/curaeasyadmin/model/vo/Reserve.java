@@ -23,5 +23,5 @@ public class Reserve {
     private int memberNo;
     private int displayNo;
     private String memberName;
-    private String displayName;
+    private String displayName;    
 }
