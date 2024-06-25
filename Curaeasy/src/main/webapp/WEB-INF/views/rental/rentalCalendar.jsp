@@ -170,7 +170,7 @@
 			<c:otherwise>
 				<c:forEach var="c" items="${list}">
 				{
-		            title: '예약완료',
+		            title: '${c.rentalResult}',
 		            start: '${c.rentalStartDate}',
 		            end:  new Date(new Date('${c.rentalEndDate}').setDate(new Date('${c.rentalEndDate}').getDate() + 1))
 		            	  .toISOString().slice(0,10),

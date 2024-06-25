@@ -164,7 +164,7 @@
 	            	<c:forEach items='${requestScope.list}' var="item">
 	           			<c:if test="${ ordinal eq item.artistOrdinal }">
 	           				<div class="artist-item">
-			                    <img src="resources/images/${ item.artistImage }" alt="작가 이미지 1">
+			                    <img src="resources/artistProfileImgs/${ item.artistImage }" alt="작가 이미지 1">
 			                    <h2>${ item.artistNickName }</h2>
 			                    <p>${ item.artistIntroduce }</p>
 			                </div>
@@ -184,7 +184,7 @@
         list.forEach(e => {
             if(e.artistOrdinal == ordinal){
                 $e = $("<div class=artist-item></div>");
-                $e.append($('<img src="resources/images/' + e.artistImage + '" alt="작가 이미지 1">'))
+                $e.append($('<img src="resources/artistProfileImgs/' + e.artistImage + '" alt="작가 이미지 1">'))
                 $e.append($('<h2>' + e.artistNickName + '</h2>'))
                 $e.append($('<p>' + e.artistIntroduce + '</p>'))
                 $(".artist-list").append($e);

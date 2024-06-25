@@ -159,22 +159,22 @@ tbody>tr:hover {
 									<td>${ n.rentalNo }</td>
 									<td><c:choose>
 											<c:when test="${n.galleryNo eq '1'}">
-								       	제 1 전시관
+								       	제1 전시관
 								    </c:when>
 											<c:when test="${n.galleryNo eq '2'}">
-								       	제 2 전시관
+								       	제2 전시관
 								    </c:when>
 											<c:when test="${n.galleryNo eq '3'}">
-								       	제 3 전시관
+								       	제3 전시관
 								    </c:when>
 											<c:when test="${n.galleryNo eq '4'}">
-								       	제 4 전시관
+								       	제4 전시관
 								    </c:when>
 											<c:when test="${n.galleryNo eq '5'}">
-								       	제 5 전시관
+								       	제5 전시관
 								    </c:when>
 											<c:when test="${n.galleryNo eq '6'}">
-								       	제 6 전시관
+								       	제6 전시관
 								    </c:when>
 										</c:choose></td>
 									<td>${ n.rentalStartDate }</td>
