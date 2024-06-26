@@ -87,7 +87,6 @@
                             <img src="https://th.bing.com/th/id/OIP.9uY3ye98WVxjuCIVC7FQwwHaHa" width="200px" alt="프로필이미지" id="preview1" class="rounded" ><br>
                             <input type="file" class="form-control-file " id="reUpfile" name="reUpfile" accept="image/png, image/jpeg"  onchange="loadImg(this, 1)" style="display: none;" > 
                         </div>
-                    
                         <button type="submit" class="btn btn-primary">추가하기</button>
                     </form>
                 </div>
@@ -101,7 +100,6 @@
             </footer>
         </div>
     </div>
-
     <script>
             $(function(){
         		$("#preview1").click(function(){

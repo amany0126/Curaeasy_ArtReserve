@@ -639,20 +639,32 @@
     </select>
     
     <update id="updateArtistStatus" parameterType="map">
-    UPDATE ARTIST
-    SET ARTIST_RESULT = #{artistResult}, ARTIST_STATUS = #{artistStatus}
-    WHERE ARTIST_NO = #{artistNo}
+	    UPDATE ARTIST
+	    SET ARTIST_RESULT = #{artistResult}, ARTIST_STATUS = #{artistStatus}
+	    WHERE ARTIST_NO = #{artistNo}
 	</update>
 	
-	<update id="updateArtist" parameterType="Artist">
-    UPDATE ARTIST
-    SET ARTIST_NICKNAME = #{artistNickName},
-        ARTIST_ORDINAL = #{artistOrdinal},
-        ARTIST_INTRODUCE = #{artistIntroduce},
-        ARTIST_IMAGE = #{artistImage}
-    WHERE ARTIST_NO = #{artistNo}
+	<update id="updateMemberArtistOngoing" parameterType="map">
+    	UPDATE MEMBER
+    	SET ARTIST_ONGOING = #{artistStatus}
+	    WHERE MEMBER_NO = (SELECT MEMBER_NO FROM ARTIST WHERE ARTIST_NO = #{artistNo})
 	</update>
-
+	
+	<update id="updateArtist" parameterType="com.kh.curaeasyadmin.model.vo.Artist">
+	    UPDATE ARTIST
+	    SET ARTIST_NICKNAME = #{artistNickName},
+	        ARTIST_INTRODUCE = #{artistIntroduce},
+	        ARTIST_IMAGE = #{artistImage},
+	        ARTIST_APPLY_TITLE = #{artistApplyTitle},
+	        ARTIST_ORDINAL = #{artistOrdinal}
+	    WHERE ARTIST_NO = #{artistNo}
+	</update>
+	
+	<select id="selectArtist" parameterType="java.lang.Integer" resultMap="artistResultSet">
+	    SELECT ARTIST_NO, ARTIST_NICKNAME, ARTIST_INTRODUCE, ARTIST_IMAGE, ARTIST_APPLY_TITLE, ARTIST_ORDINAL, MEMBER_NO
+	    FROM ARTIST
+	    WHERE ARTIST_NO = #{artistNo}
+	</select>
     <!-- 댓글 관리 -->
     <select id="selectReplyList" resultMap="replyResultSet">
         SELECT 

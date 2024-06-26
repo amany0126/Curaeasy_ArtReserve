@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -74,24 +73,15 @@
                             <input type="text" class="form-control" id="artistNickName" name="artistNickName" value="${artist.artistNickName}" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="artistOrdinal">작가 기수</label>
-                            <input type="number" class="form-control" id="artistOrdinal" name="artistOrdinal" value="${artist.artistOrdinal}" required>
-                        </div>
-                        <div class="form-group mb-3">
                             <label for="artistIntroduce">소개</label>
                             <textarea class="form-control" id="artistIntroduce" name="artistIntroduce" rows="3" required>${artist.artistIntroduce}</textarea>
                         </div>
                         <div class="form-group mb-3">
                             <label for="artistImage">썸네일 이미지</label>
-                            <input type="file" class="form-control-file" id="artistImage" name="artistImage">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label>현재 썸네일 이미지</label>
-                            <c:if test="${artist.artistImage != null}">
-                                <div class="preview">
-                                    <img src="${path}/resources/artist_images/${artist.artistImage}" alt="Artist Thumbnail">
-                                </div>
-                            </c:if>
+                            <input type="file" class="form-control-file" id="artistImage" name="artistImage" onchange="loadImg(this, 1)">
+                            <div class="preview">
+                            	<img src="../../../curaeasy/resources/resources/artist_images/$" alt="">
+                            </div>
                         </div>
                         <button type="submit" class="btn btn-primary">수정하기</button>
                         <button type="button" class="btn btn-secondary" onclick="history.back();">취소하기</button>
@@ -107,5 +97,16 @@
             </footer>
         </div>
     </div>
+    <script>
+    function loadImg(inputFile, num) {
+        if (inputFile.files && inputFile.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#artistPreviewImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(inputFile.files[0]);
+        }
+    }
+    </script>
 </body>
 </html>
