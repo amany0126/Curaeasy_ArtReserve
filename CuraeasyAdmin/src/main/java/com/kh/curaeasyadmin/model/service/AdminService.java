@@ -241,7 +241,30 @@ public class AdminService {
 		return adminDao.displayUpdate(sqlSession,display)*adminDao.displayAttUpdate(sqlSession,attachments);
 	}
 
-	public DisplayAttachment selectAttachments(int displayNo) {
-		 return adminDao.selectAttachments(sqlSession,displayNo);
+	public DisplayAttachment selectAttachment1(int displayNo) {
+		 return adminDao.selectAttachment1(sqlSession,displayNo);
 	}
+	public DisplayAttachment selectAttachment2(int displayNo) {
+		return adminDao.selectAttachment2(sqlSession,displayNo);
+	}
+	
+	@Transactional
+	public int displayUpdate(Display display, DisplayAttachment reAttachment1, DisplayAttachment reAttachment2) {
+		// TODO Auto-generated method stub
+		return adminDao.updateDisplayDate(sqlSession,display)*adminDao.updateAttachment(sqlSession,reAttachment1)*adminDao.updateAttachment(sqlSession,reAttachment2);
+	}
+
+	public Notice selectNoticeDetail(int noticeNo) {
+		return adminDao.selectNoticeDetail(sqlSession,noticeNo);
+	}
+	
+	@Transactional
+	public int noticeUpdate(Notice notice) {
+		return adminDao.noticeUpdate(sqlSession,notice);
+	}
+	@Transactional
+	public int insertNotice(Notice notice) {
+		return adminDao.insertNotice(sqlSession,notice);
+	}
+
 }

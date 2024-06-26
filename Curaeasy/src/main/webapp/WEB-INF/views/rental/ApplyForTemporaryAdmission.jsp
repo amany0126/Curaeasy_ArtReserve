@@ -230,28 +230,28 @@
     $(function (){
     	if ('${requestScope.rn.galleryNo}' == 1) { 
     		 $(".form-group input[id=galleryNo]").val(1)
-    		 $(".form-group input[id=galleryNo1]").val("제 1 전시관");
+    		 $(".form-group input[id=galleryNo1]").val("제1 전시관");
     	}
         else if ('${requestScope.rn.galleryNo}' == 2) {  
         	 $(".form-group input[id=galleryNo]").val(2)
-    		 $(".form-group input[id=galleryNo1]").val("제 2 전시관");
+    		 $(".form-group input[id=galleryNo1]").val("제2 전시관");
         }
         else if ('${requestScope.rn.galleryNo}' == 3) {  
         	 $(".form-group input[id=galleryNo]").val(3)
-    		 $(".form-group input[id=galleryNo1]").val("제 3 전시관");
+    		 $(".form-group input[id=galleryNo1]").val("제3 전시관");
         }
         else if ('${requestScope.rn.galleryNo}' == 4) {  
         	 $(".form-group input[id=galleryNo]").val(4)
-    		 $(".form-group input[id=galleryNo1]").val("제 4 전시관");
+    		 $(".form-group input[id=galleryNo1]").val("제4 전시관");
         }
         else if ('${requestScope.rn.galleryNo}' == 5) {  
         	 
         	 $(".form-gro input[id=galleryNo]").val(5)
-    		 $(".form-group input[id=galleryNo1]").val("제 5 전시관");
+    		 $(".form-group input[id=galleryNo1]").val("제5 전시관");
         }
         else if ( '${requestScope.rn.galleryNo}' == 6) { 
         	 $(".form-gro input[id=galleryNo]").val(6)
-    		 $(".form-group input[id=galleryNo1]").val("제 6 전시관");
+    		 $(".form-group input[id=galleryNo1]").val("제6 전시관");
         }
       
 	});

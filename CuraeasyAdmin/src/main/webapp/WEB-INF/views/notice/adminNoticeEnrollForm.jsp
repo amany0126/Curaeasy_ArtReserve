@@ -15,6 +15,9 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="${path}/resources/js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -70,7 +73,7 @@
             <main>
                 <div class="container">
                     <h1 class="mt-4">공지사항 추가</h1>
-                    <form action="${path}/addNotice.ad" method="post" enctype="multipart/form-data">
+                    <form action="${path}/insertNotice.ad" method="post" enctype="multipart/form-data">
                         <div class="form-group mb-3">
                             <label for="noticeTitle">제목</label>
                             <input type="text" class="form-control" id="noticeTitle" name="noticeTitle" required>
@@ -80,12 +83,9 @@
                             <textarea class="form-control" id="noticeContent" name="noticeContent" rows="3" required></textarea>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="attachments">첨부파일 추가</label>
-                            <input type="file" class="form-control-file" id="attachments" name="attachments" multiple>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label>첨부파일 미리보기</label>
-                            <div id="preview" class="preview"></div>
+                            <label for="upfile">첨부파일 추가</label><br>
+                            <img src="https://th.bing.com/th/id/OIP.9uY3ye98WVxjuCIVC7FQwwHaHa" width="200px" alt="프로필이미지" id="preview1" class="rounded" ><br>
+                            <input type="file" class="form-control-file " id="reUpfile" name="reUpfile" accept="image/png, image/jpeg"  onchange="loadImg(this, 1)" style="display: none;" > 
                         </div>
                         <button type="submit" class="btn btn-primary">추가하기</button>
                     </form>
@@ -100,24 +100,30 @@
             </footer>
         </div>
     </div>
-
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById('attachments').addEventListener('change', function(event) {
-                const files = event.target.files;
-                const preview = document.getElementById('preview');
-                preview.innerHTML = '';
-                for (const file of files) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        preview.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        });
+            $(function(){
+        		$("#preview1").click(function(){
+        			$("#reUpfile").click();
+        		});
+        	
+        	});
+        	function loadImg(inputFile, num) {
+        		if(inputFile.files.length == 1){
+        			let reader = new FileReader();
+        			reader.readAsDataURL(inputFile.files[0]);
+        			reader.onload=function(e){
+        				switch(num){
+        				case 1 : $("#preview1").attr("src",e.target.result); 
+        				break
+        			}
+        		};
+        		}else{
+        			switch(num){
+        				case 1 : $("#preview1").attr("src","https://th.bing.com/th/id/OIP.9uY3ye98WVxjuCIVC7FQwwHaHa"); 
+        				break
+        			}
+        		}
+        	};
     </script>
 </body>
 </html>

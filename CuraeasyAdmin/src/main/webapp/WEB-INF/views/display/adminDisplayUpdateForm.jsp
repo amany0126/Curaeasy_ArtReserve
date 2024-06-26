@@ -15,6 +15,9 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="${path}/resources/js/scripts.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>   
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,7 +60,7 @@
         .attachment-item button {
             margin-left: 10px;
         }
-        .btn-primary, .btn-danger {
+        .btn-primary, .btn-danger,.btn-secondary {
             width: 100px;
             margin-top: 20px;
         }
@@ -86,7 +89,7 @@
             <main>
                 <div class="container">
                     <h1 class="mt-4">전시 수정</h1>
-                    <form action="${path}/updateDisplay.ad" method="post" enctype="multipart/form-data">
+                    <form action="${path}/displayUpdate.ad" method="post" enctype="multipart/form-data">
                         <input type="hidden" name="displayNo" value="${ requestScope.display.displayNo}" />
                         <div class="form-group mb-3">
                             <label for="displayName">전시명</label>
@@ -118,31 +121,33 @@
                             </select>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="artistNickName">작가명</label>
-                            <input type="text" class="form-control" id="artistNickName" name="artistNickName" value="${ requestScope.display.artistNickName}" required>
+                            <label for="artistNickName1">작가명</label>
+                            <input type="text" class="form-control" id="artistNickName1" name="artistNickName1" value="${ requestScope.display.artistNickName}" disabled required>
+                            <input type="hidden" class="form-control" id="artistNickName" name="artistNickName" value="${ requestScope.display.artistNickName}" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="galleryName">전시관명</label>
-                            <input type="text" class="form-control" id="galleryName" name="galleryName" value="${ requestScope.display.galleryName}" required>
+                            <label for="galleryName1">전시관명</label>
+                            <input type="text" class="form-control" id="galleryName1" name="galleryName1" value="${ requestScope.display.galleryName}" disabled required>
+                            <input type="hidden" class="form-control" id="galleryName" name="galleryName" value="${ requestScope.display.galleryName}" required>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="attachments">첨부파일 추가</label>
-                            <input type="file" class="form-control-file" id="attachments" name="attachments" multiple>
+                        <div>
+	                        <div class="form-group mb-3" style="display: inline-table;; width: 30%; margin-left: 14%;">
+	                            <label>첨부파일 미리보기 (썸네일)</label> <br>
+	                            <img src="../../../curaeasy/resources/display/${requestScope.attachment1.changeName}" width="200px" alt="프로필이미지" id="preview1" class="rounded" ><br>
+	                            <input type="file" class="form-control-file " id="attachment1" name="attachment1" onchange="loadImg(this, 1)"  accept="image/png, image/jpeg" style="display: none;"> <br>
+	                        </div>
+	                        <div class="form-group mb-3" style="display: inline-table; width: 20%; ">
+	                        </div>
+	                        <div class="form-group mb-3" style="display: inline-table; width: 30%; margin-right: 5%;">
+	                            <label>첨부파일 미리보기 (내용)</label> <br>
+	                            <img src="../../../curaeasy/resources/display/${requestScope.attachment2.changeName}" width="200px" alt="프로필이미지" id="preview2" class="rounded" ><br>
+	                             <input type="file" class="form-control-file " id="attachment2" name="attachment2" onchange="loadImg(this, 2)"  accept="image/png, image/jpeg" style="display: none;"> <br>
+	                        </div>
                         </div>
-                        <div class="form-group mb-3">
-                            <label>현재 첨부파일</label>
-                                <div class="attachment-item">
-                                    <img src="../../../curaeasy/resources/display/${requestScope.attachments.changeName}" alt="${ requestScope.attachments.originName}">
-                                    <p>${attachments.originName}</p>
-                                    <button type="button" class="btn btn-danger btn-delete-attachment" data-attachment-no="${ requestScope.attachments.attachmentNo}">삭제</button>
-                                </div>
+                         <div class="form-group mb-3" align="center">
+                            <button type="submit" class="btn btn-primary">수정하기</button>
+                        	<button type="button" class="btn btn-secondary" onclick="history.back();">취소하기</button>
                         </div>
-                        <div class="form-group mb-3">
-                            <label>첨부파일 미리보기</label>
-                            <div id="preview" class="preview"></div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">수정하기</button>
-                        <button type="button" class="btn btn-secondary" onclick="history.back();">취소하기</button>
                     </form>
                 </div>
             </main>
@@ -157,48 +162,35 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll('.btn-delete-attachment').forEach(button => {
-                button.addEventListener('click', function() {
-                    if (confirm('정말 이 파일을 삭제하시겠습니까?')) {
-                        const attachmentNo = this.dataset.attachmentNo;
-                        fetch('${path}/deleteAttachment.ad', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ attachmentNo: attachmentNo })
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data.success) {
-                                this.closest('.attachment-item').remove();
-                            } else {
-                                alert('파일 삭제에 실패했습니다.');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-                    }
-                });
-            });
-
-            document.getElementById('attachments').addEventListener('change', function(event) {
-                const files = event.target.files;
-                const preview = document.getElementById('preview');
-                preview.innerHTML = '';
-                for (const file of files) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        preview.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        });
+            $(function(){
+        		$("#preview1").click(function(){
+        			$("#attachment1").click();
+        		});
+        		$("#preview2").click(function(){
+        			$("#attachment2").click();
+        		});
+        	});
+        	function loadImg(inputFile, num) {
+        		if(inputFile.files.length == 1){
+        			let reader = new FileReader();
+        			reader.readAsDataURL(inputFile.files[0]);
+        			reader.onload=function(e){
+        				switch(num){
+        				case 1 : $("#preview1").attr("src",e.target.result); 
+        				break
+        				case 2 : $("#preview2").attr("src",e.target.result); 
+        				break
+        			}
+        		};
+        		}else{
+        			switch(num){
+        				case 1 : $("#preview1").attr("src","../../../curaeasy/resources/display/${requestScope.attachment1.changeName}"); 
+        				break
+        				case 2 : $("#preview2").attr("src","../../../curaeasy/resources/display/${requestScope.attachment2.changeName}"); 
+        				break
+        			}
+        		}
+        	};
     </script>
 </body>
 </html>

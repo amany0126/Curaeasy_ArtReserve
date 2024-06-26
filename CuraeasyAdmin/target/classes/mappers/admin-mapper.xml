@@ -267,11 +267,14 @@
         WHERE DISPLAY_NO = #{displayNo}
     </select>
     
-    <select id="selectAttachments" parameterType="_int" resultMap="displayAttachmentResultMap">
-        SELECT * FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = #{displayNo}
+    <select id="selectAttachment1" parameterType="_int" resultMap="displayAttachmentResultMap">
+        SELECT * FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = #{displayNo} AND IMAGE_LEVEL = 1
+    </select>
+    <select id="selectAttachment2" parameterType="_int" resultMap="displayAttachmentResultMap">
+        SELECT * FROM DISPLAY_ATTACHMENT WHERE DISPLAY_NO = #{displayNo} AND IMAGE_LEVEL = 2
     </select>
 
-   <update id="displayUpdate" parameterType="com.kh.curaeasyadmin.model.vo.Display">
+   <update id="updateDisplayDate" parameterType="com.kh.curaeasyadmin.model.vo.Display">
         UPDATE DISPLAY
         SET DISPLAY_NAME = #{displayName},
             DISPLAY_CONTENT = #{displayContent},
@@ -284,10 +287,10 @@
         WHERE DISPLAY_NO = #{displayNo}
     </update>
 		
-	<update id="displayAttUpdate" parameterType="com.kh.curaeasyadmin.model.vo.DisplayAttachment">
+	<update id="updateAttachment" parameterType="com.kh.curaeasyadmin.model.vo.DisplayAttachment">
         UPDATE DISPLAY_ATTACHMENT
         SET CHANGE_NAME = #{changeName}
-        WHERE DISPLAY_NO = #{displayNo}
+        WHERE DISPLAY_NO = #{displayNo} AND IMAGE_LEVEL = #{imageLevel} AND ATTACHMENT_NO = #{attachmentNo}
     </update>
     
 
@@ -676,6 +679,22 @@
         ORDER BY 
             REPLY_NO
     </select>
+	<!-- 공지사항 조회 -->
+    <select id="selectNoticeDetail" parameterType="_int" resultMap="noticeResultSet">
+        SELECT * 
+        FROM NOTICE
+        WHERE NOTICE_NO = #{noticeNo} AND NOTICE_STATUS = 'Y'
+    </select>
+    <update id="noticeUpdate" parameterType="com.kh.curaeasyadmin.model.vo.Notice">
+    UPDATE NOTICE
+    SET NOTICE_TITLE = #{noticeTitle},
+        NOTICE_CONTENT = #{noticeContent},
+        NOTICE_ATTACHMENT = #{noticeAttachment}
+    WHERE NOTICE_NO = #{noticeNo} AND NOTICE_STATUS = 'Y'
+	</update>
 	
-
+	   <insert id="insertNotice" parameterType="com.kh.curaeasyadmin.model.vo.Notice">
+        INSERT INTO NOTICE (NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_ATTACHMENT, NOTICE_STATUS)
+        VALUES (SEQ_NOTICE_NO.NEXTVAL, #{noticeTitle}, #{noticeContent}, #{noticeAttachment},'Y')
+    </insert>
 </mapper>
