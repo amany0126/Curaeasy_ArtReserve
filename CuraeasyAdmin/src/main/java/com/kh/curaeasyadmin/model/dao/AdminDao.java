@@ -213,10 +213,23 @@ public class AdminDao {
         return sqlSession.update("adminMapper.updateArtistStatus", params);
     }
     
-    public void updateArtist(SqlSessionTemplate sqlSession, Artist artist) {
-        sqlSession.update("adminMapper.updateArtist", artist);
+    public int artistOngoing(SqlSessionTemplate sqlSession, int artistNo, String status) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("artistNo", artistNo);
+        params.put("artistStatus", status);
+        return sqlSession.update("adminMapper.updateMemberArtistOngoing", params);
     }
+   
     
+    
+    public int updateArtist(SqlSessionTemplate sqlSession, Artist artist) {
+        return sqlSession.update("adminMapper.updateArtist", artist);
+        
+    }
+
+    public Artist selectArtist(SqlSessionTemplate sqlSession, Integer artistNo) {
+        return sqlSession.selectOne("adminMapper.selectArtist", artistNo);
+    }
     // 댓글 관리
     public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession) {
         return (ArrayList)sqlSession.selectList("adminMapper.selectReplyList");

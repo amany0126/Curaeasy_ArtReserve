@@ -142,6 +142,7 @@ public class AdminController {
 		}
         return "redirect:/displayList.ad";
     }
+    
     private String savePath(MultipartFile reUpfile, HttpSession session) {
 		return null;
 	}
@@ -389,26 +390,61 @@ public class AdminController {
     
     @RequestMapping("/approveArtist.ad")
     public String approveArtist(@RequestParam("artistNo") int artistNo, @RequestParam("status") String status, RedirectAttributes redirectAttributes) {
-        if ("approve".equals(status)) {
+        if ("Y".equals(status)) {
             adminService.approveArtist(artistNo);
-        } else if ("reject".equals(status)) {
+            adminService.artistOngoing(artistNo);
+        } else if ("N".equals(status)) {
             adminService.rejectArtist(artistNo);
         }
+        
+        System.out.println(artistNo);
+        System.out.println(status);
         redirectAttributes.addFlashAttribute("message", "작가 승인이 완료되었습니다.");
         return "redirect:/artistList.ad";
     }
     
+    
+    @GetMapping("/updateArtist.ad")
+    public String showUpdateArtistForm(@RequestParam("artistNo") Integer artistNo, Model model) {
+        Artist artist = adminService.selectArtist(artistNo);
+        
+        System.out.println(artist);
+        model.addAttribute("artist", artist);
+        return "artist/adminArtistUpdateForm";
+    }
+
     @PostMapping("/updateArtist.ad")
-    public String updateArtist(@ModelAttribute Artist artist, @RequestParam("artistImage") MultipartFile file, HttpServletRequest request) {
+    public String updateArtist(@ModelAttribute Artist artist, @RequestParam("artistImage") MultipartFile file, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         if (!file.isEmpty()) {
             String renameFileName = saveFile(file, request);
             if (renameFileName != null) {
                 artist.setArtistImage(renameFileName);
             }
         }
-        adminService.updateArtist(artist);
+        boolean result = adminService.updateArtist(artist);
+        if (result) {
+            redirectAttributes.addFlashAttribute("message", "작가 정보가 성공적으로 업데이트되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "작가 정보 업데이트에 실패하였습니다.");
+        }
         return "redirect:/artistList.ad";
     }
+    private String saveFileArtist(MultipartFile file, HttpSession session) {
+        String originName = file.getOriginalFilename();
+        String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        int ranNum = (int) (Math.random() * 90000 + 10000);
+        String ext = originName.substring(originName.lastIndexOf("."));
+        String changeName = currentTime + ranNum + ext;
+        String savePath = "C:\\Curaeasy_ArtReserve\\Curaeasy\\src\\main\\webapp\\resources\\artist\\";
+        System.out.println(savePath);
+        try {
+            file.transferTo(new File(savePath + changeName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return changeName;
+    }
+    
 
     private String saveFile(MultipartFile file, HttpServletRequest request) {
         String root = request.getSession().getServletContext().getRealPath("resources");

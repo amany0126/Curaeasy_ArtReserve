@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -8,7 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>작가 정보 수정</title>
+    <title>공지 추가</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -37,7 +38,10 @@
         .form-group label {
             font-weight: bold;
         }
-        .btn-primary, .btn-secondary {
+        .form-control-file {
+            margin-top: 10px;
+        }
+        .btn-primary {
             width: 100px;
             margin-top: 20px;
         }
@@ -65,26 +69,25 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container">
-                    <h1 class="mt-4">작가 정보 수정</h1>
-                    <form action="${path}/updateArtist.ad" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="artistNo" value="${artist.artistNo}" />
+                    <h1 class="mt-4">공지사항 추가</h1>
+                    <form action="${path}/addNotice.ad" method="post" enctype="multipart/form-data">
                         <div class="form-group mb-3">
-                            <label for="artistNickName">예명</label>
-                            <input type="text" class="form-control" id="artistNickName" name="artistNickName" value="${artist.artistNickName}" required>
+                            <label for="noticeTitle">제목</label>
+                            <input type="text" class="form-control" id="noticeTitle" name="noticeTitle" required>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="artistIntroduce">소개</label>
-                            <textarea class="form-control" id="artistIntroduce" name="artistIntroduce" rows="3" required>${artist.artistIntroduce}</textarea>
+                            <label for="noticeContent">공지내용</label>
+                            <textarea class="form-control" id="noticeContent" name="noticeContent" rows="3" required></textarea>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="artistImage">썸네일 이미지</label>
-                            <input type="file" class="form-control-file" id="artistImage" name="artistImage" onchange="loadImg(this, 1)">
-                            <div class="preview">
-                            	<img src="../../../curaeasy/resources/resources/artist_images/$" alt="">
-                            </div>
+                            <label for="attachments">첨부파일 추가</label>
+                            <input type="file" class="form-control-file" id="attachments" name="attachments" multiple>
                         </div>
-                        <button type="submit" class="btn btn-primary">수정하기</button>
-                        <button type="button" class="btn btn-secondary" onclick="history.back();">취소하기</button>
+                        <div class="form-group mb-3">
+                            <label>첨부파일 미리보기</label>
+                            <div id="preview" class="preview"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">추가하기</button>
                     </form>
                 </div>
             </main>
@@ -97,16 +100,24 @@
             </footer>
         </div>
     </div>
+
     <script>
-    function loadImg(inputFile, num) {
-        if (inputFile.files && inputFile.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#artistPreviewImage').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(inputFile.files[0]);
-        }
-    }
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('attachments').addEventListener('change', function(event) {
+                const files = event.target.files;
+                const preview = document.getElementById('preview');
+                preview.innerHTML = '';
+                for (const file of files) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        preview.appendChild(img);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        });
     </script>
 </body>
 </html>

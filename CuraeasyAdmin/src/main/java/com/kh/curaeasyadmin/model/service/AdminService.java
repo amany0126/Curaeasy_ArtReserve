@@ -207,14 +207,24 @@ public class AdminService {
     }
     
     @Transactional
-    public void updateArtist(Artist artist) {
-        adminDao.updateArtist(sqlSession, artist);
+    public boolean updateArtist(Artist artist) {
+        return adminDao.updateArtist(sqlSession,artist) > 0;
     }
-    
+
+    public Artist selectArtist(Integer artistNo) {
+        return adminDao.selectArtist(sqlSession,artistNo);
+    }
     @Transactional
     public void approveArtist(int artistNo) {
         adminDao.updateArtistStatus(sqlSession, artistNo, "Y", "Y");
     }
+    
+    @Transactional
+    public void artistOngoing(int artistNo) {
+        adminDao.artistOngoing(sqlSession, artistNo, "Y");
+    }
+    
+    
 
     @Transactional
     public void rejectArtist(int artistNo) {
