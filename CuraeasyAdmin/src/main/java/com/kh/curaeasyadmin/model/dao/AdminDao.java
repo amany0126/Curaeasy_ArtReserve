@@ -230,8 +230,31 @@ public class AdminDao {
 		return sqlSession.update("adminMapper.displayAttUpdate", attachments);
 	}
 
-	public DisplayAttachment selectAttachments(SqlSessionTemplate sqlSession, int displayNo) {
-		return sqlSession.selectOne("adminMapper.selectAttachments", displayNo);
+	public DisplayAttachment selectAttachment1(SqlSessionTemplate sqlSession, int displayNo) {
+		return sqlSession.selectOne("adminMapper.selectAttachment1", displayNo);
+	}
+	public DisplayAttachment selectAttachment2(SqlSessionTemplate sqlSession, int displayNo) {
+		return sqlSession.selectOne("adminMapper.selectAttachment2", displayNo);
+	}
+
+	public int updateDisplayDate(SqlSessionTemplate sqlSession, Display display) {
+		return sqlSession.update("adminMapper.updateDisplayDate", display);
+	}
+
+	public int updateAttachment(SqlSessionTemplate sqlSession, DisplayAttachment reAttachment) {
+		return sqlSession.update("adminMapper.updateAttachment", reAttachment);
+	}
+
+	public Notice selectNoticeDetail(SqlSessionTemplate sqlSession, int noticeNo) {
+		return sqlSession.selectOne("adminMapper.selectNoticeDetail", noticeNo);
+	}
+
+	public int noticeUpdate(SqlSessionTemplate sqlSession, Notice notice) {
+		return sqlSession.update("adminMapper.noticeUpdate", notice);
+	}
+
+	public int insertNotice(SqlSessionTemplate sqlSession, Notice notice) {
+		return sqlSession.insert("adminMapper.insertNotice", notice);
 	}
 
 }

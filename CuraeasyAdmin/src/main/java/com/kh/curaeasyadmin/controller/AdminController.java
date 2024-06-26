@@ -5,7 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;import java.util.Map;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -98,38 +99,80 @@ public class AdminController {
     @GetMapping("/updateDisplay.ad")
     public String showUpdateDisplayForm(@RequestParam("displayNo") int displayNo, Model model) {
         Display display = adminService.selectDisplay(displayNo);
-        DisplayAttachment attachments = adminService.selectAttachments(displayNo);
+        DisplayAttachment attachment1 = adminService.selectAttachment1(displayNo);
+        DisplayAttachment attachment2 = adminService.selectAttachment2(displayNo);
         
         
         
-        System.out.println(attachments);
         model.addAttribute("display", display);
-        model.addAttribute("attachments", attachments);
+        model.addAttribute("attachment1", attachment1);
+        model.addAttribute("attachment2", attachment2);
 //        System.out.println(display);
         return "display/adminDisplayUpdateForm";
     }
 
-    @PostMapping("/updateDisplay.ad")
-    public String updateDisplay(@ModelAttribute Display display, @RequestParam("attachments") MultipartFile reUpfile, HttpSession session) {
-       DisplayAttachment attachments = new DisplayAttachment();  
-       attachments.setDisplayNo(display.getDisplayNo());
+    @PostMapping("/displayUpdate.ad")
+    public String displayUpdate(@ModelAttribute Display display,  MultipartFile attachment1,  MultipartFile attachment2, HttpSession session) {
        
-       String originalFile = display.getImagePath();
-       
-       int result = 0;
-		if(reUpfile.getSize() == 0) {
-		
-		}else {	
-			String realPath= "C:\\Curaeasy_ArtReserve\\Curaeasy\\src\\main\\webapp\\resources\\display\\"+originalFile;
-			new File(realPath).delete();	
-			String changImgName = saveFile(reUpfile, session);
+    	
+    	// System.out.println(attachment1);
+    	// System.out.println(attachment2);
+    	// System.out.println(display);
+    	
+    	String displayNo = display.getDisplayNo();
+    	
+    	// 원본 파일 정보    	
+    	DisplayAttachment originalAttachment1 = adminService.selectAttachment1(Integer.parseInt(displayNo));
+        DisplayAttachment originalAttachment2 = adminService.selectAttachment2(Integer.parseInt(displayNo));
+    	
+        // 원본 파일 체인지 명
+        String originalfileNameAttachment1 = originalAttachment1.getChangeName();
+        String originalfileNameAttachment2 = originalAttachment2.getChangeName();
+        
+        DisplayAttachment reAttachment1 = new DisplayAttachment();
+        DisplayAttachment reAttachment2 = new DisplayAttachment();
+    	
+        // 섬네일
+        if(attachment1.getSize() == 0) {
+			// 파일번호, 바뀐이름, 파일레벨
+        	reAttachment1.setChangeName(originalAttachment1.getChangeName());
+        	reAttachment1.setAttachmentNo(originalAttachment1.getAttachmentNo());
+        	reAttachment1.setImageLevel(originalAttachment1.getImageLevel());
+        	reAttachment1.setDisplayNo(displayNo);
+		}else {
+			String changImgName = saveFileDisplay(attachment1, session);	
+			reAttachment1.setChangeName(changImgName);
 			
-			System.out.println(reUpfile);
-			System.out.println(changImgName);
-			attachments.setChangeName(changImgName);
+			String realPath= "C:\\Curaeasy_ArtReserve\\Curaeasy\\src\\main\\webapp\\resources\\display\\"+originalfileNameAttachment1;
+			new File(realPath).delete();
 			
-			result = adminService.updateDisplay(display,attachments);
+			reAttachment1.setAttachmentNo(originalAttachment1.getAttachmentNo());
+        	reAttachment1.setImageLevel(originalAttachment1.getImageLevel());
+        	reAttachment1.setDisplayNo(displayNo);
 		}
+        
+        // 상세이미지
+        if(attachment2.getSize() == 0) {
+			// 파일번호, 바뀐이름, 파일레벨
+        	reAttachment2.setChangeName(originalAttachment2.getChangeName());
+        	reAttachment2.setAttachmentNo(originalAttachment2.getAttachmentNo());
+        	reAttachment2.setImageLevel(originalAttachment2.getImageLevel());
+        	reAttachment2.setDisplayNo(displayNo);
+		}else {
+			String changImgName = saveFileDisplay(attachment2, session);	
+			reAttachment2.setChangeName(changImgName);
+			
+			String realPath= "C:\\Curaeasy_ArtReserve\\Curaeasy\\src\\main\\webapp\\resources\\display\\"+originalfileNameAttachment2;
+			new File(realPath).delete();
+			
+			reAttachment2.setAttachmentNo(originalAttachment2.getAttachmentNo());
+			reAttachment2.setImageLevel(originalAttachment2.getImageLevel());
+			reAttachment2.setDisplayNo(displayNo);
+		}
+        
+        int result = adminService.displayUpdate(display,reAttachment1, reAttachment2);
+        
+		
 		if (result > 0) { // 성공
 			// 일회성 알람문구를 담아 메인 페이지로 url 재요청
 			// 첨부파일 업데이트
@@ -140,6 +183,7 @@ public class AdminController {
 		session.setAttribute("alertMsg", "정보 변경에 실패하셨습니다");
 			// /WEB-INF/views/common/errorPage.jsp
 		}
+	
         return "redirect:/displayList.ad";
     }
     private String savePath(MultipartFile reUpfile, HttpSession session) {
@@ -167,7 +211,7 @@ public class AdminController {
         ArrayList<DisplayAttachment> attachmentList = new ArrayList<>();
         for (MultipartFile file : attachments) {
             if (!file.isEmpty()) {
-                String changeName = saveFile(file, session);
+                String changeName = saveFileDisplay(file, session);
                 DisplayAttachment attachment = new DisplayAttachment();
                 attachment.setOriginName(file.getOriginalFilename());
                 attachment.setChangeName(changeName);
@@ -180,7 +224,7 @@ public class AdminController {
         return "redirect:/displayList.ad";
     }
 
-    private String saveFile(MultipartFile file, HttpSession session) {
+    private String saveFileDisplay(MultipartFile file, HttpSession session) {
         String originName = file.getOriginalFilename();
         String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         int ranNum = (int) (Math.random() * 90000 + 10000);
@@ -441,4 +485,109 @@ public class AdminController {
         model.addAttribute("replyList", replyList);
         return "reply/adminReplyListView";
     }
+    @GetMapping("addNotice.ad")
+    public String addNotice() {
+   
+    	return "notice/adminNoticeEnrollForm";
+    }
+    
+    @GetMapping("updateNotice.ad")
+    public String updateNotice(Model model, int noticeNo) {
+    	Notice noticeList = adminService.selectNoticeDetail(noticeNo);
+    	
+    	model.addAttribute("noticeList", noticeList);
+    	return "notice/adminNoticeUpdateForm";
+    }
+    
+    
+    
+    
+    @PostMapping(value = "insertNotice.ad")
+    public String insertNotice( @RequestParam MultipartFile reUpfile,Notice notice, Model model, HttpSession session) {
+    	
+    	
+    
+    	
+    	notice.setNoticeContent(notice.getNoticeContent().replace("\\r\\n", "<br>"));
+    	
+    	String changImgName = saveFileNotice(reUpfile, session);	
+    	notice.setNoticeAttachment (changImgName);
+    	
+
+    	int result = adminService.insertNotice(notice);
+    	
+    	if (result > 0) { // 성공
+    		// 일회성 알람문구를 담아 메인 페이지로 url 재요청
+    		// 첨부파일 업데이트
+    		session.setAttribute("alertMsg", "게시글 작성에 성공 하였습니다.");
+    	} else { // 실패
+    		
+    		// 에러문구 담아서 에러페이지로 포워딩
+    		session.setAttribute("alertMsg", "게시글 작성에 실패하셨습니다");
+    		// /WEB-INF/views/common/errorPage.jsp
+    	}
+    	
+    	return "redirect:/noticeList.ad";
+    	
+    }
+    
+    @PostMapping(value = "noticeUpdate.ad")
+    public String noticeUpdate( @RequestParam MultipartFile reUpfile,Notice notice, Model model, HttpSession session) {
+    	
+    	
+    	// int noticeNo = notice.getNoticeNo();
+    	
+    	notice.setNoticeContent(notice.getNoticeContent().replace("\\r\\n", "<br>"));
+    	
+    	// 원본 파일 정보    	
+    	// Notice noticeList = adminService.selectNoticeDetail(noticeNo);
+    	
+        // 원본 파일 체인지 명
+        String originalfileNameNotice = notice.getNoticeAttachment();
+        
+        // 섬네일
+        if(reUpfile.getSize() == 0) {
+			// 파일번호, 바뀐이름, 파일레벨
+	        notice.setNoticeAttachment(originalfileNameNotice);
+		}else {
+			String changImgName = saveFileNotice(reUpfile, session);	
+			notice.setNoticeAttachment (changImgName);
+			
+			String realPath= "C:\\Curaeasy_ArtReserve\\Curaeasy\\src\\main\\webapp\\resources\\notice\\"+originalfileNameNotice;
+			new File(realPath).delete();
+			
+		}
+        System.out.println(notice);
+        int result = adminService.noticeUpdate(notice);
+		
+		if (result > 0) { // 성공
+			// 일회성 알람문구를 담아 메인 페이지로 url 재요청
+			// 첨부파일 업데이트
+			session.setAttribute("alertMsg", "정보 변경에 성공 하였습니다.");
+		} else { // 실패
+			
+			// 에러문구 담아서 에러페이지로 포워딩
+		session.setAttribute("alertMsg", "정보 변경에 실패하셨습니다");
+			// /WEB-INF/views/common/errorPage.jsp
+		}
+
+        return "redirect:/noticeList.ad";
+    	
+    }
+    
+    private String saveFileNotice(MultipartFile file, HttpSession session) {
+        String originName = file.getOriginalFilename();
+        String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        int ranNum = (int) (Math.random() * 90000 + 10000);
+        String ext = originName.substring(originName.lastIndexOf("."));
+        String changeName = currentTime + ranNum + ext;
+        String savePath = "C:\\Curaeasy_ArtReserve\\Curaeasy\\src\\main\\webapp\\resources\\notice\\";
+        try {
+            file.transferTo(new File(savePath + changeName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return changeName;
+    }
+
 }
