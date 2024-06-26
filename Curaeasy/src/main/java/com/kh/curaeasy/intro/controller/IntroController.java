@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.kh.curaeasy.intro.model.service.IntroService;
+import com.kh.curaeasy.notice.model.vo.Notice;
 
 @Controller
 public class IntroController {
@@ -49,10 +50,13 @@ public class IntroController {
     	// 값 저장할 HashMap 생성
     	HashMap<String, Object> map = new HashMap<>();
     	
+    	
+    	Notice notice =  introService.SelectLatestNotice();
+    	notice.setNoticeContent(notice.getNoticeContent().replace("<br>", ""));
     	// 메인 페이지에 표시할 최신 전시, 공지, 작가 가져오기
     	map.put("display", introService.SelectLatestDisplay());
     	map.put("artist", introService.SelectLatestArtist());
-    	map.put("notice", introService.SelectLatestNotice());
+    	map.put("notice", notice);
     	return new Gson().toJson(map);
     	
     }
