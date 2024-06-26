@@ -89,6 +89,7 @@ public class DisplayController {
     	
     	// 선택한 작품번호의 작품과 첨부파일 가져오기
     	Display d = displayService.selectDisplay(dno);
+    	 d.setDisplayContent(d.getDisplayContent().replace("\\r\\n", "<br>"));
     	ArrayList<DisplayAttachment> list = displayService.selectDisplayAttachment(dno);
     	
     	model.addAttribute("d", d);
@@ -109,6 +110,8 @@ public class DisplayController {
     	System.out.println(upfile);
     	
     	ArrayList<DisplayAttachment> fileList = new ArrayList<DisplayAttachment>();
+    	
+    	 d.setDisplayContent(d.getDisplayContent().replace("\\r\\n", "<br>"));
     	
     	for (int i = 0; i < upfile.size(); i++) {
     		MultipartFile file = upfile.get(i);

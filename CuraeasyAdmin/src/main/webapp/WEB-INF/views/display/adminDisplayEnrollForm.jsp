@@ -15,6 +15,9 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="${path}/resources/js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>   
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -108,13 +111,19 @@
                             <label for="galleryName">전시관명</label>
                             <input type="text" class="form-control" id="galleryName" name="galleryName" required>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="attachments">첨부파일 추가</label>
-                            <input type="file" class="form-control-file" id="attachments" name="attachments" multiple>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label>첨부파일 미리보기</label>
-                            <div id="preview" class="preview"></div>
+                        <div>
+	                        <div class="form-group mb-3" style="display: inline-table;; width: 30%; margin-left: 14%;">
+	                            <label>첨부파일 미리보기 (썸네일)</label> <br>
+	                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8bDAQ92odcpHEd9_LT271RE4lm3j-ae9D_g&s" width="200px" alt="프로필이미지" id="preview1" class="rounded" ><br>
+	                            <input type="file" class="form-control-file " id="attachment1" name="attachment1" onchange="loadImg(this, 1)"  accept="image/png, image/jpeg" style="display: none;"> <br>
+	                        </div>
+	                        <div class="form-group mb-3" style="display: inline-table; width: 20%; ">
+	                        </div>
+	                        <div class="form-group mb-3" style="display: inline-table; width: 30%; margin-right: 5%;">
+	                            <label>첨부파일 미리보기 (내용)</label> <br>
+	                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8bDAQ92odcpHEd9_LT271RE4lm3j-ae9D_g&s" width="200px" alt="프로필이미지" id="preview2" class="rounded" ><br>
+	                             <input type="file" class="form-control-file " id="attachment2" name="attachment2" onchange="loadImg(this, 2)"  accept="image/png, image/jpeg" style="display: none;"> <br>
+	                        </div>
                         </div>
                         <button type="submit" class="btn btn-primary">추가하기</button>
                     </form>
@@ -131,22 +140,35 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById('attachments').addEventListener('change', function(event) {
-                const files = event.target.files;
-                const preview = document.getElementById('preview');
-                preview.innerHTML = '';
-                for (const file of files) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        preview.appendChild(img);
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        });
+    $(function(){
+		$("#preview1").click(function(){
+			$("#attachment1").click();
+		});
+		$("#preview2").click(function(){
+			$("#attachment2").click();
+		});
+	});
+	function loadImg(inputFile, num) {
+		if(inputFile.files.length == 1){
+			let reader = new FileReader();
+			reader.readAsDataURL(inputFile.files[0]);
+			reader.onload=function(e){
+				switch(num){
+				case 1 : $("#preview1").attr("src",e.target.result); 
+				break
+				case 2 : $("#preview2").attr("src",e.target.result); 
+				break
+			}
+		};
+		}else{
+			switch(num){
+				case 1 : $("#preview1").attr("src","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8bDAQ92odcpHEd9_LT271RE4lm3j-ae9D_g&s"); 
+				break
+				case 2 : $("#preview2").attr("src","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8bDAQ92odcpHEd9_LT271RE4lm3j-ae9D_g&s"); 
+				break
+			}
+		}
+	};
     </script>
 </body>
 </html>

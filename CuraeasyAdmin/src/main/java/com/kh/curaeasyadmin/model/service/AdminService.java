@@ -10,6 +10,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.model.dao.AdminDao;
@@ -78,16 +79,16 @@ public class AdminService {
         adminDao.deleteDisplay(sqlSession, displayNo);
     }
     
+  
+    
     @Transactional
-    public void addDisplay(Display display, ArrayList<DisplayAttachment> attachmentList) {
-        adminDao.addDisplay(sqlSession, display);
-        if (attachmentList != null && !attachmentList.isEmpty()) {
-            for (DisplayAttachment attachment : attachmentList) {
-                attachment.setDisplayNo(display.getDisplayNo());
-                adminDao.addDisplayAttachment(sqlSession, attachment);
-            }
-        }
-    }
+	public int addDisplay(Display display, DisplayAttachment uplodeAttachment1, DisplayAttachment uplodeAttachment2) {
+		return adminDao.addDisplay(sqlSession, display)*adminDao.addDisplayAttachment(sqlSession, uplodeAttachment1)* adminDao.addDisplayAttachment(sqlSession, uplodeAttachment2);
+		
+	}
+    
+    
+    
 
     // 전시관 관리
     public int getGalleryListCount(String searchKeyword) {
@@ -256,5 +257,7 @@ public class AdminService {
 	public int insertNotice(Notice notice) {
 		return adminDao.insertNotice(sqlSession,notice);
 	}
+
+
 
 }

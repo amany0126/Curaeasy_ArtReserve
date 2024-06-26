@@ -39,7 +39,10 @@ import com.kh.curaeasyadmin.model.vo.Review;
 
 @Controller
 public class AdminController {
-
+	
+	
+	
+	
     @Autowired
     private AdminService adminService;
 
@@ -207,20 +210,28 @@ public class AdminController {
     }
 
     @PostMapping("/addDisplay.ad")
-    public String addDisplay(Display display, @RequestParam("attachments") MultipartFile[] attachments, HttpSession session) {
-        ArrayList<DisplayAttachment> attachmentList = new ArrayList<>();
-        for (MultipartFile file : attachments) {
-            if (!file.isEmpty()) {
-                String changeName = saveFileDisplay(file, session);
-                DisplayAttachment attachment = new DisplayAttachment();
-                attachment.setOriginName(file.getOriginalFilename());
-                attachment.setChangeName(changeName);
-                attachment.setImageLevel(file.equals(attachments[0]) ? 1 : 2);
-                attachment.setStatus("Y");
-                attachmentList.add(attachment);
-            }
-        }
-        adminService.addDisplay(display, attachmentList);
+    public String addDisplay(Display display, MultipartFile attachment1,  MultipartFile attachment2, HttpSession session) {
+       
+        
+        display.setDisplayContent(display.getDisplayContent().replace("\\r\\n", "<br>"));
+        
+        
+        DisplayAttachment UplodeAttachment1 = new DisplayAttachment();
+        DisplayAttachment UplodeAttachment2 = new DisplayAttachment();
+        
+        String changImgName1 = saveFileDisplay(attachment1, session);	
+        UplodeAttachment1.setOriginName(attachment1.getOriginalFilename());
+        UplodeAttachment1.setChangeName(changImgName1);
+        UplodeAttachment1.setImageLevel(1);
+        
+        System.out.println(attachment1.getOriginalFilename());
+		String changImgName2 = saveFileDisplay(attachment2, session);	
+		UplodeAttachment2.setOriginName(attachment2.getOriginalFilename());
+		UplodeAttachment2.setChangeName(changImgName2);
+		UplodeAttachment2.setImageLevel(2);
+        
+   
+        int result = adminService.addDisplay(display, UplodeAttachment1,UplodeAttachment2);
         return "redirect:/displayList.ad";
     }
 
@@ -535,12 +546,12 @@ public class AdminController {
     public String noticeUpdate( @RequestParam MultipartFile reUpfile,Notice notice, Model model, HttpSession session) {
     	
     	
-    	// int noticeNo = notice.getNoticeNo();
+    	 int noticeNo = notice.getNoticeNo();
     	
     	notice.setNoticeContent(notice.getNoticeContent().replace("\\r\\n", "<br>"));
     	
     	// 원본 파일 정보    	
-    	// Notice noticeList = adminService.selectNoticeDetail(noticeNo);
+    	Notice noticeList = adminService.selectNoticeDetail(noticeNo);
     	
         // 원본 파일 체인지 명
         String originalfileNameNotice = notice.getNoticeAttachment();
@@ -548,7 +559,7 @@ public class AdminController {
         // 섬네일
         if(reUpfile.getSize() == 0) {
 			// 파일번호, 바뀐이름, 파일레벨
-	        notice.setNoticeAttachment(originalfileNameNotice);
+	        notice.setNoticeAttachment(noticeList.getNoticeAttachment());
 		}else {
 			String changImgName = saveFileNotice(reUpfile, session);	
 			notice.setNoticeAttachment (changImgName);
@@ -557,7 +568,7 @@ public class AdminController {
 			new File(realPath).delete();
 			
 		}
-        System.out.println(notice);
+        // System.out.println(notice);
         int result = adminService.noticeUpdate(notice);
 		
 		if (result > 0) { // 성공

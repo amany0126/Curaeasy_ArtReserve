@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.model.vo.*;
@@ -80,10 +81,10 @@ public class AdminDao {
         return sqlSession.insert("adminMapper.addDisplay", display);
     }
 
-    public int addDisplayAttachment(SqlSessionTemplate sqlSession, DisplayAttachment attachment) {
-        return sqlSession.insert("adminMapper.addDisplayAttachment", attachment);
-    }
 
+	public int addDisplayAttachment(SqlSessionTemplate sqlSession,  DisplayAttachment uplodeAttachment) {
+		 return sqlSession.insert("adminMapper.addDisplayAttachment", uplodeAttachment);
+	}
     // 전시관 관리
     public int getGalleryListCount(SqlSessionTemplate sqlSession, String searchKeyword) {
         return sqlSession.selectOne("adminMapper.getGalleryListCount", searchKeyword);
@@ -256,5 +257,6 @@ public class AdminDao {
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice notice) {
 		return sqlSession.insert("adminMapper.insertNotice", notice);
 	}
+
 
 }

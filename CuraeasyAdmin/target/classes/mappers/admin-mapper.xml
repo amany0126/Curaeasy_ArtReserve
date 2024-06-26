@@ -311,7 +311,7 @@
     <!-- Insert display attachment -->
     <insert id="addDisplayAttachment" parameterType="com.kh.curaeasyadmin.model.vo.DisplayAttachment">
         INSERT INTO DISPLAY_ATTACHMENT (ATTACHMENT_NO, ORIGIN_NAME, CHANGE_NAME, IMAGE_LEVEL, STATUS, DISPLAY_NO)
-        VALUES (SEQ_DISPLAY_ATTACHMENT_NO.NEXTVAL, #{originName}, #{changeName}, #{imageLevel}, #{status}, #{displayNo})
+        VALUES (SEQ_DISPLAY_ATTACHMENT_NO.NEXTVAL, #{originName}, #{changeName}, #{imageLevel}, 'Y', SEQ_DISPLAY_NO.CURRVAL)
     </insert>
 
     <!-- 전시관 관리 -->
