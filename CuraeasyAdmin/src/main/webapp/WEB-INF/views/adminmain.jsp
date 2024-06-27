@@ -26,7 +26,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
+        <a class="navbar-brand ps-3" href="${path}/admin.ad">관리자 페이지</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
     </nav>
@@ -55,7 +55,7 @@
                             <div class="card bg-success text-white mb-4">
                                 <div class="card-body">당해 매출액</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <div class="small text-white">₩${sales}</div>
+                                    <div class="small text-white" id="sales">₩${sales}</div>
                                 </div>
                             </div>
                         </div>
@@ -160,10 +160,10 @@
         var top5ExhibitionsChart = new Chart(ctx2, {
             type: 'bar',
             data: {
-                labels: topDisplaysLabels,
+                labels: [${top5display[0].displayNo},${top5display[1].displayNo},${top5display[2].displayNo},${top5display[3].displayNo},${top5display[4].displayNo}],
                 datasets: [{
                     label: '예매량',
-                    data: topDisplaysCounts,
+                    data: [${top5display[0].totalReservations},${top5display[1].totalReservations},${top5display[2].totalReservations},${top5display[3].totalReservations},${top5display[4].totalReservations}],
                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
                     borderColor: 'rgba(153, 102, 255, 1)',
                     borderWidth: 1
@@ -176,6 +176,16 @@
                     }
                 }
             }
+        });
+        
+        function formatNumber(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            var salesElement = document.getElementById("sales");
+            var sales = salesElement.textContent;
+            salesElement.textContent = formatNumber(sales);
         });
     </script>
 </body>

@@ -215,7 +215,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
+        <a class="navbar-brand ps-3" href="${path}/admin.ad">관리자 페이지</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
         <!-- Logout Button-->
@@ -261,19 +261,27 @@
                                 <c:forEach var="reserve" items="${reserveList}">
                                     <tr>
                                         <td>${reserve.reserveNo}</td>
-                                        <td>${reserve.reserveCount}</td>
-                                        <td>${reserve.paymentCode}</td>
+                                        <td>${reserve.reserveCount}매</td>
+                                        <td class="paymentCode">${reserve.paymentCode}</td>
                                         <td class="date">${reserve.paymentDate}</td>
                                         <td class="date">${reserve.entranceDate}</td>
                                         <td class="price">${reserve.paymentPrice}</td>
-                                        <td>${reserve.reserveStatus}</td>
+                                        <td>${reserve.reserveStatus == 'Y' ? "예매됨" : "환불처리" }</td>
                                         <td>${reserve.memberName}</td>
                                         <td>${reserve.displayName}</td>
                                         <td>
-                                            <button class="btn <c:if test='${reserve.reserveStatus == "환불완료"}'>btn-disabled</c:if> btn-danger"
-                                                    onclick="if('${reserve.reserveStatus}' !== '환불완료') { location.href='${path}/updateReserveStatus.ad?reserveNo=${reserve.reserveNo}'; } else { alert('이미 환불된 예매입니다.'); }">
-                                                환불하기
-                                            </button>
+                                            <c:choose>
+                                                <c:when test="${reserve.reserveStatus == 'Y'}">
+                                                    <button class="btn btn-danger" onclick="requestRefund(this);">
+                                                        환불하기
+                                                    </button>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <button class="btn btn-disabled" disabled>
+                                                        처리완료
+                                                    </button>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -309,5 +317,23 @@
             </footer>
         </div>
     </div>
+    <script>
+    	function requestRefund(e){
+    		const paymentCode = $(e).parent("td").siblings(".paymentCode").text();
+    		$.ajax({
+    			url: "refundRequest.do",
+    			method: "post",
+    			data: {
+    				paymentCode: paymentCode
+    			},
+    			success: (result) => {
+    				console.log(result);
+    			},
+    			error: () => {
+    				console.log("환불 실패");
+    			}
+    		});
+    	}
+    </script>
 </body>
 </html>

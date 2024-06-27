@@ -43,7 +43,7 @@ public class AdminService {
         return adminDao.getArtistsAwaitingApproval(sqlSession);
     }
     
-    public List<Map<String, Object>> getTop5Displays() {
+    public ArrayList<Map<String, Object>> getTop5Displays() {
         return adminDao.getTop5Displays(sqlSession);
     }
 
@@ -196,8 +196,6 @@ public class AdminService {
         return adminDao.updateMemberStatus(sqlSession, memberNo);
     }
 
-
-
     // 작가 관리
     public int getArtistListCount() {
         return adminDao.getArtistListCount(sqlSession);
@@ -224,8 +222,6 @@ public class AdminService {
     public void artistOngoing(int artistNo) {
         adminDao.artistOngoing(sqlSession, artistNo, "Y");
     }
-    
-    
 
     @Transactional
     public void rejectArtist(int artistNo) {

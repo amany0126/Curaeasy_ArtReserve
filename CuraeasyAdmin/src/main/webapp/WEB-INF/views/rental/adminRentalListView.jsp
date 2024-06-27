@@ -205,7 +205,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
+        <a class="navbar-brand ps-3" href="${path}/admin.ad">관리자 페이지</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
         <!-- Logout Button-->
@@ -252,13 +252,13 @@
                                         <td>${rental.rentalNo}</td>
                                         <td class="date">${rental.rentalStartDate}</td>
                                         <td class="date">${rental.rentalEndDate}</td>
-                                        <td>${rental.rentalStatus == 'Y' ? '대관중' : '취소됨'}</td>
+                                        <td>${rental.rentalStatus == 'Y' ? '대관중' : (rental.rentalStatus == null ? '대기중' : '취소됨')}</td>
                                         <td>${rental.rentalResult}</td>
                                         <td>${rental.galleryName}</td>
                                         <td>${rental.artistNickName}</td>
                                         <td><button class="btn btn-warning" onclick="location.href='${path}/updateRental.ad?rentalNo=${rental.rentalNo}'">수정하기</button></td>
                                         <td>
-                                            <button class="btn <c:if test='${rental.rentalStatus == "N"}'>btn-disabled</c:if> btn-danger"
+                                            <button class="btn <c:if test='${rental.rentalResult == "승인됨"}'>btn-disabled</c:if> btn-danger"
                                                     onclick="if('${rental.rentalStatus}' !== 'N') { location.href='${path}/updateRentalStatus.ad?rentalNo=${rental.rentalNo}'; } else { alert('이미 취소된 대관입니다.'); }">
                                                 승인하기
                                             </button>

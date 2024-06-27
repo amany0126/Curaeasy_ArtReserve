@@ -146,18 +146,19 @@
     
     <!-- 대시보드 -->
     
-    <select id="getMemberCount" resultType="int">
-        SELECT COUNT(*) FROM member
+	 <select id="getMemberCount" resultType="int">
+        SELECT COUNT(*) FROM MEMBER WHERE MEMBER_STATUS = 'Y'
     </select>
 
     <select id="getCurrentYearSales" resultType="int">
-		SELECT SUM(PAYMENT_PRICE * RESERVE_COUNT) AS total_sales
-		FROM RESERVE
-		WHERE EXTRACT(YEAR FROM PAYMENT_DATE) = 2024
+	    SELECT SUM(PAYMENT_PRICE * RESERVE_COUNT) AS total_sales
+	    FROM RESERVE
+	    WHERE EXTRACT(YEAR FROM PAYMENT_DATE) = 2024
+	    AND RESERVE_STATUS = 'Y'
     </select>
 
     <select id="getDisplayCount" resultType="int">
-        SELECT COUNT(*) FROM "DISPLAY"
+        SELECT COUNT(*) FROM "DISPLAY" WHERE DISPLAY_STATUS !='종료'
     </select>
 
     <select id="getArtistsAwaitingApproval" resultType="int">
@@ -181,8 +182,6 @@
 	    GROUP BY EXTRACT(MONTH FROM PAYMENT_DATE)
 	    ORDER BY EXTRACT(MONTH FROM PAYMENT_DATE)
 	</select>
-    
-    
     
     <!-- 전시회 관리 -->
     <select id="getDisplayListCount" parameterType="String" resultType="int">
@@ -613,9 +612,8 @@
         SET MEMBER_STATUS = 'N'
         WHERE MEMBER_NO = #{memberNo}
     </update>
-
-
-    <!-- 작가 관리 -->
+	
+	<!-- 작가 관리 -->
     <select id="selectArtistList" resultMap="artistResultSet">
         SELECT 
             ARTIST_NO,
@@ -654,8 +652,6 @@
 	    UPDATE ARTIST
 	    SET ARTIST_NICKNAME = #{artistNickName},
 	        ARTIST_INTRODUCE = #{artistIntroduce},
-	        ARTIST_IMAGE = #{artistImage},
-	        ARTIST_APPLY_TITLE = #{artistApplyTitle},
 	        ARTIST_ORDINAL = #{artistOrdinal}
 	    WHERE ARTIST_NO = #{artistNo}
 	</update>
@@ -665,6 +661,7 @@
 	    FROM ARTIST
 	    WHERE ARTIST_NO = #{artistNo}
 	</select>
+	
     <!-- 댓글 관리 -->
     <select id="selectReplyList" resultMap="replyResultSet">
         SELECT 
