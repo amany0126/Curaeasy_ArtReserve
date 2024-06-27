@@ -14,12 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,8 +34,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.common.template.Pagination;
 import com.kh.curaeasyadmin.model.service.AdminService;
@@ -398,6 +400,17 @@ public class AdminController {
         model.addAttribute("pi", pi);
         return "notice/adminNoticeListView";
     }
+    
+	@RequestMapping("/deleteNotice.ad")
+    public String deleteNotice(@RequestParam("noticeNo") int noticeNo, RedirectAttributes redirectAttributes) {
+        Notice notice = adminService.getNoticeById(noticeNo);
+        if ("N".equals(notice.getNoticeStatus())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "이미 삭제처리된 공지사항입니다.");
+        } else {
+            adminService.updateNoticeStatusToEnd(noticeNo);
+        }
+        return "redirect:/noticeList.ad";
+    }
 
     // 후기 관리
     @RequestMapping("reviewList.ad")
@@ -665,7 +678,7 @@ public class AdminController {
     // 환불용 메소드
     @PostMapping(value="refundRequest.do", produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String refundRequest(String paymentCode, String merchant_uid) throws IOException {
+    public String refundRequest(String paymentCode, String merchant_uid) throws IOException, ParseException {
     	URL url = new URL("https://api.portone.io/payments/" + paymentCode + "/cancel");
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         
@@ -687,10 +700,30 @@ public class AdminController {
         bw.close();
         
         BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String result = br.readLine();
         br.close();
         conn.disconnect();
         
+        System.out.println(result);
         
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) parser.parse(result);
+        
+        return jsonObject.toString();
+    }
+    
+    // 환불후 DB 업데이트 메소드
+    @PostMapping("updateReserveStatus.do")
+    @ResponseBody
+    public String updateReserveStatus(String paymentCode) {
+    	
+    	int result = adminService.updateReserveStatus(paymentCode);
+    	
+    	if(result > 0) {
+    		return String.valueOf(result);
+    	}
+    		
+    	return null;
     }
 
 }

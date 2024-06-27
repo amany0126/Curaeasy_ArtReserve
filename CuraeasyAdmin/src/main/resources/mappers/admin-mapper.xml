@@ -508,6 +508,26 @@
     <select id="getNoticeListCount" resultType="int">
         SELECT COUNT(*) FROM NOTICE
     </select>
+    
+    <update id="deleteNotice" parameterType="int">
+        UPDATE NOTICE
+        SET NOTICE_STATUS = 'N'
+        WHERE NOTICE_NO = #{noticeNo}
+    </update>
+    
+    <select id="selectNoticeById" parameterType="int" resultMap="noticeResultSet">
+    	SELECT 
+        	NOTICE_NO,
+        	NOTICE_DATE,
+        	NOTICE_TITLE,
+	        NOTICE_CONTENT,
+        	NOTICE_ATTACHMENT,
+        	NOTICE_COUNT,
+	        NOTICE_STATUS
+    	FROM NOTICE
+    	WHERE NOTICE_NO = #{noticeNo}
+	</select>
+    
 
     <!-- 후기 관리 -->
 	<select id="selectReviewList" resultMap="reviewResultSet">
@@ -690,8 +710,14 @@
     WHERE NOTICE_NO = #{noticeNo} AND NOTICE_STATUS = 'Y'
 	</update>
 	
-	   <insert id="insertNotice" parameterType="com.kh.curaeasyadmin.model.vo.Notice">
-        INSERT INTO NOTICE (NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_ATTACHMENT, NOTICE_STATUS)
-        VALUES (SEQ_NOTICE_NO.NEXTVAL, #{noticeTitle}, #{noticeContent}, #{noticeAttachment},'Y')
+	<insert id="insertNotice" parameterType="com.kh.curaeasyadmin.model.vo.Notice">
+		INSERT INTO NOTICE (NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_ATTACHMENT, NOTICE_STATUS)
+    	VALUES (SEQ_NOTICE_NO.NEXTVAL, #{noticeTitle}, #{noticeContent}, #{noticeAttachment}, 'Y')
     </insert>
+    
+    <update id="updateReserveStatus" parameterType="string">
+    	UPDATE RESERVE
+    	   SET RESERVE_STATUS = 'N'
+    	 WHERE PAYMENT_CODE = #{paymentCode}
+    </update>
 </mapper>

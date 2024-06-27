@@ -266,7 +266,7 @@
                                         <td class="date">${reserve.paymentDate}</td>
                                         <td class="date">${reserve.entranceDate}</td>
                                         <td class="price">${reserve.paymentPrice}</td>
-                                        <td>${reserve.reserveStatus == 'Y' ? "예매됨" : "환불처리" }</td>
+                                        <td class="reserveStatus">${reserve.reserveStatus == 'Y' ? "예매됨" : "환불처리" }</td>
                                         <td>${reserve.memberName}</td>
                                         <td>${reserve.displayName}</td>
                                         <td>
@@ -327,7 +327,29 @@
     				paymentCode: paymentCode
     			},
     			success: (result) => {
-    				console.log(result);
+    				
+    				const status = result.cancellation.status;
+    				
+    				if(status === "SUCCEEDED"){
+    					// DB 변경 요청 보내기
+    					$.ajax({
+    						url: "updateReserveStatus.do",
+    						method: "POST",
+    						data: {
+    							paymentCode: paymentCode
+    						},
+    						success: (result2) => {
+    							alert("환불 처리 완료.");
+								location.href = "";
+    						},
+    						error: () => {
+    							alert("DB 수정 실패");
+    						}
+    					});
+    				} else {
+    					alert("환불 실패");
+    				}
+    				
     			},
     			error: () => {
     				console.log("환불 실패");

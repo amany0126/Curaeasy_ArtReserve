@@ -139,17 +139,16 @@
 
                 <tr>
                     <tr>
-                    <th>첨부파일</th></tr>
-                    <td colspan="3">
-                    	<c:choose>
+                    <th>첨부파일&nbsp; : &nbsp;
+                    <c:choose>
 	                    	<c:when test="${ empty n.noticeAttachment }">
 	                    		첨부파일이 없습니다.
 	                    	</c:when>
 	                    	<c:otherwise>
-                        		<img src="resources/notice/${ n.noticeAttachment }" >
+                        		<a href="resources/notice/${ n.noticeAttachment }">${ n.noticeAttachment }</a>
                         	</c:otherwise>
                         </c:choose>
-                    </td>
+                    </th></tr>
                 </tr>
                 <tr>
                     <th colspan="3">내용</th>

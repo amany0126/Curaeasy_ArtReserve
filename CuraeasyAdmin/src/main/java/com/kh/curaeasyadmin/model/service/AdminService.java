@@ -72,14 +72,9 @@ public class AdminService {
         return adminDao.selectAttachmentsByDisplayNo(sqlSession, displayNo);
     }
 
-    
-  
-
     public void updateDisplayStatusToEnd(int displayNo) {
         adminDao.deleteDisplay(sqlSession, displayNo);
     }
-    
-  
     
     @Transactional
 	public int addDisplay(Display display, DisplayAttachment uplodeAttachment1, DisplayAttachment uplodeAttachment2) {
@@ -165,6 +160,15 @@ public class AdminService {
     public ArrayList<Notice> selectNoticeList(PageInfo pi) {
         return adminDao.selectNoticeList(sqlSession, pi);
     }
+    
+    public Notice getNoticeById(int noticeNo) {
+        return adminDao.selectNoticeById(sqlSession, noticeNo);
+    }
+
+    public void updateNoticeStatusToEnd(int noticeNo) {
+        adminDao.deleteNotice(sqlSession, noticeNo);
+    }
+    
 
     // 후기 관리
     public int getReviewListCount() {
@@ -262,6 +266,11 @@ public class AdminService {
 	@Transactional
 	public int insertNotice(Notice notice) {
 		return adminDao.insertNotice(sqlSession,notice);
+	}
+	
+	@Transactional
+	public int updateReserveStatus(String paymentCode) {
+		return adminDao.updateReserveStatus(sqlSession, paymentCode);
 	}
 
 

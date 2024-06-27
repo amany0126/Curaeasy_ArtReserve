@@ -9,15 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>전시 수정</title>
+    <title>공지사항 수정</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="${path}/resources/js/scripts.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>   
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -44,23 +44,7 @@
         .form-control-file {
             margin-top: 10px;
         }
-        .attachment-item {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .attachment-item img {
-            max-width: 100px;
-            margin-right: 10px;
-        }
-        .attachment-item p {
-            margin: 0;
-            flex: 1;
-        }
-        .attachment-item button {
-            margin-left: 10px;
-        }
-        .btn-primary, .btn-danger,.btn-secondary {
+        .btn-primary, .btn-danger, .btn-secondary {
             width: 100px;
             margin-top: 20px;
         }
@@ -89,28 +73,25 @@
             <main>
                 <div class="container">
                     <h1 class="mt-4">공지사항 수정</h1>
-                    <form action="${path}/noticeUpdate.ad" method="post" enctype="multipart/form-data" >
-                        <input type="hidden" name="noticeNo" value="${ requestScope.noticeList.noticeNo}" />
+                    <form action="${path}/noticeUpdate.ad" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="noticeNo" value="${requestScope.noticeList.noticeNo}" />
                         <div class="form-group mb-3">
                             <label for="noticeTitle">제목</label>
-                            <input type="text" class="form-control" id="noticeTitle" name="noticeTitle" value="${ requestScope.noticeList.noticeTitle}" required>
+                            <input type="text" class="form-control" id="noticeTitle" name="noticeTitle" value="${requestScope.noticeList.noticeTitle}" required>
                         </div>
                         <div class="form-group mb-3">
                             <label for="noticeContent">내용</label>
-                            <textarea class="form-control" id="noticeContent" name="noticeContent" rows="3" required>${ requestScope.noticeList.noticeContent}</textarea>
+                            <textarea class="form-control" id="noticeContent" name="noticeContent" rows="3" required>${requestScope.noticeList.noticeContent}</textarea>
                         </div>
-
-                    
-	                        <div class="form-group mb-3" ">
-	                            <label>첨부파일 미리보기</label> <br>
-	                            <img src="../../../curaeasy/resources/notice/${requestScope.noticeList.noticeAttachment}" width="200px" alt="프로필이미지" id="preview1" class="rounded" ><br>
-	                            <input type="file" class="form-control-file " id="reUpfile" name="reUpfile" onchange="loadImg(this, 1)" accept="image/png, image/jpeg"   style="display: none;" > <br> 
-	                        </div>
-	                       
-                       
-                         <div class="form-group mb-3" align="center">
+                        <div class="form-group mb-3">
+                            <label for="reUpfile">첨부파일 수정</label><br>
+                            <span id="fileName">${requestScope.noticeList.noticeAttachment != null ? requestScope.noticeList.noticeAttachment : "첨부된 파일이 없습니다."}</span><br>
+                            <input type="file" class="form-control-file" id="reUpfile" name="reUpfile" accept=".pdf,.hwp,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt" onchange="loadFileName(this)" style="display: none;">
+                            <button type="button" class="btn btn-secondary" onclick="document.getElementById('reUpfile').click();">파일 선택</button>
+                        </div>
+                        <div class="form-group mb-3" align="center">
                             <button type="submit" class="btn btn-primary">수정하기</button>
-                        	<button type="button" class="btn btn-secondary" onclick="history.back();">취소하기</button>
+                            <button type="button" class="btn btn-secondary" onclick="history.back();">취소하기</button>
                         </div>
                     </form>
                 </div>
@@ -126,29 +107,14 @@
     </div>
 
     <script>
-            $(function(){
-        		$("#preview1").click(function(){
-        			$("#reUpfile").click();
-        		});
-        	
-        	});
-        	function loadImg(inputFile, num) {
-        		if(inputFile.files.length == 1){
-        			let reader = new FileReader();
-        			reader.readAsDataURL(inputFile.files[0]);
-        			reader.onload=function(e){
-        				switch(num){
-        				case 1 : $("#preview1").attr("src",e.target.result); 
-        				break
-        			}
-        		};
-        		}else{
-        			switch(num){
-        				case 1 : $("#preview1").attr("src","../../../curaeasy/resources/notice/${requestScope.noticeList.noticeAttachment}"); 
-        				break
-        			}
-        		}
-        	};
+        function loadFileName(input) {
+            const fileNameSpan = document.getElementById('fileName');
+            if (input.files.length > 0) {
+                fileNameSpan.textContent = input.files[0].name;
+            } else {
+                fileNameSpan.textContent = '첨부된 파일이 없습니다.';
+            }
+        }
     </script>
 </body>
 </html>

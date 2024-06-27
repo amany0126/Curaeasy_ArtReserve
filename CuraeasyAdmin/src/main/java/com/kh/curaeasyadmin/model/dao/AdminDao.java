@@ -160,6 +160,14 @@ public class AdminDao {
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
         return (ArrayList)sqlSession.selectList("adminMapper.selectNoticeList", null, rowBounds);
     }
+    
+    public Notice selectNoticeById(SqlSessionTemplate sqlSession, int noticeNo) {
+        return sqlSession.selectOne("adminMapper.selectNoticeById", noticeNo);
+    }
+    
+    public void deleteNotice(SqlSessionTemplate sqlSession, int noticeNo) {
+        sqlSession.update("adminMapper.deleteNotice", noticeNo);
+    }
 
     // 후기 관리
     public int getReviewListCount(SqlSessionTemplate sqlSession) {
@@ -270,6 +278,10 @@ public class AdminDao {
 
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice notice) {
 		return sqlSession.insert("adminMapper.insertNotice", notice);
+	}
+
+	public int updateReserveStatus(SqlSessionTemplate sqlSession, String paymentCode) {
+		return sqlSession.update("adminMapper.updateReserveStatus", paymentCode);
 	}
 
 
