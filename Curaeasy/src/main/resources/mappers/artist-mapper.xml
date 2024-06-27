@@ -35,7 +35,8 @@
 		  FROM ARTIST
 		 WHERE ARTIST_RESULT = 'Y'
 		   AND ARTIST_NO = (SELECT MAX(ARTIST_NO)
-		   					   FROM ARTIST)
+		   					   FROM ARTIST
+		   					   WHERE ARTIST_RESULT = 'Y')
 	</select>
 	
 	<!-- 작가소개 페이지에 표시할 작가 리스트를 가져오는 쿼리 -->

@@ -93,11 +93,12 @@
         console.log(obj);
       },
       eventClick: function(info) { // 일정 하나 선택
-          console.log(info.event._def.title);
+          console.log(info.jsEvent.target.className.includes("fc-bg-event fc-event fc-event-start fc-event-end fc-event-future" || info.event._def.ui.borderColor == 'gray'));
+          //console.log(info.event._def.title);
           
-          console.log(info.jsEvent.target.className.includes("fc-bg-event fc-event fc-event-start fc-event-end fc-event-future"));
-          if(info.jsEvent.target.className.includes("fc-bg-event fc-event fc-event-start fc-event-end fc-event-future")){
-              // alert('이미 등록된 일정입니다');
+          //console.log(info.jsEvent.target.className.includes("fc-bg-event fc-event fc-event-start fc-event-end fc-event-future"));
+          if(info.event._def.ui.borderColor == 'gray'){
+               alert('이미 종료된 전시회입니다');
               }else{
               // alert('신청 가능한 일자입니다')
               window.open("displayDetail.do?dno="+displayMapper.get(

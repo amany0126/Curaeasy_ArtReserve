@@ -260,7 +260,7 @@
         function createDisplayElement(display) {
 
             const displayImg = document.createElement("img");
-            displayImg.src="http://naver.com";
+            displayImg.src="resources/display/" + display.imagePath;
             displayImg.alt="사진 추가예정";
 
             const displayName = document.createElement("h3");
@@ -283,10 +283,7 @@
 
         function createNoticeElement(notice) {
 
-            const noticeImg = document.createElement("img");
-            noticeImg.src="http://naver.com";
-            noticeImg.alt="사진 추가예정";
-
+           
             const noticeTitle = document.createElement("h3");
             noticeTitle.innerText = notice.noticeTitle;
 
@@ -300,7 +297,7 @@
             // displayGallery.innerText = display.galleryNo;
             
             // var $ee = $("<div class=card>").append(displayImg).append(displayName).append(displayDuration).append(displayContent).append(displayGallery);
-            var $ee = $("<div class=card>").append(noticeImg).append(noticeTitle).append(noticeContent);
+            var $ee = $("<div class=card>").append(noticeTitle).append(noticeContent);
             var $e = $("<div class=section>").append("<h2>공지</h2>").append($ee);
 
             return $e;
@@ -309,17 +306,17 @@
         function createArtistElement(artist) {
 
             const artistImg = document.createElement("img");
-            artistImg.src="http://naver.com";
+            artistImg.src="resources/artistProfileImgs/" + artist.artistImage;
             artistImg.alt="사진 추가예정";
 
             const artistNickName = document.createElement("h3");
-            artistNickName.innerText = artist.artistNickName;
+            artistNickName.innerText = "${artist.artistNickName}";
 
             // const displayDuration = document.createElement("p");
             // displayDuration.innerText = display.displayStartDate + " - " + display.displayEndDate;
 
             const artistIntroduce = document.createElement("p");
-            artistIntroduce.innerText = artist.artistIntroduce;
+            artistIntroduce.innerText = "${artist.artistIntroduce}";
 
             // const displayGallery = document.createElement("p");
             // displayGallery.innerText = display.galleryNo;

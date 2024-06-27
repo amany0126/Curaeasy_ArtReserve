@@ -15,7 +15,7 @@
     <style>
         .container {
             max-width: 100%;
-            margin: auto;
+            margin: auto; margin-top: 50px; margin-bottom: 50px;
             padding: 20px;
             margin-bottom: 50px;
         }
@@ -85,6 +85,10 @@
             object-fit: cover;
             border-radius: 20px;
             border-style: ridge;
+            transition: filter 0.3s ease;
+        }
+        .exhibition-item img:hover{
+            filter: blur(1px);
             box-shadow: 0 0 10px gray;
         }
         .exhibition-item h2 {

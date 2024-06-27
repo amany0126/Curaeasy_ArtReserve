@@ -67,25 +67,28 @@
         }
         .exhibition-intro p { font-size: 1em; line-height: 1.5; }
         .back-to-list { text-align: center; margin-top: 30px; margin-bottom: 50px; }
-        .back-to-list a {
-            text-decoration: none;
-            color: black;
-            background-color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            border :  1px solid black;
-        }
-        .back-to-list a:hover {
-            background-color: black; color:white;
-            /*transform: translateY(10px); a라 안됨*/
-        }
         hr {
             border: 0;
             border-top: 2px solid #ccc;
             margin: 30px 0;
         }
-
         #calendar-container a{ color: black; text-decoration: none;}
+
+
+        /* 목록으로 */
+        #back {
+            color: black;
+            text-decoration: none;
+            font-size: 1.5em; 
+            font-weight: bold;  
+        }
+        #back:hover{
+            border-radius: 80px;
+            box-shadow: 20px 10px 15px 10px rgb(230, 229, 229); 
+        }
+        .back-to-list {text-align: left;}
+       
+
     </style>
 
     <!-- jQuery UI CSS -->
@@ -196,11 +199,11 @@
             <c:forEach items="${ requestScope.list }" var="item">
             	<img src="resources/display/${ item.changeName }" alt="전시 포스터">
             </c:forEach>
-            <p>${ requestScope.d.displayContent }</p>
+            <p style="white-space: pre-line;">${ requestScope.d.displayContent }</p>
         </div>
-        <hr>
+        <hr><br>
         <div class="back-to-list">
-            <a href="onDisplay.do">목록으로 가기</a>
+            <a id="back" href="onDisplay.do">&#128281; 목록으로</a>
         </div>
     </div>
 </div>

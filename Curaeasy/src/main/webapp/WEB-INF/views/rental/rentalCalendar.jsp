@@ -109,7 +109,7 @@
            if(info.jsEvent.toElement.className.includes("number")){
         	   
            }else{
-            if(info.jsEvent.srcElement.innerText === "예약종료" || info.jsEvent.srcElement.innerText === "예약완료"){
+            if(info.jsEvent.srcElement.innerText === "예약종료" || info.jsEvent.srcElement.innerText === "승인됨"|| info.jsEvent.srcElement.innerText === "심사중"){
                 alert('신청이 불가능한 일정입니다');
                 }else{
                 alert('신청 가능한 일자입니다')

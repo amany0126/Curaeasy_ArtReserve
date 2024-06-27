@@ -43,7 +43,7 @@
                          <br>
                
                         <label for="artistApplyTitle">* 신청제목 :</label>
-                        <input type="text" class="form-control" id="artistApplyTitle" placeholder="한글 100글자 이내" name="artistApplyTitle" maxlength="100px" required> <br>
+                        <input type="text" class="form-control" id="artistApplyTitle" placeholder="'[활동명] 큐레이지 아트플랫폼 작가 신청서' 으로 작성해주세요." name="artistApplyTitle" maxlength="100px" required> <br>
                         <label for="artistIntroduce">* 자기소개/설명 :</label>
                         <input type="url" class="form-control" id="artistIntroduce" placeholder="포트폴리오 주소 기입" name="artistIntroduce" maxlength="100px" required> <br>
                         <!-- <textarea class="form-control" rows="5" id="artistIntroduce" name="artistIntroduce" placeholder="한글 100글자 이하" maxlength="100px" required></textarea> -->
