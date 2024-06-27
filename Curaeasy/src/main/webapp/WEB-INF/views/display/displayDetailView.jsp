@@ -199,7 +199,7 @@
             <c:forEach items="${ requestScope.list }" var="item">
             	<img src="resources/display/${ item.changeName }" alt="전시 포스터">
             </c:forEach>
-            <p>${ requestScope.d.displayContent }</p>
+            <p style="white-space: pre-line;">${ requestScope.d.displayContent }</p>
         </div>
         <hr><br>
         <div class="back-to-list">

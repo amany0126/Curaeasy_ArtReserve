@@ -281,7 +281,11 @@ public class MemberController {
 		
 	}
 	@GetMapping("myPage.me")
-	public String myPage() {
+	public String myPage( HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser"); 
+		Member loginUser = memberService.loginMember(m);
+		session.setAttribute("loginUser", loginUser);
+		
 		return "member/myPage";
 	}
 	

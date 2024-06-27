@@ -90,9 +90,9 @@
             <div class="footer-column">
                 <h3>Follow Us</h3>
                 <div class="sns-icons">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/Inartplatform/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/incheonartplatform?FORM=SNAPST"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/incheonartplatform?FORM=SNAPST"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>

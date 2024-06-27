@@ -241,7 +241,7 @@ tr:hover {
 	<script>
     $("#noticeList tbody tr").click(function() {
     	
-    	if(${requestScope.dno} != "결제 내역이 없습니다."){
+    	if('${requestScope.dno}' != "결제 내역이 없습니다."){
     		  let f = document.createElement('form');
     	        let dno = '${requestScope.dno}'
     	    

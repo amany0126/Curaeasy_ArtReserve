@@ -89,7 +89,7 @@ public class DisplayController {
     	
     	// 선택한 작품번호의 작품과 첨부파일 가져오기
     	Display d = displayService.selectDisplay(dno);
-    	 d.setDisplayContent(d.getDisplayContent().replace("\\r\\n", "<br>"));
+    	d.setDisplayContent(d.getDisplayContent().replace("\\r\\n", "<br>"));
     	ArrayList<DisplayAttachment> list = displayService.selectDisplayAttachment(dno);
     	
     	model.addAttribute("d", d);
