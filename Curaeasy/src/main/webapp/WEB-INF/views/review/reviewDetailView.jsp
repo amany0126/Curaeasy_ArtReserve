@@ -163,7 +163,7 @@
             </div>
         </div>
         <div class="review-content">
-            <img src="resources/reviewProfileImgs/${ requestScope.r.reviewImage  }" alt="리뷰사진">
+            <img src="resources/reviewProfileImgs/${ requestScope.r.reviewImage  }" alt="리뷰사진" style="width: 50%">
             <p style="white-space: pre-line;">
                 ${ requestScope.r.reviewContent  }
             </p>
