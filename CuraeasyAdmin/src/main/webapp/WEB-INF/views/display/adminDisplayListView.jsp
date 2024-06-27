@@ -216,7 +216,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
+        <a class="navbar-brand ps-3" href="${path}/admin.ad">관리자 페이지</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
         <!-- Logout Button-->
@@ -276,7 +276,7 @@
                                         <td>
                                             <button class="btn <c:if test='${display.displayStatus == "종료"}'>btn-disabled</c:if> btn-danger"
                                                     onclick="if('${display.displayStatus}' !== '종료') { location.href='${path}/deleteDisplay.ad?displayNo=${display.displayNo}'; } else { alert('이미 삭제처리된 전시회입니다.'); }">
-                                                삭제하기
+                                                		${display.displayStatus == "종료" ? "처리완료" : "삭제하기"}
                                             </button>
                                         </td>
                                     </tr>

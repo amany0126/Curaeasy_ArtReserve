@@ -71,6 +71,7 @@ public class ReserveController {
 	@ResponseBody
 	public String insertReserve(Reserve data, Model model, HttpSession session, HttpServletRequest request) throws MessagingException {
 		
+		System.out.println(data);
 		rService.insertReserve(data);
 		Reserve r = rService.selectLastInsertedReserve(data.getMemberNo());
 		

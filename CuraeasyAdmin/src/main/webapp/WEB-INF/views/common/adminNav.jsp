@@ -57,7 +57,6 @@
                 <div class="collapse" id="collapseReviews" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionReviews">
                         <a class="nav-link" href="${path}/reviewList.ad">후기 관리</a>
-                        <a class="nav-link" href="${path}/replyList.ad">댓글 관리</a>
                     </nav>
                 </div>
             </div>

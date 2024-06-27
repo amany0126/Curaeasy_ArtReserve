@@ -1,6 +1,12 @@
 package com.kh.curaeasyadmin.controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,9 +15,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +30,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.common.template.Pagination;
 import com.kh.curaeasyadmin.model.service.AdminService;
@@ -55,7 +68,9 @@ public class AdminController {
     	int artistsAwaitingApproval = adminService.getArtistsAwaitingApproval();
     	
     	List<Map<String, Object>> monthlyReservations = adminService.getMonthlyReservationCounts();
-    	List<Map<String, Object>> top5display = adminService.getTop5Displays();
+    	ArrayList<Map<String, Object>> top5display = adminService.getTop5Displays();
+    	
+    	
     	
     	
     	model.addAttribute("memberCount",memberCount);
@@ -66,8 +81,8 @@ public class AdminController {
         model.addAttribute("monthlyReservations",monthlyReservations );
         model.addAttribute("top5display",top5display );
         
-        System.out.println(monthlyReservations);
-        System.out.println(top5display);
+        System.out.println(monthlyReservations);// 티켓
+        System.out.println(top5display); // 탑5
         
         return "adminmain";
     }
@@ -344,8 +359,8 @@ public class AdminController {
     @RequestMapping("/updateRentalStatus.ad")
     public String updateRentalStatus(@RequestParam("rentalNo") int rentalNo, RedirectAttributes redirectAttributes) {
         Rental rental = adminService.getRentalByNo(rentalNo);
-        if ("N".equals(rental.getRentalStatus())) {
-            redirectAttributes.addFlashAttribute("errorMessage", "이미 취소된 대관입니다.");
+        if ("승인됨".equals(rental.getRentalResult())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "이미 승인된 대관입니다.");
         } else {
             adminService.updateRentalStatus(rentalNo);
         }
@@ -384,6 +399,17 @@ public class AdminController {
         model.addAttribute("noticeList", noticeList);
         model.addAttribute("pi", pi);
         return "notice/adminNoticeListView";
+    }
+    
+	@RequestMapping("/deleteNotice.ad")
+    public String deleteNotice(@RequestParam("noticeNo") int noticeNo, RedirectAttributes redirectAttributes) {
+        Notice notice = adminService.getNoticeById(noticeNo);
+        if ("N".equals(notice.getNoticeStatus())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "이미 삭제처리된 공지사항입니다.");
+        } else {
+            adminService.updateNoticeStatusToEnd(noticeNo);
+        }
+        return "redirect:/noticeList.ad";
     }
 
     // 후기 관리
@@ -432,7 +458,7 @@ public class AdminController {
     
     
 
-    // 작가 관리
+ // 작가 관리
     @RequestMapping("artistList.ad")
     public String artistList(@RequestParam(value="currentPage", defaultValue="1") int currentPage, Model model) {
         int listCount = adminService.getArtistListCount();
@@ -468,14 +494,25 @@ public class AdminController {
         return "artist/adminArtistUpdateForm";
     }
 
+//    @PostMapping("/updateArtist.ad")
+//    public String updateArtist(@ModelAttribute Artist artist, @RequestParam("artistImage") MultipartFile file, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+//        if (!file.isEmpty()) {
+//            String renameFileName = saveFile(file, request);
+//            if (renameFileName != null) {
+//                artist.setArtistImage(renameFileName);
+//            }
+//        }
+//        boolean result = adminService.updateArtist(artist);
+//        if (result) {
+//            redirectAttributes.addFlashAttribute("message", "작가 정보가 성공적으로 업데이트되었습니다.");
+//        } else {
+//            redirectAttributes.addFlashAttribute("errorMessage", "작가 정보 업데이트에 실패하였습니다.");
+//        }
+//        return "redirect:/artistList.ad";
+//    }
+    
     @PostMapping("/updateArtist.ad")
-    public String updateArtist(@ModelAttribute Artist artist, @RequestParam("artistImage") MultipartFile file, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        if (!file.isEmpty()) {
-            String renameFileName = saveFile(file, request);
-            if (renameFileName != null) {
-                artist.setArtistImage(renameFileName);
-            }
-        }
+    public String updateArtist(@ModelAttribute Artist artist, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         boolean result = adminService.updateArtist(artist);
         if (result) {
             redirectAttributes.addFlashAttribute("message", "작가 정보가 성공적으로 업데이트되었습니다.");
@@ -484,6 +521,7 @@ public class AdminController {
         }
         return "redirect:/artistList.ad";
     }
+
     private String saveFileArtist(MultipartFile file, HttpSession session) {
         String originName = file.getOriginalFilename();
         String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
@@ -635,6 +673,57 @@ public class AdminController {
             e.printStackTrace();
         }
         return changeName;
+    }
+    
+    // 환불용 메소드
+    @PostMapping(value="refundRequest.do", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String refundRequest(String paymentCode, String merchant_uid) throws IOException, ParseException {
+    	URL url = new URL("https://api.portone.io/payments/" + paymentCode + "/cancel");
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        
+        conn.setRequestMethod("POST");
+        
+        
+        conn.setRequestProperty("Content-type", "application/json");
+        conn.setRequestProperty("Authorization", "PortOne 26yLZD3zmUTs3ZxkE4RrWTMLNEukKG1TZvIuuc7u0VA9RcRG9Ui1M20DhU0wxMzzeYX87H8hmTBzGHFR");
+        
+        conn.setDoOutput(true);
+        
+        JsonObject json = new JsonObject();
+        json.addProperty("storeId", "store-7e7b8b35-0e5d-454d-9262-238566d87dbb");
+        json.addProperty("reason", "환불신청");
+        
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+        bw.write(json.toString());
+        bw.flush();
+        bw.close();
+        
+        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String result = br.readLine();
+        br.close();
+        conn.disconnect();
+        
+        System.out.println(result);
+        
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) parser.parse(result);
+        
+        return jsonObject.toString();
+    }
+    
+    // 환불후 DB 업데이트 메소드
+    @PostMapping("updateReserveStatus.do")
+    @ResponseBody
+    public String updateReserveStatus(String paymentCode) {
+    	
+    	int result = adminService.updateReserveStatus(paymentCode);
+    	
+    	if(result > 0) {
+    		return String.valueOf(result);
+    	}
+    		
+    	return null;
     }
 
 }

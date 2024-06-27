@@ -35,8 +35,8 @@ public class AdminDao {
     
     }
     
-    public List<Map<String, Object>> getTop5Displays(SqlSessionTemplate sqlSession) {
-        return sqlSession.selectList("adminMapper.getTop5Displays");
+    public ArrayList<Map<String, Object>> getTop5Displays(SqlSessionTemplate sqlSession) {
+        return (ArrayList) sqlSession.selectList("adminMapper.getTop5Displays");
     }
 
 
@@ -160,6 +160,14 @@ public class AdminDao {
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
         return (ArrayList)sqlSession.selectList("adminMapper.selectNoticeList", null, rowBounds);
     }
+    
+    public Notice selectNoticeById(SqlSessionTemplate sqlSession, int noticeNo) {
+        return sqlSession.selectOne("adminMapper.selectNoticeById", noticeNo);
+    }
+    
+    public void deleteNotice(SqlSessionTemplate sqlSession, int noticeNo) {
+        sqlSession.update("adminMapper.deleteNotice", noticeNo);
+    }
 
     // 후기 관리
     public int getReviewListCount(SqlSessionTemplate sqlSession) {
@@ -194,8 +202,8 @@ public class AdminDao {
     public int updateMemberStatus(SqlSessionTemplate sqlSession, int memberNo) {
         return sqlSession.update("adminMapper.updateMemberStatus", memberNo);
     }
-
-    // 작가 관리
+    
+ // 작가 관리
     public int getArtistListCount(SqlSessionTemplate sqlSession) {
         return sqlSession.selectOne("adminMapper.getArtistListCount");
     }
@@ -231,6 +239,7 @@ public class AdminDao {
     public Artist selectArtist(SqlSessionTemplate sqlSession, Integer artistNo) {
         return sqlSession.selectOne("adminMapper.selectArtist", artistNo);
     }
+  
     // 댓글 관리
     public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession) {
         return (ArrayList)sqlSession.selectList("adminMapper.selectReplyList");
@@ -269,6 +278,10 @@ public class AdminDao {
 
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice notice) {
 		return sqlSession.insert("adminMapper.insertNotice", notice);
+	}
+
+	public int updateReserveStatus(SqlSessionTemplate sqlSession, String paymentCode) {
+		return sqlSession.update("adminMapper.updateReserveStatus", paymentCode);
 	}
 
 

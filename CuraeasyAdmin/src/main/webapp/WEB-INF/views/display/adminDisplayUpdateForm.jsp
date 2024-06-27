@@ -78,7 +78,7 @@
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
+        <a class="navbar-brand ps-3" href="${path}/admin.ad">관리자 페이지</a>
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
     </nav>
     <div id="layoutSidenav">
@@ -125,11 +125,17 @@
                             <input type="text" class="form-control" id="artistNickName1" name="artistNickName1" value="${ requestScope.display.artistNickName}" disabled required>
                             <input type="hidden" class="form-control" id="artistNickName" name="artistNickName" value="${ requestScope.display.artistNickName}" required>
                         </div>
-                        <div class="form-group mb-3">
-                            <label for="galleryName1">전시관명</label>
-                            <input type="text" class="form-control" id="galleryName1" name="galleryName1" value="${ requestScope.display.galleryName}" disabled required>
-                            <input type="hidden" class="form-control" id="galleryName" name="galleryName" value="${ requestScope.display.galleryName}" required>
-                        </div>
+						<div class="form-group mb-3">
+						    <label for="galleryName">전시관명</label>
+						    <select class="form-control" id="galleryName" name="galleryName" required>
+						        <option value="제 1 전시관" ${requestScope.display.galleryName == '제 1 전시관' ? 'selected' : ''}>제 1 전시관</option>
+						        <option value="제 2 전시관" ${requestScope.display.galleryName == '제 2 전시관' ? 'selected' : ''}>제 2 전시관</option>
+						        <option value="제 3 전시관" ${requestScope.display.galleryName == '제 3 전시관' ? 'selected' : ''}>제 3 전시관</option>
+						        <option value="제 4 전시관" ${requestScope.display.galleryName == '제 4 전시관' ? 'selected' : ''}>제 4 전시관</option>
+						        <option value="제 5 전시관" ${requestScope.display.galleryName == '제 5 전시관' ? 'selected' : ''}>제 5 전시관</option>
+						        <option value="제 6 전시관" ${requestScope.display.galleryName == '제 6 전시관' ? 'selected' : ''}>제 6 전시관</option>
+						    </select>
+						</div>
                         <div>
 	                        <div class="form-group mb-3" style="display: inline-table;; width: 30%; margin-left: 14%;">
 	                            <label>첨부파일 미리보기 (썸네일)</label> <br>

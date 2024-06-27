@@ -195,7 +195,7 @@
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
-        <a class="navbar-brand ps-3" href="${path}/">관리자 페이지</a>
+        <a class="navbar-brand ps-3" href="${path}/admin.ad">관리자 페이지</a>
         <!-- Sidebar Toggle-->
         <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
         <!-- Logout Button-->
@@ -243,7 +243,7 @@
                                         <td>${notice.noticeTitle}</td>
                                         <td>${notice.noticeContent}</td>
                                         <td>${notice.noticeDate}</td>
-										<td>${not empty notice.noticeAttachment ? 'Y' : 'N'}</td>
+										<td>${not empty notice.noticeAttachment ? '📄' : ' '}</td>
                                         <td>${notice.noticeCount}</td>
                                         <td>${notice.noticeStatus == 'Y' ? '게시중' : '삭제됨'}</td>
                                         <td><button class="btn btn-warning" onclick="location.href='${path}/updateNotice.ad?noticeNo=${notice.noticeNo}'">수정하기</button></td>

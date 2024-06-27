@@ -146,18 +146,19 @@
     
     <!-- 대시보드 -->
     
-    <select id="getMemberCount" resultType="int">
-        SELECT COUNT(*) FROM member
+	 <select id="getMemberCount" resultType="int">
+        SELECT COUNT(*) FROM MEMBER WHERE MEMBER_STATUS = 'Y'
     </select>
 
     <select id="getCurrentYearSales" resultType="int">
-		SELECT SUM(PAYMENT_PRICE * RESERVE_COUNT) AS total_sales
-		FROM RESERVE
-		WHERE EXTRACT(YEAR FROM PAYMENT_DATE) = 2024
+	    SELECT SUM(PAYMENT_PRICE * RESERVE_COUNT) AS total_sales
+	    FROM RESERVE
+	    WHERE EXTRACT(YEAR FROM PAYMENT_DATE) = 2024
+	    AND RESERVE_STATUS = 'Y'
     </select>
 
     <select id="getDisplayCount" resultType="int">
-        SELECT COUNT(*) FROM "DISPLAY"
+        SELECT COUNT(*) FROM "DISPLAY" WHERE DISPLAY_STATUS !='종료'
     </select>
 
     <select id="getArtistsAwaitingApproval" resultType="int">
@@ -181,8 +182,6 @@
 	    GROUP BY EXTRACT(MONTH FROM PAYMENT_DATE)
 	    ORDER BY EXTRACT(MONTH FROM PAYMENT_DATE)
 	</select>
-    
-    
     
     <!-- 전시회 관리 -->
     <select id="getDisplayListCount" parameterType="String" resultType="int">
@@ -509,6 +508,26 @@
     <select id="getNoticeListCount" resultType="int">
         SELECT COUNT(*) FROM NOTICE
     </select>
+    
+    <update id="deleteNotice" parameterType="int">
+        UPDATE NOTICE
+        SET NOTICE_STATUS = 'N'
+        WHERE NOTICE_NO = #{noticeNo}
+    </update>
+    
+    <select id="selectNoticeById" parameterType="int" resultMap="noticeResultSet">
+    	SELECT 
+        	NOTICE_NO,
+        	NOTICE_DATE,
+        	NOTICE_TITLE,
+	        NOTICE_CONTENT,
+        	NOTICE_ATTACHMENT,
+        	NOTICE_COUNT,
+	        NOTICE_STATUS
+    	FROM NOTICE
+    	WHERE NOTICE_NO = #{noticeNo}
+	</select>
+    
 
     <!-- 후기 관리 -->
 	<select id="selectReviewList" resultMap="reviewResultSet">
@@ -613,9 +632,8 @@
         SET MEMBER_STATUS = 'N'
         WHERE MEMBER_NO = #{memberNo}
     </update>
-
-
-    <!-- 작가 관리 -->
+	
+	<!-- 작가 관리 -->
     <select id="selectArtistList" resultMap="artistResultSet">
         SELECT 
             ARTIST_NO,
@@ -654,8 +672,6 @@
 	    UPDATE ARTIST
 	    SET ARTIST_NICKNAME = #{artistNickName},
 	        ARTIST_INTRODUCE = #{artistIntroduce},
-	        ARTIST_IMAGE = #{artistImage},
-	        ARTIST_APPLY_TITLE = #{artistApplyTitle},
 	        ARTIST_ORDINAL = #{artistOrdinal}
 	    WHERE ARTIST_NO = #{artistNo}
 	</update>
@@ -665,6 +681,7 @@
 	    FROM ARTIST
 	    WHERE ARTIST_NO = #{artistNo}
 	</select>
+	
     <!-- 댓글 관리 -->
     <select id="selectReplyList" resultMap="replyResultSet">
         SELECT 
@@ -693,8 +710,14 @@
     WHERE NOTICE_NO = #{noticeNo} AND NOTICE_STATUS = 'Y'
 	</update>
 	
-	   <insert id="insertNotice" parameterType="com.kh.curaeasyadmin.model.vo.Notice">
-        INSERT INTO NOTICE (NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_ATTACHMENT, NOTICE_STATUS)
-        VALUES (SEQ_NOTICE_NO.NEXTVAL, #{noticeTitle}, #{noticeContent}, #{noticeAttachment},'Y')
+	<insert id="insertNotice" parameterType="com.kh.curaeasyadmin.model.vo.Notice">
+		INSERT INTO NOTICE (NOTICE_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_ATTACHMENT, NOTICE_STATUS)
+    	VALUES (SEQ_NOTICE_NO.NEXTVAL, #{noticeTitle}, #{noticeContent}, #{noticeAttachment}, 'Y')
     </insert>
+    
+    <update id="updateReserveStatus" parameterType="string">
+    	UPDATE RESERVE
+    	   SET RESERVE_STATUS = 'N'
+    	 WHERE PAYMENT_CODE = #{paymentCode}
+    </update>
 </mapper>
