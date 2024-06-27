@@ -198,10 +198,21 @@
 <jsp:include page="../common/footer.jsp" />
 
 <script>
+    
+    let interval;
+
     $(function() {
-        searchReplyList();
-        setInterval(searchReplyList, 1000);
+        startInterval();
     });
+
+    function startInterval(){
+        searchReplyList();
+        interval = setInterval(searchReplyList, 1000);
+    };
+
+    function stopInterval(){
+        clearInterval(interval);
+    }
 
     function clickEdit(e) {
         let $com = $(e).parents("div.comment");
@@ -267,6 +278,7 @@
                 },
                 success: function(result) {
                     searchReplyList();
+                    startInterval();
                 },
                 error: function() {
                     console.log("댓글 수정 실패");
@@ -294,12 +306,32 @@
             },
             success: function(result) {
                 searchReplyList();
+                startInterval();
             },
             error: function() {
                 console.log("댓글 수정 실패");
             }
         });
     }
+
+    function exit(e){
+        let index = $(e).parent("div").parent("div").attr("name");
+        $(`.comment[name=\${index}] .dropdown-content`).toggle(0);
+        startInterval();
+    }
+
+    function imgClick(e) {
+
+        let content = $(e).siblings("p").text();
+        let index = $(e).parent("div").attr("name");
+
+        let $textarea = $("#comment-textarea").clone().addClass("comment-edit");
+
+        $(`.comment[name=\${index}] textarea`).val(content);
+
+        $(`.comment[name=\${index}] .dropdown-content`).toggle(0);
+        stopInterval();
+    };
     
     
     function searchReplyList() {
@@ -326,35 +358,26 @@
                     $div.append($(`<h5>\${element.memberNo} &nbsp;&nbsp;<small class="text-muted">\${element.replyEnrollDate}</small></h5>`));
                     if("${sessionScope.loginUser}" != ""){
                         if($div.children("input").attr("name") == "${sessionScope.loginUser.memberId}"){
-                            let $img = ($("<img src='https://www.svgrepo.com/show/491050/meatballs-menu.svg'>"))
-                            $img.click(function() {
-
-                                let content = $(this).siblings("p").text();
-                                let index = $(this).parent("div").attr("name");
-
-                                let $textarea = $("#comment-textarea").clone().addClass("comment-edit");
-
-                                $(`.comment[name=\${index}] textarea`).val(content);
-
-                                $(`.comment[name=\${index}] .dropdown-content`).toggle(0);
-                                
-                            })
-
-                                $div.append($img)
+                            let $img = ($("<img src='https://www.svgrepo.com/show/491050/meatballs-menu.svg' onclick='imgClick(this);'>"))
+                            
+                            $div.append($img)
 
                             let $dropdown = $("<div class='dropdown-content'></div>")
                             $dropdown.append("<a href='javascript:void(0);' onclick='clickEdit(this)' class='edit'>수정</a>")
                             $dropdown.append("<br>")
-                            $dropdown.append("<a href='javascript:void(0);' onclick='deleteReply(this)'>삭제</a>")
+                            $dropdown.append("<a href='javascript:void(0);' onclick='deleteReply(this)'>삭제</a>") 
+                            $dropdown.append("<br>")
+                            $dropdown.append("<a href='javascript:void(0);' onclick='exit(this)'>취소</a>")
     
                             $div.append($dropdown);
                         }
-                        
 
                     }
-                    $div.append($(`<p>\${element.replyContent}</p>`));
 
-                    divList += $div.html();
+                    $div.append($(`<p>\${element.replyContent}</p>`));
+                    let wrap = $("<div></div>");
+                    wrap.append($div);
+                    divList += wrap.html();
                     // console.log($div)
                     // console.log($divList)
                 })

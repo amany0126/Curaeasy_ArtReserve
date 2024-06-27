@@ -178,6 +178,15 @@ public class AdminService {
     public ArrayList<Review> selectReviewList(PageInfo pi) {
         return adminDao.selectReviewList(sqlSession, pi);
     }
+    
+    public Review getReviewById(int reviewNo) {
+        return adminDao.selectReviewById(sqlSession, reviewNo);
+    }
+    
+    @Transactional
+    public int updateReviewStatusToEnd(int reviewNo, Reserve re) {
+    	return adminDao.deleteReview(sqlSession, reviewNo)*adminDao.deleteReviweWriter(sqlSession,re);
+    }
 
     // 회원 관리
     public int getMemberListCount() {
@@ -271,6 +280,10 @@ public class AdminService {
 	@Transactional
 	public int updateReserveStatus(String paymentCode) {
 		return adminDao.updateReserveStatus(sqlSession, paymentCode);
+	}
+
+	public int selectDisplayNo(String displayName) {
+		return adminDao.selectDisplayNo(sqlSession, displayName);
 	}
 
 

@@ -179,6 +179,14 @@ public class AdminDao {
         RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
         return (ArrayList)sqlSession.selectList("adminMapper.selectReviewList", null, rowBounds);
     }
+    
+    public Review selectReviewById(SqlSessionTemplate sqlSession, int reviewNo) {
+        return sqlSession.selectOne("adminMapper.selectReviewById", reviewNo);
+    }
+    
+    public int deleteReview(SqlSessionTemplate sqlSession, int reviewNo) {
+       return sqlSession.update("adminMapper.deleteReview", reviewNo);
+    }
 
     // 회원 관리
     public int getMemberListCount(SqlSessionTemplate sqlSession) {
@@ -282,6 +290,14 @@ public class AdminDao {
 
 	public int updateReserveStatus(SqlSessionTemplate sqlSession, String paymentCode) {
 		return sqlSession.update("adminMapper.updateReserveStatus", paymentCode);
+	}
+
+	public int selectDisplayNo(SqlSessionTemplate sqlSession, String displayName) {
+		return sqlSession.selectOne("adminMapper.selectDisplayNo", displayName);
+	}
+
+	public int deleteReviweWriter(SqlSessionTemplate sqlSession, Reserve re) {
+		return sqlSession.update("adminMapper.deleteReviweWriter", re);
 	}
 
 

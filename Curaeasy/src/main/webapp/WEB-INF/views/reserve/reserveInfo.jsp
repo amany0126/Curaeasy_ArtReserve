@@ -330,7 +330,13 @@
     
     <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
     <script>
-
+    
+	    function uuid() {
+	        return ('10000000-1000-4000-8000-100000000000').replace(/[018]/g, c => (
+	            c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16)
+	        );
+	    }
+	    
         async function payment() {
 
             if($(".form-group input[id=memberName]").val().trim().length === 0){
@@ -363,8 +369,8 @@
     		//   $(".form-group input[id=memberBirthday]").val("").attr("disabled",false)
     		//   $(".form-group input[id=memberAddress1]").val("").attr("disabled",false)
     		//   $(".form-group input[id=memberAddress2]").val("").attr("disabled",false)
-
-            const paymentId = crypto.randomUUID()
+			
+            const paymentId = uuid();
             const response = await PortOne.requestPayment({
             // Store ID 설정
             storeId: "store-7e7b8b35-0e5d-454d-9262-238566d87dbb",

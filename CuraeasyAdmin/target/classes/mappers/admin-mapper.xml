@@ -552,6 +552,26 @@
     <select id="getReviewListCount" resultType="int">
         SELECT COUNT(*) FROM REVIEW
     </select>
+    
+    <update id="deleteReview" parameterType="int">
+        UPDATE 	REVIEW
+        SET REVIEW_STATUS = 'N'
+        WHERE REVIEW_NO = #{reviewNo}
+    </update>
+    
+	<select id="selectReviewById" parameterType="int" resultMap="reviewResultSet">
+	    SELECT
+	        REVIEW_NO,
+	        REVIEW_TITLE,
+	        REVIEW_CONTENT,
+	        REVIEW_ENROLL_DATE,
+	        REVIEW_COUNT,
+	        REVIEW_IMAGE,
+	        REVIEW_STATUS,
+	        MEMBER_NO
+	    FROM REVIEW
+	    WHERE REVIEW_NO = #{reviewNo}
+	</select>
 
 	<!-- 회원 관리 -->
     <select id="selectMemberList" resultMap="memberResultSet">
@@ -648,6 +668,8 @@
             MEMBER_NO
         FROM 
             ARTIST
+        WHERE ARTIST_STATUS == 'Y'
+        OR ARTIST_RESULT != 'Y'
         ORDER BY 
             ARTIST_NO DESC
     </select>
@@ -671,8 +693,7 @@
 	<update id="updateArtist" parameterType="com.kh.curaeasyadmin.model.vo.Artist">
 	    UPDATE ARTIST
 	    SET ARTIST_NICKNAME = #{artistNickName},
-	        ARTIST_INTRODUCE = #{artistIntroduce},
-	        ARTIST_ORDINAL = #{artistOrdinal}
+	        ARTIST_INTRODUCE = #{artistIntroduce}
 	    WHERE ARTIST_NO = #{artistNo}
 	</update>
 	
@@ -700,7 +721,7 @@
     <select id="selectNoticeDetail" parameterType="_int" resultMap="noticeResultSet">
         SELECT * 
         FROM NOTICE
-        WHERE NOTICE_NO = #{noticeNo} AND NOTICE_STATUS = 'Y'
+        WHERE NOTICE_NO = #{noticeNo}
     </select>
     <update id="noticeUpdate" parameterType="com.kh.curaeasyadmin.model.vo.Notice">
     UPDATE NOTICE
@@ -720,4 +741,17 @@
     	   SET RESERVE_STATUS = 'N'
     	 WHERE PAYMENT_CODE = #{paymentCode}
     </update>
+    
+      <select id="selectDisplayNo" resultType="int"  parameterType="string">
+         SELECT DISPLAY_NO
+		      FROM DISPLAY 
+		  WHERE DISPLAY_NAME = #{displayName}
+    </select>
+    	<update id="deleteReviweWriter" parameterType="com.kh.curaeasyadmin.model.vo.Reserve" >
+		UPDATE RESERVE 
+		   SET REVIEW_WRITED = 'N'
+		 WHERE REVIEW_WRITED = 'Y'
+		   AND MEMBER_NO = #{memberNo} AND DISPLAY_NO = #{displayNo}
+	</update>
+    
 </mapper>

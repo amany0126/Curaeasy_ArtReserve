@@ -53,6 +53,7 @@ public class IntroController {
     	
     	Notice notice =  introService.SelectLatestNotice();
     	notice.setNoticeContent(notice.getNoticeContent().replace("<br>", ""));
+    	
     	// 메인 페이지에 표시할 최신 전시, 공지, 작가 가져오기
     	map.put("display", introService.SelectLatestDisplay());
     	map.put("artist", introService.SelectLatestArtist());

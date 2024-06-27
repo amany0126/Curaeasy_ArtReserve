@@ -237,7 +237,6 @@
                                     <th>이미지</th>
                                     <th>상태</th>
                                     <th>아이디</th>
-                                    <th>수정</th>
                                     <th>삭제</th>
                                 </tr>
                             </thead>
@@ -249,11 +248,22 @@
                                         <td class="truncate">${review.reviewContent}</td>
                                         <td class="date">${review.reviewEnrollDate}</td>
                                         <td>${review.reviewCount}</td>
-                                        <td class="attachment">${review.reviewImage}</td>
+                                        
+                                        <td class="attachment">${review.reviewImage != null ? ':액자에_담긴_그림:' : ''}</td>
                                         <td>${review.reviewStatus == 'Y' ? '게시중' : '삭제됨'}</td>
                                         <td>${review.memberId}</td>
-                                        <td><button class="btn btn-warning btn-edit" onclick="location.href='${path}/updateReview.ad?reviewNo=${review.reviewNo}'">수정하기</button></td>
-                                        <td><button class="btn btn-danger btn-delete" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='${path}/deleteReview.ad?reviewNo=${review.reviewNo}'; }">삭제하기</button></td>
+                                        <c:choose>
+                                        	
+                                        	<c:when test="${review.reviewStatus eq 'Y'}">
+		                                        <td><button class="btn btn-danger btn-delete" onclick="if(confirm('정말 삭제하시겠습니까?')) { location.href='${path}/deleteReview.ad?reviewNo=${review.reviewNo}'; }">삭제하기</button></td>
+                                        	
+                                        	</c:when>
+                                        	<c:otherwise>
+		                                        <td><button class="btn btn-danger btn-delete" disabled>삭제하기</button></td>
+                                        	
+                                        	</c:otherwise>
+                                        
+                                        </c:choose>
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty reviewList}">

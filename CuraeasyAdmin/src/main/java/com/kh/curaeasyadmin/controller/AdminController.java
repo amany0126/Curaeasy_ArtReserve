@@ -423,6 +423,31 @@ public class AdminController {
         return "review/adminReviewListView";
     }
     
+	@RequestMapping("/deleteReview.ad")
+    public String deleteReview(@RequestParam("reviewNo") int reviewNo, RedirectAttributes redirectAttributes) {
+        
+		
+		Review review = adminService.getReviewById(reviewNo);
+		
+		int memberNo = review.getMemberNo();
+		String displayName = review.getReviewTitle().substring(review.getReviewTitle().indexOf("[")+1,(review.getReviewTitle().indexOf("]")));
+		
+		int displayNo = adminService.selectDisplayNo(displayName);
+		
+		Reserve re = new Reserve();
+		re.setMemberNo(memberNo);
+		re.setDisplayNo(displayNo);
+		
+		System.out.println(re);
+		
+        if ("N".equals(review.getReviewStatus())) {
+            redirectAttributes.addFlashAttribute("errorMessage", "이미 삭제처리된 리뷰입니다.");
+        } else {
+          int result=  adminService.updateReviewStatusToEnd(reviewNo,re);
+        }
+        return "redirect:/reviewList.ad";
+    }
+    
     // 멤버 관리
 
     @RequestMapping("memberList.ad")

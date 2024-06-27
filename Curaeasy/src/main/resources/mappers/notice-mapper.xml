@@ -14,11 +14,12 @@
 	
 	<!-- 메인페이지에 표시할 최신 등록 공지를 한개 선택하는 쿼리 -->
 	<select id="selectLatestNotice" resultMap="noticeResultSet" resultType="notice">
-		SELECT *
+				SELECT *
 		  FROM NOTICE
 		 WHERE NOTICE_STATUS = 'Y'
 		   AND NOTICE_NO = (SELECT MAX(NOTICE_NO)
-		   					   FROM NOTICE)
+		   					   FROM NOTICE
+                               WHERE NOTICE_STATUS = 'Y')
 	</select>
 	
 	

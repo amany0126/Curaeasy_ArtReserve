@@ -46,7 +46,7 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            max-width: 1300px;
+            width: 1400px;
             margin: auto;
             padding: 20px;
         }
@@ -193,6 +193,7 @@
             border-radius: 10px;
             padding: 15px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            height: 200px;
         }
         .card img {
             max-width: 100%;
@@ -275,7 +276,7 @@
             const displayGallery = document.createElement("p");
             displayGallery.innerText = display.galleryNo;
             
-            var $ee = $("<div class=card>").append(displayImg).append(displayName).append(displayDuration).append(displayContent).append(displayGallery);
+            var $ee = $("<div class=card>").append(displayImg).append(displayName).append(displayDuration);
             var $e = $("<div class=section>").append("<h2>전시</h2>").append($ee);
 
             return $e;
