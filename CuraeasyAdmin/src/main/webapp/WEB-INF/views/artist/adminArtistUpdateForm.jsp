@@ -77,10 +77,16 @@
                             <textarea class="form-control" id="artistIntroduce" name="artistIntroduce" rows="3" required>${artist.artistIntroduce}</textarea>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="artistImage">썸네일 이미지</label>
-                            <input type="file" class="form-control-file" id="artistImage" name="artistImage" onchange="loadImg(this, 1)">
+                            <label for="artistImage">썸네일 이미지</label><br>
                             <div class="preview">
-                            	<img src="../../../curaeasy/resources/resources/artist_images/$" alt="">
+                                <c:choose>
+                                    <c:when test="${not empty artist.artistImage}">
+                                        <img src="../../../curaeasy/resources/artistProfileImgs/${artist.artistImage}" width="200px" alt="프로필이미지" id="preview1" class="rounded" ><br>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <p>이미지가 없습니다.</p>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">수정하기</button>
@@ -97,16 +103,5 @@
             </footer>
         </div>
     </div>
-    <script>
-    function loadImg(inputFile, num) {
-        if (inputFile.files && inputFile.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#artistPreviewImage').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(inputFile.files[0]);
-        }
-    }
-    </script>
 </body>
 </html>
