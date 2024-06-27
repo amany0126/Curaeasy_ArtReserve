@@ -39,7 +39,10 @@ import com.kh.curaeasyadmin.model.vo.Review;
 
 @Controller
 public class AdminController {
-
+	
+	
+	
+	
     @Autowired
     private AdminService adminService;
 
@@ -186,6 +189,7 @@ public class AdminController {
 	
         return "redirect:/displayList.ad";
     }
+    
     private String savePath(MultipartFile reUpfile, HttpSession session) {
 		return null;
 	}
@@ -207,20 +211,28 @@ public class AdminController {
     }
 
     @PostMapping("/addDisplay.ad")
-    public String addDisplay(Display display, @RequestParam("attachments") MultipartFile[] attachments, HttpSession session) {
-        ArrayList<DisplayAttachment> attachmentList = new ArrayList<>();
-        for (MultipartFile file : attachments) {
-            if (!file.isEmpty()) {
-                String changeName = saveFileDisplay(file, session);
-                DisplayAttachment attachment = new DisplayAttachment();
-                attachment.setOriginName(file.getOriginalFilename());
-                attachment.setChangeName(changeName);
-                attachment.setImageLevel(file.equals(attachments[0]) ? 1 : 2);
-                attachment.setStatus("Y");
-                attachmentList.add(attachment);
-            }
-        }
-        adminService.addDisplay(display, attachmentList);
+    public String addDisplay(Display display, MultipartFile attachment1,  MultipartFile attachment2, HttpSession session) {
+       
+        
+        display.setDisplayContent(display.getDisplayContent().replace("\\r\\n", "<br>"));
+        
+        
+        DisplayAttachment UplodeAttachment1 = new DisplayAttachment();
+        DisplayAttachment UplodeAttachment2 = new DisplayAttachment();
+        
+        String changImgName1 = saveFileDisplay(attachment1, session);	
+        UplodeAttachment1.setOriginName(attachment1.getOriginalFilename());
+        UplodeAttachment1.setChangeName(changImgName1);
+        UplodeAttachment1.setImageLevel(1);
+        
+        System.out.println(attachment1.getOriginalFilename());
+		String changImgName2 = saveFileDisplay(attachment2, session);	
+		UplodeAttachment2.setOriginName(attachment2.getOriginalFilename());
+		UplodeAttachment2.setChangeName(changImgName2);
+		UplodeAttachment2.setImageLevel(2);
+        
+   
+        int result = adminService.addDisplay(display, UplodeAttachment1,UplodeAttachment2);
         return "redirect:/displayList.ad";
     }
 
@@ -433,26 +445,61 @@ public class AdminController {
     
     @RequestMapping("/approveArtist.ad")
     public String approveArtist(@RequestParam("artistNo") int artistNo, @RequestParam("status") String status, RedirectAttributes redirectAttributes) {
-        if ("approve".equals(status)) {
+        if ("Y".equals(status)) {
             adminService.approveArtist(artistNo);
-        } else if ("reject".equals(status)) {
+            adminService.artistOngoing(artistNo);
+        } else if ("N".equals(status)) {
             adminService.rejectArtist(artistNo);
         }
+        
+        System.out.println(artistNo);
+        System.out.println(status);
         redirectAttributes.addFlashAttribute("message", "작가 승인이 완료되었습니다.");
         return "redirect:/artistList.ad";
     }
     
+    
+    @GetMapping("/updateArtist.ad")
+    public String showUpdateArtistForm(@RequestParam("artistNo") Integer artistNo, Model model) {
+        Artist artist = adminService.selectArtist(artistNo);
+        
+        System.out.println(artist);
+        model.addAttribute("artist", artist);
+        return "artist/adminArtistUpdateForm";
+    }
+
     @PostMapping("/updateArtist.ad")
-    public String updateArtist(@ModelAttribute Artist artist, @RequestParam("artistImage") MultipartFile file, HttpServletRequest request) {
+    public String updateArtist(@ModelAttribute Artist artist, @RequestParam("artistImage") MultipartFile file, HttpServletRequest request, RedirectAttributes redirectAttributes) {
         if (!file.isEmpty()) {
             String renameFileName = saveFile(file, request);
             if (renameFileName != null) {
                 artist.setArtistImage(renameFileName);
             }
         }
-        adminService.updateArtist(artist);
+        boolean result = adminService.updateArtist(artist);
+        if (result) {
+            redirectAttributes.addFlashAttribute("message", "작가 정보가 성공적으로 업데이트되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage", "작가 정보 업데이트에 실패하였습니다.");
+        }
         return "redirect:/artistList.ad";
     }
+    private String saveFileArtist(MultipartFile file, HttpSession session) {
+        String originName = file.getOriginalFilename();
+        String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        int ranNum = (int) (Math.random() * 90000 + 10000);
+        String ext = originName.substring(originName.lastIndexOf("."));
+        String changeName = currentTime + ranNum + ext;
+        String savePath = "C:\\Curaeasy_ArtReserve\\Curaeasy\\src\\main\\webapp\\resources\\artist\\";
+        System.out.println(savePath);
+        try {
+            file.transferTo(new File(savePath + changeName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return changeName;
+    }
+    
 
     private String saveFile(MultipartFile file, HttpServletRequest request) {
         String root = request.getSession().getServletContext().getRealPath("resources");
@@ -535,12 +582,12 @@ public class AdminController {
     public String noticeUpdate( @RequestParam MultipartFile reUpfile,Notice notice, Model model, HttpSession session) {
     	
     	
-    	// int noticeNo = notice.getNoticeNo();
+    	 int noticeNo = notice.getNoticeNo();
     	
     	notice.setNoticeContent(notice.getNoticeContent().replace("\\r\\n", "<br>"));
     	
     	// 원본 파일 정보    	
-    	// Notice noticeList = adminService.selectNoticeDetail(noticeNo);
+    	Notice noticeList = adminService.selectNoticeDetail(noticeNo);
     	
         // 원본 파일 체인지 명
         String originalfileNameNotice = notice.getNoticeAttachment();
@@ -548,7 +595,7 @@ public class AdminController {
         // 섬네일
         if(reUpfile.getSize() == 0) {
 			// 파일번호, 바뀐이름, 파일레벨
-	        notice.setNoticeAttachment(originalfileNameNotice);
+	        notice.setNoticeAttachment(noticeList.getNoticeAttachment());
 		}else {
 			String changImgName = saveFileNotice(reUpfile, session);	
 			notice.setNoticeAttachment (changImgName);
@@ -557,7 +604,7 @@ public class AdminController {
 			new File(realPath).delete();
 			
 		}
-        System.out.println(notice);
+        // System.out.println(notice);
         int result = adminService.noticeUpdate(notice);
 		
 		if (result > 0) { // 성공

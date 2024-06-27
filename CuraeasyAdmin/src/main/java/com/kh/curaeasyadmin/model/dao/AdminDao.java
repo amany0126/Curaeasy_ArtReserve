@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.curaeasyadmin.common.model.vo.PageInfo;
 import com.kh.curaeasyadmin.model.vo.*;
@@ -80,10 +81,10 @@ public class AdminDao {
         return sqlSession.insert("adminMapper.addDisplay", display);
     }
 
-    public int addDisplayAttachment(SqlSessionTemplate sqlSession, DisplayAttachment attachment) {
-        return sqlSession.insert("adminMapper.addDisplayAttachment", attachment);
-    }
 
+	public int addDisplayAttachment(SqlSessionTemplate sqlSession,  DisplayAttachment uplodeAttachment) {
+		 return sqlSession.insert("adminMapper.addDisplayAttachment", uplodeAttachment);
+	}
     // 전시관 관리
     public int getGalleryListCount(SqlSessionTemplate sqlSession, String searchKeyword) {
         return sqlSession.selectOne("adminMapper.getGalleryListCount", searchKeyword);
@@ -213,10 +214,23 @@ public class AdminDao {
         return sqlSession.update("adminMapper.updateArtistStatus", params);
     }
     
-    public void updateArtist(SqlSessionTemplate sqlSession, Artist artist) {
-        sqlSession.update("adminMapper.updateArtist", artist);
+    public int artistOngoing(SqlSessionTemplate sqlSession, int artistNo, String status) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("artistNo", artistNo);
+        params.put("artistStatus", status);
+        return sqlSession.update("adminMapper.updateMemberArtistOngoing", params);
     }
+   
     
+    
+    public int updateArtist(SqlSessionTemplate sqlSession, Artist artist) {
+        return sqlSession.update("adminMapper.updateArtist", artist);
+        
+    }
+
+    public Artist selectArtist(SqlSessionTemplate sqlSession, Integer artistNo) {
+        return sqlSession.selectOne("adminMapper.selectArtist", artistNo);
+    }
     // 댓글 관리
     public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession) {
         return (ArrayList)sqlSession.selectList("adminMapper.selectReplyList");
@@ -256,5 +270,6 @@ public class AdminDao {
 	public int insertNotice(SqlSessionTemplate sqlSession, Notice notice) {
 		return sqlSession.insert("adminMapper.insertNotice", notice);
 	}
+
 
 }

@@ -128,6 +128,7 @@ public class ReviewController {
 		r.setReviewTitle(setTitle);
 		int userNo= ((Member)session.getAttribute("loginUser")).getMemberNo();
 		r.setMemberNo(""+userNo);
+		 r.setReviewContent(r.getReviewContent().replace("\\r\\n", "<br>"));
 
 		ReviewListData.put("userNo", ""+userNo);
 		ReviewListData.put("displayName", displayName);
@@ -243,6 +244,7 @@ public class ReviewController {
 		
 		
 		
+		
 		// rno 파라미터가 없는 경우
 		if(rno == 0) {
 			mv.addObject("errorMsg", "잘못된 접근입니다.")
@@ -252,6 +254,7 @@ public class ReviewController {
 			/* System.out.println(rno); */
 		reviewService.selectCount(rno);
 		Review r = reviewService.selectReview(rno);
+		 r.setReviewContent(r.getReviewContent().replace("\\r\\n", "<br>"));
 		mv.addObject("rno", rno)
 		  .addObject("r", r)
 		  .setViewName("review/reviewDetailView");

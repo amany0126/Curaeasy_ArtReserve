@@ -67,7 +67,7 @@ public class NoticeController {
 	        if(result > 0) {
 	        	
 	            Notice n = noticeService.selectNotice(nno);
-
+	            n.setNoticeContent(n.getNoticeContent().replace("\\r\\n", "<br>"));
 	            System.out.println("공지 제목: " + n.getNoticeTitle());
 
 	            // 이전글과 다음글 ID 조회
