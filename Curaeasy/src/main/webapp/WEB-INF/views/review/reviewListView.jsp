@@ -24,7 +24,7 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<title>후기 게시글목록</title>
+<title>후기 게시판</title>
 
 
 <style>

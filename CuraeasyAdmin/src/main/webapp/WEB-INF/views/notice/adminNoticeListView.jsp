@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="utf-8" />
@@ -10,6 +11,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>전시관리</title>
+    
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
     <link href="${path}/resources/css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -18,10 +20,11 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
     <script src="${path}/resources/js/scripts.js"></script>
     <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #F4F4F9;
+            background-color: #f4f4f9;
             margin: 0;
             padding: 0;
         }
@@ -54,20 +57,20 @@
             text-overflow: ellipsis;
         }
         table th {
-            background-color: #007BFF;
+            background-color: #007bff;
             color: white;
         }
         table td {
-            background-color: #F8F9FC;
+            background-color: #f8f9fc;
         }
         table tr:nth-child(even) {
-            background-color: #F1F1F1;
+            background-color: #f1f1f1;
         }
         table tr:nth-child(odd) {
-            background-color: #F8F9FC;
+            background-color: #f8f9fc;
         }
         table tr:hover {
-            background-color: #D1D3E2;
+            background-color: #d1d3e2;
             cursor: pointer;
         }
         .truncate {
@@ -107,12 +110,12 @@
             display: block;
             padding: 8px 16px;
             text-decoration: none;
-            color: #007BFF;
+            color: #007bff;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
         .pagination a:hover {
-            background-color: #007BFF;
+            background-color: #007bff;
             color: white;
         }
         .pagination a.disabled {
@@ -120,20 +123,23 @@
             pointer-events: none;
             cursor: default;
         }
+   
         .pagination a.active {
-            background-color: #007BFF;
+            background-color: #007bff;
             color: white;
-            border-color: #007BFF;
+            border-color: #007bff;
         }
         /* 테이블 배경색 흰색으로 설정 */
         #datatablesSimple {
             background-color: white;
         }
+
         /* 테이블 요소 중앙 정렬 */
         #datatablesSimple th, #datatablesSimple td {
             text-align: center;
             vertical-align: middle;
         }
+        
         /* Disabled button style */
         .btn-disabled {
             background-color: grey;
@@ -144,6 +150,7 @@
         function goToDetail(noticeNo) {
             window.location.href = '${path}/noticeDetail.ad?noticeNo=' + noticeNo;
         }
+
         function truncateText(selector, maxLength) {
             const elements = document.querySelectorAll(selector);
             elements.forEach(element => {
@@ -152,18 +159,32 @@
                 }
             });
         }
+
+        function formatDate() {
+            const dateElements = document.querySelectorAll('.date');
+            dateElements.forEach(element => {
+                let date = new Date(element.textContent);
+                let formattedDate = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
+                element.textContent = formattedDate;
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             truncateText('.truncate', 20);
+            formatDate();
+            
             // 검색 버튼 클릭 이벤트
             $("#searchButton").click(function() {
                 performSearch();
             });
+            
             // 검색 입력창에서 Enter 키 눌렀을 때 이벤트
             $("#searchInput").on("keypress", function(e) {
                 if (e.which == 13) { // Enter 키 코드
                     performSearch();
                 }
             });
+            
             function performSearch() {
                 var searchValue = $("#searchInput").val().toLowerCase();
                 var searchCategory = $("#searchCategory").val();
@@ -180,6 +201,7 @@
         });
     </script>
 </head>
+
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <!-- Navbar Brand-->
@@ -198,7 +220,7 @@
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
-                    <h1 class="mt-4">📢 공지사항 목록 조회</h1>
+                    <h1 class="mt-4">📢 공지사항 목록 조회</h1>  
                     <div class="search-bar">
                         <select id="searchCategory" class="form-select">
                             <option value="all">전체</option>
@@ -212,8 +234,8 @@
                     <div class="table-responsive">
                         <table id="datatablesSimple" class="table table-striped table-bordered">
                             <thead>
-                                <tr style="background-color: #007BFF; color: white;">
-                                    <th>공지번호</th>
+                                <tr style="background-color: #007bff; color: white;">
+                                   <th>공지번호</th>
                                     <th>제목</th>
                                     <th>내용</th>
                                     <th>작성일</th>
@@ -230,17 +252,12 @@
                                         <td>${notice.noticeNo}</td>
                                         <td>${notice.noticeTitle}</td>
                                         <td>${notice.noticeContent}</td>
-                                        <td>${notice.noticeDate}</td>
-                                        <td>${not empty notice.noticeAttachment ? '📄' : ''}</td>
+                                        <td class="date">${notice.noticeDate}</td>
+										<td>${not empty notice.noticeAttachment ? '📄' : ' '}</td>
                                         <td>${notice.noticeCount}</td>
                                         <td>${notice.noticeStatus == 'Y' ? '게시중' : '삭제됨'}</td>
                                         <td><button class="btn btn-warning" onclick="location.href='${path}/updateNotice.ad?noticeNo=${notice.noticeNo}'">수정하기</button></td>
-                                        <td>
-                                            <button class="btn ${notice.noticeStatus == 'Y' ? 'btn-danger' : 'btn-disabled'}"
-                                                    onclick="if('${notice.noticeStatus}' == 'Y') { location.href='${path}/deleteNotice.ad?noticeNo=${notice.noticeNo}'; } else { alert('이미 삭제된 공지사항입니다.'); }">
-                                                ${notice.noticeStatus == 'Y' ? '삭제하기' : '처리완료'}
-                                            </button>
-                                        </td>
+                                        <td><button class="btn btn-danger" onclick="if(confirm('정말로 삭제하시겠습니까?')){ location.href='${path}/deleteNotice.ad?noticeNo=${notice.noticeNo}'; }">삭제하기</button></td>
                                     </tr>
                                 </c:forEach>
                                 <c:if test="${empty noticeList}">

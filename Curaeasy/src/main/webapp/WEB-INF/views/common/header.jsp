@@ -54,7 +54,7 @@
             flex-grow: 1;
         }
 
-        #user-actions li { list-style-type : none; }  
+        #user-actions li { list-style-type : none; margin-left: 150px;}  
         #user-actions { display: flex; align-items: center; }
         .login-link, .signup-link, .schedule-link { color: white; line-height : 40px; text-align: left;}
         #user-actions a:hover { color : white; text-decoration : none;}
@@ -116,12 +116,12 @@ s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 <!--End of Tawk.to Script-->
-<!--End of Tawk.to Script-->
+
 	<c:if test="${not empty sessionScope.alertMsg}">
 			<script>
 				alert("${sessionScope.alertMsg}");
 			</script>
-			<c:remove var="alertMsg" scope="session"/>
+			<c:remove var="alertMsg" scope="session" />
 		</c:if>
         <div id="header-1">
             <ul id="navi">

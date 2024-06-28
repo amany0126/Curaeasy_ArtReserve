@@ -69,17 +69,21 @@
             font-size: 1em;
             line-height: 1.5;
         }
-        .back-to-list {
+        /* 목록으로 */
+        .btn-container {
             text-align: center;
             margin-top: 20px;
         }
-        .back-to-list a {
-            text-decoration: none;
-            color: #fff;
-            background-color: #333;
+        .btn-container button {
             padding: 10px 20px;
-            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            border-radius: 20px; width: 150px;
         }
+        /**/
+
         hr {
             border: 0;
             border-top: 2px solid #ccc;
@@ -112,7 +116,12 @@
             z-index: 1;
         }
 
-        button:hover{transform: translateY(10px); cursor:pointer; }
+        .btn-container>button:hover{transform: translateY(10px); cursor:pointer; }
+        button:hover{cursor:pointer;}
+
+        #submit {
+            border-radius: 10px; background-color: white; color:black;
+        }
         
 
         
@@ -175,13 +184,13 @@
                     <c:when test="${empty sessionScope.loginUser}">
                         <div id="comment-textarea" style="margin-top: 10px;">
                             <textarea class="form-control comment-input" name="" placeholder="로그인 후 댓글 작성 가능합니다." rows="3" style="resize: none; width: 90%; display: inline-block; vertical-align: middle;" disabled></textarea>
-                            <button class="btn btn-primary" id="submit" style="height: 100%;" disabled>등록</button>
+                            <button class="btn btn-primary" id="submit" style="height: 85px;" disabled>등록</button>
                         </div>
                     </c:when>
                     <c:otherwise>
                         <div id="comment-textarea" style="margin-top: 10px;">
                             <textarea class="form-control comment-input" name="" placeholder="댓글을 입력해 주세요." rows="3" style="resize: none; width: 90%; display: inline-block; vertical-align: middle;"></textarea>
-                            <button class="btn btn-primary" id="submit" style="height: 100%;" onclick="insertReply(this)">등록</button>
+                            <button class="btn btn-primary" id="submit" style="height: 85px;" onclick="insertReply(this)">등록</button>
                         </div>
                     </c:otherwise>
                 </c:choose>
@@ -189,8 +198,8 @@
                 
             </div>
         </div>
-        <div class="back-to-list">
-            <a id="back" href="review.do">목록으로 가기</a>
+        <div class="btn-container">
+            <button onclick="location.href='review.do'">목록으로</button>
         </div>
     </div>
 </div>

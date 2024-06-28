@@ -54,7 +54,7 @@
                 
                 <form action="insertReview.re" method="post" enctype="multipart/form-data">
                     <div class="form-group">
-                        <label for="reviewTitle">* 전시회 제목 :</label>
+                        <label for="reviewTitle">* 후기 제목 :</label>
                         <input type="text" class="form-control" id="reviewTitle" placeholder="한글 30글자 이내" maxlength="30px" name="reviewTitle" required> <br>
                         <div id="checkResult1" style="font-size: 0.8em ;display: none;" ></div>
                         <label for="displayName">* 리뷰 작성 가능한 전시회 목록 : </label> <br>

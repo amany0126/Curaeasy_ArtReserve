@@ -171,7 +171,7 @@
             <button onclick="location.href='notice.do'">목록으로</button>
         </div>
 
-
+<%-- 
         <div class="notice-nav">
             <div class="nav-item">
                 <span>이전글</span>
@@ -185,7 +185,7 @@
                 <span class="icon">&#8744;</span>
             </div>
         </div>
-
+ --%>
 
 
 

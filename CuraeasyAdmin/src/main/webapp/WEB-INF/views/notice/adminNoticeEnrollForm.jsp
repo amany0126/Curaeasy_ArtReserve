@@ -44,10 +44,6 @@
         .form-control-file {
             margin-top: 10px;
         }
-        .btn-primary {
-            width: 100px;
-            margin-top: 20px;
-        }
     </style>
 </head>
 
@@ -80,6 +76,7 @@
                             <button type="button" class="btn btn-secondary" onclick="document.getElementById('reUpfile').click();">파일 선택</button>
                         </div>
                         <button type="submit" class="btn btn-primary">추가하기</button>
+                        <button type="button" class="btn btn-secondary" onclick="history.back();">취소하기</button>
                     </form>
                 </div>
             </main>

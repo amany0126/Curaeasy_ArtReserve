@@ -23,7 +23,7 @@
         .container {
             max-width: 1200px;
             margin: auto;
-            margin-bottom: 70%;
+            margin-bottom: 100px;
             padding: 20px;
             margin-top: 80px; background-color :#e7e6e6;
             box-shadow: 0 0 10px gray;

@@ -64,10 +64,10 @@
         <div class="subtitle">조직도</div>
         <table id="table">
             <tr>
-                <th>직위</th>
-                <th>성명</th>
+                <th style="width: 75px">직위</th>
+                <th style="width: 100px">성명</th>
                 <th>담당 업무</th>
-                <th>전화번호</th>
+                <th style="width: 150px">전화번호</th>
             </tr>
             <tr>
                 <td>팀장</td>

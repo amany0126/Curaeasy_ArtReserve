@@ -668,7 +668,7 @@
             MEMBER_NO
         FROM 
             ARTIST
-        WHERE ARTIST_STATUS == 'Y'
+        WHERE ARTIST_STATUS = 'Y'
         OR ARTIST_RESULT != 'Y'
         ORDER BY 
             ARTIST_NO DESC

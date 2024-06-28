@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Grandiflora+One&display=swap" rel="stylesheet">
 
-    <title>현재 전시</title>
+    <title>지난 전시</title>
     <style>
         .container {
             max-width: 100%;
@@ -34,6 +34,7 @@
             font-size: 2em;
             margin: 0 0 10px 0;
         }
+        
         .tab-menu {
             display: flex;
             justify-content: center;

@@ -248,8 +248,7 @@
                                         <td class="truncate">${review.reviewContent}</td>
                                         <td class="date">${review.reviewEnrollDate}</td>
                                         <td>${review.reviewCount}</td>
-                                        
-                                        <td class="attachment">${review.reviewImage != null ? ':액자에_담긴_그림:' : ''}</td>
+                                        <td>${not empty review.reviewImage ? '🖼️' : ' '}</td>
                                         <td>${review.reviewStatus == 'Y' ? '게시중' : '삭제됨'}</td>
                                         <td>${review.memberId}</td>
                                         <c:choose>

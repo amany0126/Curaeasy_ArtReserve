@@ -193,7 +193,7 @@
             border-radius: 10px;
             padding: 15px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            height: 200px;
+            height: auto;
         }
         .card img {
             max-width: 100%;
@@ -311,13 +311,13 @@
             artistImg.alt="사진 추가예정";
 
             const artistNickName = document.createElement("h3");
-            artistNickName.innerText = "${artist.artistNickName}";
+            artistNickName.innerText = artist.artistNickName;
 
             // const displayDuration = document.createElement("p");
             // displayDuration.innerText = display.displayStartDate + " - " + display.displayEndDate;
 
             const artistIntroduce = document.createElement("p");
-            artistIntroduce.innerText = "${artist.artistIntroduce}";
+            artistIntroduce.innerText = artist.artistIntroduce;
 
             // const displayGallery = document.createElement("p");
             // displayGallery.innerText = display.galleryNo;

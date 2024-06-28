@@ -10,22 +10,23 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
-      /*   .content {
-            background-color:rgb(247, 245, 245);
-            width:80%;
-            margin:auto;
-        } */
-        .innerOuter {
-            border:0px solid lightgray;
-            width:80%;
-            margin:auto;
-            padding:5% 10%;
-            background-color:white;
-			margin-top: 5px;
-        }
-		.btns>button{ border-radius: 20px; width: 130px; background-color: white; }
-		.btns>button:hover { background-color: black;color:white; transform: translateY(10px);}
-    </style>
+		/*   .content {
+			  background-color:rgb(247, 245, 245);
+			  width:80%;
+			  margin:auto;
+		  } */
+		  .innerOuter {
+			  border:0px solid lightgray;
+			  width:80%;
+			  margin:auto;
+			  padding:5% 10%;
+			  background-color:white;
+			  margin-top: 5px;
+		  }
+		  .btns>button{ border-radius: 20px; width: 130px; background-color: white; }
+		  .btns>button:hover { background-color: black;color:white; transform: translateY(10px);}
+		  label{background-color: rgb(253, 240, 225); border-radius: 20px; padding:10px 20px 10px 10px;}
+	  </style>
 </head>
 </head>
 <body>
