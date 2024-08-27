@@ -44,4 +44,5 @@
 ![로그인](https://github.com/user-attachments/assets/1aad4f12-b9e6-4358-8cb6-87b8724dd056)
 ![마이페이지](https://github.com/user-attachments/assets/2c718e23-1da1-45bb-9289-9469d086a444)
 ![예매 확인](https://github.com/user-attachments/assets/d3b06165-9108-42ed-8430-1280fbd74111)
+![스케쥴 및 예약 (1)](https://github.com/user-attachments/assets/ee1e48b5-bafd-43b0-8716-896d3c18d308)
 
