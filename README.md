@@ -1,4 +1,4 @@
-# 큐라이지_아트리저브
+#  큐레이지_공간대여
 파이널프로젝트 > 미술 전시 공간 대관 및 예약을 위한 웹사이트
 
 <img src="https://github.com/lutina15/Curaeasy_ArtReserve/blob/main/Curaeasy/src/main/webapp/resources/images/logo2.png" width="300" />
@@ -6,7 +6,7 @@
 ## 👥 팀 소개
 팀명 : 창조주
 
-팀원 : 총 5명 (구사랑, 이경한, 이영지, 조호성, 한상준)
+팀원 : 총 5명 ( 이경한, 조호성, 한상준, 구사랑, 이영지)
 
 ## 🚩 설계 목표
 
@@ -18,8 +18,8 @@
 - sqldelveloper Oracle
 - Visual Studio Code
 - Spring 5.3.14
-- Apache Tomcat
-- jQuery
+- Apache Tomcat 9.0.87
+- jQuery 4.1.3
 - java jdk11
 - HTML5
 - Java Script
