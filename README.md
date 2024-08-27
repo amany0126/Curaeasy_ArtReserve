@@ -15,15 +15,15 @@
 
 - ## ⚙️ 개발 환경
 ![이미지](https://github.com/user-attachments/assets/a3885e0e-fa8e-4410-8c29-d4a79507249e)
--sqd 개발자 오라클
--비주얼 스튜디오 코드
--봄 5.3.14
--아파치 톰캣 9.0.87
-- jQuery 4.1.3
--java jdk11
--HTML5
--자바 스크립트
--CSS3
+- sqldelveloper Oracle
+- Visual Studio Code
+- Spring 5.3.14
+- Apache Tomcat 9.0.87
+- jQuery 3.7.1
+- java jdk11
+- HTML5
+- CSS3
+
 
  ## 📝 USE CASE 다이어그램 / ERD
 ![7](https://github.com/user-attachments/assets/f3d3c5a2-ea9c-4843-a33e-cee74332b9ab)
