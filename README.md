@@ -1,4 +1,4 @@
-# 큐레이지_공간대여
+# 큐레이지_공간예약
 파이널프로젝트 > 미술 전시 공간 대관 및 예약을 위한 웹사이트
 
 <img src="https://github.com/lutina15/Curaeasy_ArtReserve/blob/main/Curaeasy/src/main/webapp/resources/images/logo2.png " width="300" />
