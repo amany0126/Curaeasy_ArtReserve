@@ -38,8 +38,10 @@
 
 ![큐레이지 메인](https://github.com/user-attachments/assets/da8cadec-1004-45c7-b2f3-1c11dfc9dda5)
 
-<img src= "https://github.com/user-attachments/assets/4323c449-2276-4eb9-a0be-6e6e0298bb2d"
+<img src= "https://github.com/user-attachments/assets/4323c449-2276-4eb9-a0be-6e6e0298bb2d "
 width="100%"/>
+![회원가](https://github.com/user-attachments/assets/4323c449-2276-4eb9-a0be-6e6e0298bb2d)
+
 
 ![로그인](https://github.com/user-attachments/assets/1aad4f12-b9e6-4358-8cb6-87b8724dd056)
 ![마이페이지](https://github.com/user-attachments/assets/2c718e23-1da1-45bb-9289-9469d086a444)
