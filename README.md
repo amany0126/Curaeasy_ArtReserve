@@ -30,19 +30,23 @@
 ![8](https://github.com/user-attachments/assets/a34dd47a-1267-47e5-afdb-ed766b9d0586)
 
 ## 📄 기능 구현
-![9](https://github.com/user-attachments/assets/57fdeed8-3631-47f7-9c65-a8b3cd684080)
+사용자
+![9](https://github.com/user-attachments/assets/57fdeed8-3631-47f7-9c65-a8b3cd684080) 
+관리자 
 ![10](https://github.com/user-attachments/assets/1a982fee-e34c-4e17-ab73-d9b5effda938)
 ![11](https://github.com/user-attachments/assets/94db4300-c66a-434c-9cfc-c183343d9f5c)
 
 ## 💻 화면 구현
-
+메인페이지
 ![큐레이지 메인](https://github.com/user-attachments/assets/da8cadec-1004-45c7-b2f3-1c11dfc9dda5)
-
+회원가입 페이지
 ![회원가입 (3)](https://github.com/user-attachments/assets/7b062d6e-bb46-4191-93ec-47e30f70e0cf)
-
-
+로그인 페이지
 ![로그인](https://github.com/user-attachments/assets/1aad4f12-b9e6-4358-8cb6-87b8724dd056)
+마이페이지
 ![마이페이지](https://github.com/user-attachments/assets/2c718e23-1da1-45bb-9289-9469d086a444)
+예매확인 페이지
 ![예매 확인](https://github.com/user-attachments/assets/d3b06165-9108-42ed-8430-1280fbd74111)
+스케쥴 확인 페이지
 ![스케쥴 및 예약 (1)](https://github.com/user-attachments/assets/ee1e48b5-bafd-43b0-8716-896d3c18d308)
 
